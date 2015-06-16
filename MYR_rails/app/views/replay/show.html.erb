@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
+
+
 <head>
-	<%= javascript_include_tag 'real_time', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'replay', 'data-turbolinks-track' => true %>
 </head>
-<body>
+
 	<div id="above_the_map">
 </div>
 
@@ -25,9 +25,9 @@
 		</style>
 		
 
-		
-		<div class="one_third" style='height: 100%'>
-			<div id="map-panel"></div>
+			<a id="refresh-replay_panel" href<%= link_to "REFRESH PANEL", :action => :replay_map_panel, remote: true%></a>
+	
+			<div id="replay_map-panel"></div>
 				<div id="choice-teams">
 				</div>
 					
@@ -41,11 +41,9 @@
 				Select a mission
 				</div>
 				<br>
-			<a id="refresh-panel" href<%= link_to "REFRESH PANEL", :action => :map_panel, remote: true%></a>
-			
+		
 			<button id="getNewTrackers" type="button">Get trackers</button> 
 			<button id="getNewCoordinates" type="button">Get coordinates</button> 
 		</div>
 	</div> 
-</body>
-</html>
+<

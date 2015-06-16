@@ -43,10 +43,10 @@ $(document).ready(function(){
 });
 
 //when the panel is displayed
-$("#replay_panel").ready(function(){
+$("#map-panel").ready(function(){
 
   //for all checkboxes of tracker, on click do ...
-  $("#replay_panel").on("click", "input[name*='tracker']", function() {
+  $("#map-panel").on("click", "input[name*='tracker']", function() {
       //get id of the checkbox
       var id = $(this).attr('id');
       //if checked

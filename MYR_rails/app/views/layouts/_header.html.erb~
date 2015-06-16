@@ -15,7 +15,7 @@
 					<%=li_actif(missions_path) %><a href="<%= missions_path%>"> Missions </a></li>
 					<%=li_actif(coordinates_path) %><a href="<%= real_time_path%>"> Real Time </a></li>
 					<%=li_actif(missions_path) %><a href="<%= replay_path%>"> Replay </a></li>	
-					<% if sign_A?%>
+					<% if sign_A? %>
 						<%=li_actif(attempts_path) %><a href="<%= attempts_path%>"> Attempts </a></li>	
 						<%=li_actif(trackers_path) %><a href="<%= trackers_path%>"> Trackers </a></li>	
 					<% end %>

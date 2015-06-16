@@ -4,21 +4,37 @@ $(document).ready(function(){
 	google.maps.event.addDomListener(window, 'load', initializeMap);
 
 	//display panel
-	$("#refresh-panel").click();
+	$("#refresh-panel").click(function(){
+			$.ajax({
+			type: "GET",
+			url: "/map_panel",
+			
+			success: function(){
+			}       
+		});
+	});
 
 	//initializeMap();
 	initialScroll();
 	
-		$("#choose_teams").click(function(){
+	//choose teams
+	$("#choose_teams").click(function(){
 		$.ajax({
 			type: "GET",
 			url: "/choice_teams",
-			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers()},
-			dataType: "json",
-			success: function(data){
-				if(data.length > 0){
-					refreshWithNewMarkers2(data);
-				}
+			
+			success: function(){
+			}       
+		});
+	});
+	
+	//choose robots
+	$("#choose_robots").click(function(){
+		$.ajax({
+			type: "GET",
+			url: "/choice_robots",
+			
+			success: function(){
 			}       
 		});
 	});

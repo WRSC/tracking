@@ -14,6 +14,7 @@ class RealTimeController < ApplicationController
 	def choice_teams
 			#-------------- HTML PRESENTATION ----------------------------------
 		#-------- variables d instance passees a la vue -------------------
+		
 		@teams=Team.all #all the teams
 
 		#creation of @tabteams to help for the generation of the HTML code 
@@ -24,6 +25,7 @@ class RealTimeController < ApplicationController
 		else
 			@tabteams = []
 		end	
+		
 		#--------------------------------------------------------------------
 	end
 	

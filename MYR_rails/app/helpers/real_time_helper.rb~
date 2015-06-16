@@ -1,7 +1,11 @@
 module RealTimeHelper
 
   NUM_MAX_COORDS = 1000 #constant
- 
+  
+  def chooseTeams
+  	return 
+  end
+
   def getCurrentMission
 		now = Time.zone.now #time in UTC 00
     currentMission = Mission.where "start < ? AND ? < end", now, now

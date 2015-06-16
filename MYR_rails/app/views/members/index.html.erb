@@ -1,0 +1,119 @@
+<p id="notice"><%= notice %></p>
+
+<h1>List of members</h1><br>
+<% playerInvite="" %>
+<!--
+<div id="content">
+  <section class="round">
+    <% flash.each do |key, value| %>
+      <div id="monflash" class="flash <%= key %>"><%= value %></div>
+    <% end %>
+  </section>
+  <%= yield %>
+</div>
+-->
+<% if !sign_in?  %>
+  <%= link_to 'New Member', new_member_path %>
+<% end %>
+<table>
+  <thead>
+    <tr >
+        <th class=column-member>Name
+      <a href= members ><button id="sortbuttonT" name="Namebis" onclick="myFunctionSort(this.name)" ></button></a>
+      <a href= members ><button id="sortbuttonD" name="Name" onclick="myFunctionSort(this.name)" ></button></a></th>
+    
+    
+    
+        <th class=column-member>Email
+      <a href= members ><button id="sortbuttonT" name="Emailbis" onclick="myFunctionSort(this.name)" ></button></a>
+      <a href= members ><button id="sortbuttonD" name="Email" onclick="myFunctionSort(this.name)" ></button></a></th>
+    
+    
+    
+        <th class=column-member>Role
+      <a href= members ><button id="sortbuttonT" name="Rolebis" onclick="myFunctionSort(this.name)" ></button></a>
+      <a href= members ><button id="sortbuttonD" name="Role" onclick="myFunctionSort(this.name)" ></button></a></th>
+    
+    
+    
+        <th class=column-member>Team
+      <a href= members ><button id="sortbuttonT" name="Teambis" onclick="myFunctionSort(this.name)" ></button></a>
+      <a href= members ><button id="sortbuttonD" name="Team" onclick="myFunctionSort(this.name)" ></button></a></th>
+    
+    
+    
+    <% if sign_in? %>
+    <% if is_admin? %>
+      <th class="column-member-sed" colspan="2"></th>
+    <% else %>
+      <% if is_leader? %>
+        <th>Invite</th>
+      <% end %>
+    <% end %>
+    <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+
+  <% idMems = []%>
+    <% @members.each do |member| %>
+    <% idMems << member.id %>
+  <% end %>
+  <% allMemberdIdSort=sortId(idMems) %>
+  <% if allMemberdIdSort != [] %>
+    <% for ii in 0..(allMemberdIdSort.size-1) %>
+    <% member=Member.find_by_id(allMemberdIdSort[ii]) %>
+      <% nameteam="" %>
+      <tr>
+      <td ><%= link_to member.name, member %></td>
+      <td><%= member.email %></td>
+      <td><%= member.role %></td>
+      
+      <% rep=[] %>
+      <% if  Team.first != nil %>
+        <% for i in Team.first.id..Team.last.id%>
+          <% myVar = Team.find_by_id(i) %>
+          <% if myVar!= nil %>
+            <% if member.team_id == myVar.id  %>
+              <% rep<<myVar.name %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% nameteam=tabToString(rep) %>
+      <td><%= nameteam %></td>
+      <% if sign_in? %>
+        <% if is_admin? %>
+          <td><%= link_to 'Edit', edit_member_path(member) %></td>
+          <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+          <% if is_leader? %>
+            <% if nameteam=="" && member.role != "administrator" %>
+              <td><a href= member/invite ><button id="invitebutton" name=<%= member.name %> type="button" onclick="myFunction(this.name)">Invite</button></a></td>
+            <% elsif  member.role=="administrator"%>
+              <td>No team for the admin</td>
+            <% else %>
+              <td>Currently in a Team</td>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+
+<script>
+  function myFunction(clicked_id) {
+    $.cookie("playerInvite",clicked_id,{path:'/' });
+  }
+  function myFunctionSort(clicked_id) {
+    $.cookie("Sort",clicked_id,{path:'/' });
+  }
+</script>

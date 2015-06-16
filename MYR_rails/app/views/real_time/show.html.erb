@@ -1,0 +1,43 @@
+
+<head>
+	<%= javascript_include_tag 'real_time', 'data-turbolinks-track' => true %>
+</head>
+
+	<style type="text/css">
+		#map_frame_container{
+			margin-left:10px;
+			margin-top: 10px;
+		}
+	</style>
+
+	<div id="above_the_map">
+</div>
+
+	<div id="map_frame_container" style='width: 99%; height: 93%'>
+		<div id="map-container" class="two_third first" style='height: 100%'>
+			<div id="map-canvas"></div>
+		</div>
+		<style>
+		.gm-style img { max-width: none; }
+		.gm-style label { width: auto; display: inline; }
+		</style>
+		
+		<div class="one_third" style='height: 100%'>
+			<button id="button_choice_teams" type="button">Select a Team</button>
+			<a id="refresh-choice_teams" href<%= link_to "Select a robot:", :action => :choice_teams, remote: true%></a>
+			<div id="choice_teams"></div>
+			<br>
+
+			<button id="button_choice_robots" type="button">Select a Robot</button>
+			<a id="refresh-choice_robots" href<%= link_to "Select a robot:", :action => :choice_robots, remote: true%></a>
+			<div id="choice_robots"></div>
+			<br>
+			
+			<div id="map-panel"></div>
+			<a id="refresh-panel" href<%= link_to "REFRESH PANEL", :action => :map_panel, remote: true%></a>
+			
+			<button id="getNewTrackers" type="button">Get trackers</button> 
+			<button id="getNewCoordinates" type="button">Get coordinates</button> 
+		</div>
+	</div> 
+

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @attempt.name %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @attempt.start %>
+</p>
+
+<p>
+  <strong>End:</strong>
+  <%= @attempt.end %>
+</p>
+
+<p>
+  <strong>Robot:</strong>
+  <%= @attempt.robot_id %>
+</p>
+
+<p>
+  <strong>Mission:</strong>
+  <%= @attempt.mission_id %>
+</p>
+
+<p>
+  <strong>Tracker:</strong>
+  <%= @attempt.tracker_id %>
+</p>
+
+<%= link_to 'Edit', edit_attempt_path(@attempt) %> |
+<%= link_to 'Back', attempts_path %>

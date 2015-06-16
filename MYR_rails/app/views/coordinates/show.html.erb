@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @coordinate.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @coordinate.longitude %>
+</p>
+
+<p>
+  <strong>Datetime:</strong>
+  <%= @coordinate.datetime %>
+</p>
+
+<p>
+  <strong>Tracker:</strong>
+  <%= @coordinate.tracker_id %>
+</p>
+
+<%= link_to 'Edit', edit_coordinate_path(@coordinate) %> |
+<%= link_to 'Back', coordinates_path %>

@@ -1,0 +1,14 @@
+<h1>Editing Member</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @member %> |
+
+<% if sign_in? && (is_admin? || @member.id == cookies.signed[:user_id]) %>
+	<% if heIsLeader?(@member.name) %>
+		<%= link_to 'Destroy', @member, method: :delete, data: { confirm: 'Destroy this account ? WARNING !! You are a team leader, if you destroy your account you will destroy your team as well' } %> |
+	<% else %>
+		<%= link_to 'Destroy', @member, method: :delete, data: { confirm: 'You want to destroy this account ?' }%> |
+	<% end %>
+<% end %>
+<%= link_to 'Back', members_path %>

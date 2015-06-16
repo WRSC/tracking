@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  latitude: 9.99
+  longitude: 9.99
+  datetime: 2015-02-25 15:33:39
+  mission_id: 1
+
+two:
+  name: MyString
+  description: MyText
+  latitude: 9.99
+  longitude: 9.99
+  datetime: 2015-02-25 15:33:39
+  mission_id: 1

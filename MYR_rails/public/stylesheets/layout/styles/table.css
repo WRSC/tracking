@@ -1,0 +1,21 @@
+
+table a:link {
+	color:#000000;
+	text-decoration:underline;
+}
+
+table a:visited {
+	color:#0000FF;
+	text-decoration:none;
+}
+
+table a:hover {
+	color:#808080;
+	text-decoration:none;
+}
+
+table a:active {
+	color:#000000;
+	text-decoration:none;
+} 
+

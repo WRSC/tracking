@@ -1,0 +1,33 @@
+<%= form_for(@robot) do |f| %>
+  <% if @robot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@robot.errors.count, "error") %> prohibited this robot from being saved:</h2>
+
+      <ul>
+      <% @robot.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+    <%= f.text_field :category %>
+  </div>
+  <div class="field">
+    <%= f.label :team_id %><br>
+    <%= f.number_field :team_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tracker_id %><br>
+    <%= f.number_field :tracker_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

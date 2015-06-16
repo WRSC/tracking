@@ -1,0 +1,6 @@
+<div id="newIndicate">
+<h1>New Member</h1>
+</div>
+<%= render 'form' %>
+
+<%= link_to 'Back', members_path %>

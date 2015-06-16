@@ -1,0 +1,35 @@
+<%= form_for(@mission) do |f| %>
+  <% if @mission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@mission.errors.count, "error") %> prohibited this mission from being saved:</h2>
+
+      <ul>
+      <% @mission.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+    <p>Please select start and end times in UTC +00</p>
+    <div class="field">
+    <%= f.label :start %><br>
+    <%= f.datetime_select :start %>
+  </div>
+  <div class="field">
+    <%= f.label :end %><br>
+    <%= f.datetime_select :end %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,167 @@
+bonjour: "hello"
+
+
+
+CSS: &CSS layout/styles/layout
+
+ppppp:
+ back_ground: "demo/backgrounds/1.png"
+ toto: *CSS
+
+
+sponsors:
+  -
+    name: "ENSTA Bretagne"
+    description: "French Graduate and Post-graduate Engineering School and Research Institute based in Brest"
+    picture: "/stylesheets/images/default/Logo_ENSTA_Bretagne.jpg"
+    link: "http://www.ensta-bretagne.eu/"
+  -
+    name: "WRSC"
+    description: "World Robotic Sailing Championship"
+    picture: "/stylesheets/images/default/Logo_WRSC.jpg"
+    link: "http://wrsc2014.com/"
+  -
+    name: "Aland University"
+    description: "University of Applied Sciences based in Åland"
+    picture: "/stylesheets/images/default/Logo_Aland2.png"
+    link: "http://www.ha.ax/text.con?iPage=28&iLan=1"
+
+realTime:
+  name: &realTime_name "Real Time"
+  link: &realTime_link "<%= members_path%>"
+
+replay:
+  name: &replay_name "Replay"
+  link: &replay_link "<%= members_path%>"
+
+login:
+  name: &login_name "Login or Signin"
+  link: &login_link "<%= members_path%>"
+
+
+
+home:
+  name: &home_name "Home"
+  link: &home_link "<%= home_path %>"
+  hexagons:
+      - name: *realTime_name
+        text: "Click here to follow the WRSC 2015"
+      - name: *replay_name
+        text: "Click here to replay an event of the WRSC 2015"
+      - name: *login_name
+        text: "If you are a competitor you can create an account to add/join your team"
+  questions:
+    -
+      question: "What is Monitor Your Robot ?"
+      answer: "This site has been created by students of ENSTA Bretagne for the WRSC 2014 in Galway and allows anyboby to track the robots during the competition."
+    -
+      question: "What is the WRSC ?"
+      answer: "The WRSC is the World Robotic Sailing Championship. The 2014 edition takes place in Galway, Ireland between the 8th and the 13th September."
+    -
+      question: "How can I follow the competition ?"
+      answer: "To follow the WRSC 2014 in real time just click on the tab "
+  background:
+    picture: "/stylesheets/images/demo/backgrounds/1.png"
+
+contact:
+  name: &contact_name "Contact"
+  link: &contact_link "<%= contact_path%>"
+  tab:
+    names:
+      - "Role"
+      - "Name"
+      - "Email Address"
+      - "Social Network"
+    lines:
+      -
+        - "Programmer and Web Designer"
+        - "Benoit BOURDON"
+        - "<A HREF='mailto:'>benoit.bourdon@ensta-bretagne.org</A>"
+        - "<center><a href='http://fr.linkedin.com/in/bourdonbenoit/en' title='Benoit BOURDON' target='_blank'><strong><img src='/linkedin.png'/></strong></a> </center>"
+      -
+        - "Programmer and Web Designer"
+        - "Bastien DROUOT"
+        - "<A HREF='mailto:'>bastien.drouot@ensta-bretagne.org</A>"
+        - "<center><a href='http://fr.linkedin.com/pub/bastien-drouot/9a/306/46' title='Bastien DROUOT' target='_blank'><strong><img src='/linkedin.png'/></strong></a> </center>"
+      -
+        - "Teacher"
+        - "Olivier REYNET"
+        - "<A HREF='mailto:'>olivier.reynet@ensta-bretagne.fr</A>"
+        - ""
+      -
+        - "Electronics Engineer"
+        - "Quentin DESCOURS"
+        - "<A HREF='mailto:'>quentin.descours@ensta-bretagne.org</A>"
+        - ""
+      -
+        - "Electronics Engineer"
+        - "Mouad BICHOUARINE"
+        - "<A HREF='mailto:'>mouad.bichouarine@ensta-bretagne.org</A>"
+        - ""
+      -
+        - "Electronics Engineer"
+        - "Jean-Jacques BOYE"
+        - "<A HREF='mailto:'>jean-jacques@ensta-bretagne.org</A>"
+        - "<center><a href='http://fr.linkedin.com/in/jeanjacquesboye/en' title='Jean-Jacques BOYE' target='_blank'><strong><img src='/linkedin.png'/></strong></a> </center>"
+      -
+        - "Electronics Engineer"
+        - "Simon STEPHAN"
+        - "<A HREF='mailto:'>simon.stephan@ensta-bretagne.org</A>"
+        - ""
+      -
+        - "Teacher"
+        - "Jean-Christophe LE LANN"
+        - "<A HREF='mailto:'>jean-christophe.le_lann@ensta-bretagne.fr</A>"
+        - ""
+
+
+
+layout:
+  title: "Default Title"
+  strylesheet: "<%= stylesheet_link_tag 'layout/styles/layout.css', media: 'all', 'data-turbolinks-track' => true %>"
+  javascript: "<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>"
+  metaTags: "<%= csrf_meta_tags %>"
+  yield: "<%= yield %>"
+  logo: "/stylesheets/images/default/logo.PNG"
+  tab:
+    -
+      name: *home_name
+      link: *home_link
+      liTag: "<%=li_actif(members_path) %>" #To replace with <%=li_actif(*home_link) %>
+      tab: ""
+    -
+      name: "Follow a regatta"
+      link: "#"
+      liTag: "<%=li_actif([coordinates_path,missions_path]) %>" #To replace with <%=li_actif([*realTime_link,*replay_link]) %>
+      tab:
+        -
+          name: *realTime_name
+          link: *realTime_link
+          liTag: "<%=li_actif(coordinates_path) %>" #To replace with <%=li_actif(*realTime_link) %>
+          tab: ""
+        -
+         name: *replay_name
+         link: *replay_link
+         liTag: "<%=li_actif(missions_path) %>" #To replace with <%=li_actif(*replay_link) %>
+         tab: ""
+
+    -
+      name: "My Account"
+      link: "#"
+      liTag: "<%=li_actif([teams_path,members_path]) %>" #To replace with <%=li_actif([???1,???2]) %>
+      tab:
+        -
+          name: "My Team"
+          link: "<%= members_path %>"  #To replace with ???1
+          liTag: "<%=li_actif(teams_path) %>" #To replace with <%=li_actif(???1) %>
+          tab: ""
+        -
+          name: "My Own Information"
+          link: "<%= members_path %>" #To replace with ???2
+          liTag: "<%=li_actif(members_path) %>" #To replace with <%=li_actif(???2) %>
+          tab: ""
+    -
+      name: *contact_name
+      link: *contact_link
+      liTag: "<%= li_actif(robots_path) %>" #To replace with <%= li_actif(*contact_link) %>
+      tab: ""

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= data["layout"]["title"]  %></title>
+  <link rel="icon" type="image/png" href=<%= data["layout"]["favicon"]  %> />
+  <style type="text/css">
+ 	  html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo59o2hZMz28Crm8UeHRp3lRN56OOii7o"></script>
+  <meta charset="utf-8">
+  <%= data["layout"]["strylesheet"] %>
+  <%= data["layout"]["javascript"] %>
+  <%= data["layout"]["metaTags"] %>
+</head>
+
+<body id="top">
+  <div class="wrapper row1">
+    <header id="header" class="clear"> 
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><img class="imgTitleLogo" src= <%= data["layout"]["logo"] %> > <a href="<%=  data["home"]["link"] %>"> <%= data["layout"]["title"]%> </a></h1>
+      </div>
+      <!-- ################################################################################################ -->
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <%= data["layout"]["tab"][0]["liTag"] %><a href="<%=  data["layout"]["tab"][0]["link"] %>"> <%= data["layout"]["tab"][0]["name"]%> </a></li>
+          <%=  data["layout"]["tab"][1]["liTag"] %><a class="drop" href="<%=  data["layout"]["tab"][1]["link"] %>"><%= data["layout"]["tab"][1]["name"]%></a>
+          <ul>
+            <%=  data["layout"]["tab"][1]["tab"][0]["liTag"] %><a href="<%=  data["layout"]["tab"][1]["tab"][0]["link"] %>"> <%= data["layout"]["tab"][1]["tab"][0]["name"]%> </a></li>
+            <%= data["layout"]["tab"][1]["tab"][1]["liTag"] %><a href="<%=  data["layout"]["tab"][1]["tab"][1]["link"] %>"> <%= data["layout"]["tab"][1]["tab"][1]["name"]%> </a></li>
+          </ul>
+        </li>
+        <%= data["layout"]["tab"][2]["liTag"] %><a class="drop" href="<%=  data["layout"]["tab"][2]["link"] %>"><%= data["layout"]["tab"][2]["name"] %> </a>
+        <ul>
+          <%= data["layout"]["tab"][2]["tab"][0]["liTag"] %><a href="<%=  data["layout"]["tab"][2]["tab"][0]["link"] %>"> <%= data["layout"]["tab"][2]["tab"][0]["name"]%> </a></li>
+          <%= data["layout"]["tab"][2]["tab"][1]["liTag"] %><a href="<%=  data["layout"]["tab"][2]["tab"][1]["link"] %>"> <%= data["layout"]["tab"][2]["tab"][1]["name"]%> </a></li>
+        </ul>
+      </li>
+      <%= data["layout"]["tab"][3]["liTag"] %><a href="<%=  data["layout"]["tab"][3]["link"] %>"> <%= data["layout"]["tab"][3]["name"]%> </a></li>
+    </ul>
+  </nav>
+</header>
+</div>
+
+<!-- container body -->
+<%= data["layout"]["yield"] %>
+<!-- END container body -->
+
+
+</div>
+
+<div class="wrapper row5">
+  <div id="copyright" class="clear"> 
+    <!-- ################################################################################################ -->
+    <p class="fl_left">MYR Project 2015 developed by <a href="<%= data["sponsors"][0]["link"]%>"  title="<%= data["sponsors"][0]["description"]%>"><%= data["sponsors"][0]["name"]%></a></p>
+    <p class="fl_right">Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+    <!-- ################################################################################################ --> 
+  </div>
+</div>
+</body>
+</html>
+
+
+
+

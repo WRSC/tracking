@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  start: 2015-02-25 15:34:58
+  end: 2015-02-25 15:34:58
+  robot_id: 1
+  mission_id: 1
+  tracker_id: 1
+
+two:
+  name: MyString
+  start: 2015-02-25 15:34:58
+  end: 2015-02-25 15:34:58
+  robot_id: 1
+  mission_id: 1
+  tracker_id: 1

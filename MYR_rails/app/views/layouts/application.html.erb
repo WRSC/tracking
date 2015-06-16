@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Default Title</title>
+  <link rel="icon" type="image/png" href='/MYRicon.png' />
+  <style type="text/css">
+ 	  html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRy1JCXCFTbMLqEIIaSnSdK5Y9dGhkBVQ"></script>
+  <meta charset="utf-8">
+  <%= stylesheet_link_tag 'layout/styles/layout.css', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'layout/styles/form.css', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'layout/styles/table.css', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'sidebar/css/component.css', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'sidebar/css/demo.css', media: 'all', 'data-turbolinks-track' => true %>
+ 
+   <%= stylesheet_link_tag 'sidebar/css/normalize.css', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body id="top">
+<%= render 'layouts/header' %>
+
+<!-- container body -->
+<%= yield %>
+<!-- END container body -->
+
+
+<%= render 'layouts/footer' %>
+
+
+</body>
+</html>
+
+
+
+

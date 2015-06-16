@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Coordinates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Datetime</th>
+      <th>Tracker</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @coordinates.each do |coordinate| %>
+      <tr>
+        <td><%= coordinate.latitude %></td>
+        <td><%= coordinate.longitude %></td>
+        <td><%= coordinate.datetime %></td>
+        <td><%= coordinate.tracker_id %></td>
+        <td><%= link_to 'Show', coordinate %></td>
+        <td><%= link_to 'Edit', edit_coordinate_path(coordinate) %></td>
+        <td><%= link_to 'Destroy', coordinate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Coordinate', new_coordinate_path %>

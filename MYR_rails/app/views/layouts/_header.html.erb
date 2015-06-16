@@ -1,0 +1,47 @@
+<div class="wrapper row1">
+	<header id="header" class="clear"> 
+		<!-- ################################################################################################ -->
+		<div id="logo" class="fl_left">
+			<h1><img class="imgTitleLogo" src= /stylesheets/images/default/logo.PNG > <a href="<%= home_path %>"> Default Title </a></h1>
+		</div>
+		<!-- ################################################################################################ -->
+		<nav id="mainav" class="fl_right">
+			<ul class="clear">
+				<%=li_actif(home_path) %><a href="<%= home_path %>"> Home </a></li>
+				<%=li_actif([coordinates_path,missions_path]) %><a class="drop" href="#">Follow a regatta</a>
+				<ul>
+					<%=li_actif(teams_path) %><a href="<%= teams_path%>"> Teams </a></li>
+					<%=li_actif(robots_path) %><a href="<%= robots_path%>"> Robots </a></li>
+					<%=li_actif(missions_path) %><a href="<%= missions_path%>"> Missions </a></li>
+					<%=li_actif(coordinates_path) %><a href="<%= real_time_path%>"> Real Time </a></li>
+					<%=li_actif(missions_path) %><a href="<%= replay_path%>"> Replay </a></li>	
+					<% if sign_A? %>
+						<%=li_actif(attempts_path) %><a href="<%= attempts_path%>"> Attempts </a></li>	
+						<%=li_actif(trackers_path) %><a href="<%= trackers_path%>"> Trackers </a></li>	
+					<% end %>
+				</ul>
+				</li>
+				<% if sign_in(current_user) %>
+						<% if current_user.logo==nil || current_user.logo=="" %>
+							<img  src= "/stylesheets/images/demo/avatar.png" > 
+						<% else %>
+							<img  src= "<%= current_user.logo %>" > 
+						<% end %>
+						<%=current_user.name%>
+						<%=li_actif([teams_path,members_path]) %><a class="drop" href="#">My Account </a>
+						<ul>
+							<%=li_actif(teams_path) %><a href="<%= members_path %>"> My Team </a></li>	
+							<% prefix=members_path%>	
+							<% postfix=current_user.id.to_s %>
+							<% current_user_path= prefix+'/'+postfix %>
+							<%=li_actif(members_path) %><a href="<%= current_user_path%>"> My Profil </a></li>
+						</ul>
+					<%=li_actif(signout_path) %><a href="<%= signout_path %>"> Sign out </a></li>
+				<% else %>
+					<%=li_actif(signin_path) %><a href="<%= signin_path %>"> Sign in </a></li>
+					<%=li_actif(signup_path) %><a href="<%= signup_path %>"> Sign up </a></li>
+				<% end %>
+			</ul>
+		</nav>
+	</header>
+</div>

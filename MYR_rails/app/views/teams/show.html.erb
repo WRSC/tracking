@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+<style type='text/css'>
+	h1{
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+	}
+</style>
+<h1>
+  <strong>Name:</strong>
+  <%= @team.name %>
+</h1>
+
+<h1>
+  <strong>Logo:</strong>
+  <%= @team.logo %>
+</h1>
+
+<h1>
+  <strong>Description:</strong>
+  <%= @team.description %>
+</h1>
+
+
+<h1>
+	<strong>Robots of <%= @team.name%>:</strong><br>
+	<% if @team.robot.size==0 %>
+		 <%= @team.name%> has not created any robot yet !!!
+	<% else %>
+		<%= @team.name%> has <%= @team.robot.size %> robots 
+		<%= render 'showRobots'%>
+	<% end %>
+</h1>
+
+<%= link_to 'Edit', edit_team_path(@team) %> |
+<%= link_to 'Back', teams_path %>

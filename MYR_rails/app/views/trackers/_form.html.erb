@@ -1,0 +1,25 @@
+<%= form_for(@tracker) do |f| %>
+  <% if @tracker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tracker.errors.count, "error") %> prohibited this tracker from being saved:</h2>
+
+      <ul>
+      <% @tracker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :token %><br>
+    <%= f.text_field :token %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.number_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

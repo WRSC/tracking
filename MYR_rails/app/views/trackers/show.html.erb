@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Token:</strong>
+  <%= @tracker.token %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @tracker.description %>
+</p>
+
+<%= link_to 'Edit', edit_tracker_path(@tracker) %> |
+<%= link_to 'Back', trackers_path %>

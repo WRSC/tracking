@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+<p>
+<% if @member.logo!="" && @member.logo!=nil %>
+  <img src=<%= @member.logo %>>
+<% end %>
+</p>
+
+<div class="container-fluid">
+  <div class="row">
+    <%= render 'members/control_panel' %>
+   </div>
+
+</div>

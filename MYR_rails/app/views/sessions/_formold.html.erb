@@ -1,0 +1,29 @@
+<%= form_for(:session, :url => sessions_path) do |f| %>
+<div id="content">
+  <section class="round">
+    <% flash.each do |key, value| %>
+      <div id="monflash" class="flash <%= key %>"><%= value %></div>
+    <% end %>
+  </section>
+  <%= yield %>
+</div>
+  <p>
+    <div class="field">
+		  <strong><%= f.label :name %></strong>
+		  <%= f.text_field :name %>
+    </div>
+    <br>
+    
+    <div class="field">
+     <strong><%= f.label :password %></strong>
+    <%= f.password_field :password %>
+    </div>
+    </p>
+    <p>
+    <div class="actions">
+    <%= f.submit "Sign in" %>
+    </div>
+  </p>
+<% end %>
+
+<p> <%= link_to "Do you want create an account ?", signup_path =%> <p>

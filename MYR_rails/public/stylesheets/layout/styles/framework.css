@@ -1,0 +1,95 @@
+@charset "utf-8";
+/*
+Template Name: Cortex
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+File: Framework CSS
+*/
+
+html{overflow-y:scroll;}
+body{margin:0; padding:0; font-size:14px; line-height:1.6em;}
+
+.bold{font-weight:bold;}
+.center{text-align:center;}
+.right{text-align:right;}
+.uppercase{text-transform:uppercase;}
+.hidden{display:none;}
+.nospace{margin:0; padding:0; list-style:none;}
+.borderedbox{border:1px solid;}
+.bgded{background:top center no-repeat; background-size:cover;}
+.fixed{background-attachment:fixed;}
+
+.clear{display:block;}
+.clear::before, .clear::after{display:table; content:"";}
+.clear, .clear::after{clear:both;}
+
+a{outline:none; text-decoration:none;}
+
+.fl_left, .imgl{float:left;}
+.fl_right, .imgr{float:right;}
+
+img{width:auto; max-width:100%; height:auto; margin:0; padding:0; border:none; line-height:normal; vertical-align:middle;}
+.imgl{margin:0 15px 10px 0; clear:left;}
+.imgr{margin:0 0 10px 15px; clear:right;}
+.imgTitleLogo{ width:10%;height:10%; }
+.imgSponsorLogo{ width:100%;height:100%; }
+
+
+/* Fonts
+-----------------------------------------------------------------------------------*/
+body, input, textarea, select{font-family:Verdana, Geneva, sans-serif;}
+h1, h2, h3, h4, h5, h6, .heading{font-family:Georgia, "Times New Roman", Times, serif;}
+
+
+/* Generalise
+-----------------------------------------------------------------------------------*/
+h1, h2, h3, h4, h5, h6, .heading{margin:0 0 20px 0; font-size:22px; line-height:normal; font-weight:normal;}
+
+address{font-style:normal; font-weight:normal;}
+hr{display:block; width:100%; height:1px; border:solid; border-width:1px 0 0 0;}
+
+.wrapper{display:block; width:100%; margin:0; padding:0; text-align:left; word-wrap:break-word;}
+#header, #announce, #breadcrumb, #container, #footer, #copyright{display:block; width:978px; margin:0 auto;}
+
+
+/* HTML 5 Overrides
+-----------------------------------------------------------------------------------*/
+address, article, aside, figcaption, figure, footer, header, main, nav, section{display:block; margin:0; padding:0;}
+
+
+/* Grid
+-----------------------------------------------------------------------------------*/
+.one_half, .one_third, .two_third, .one_quarter, .two_quarter, .three_quarter{display:inline-block; float:left; margin:0 0 0 3.06748466257669%; list-style:none; box-sizing:border-box;}
+.one_half:first-child, .one_third:first-child, .two_third:first-child, .one_quarter:first-child, .two_quarter:first-child, .three_quarter:first-child{margin-left:0;}
+
+.first{clear:left;}
+.first, .nogutter{margin-left:0;}
+
+.one_quarter{width:22.69938650306748%;}
+.one_quarter.nogutter{width:25%;}
+.one_third{width:31.28834355828221%;}
+.one_third.nogutter{width:33.33333333333333%;}
+.one_half, .two_quarter{width:48.46625766871166%;}
+.one_half.nogutter, .two_quarter.nogutter{width:50%;}
+.two_third{width:65.6441717791411%;}
+.two_third.nogutter{width:66.66666666666666%;}
+.three_quarter{width:74.23312883435584%;}
+.three_quarter.nogutter{width:75%;}
+
+
+/* Spacing Elements
+-----------------------------------------------------------------------------------*/
+.push10{margin-bottom:10px;}
+.push15{margin-bottom:15px;}
+.push30{margin-bottom:30px;}
+.push50{margin-bottom:50px;}
+.push80{margin-bottom:80px;}
+
+.pad5{padding:5px;}
+.pad10{padding:10px;}
+.pad15{padding:15px;}
+.pad30{padding:30px;}
+.pad50{padding:50px;}
+.pad80{padding:80px;}

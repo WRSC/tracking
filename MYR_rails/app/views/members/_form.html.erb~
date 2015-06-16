@@ -1,0 +1,54 @@
+<div class="row">
+<%= form_for(@member) do |f| %>
+  <% if @member.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h2>
+
+      <ul>
+      <% @member.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div id="content">
+  <section class="round">
+    <% flash.each do |key, value| %>
+      <div id="monflash" class="flash <%= key %>"><%= value %></div>
+    <% end %>
+  </section>
+  <%= yield %>
+  </div>
+
+  <p>
+  <% if @member.logo!="" && @member.logo!=nil %>
+    <img src=<%= @member.logo %>>
+  <% end %>
+  </p>
+
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+ 
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, :placeholder => "Repeat password" %>
+ 
+    <%= f.label :email %>
+    <%= f.text_field :email, :placeholder => "email@exemple.com" %>
+
+  	<%= f.label :role %>
+    <%= f.select :role, ['visitor','player'] %>
+
+    <%= f.label :logo %>
+    <%= f.text_field :logo, :placeholder => "http://www.example.com"%>
+  
+  <p>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  </p>
+<% end %>
+</div>

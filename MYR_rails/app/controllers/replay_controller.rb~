@@ -1,0 +1,23 @@
+class ReplayController < ApplicationController
+	def show 
+	end
+	
+	def map_panel
+	end
+	
+	def choice_teams
+		#-------------- HTML PRESENTATION ----------------------------------
+		#-------- variables d instance passees a la vue -------------------
+		@teams=Team.all #all the teams
+
+		#creation of @tabteams to help for the generation of the HTML code 
+		@strteams = cookies[:rteamslist]
+		if (@strteams != nil) #cannot split nil
+			@tabteams = @strteams.split(",");
+			@tabteams.sort! #to display the robot in the order of the teams
+		else
+			@tabteams = []
+		end	
+		#--------------------------------------------------------------------
+	end
+end

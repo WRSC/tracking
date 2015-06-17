@@ -9,7 +9,112 @@ class RealTimeController < ApplicationController
 	end
 
 	def map_panel
+		#------------------------------------------------------------------------------------
+		#------------ GATHERING ALL THE DESIRED COORDINATES-----------------------------
+		@coordinatesCustom = [] #create an empty array where adding desired coordinates
+		tab = []
+		
+		robots=[]
+		str = cookies[:robotslist]
+		if (str != nil)
+			robots = str.split(",")
+		end
+		if (str != nil) #cannot split nil
+			tab = str.split(","); # see what happen if tab only have one element and no ','
+		end
+		
+		tabtrack=[]
+		
+		for i in (0..(tab.length-1)) # skip the loop if tab = []
+			if (Tracker.find_by_id(Robot.find_by_id(tab[i]).tracker_id) !=nil)
+				tabtrack.push((Tracker.find_by_id(Robot.find_by_id(tab[i]).tracker_id)).id) #recursively add the coordinates
+			end
+		end
+		
+		for i in (0..(tabtrack.length-1)) # skip the loop if tab = []
+			@coordinatesCustom += Coordinate.where(tracker_id: tabtrack[i]); #recursively add the coordinates
+		end
+		#----------------------------------------------------------------------------------
+
+		#---------------------------- START Limite coordinate -----------------
+		mycoordinatesCustom=@coordinatesCustom.reverse
+		sortie=[]
+		p=1 
+		q=1
+		nbpts=0
+		nbptsmax=125
+		tra=0
+		nbtra=tabtrack.length
+		if mycoordinatesCustom != nil
+			for j in 0..mycoordinatesCustom.length-1
+				if mycoordinatesCustom[j]!= nil
+					if mycoordinatesCustom[j].tracker_id != tra
+						tra = mycoordinatesCustom[j].tracker_id
+						p=1
+						q=1
+						nbpts=0
+					end
+					if nbpts < nbptsmax/nbtra
+						if q%p == 0
+							sortie=sortie+[mycoordinatesCustom[j]]
+							nbpts=nbpts+1
+						end
+					end
+					if q>=60*p
+						p=10*p
+					end
+					q=q+1
+				end
+			end
+		end
+		@coordinatesCustom=sortie.reverse
+		#---------------------------- FIN Limite coordinate -----------------
+		#------------------------------------------------------------------------------------	
+
+		#------------------------------ CREATION OF MARKERS -------------------------------------
+		i = 0
+		@hash = Gmaps4rails.build_markers(@coordinatesCustom) do |coordinate, marker| #create the @hash with all the coordiantes for gmap4rails
+			marker.lat coordinate.latitude
+			marker.lng coordinate.longitude
+			#permet d avoir une couleur differente par tracker et que le dernier point soit plus grand que les autres
+			if @coordinatesCustom[i+1] == nil || @coordinatesCustom[i+1].tracker_id != @coordinatesCustom[i].tracker_id
+				marker.picture({
+					"url" => "icons/medium"+coordinate.tracker_id.to_s+".png",
+					"width" => 25,
+					"height" => 29
+					})
+				#infowindow choisit ce que fait le clic de souris sur un marker
+				@coordinate = coordinate
+				marker.infowindow render_to_string("infowindow", :collection => @coordinate)
+			else
+				marker.picture({
+					"url" => "icons/small"+coordinate.tracker_id.to_s+".png",
+					"width" => 5,
+					"height" => 5
+					})
+			end
+			url= Team.find_by_id(Robot.find_by_tracker_id(coordinate.tracker_id).team_id).logo	
+			i = i+1
+		end
+		#------------------------------------------------------------------------------------
+
+		#----------------------- CREATION OF POLYLINES  ------------------------------
+		# colors:     rouge  , bleu   , vert foncé, orange  , noir    , mauve    , blanc  , rose  , vert fluo , rouge foncé, jaune , turquoise
+		@colors = [nil,'#CC0000','#0000CC','#003300','#FF3300','#000000','#660099','#FFFFFF','#CC00CC','#00CC00','#660000','#FFFF00','#33FFFF']
+		
+		j = 0 #indice de boucle pour le parcours de @coordinatesCustom
+		@hash2 = []
+		
+		for j in 0 ..@coordinatesCustom.length-1
+			if @hash2[@coordinatesCustom[j].tracker_id] == nil
+				@hash2[@coordinatesCustom[j].tracker_id] = []
+				@hash2[@coordinatesCustom[j].tracker_id].push({lat: @coordinatesCustom[j].latitude.to_s, lng: @coordinatesCustom[j].longitude.to_s})
+			else
+				@hash2[@coordinatesCustom[j].tracker_id].push({lat: @coordinatesCustom[j].latitude.to_s, lng: @coordinatesCustom[j].longitude.to_s})
+			end
+		end
 	end
+	#------------------------------------------------------------------------------------
 	
 	def choice_teams
 			#-------------- HTML PRESENTATION ----------------------------------

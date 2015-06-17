@@ -1,18 +1,11 @@
 //=require rtmap
+//=require choice_robots
+//=require choice_teams
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap);
 
-	//display panel
-	$("#refresh-panel").click(function(){
-			$.ajax({
-			type: "GET",
-			url: "/map_panel",
-			
-			success: function(){
-			}       
-		});
-	});
+
 
 	//initializeMap();
 	initialScroll();
@@ -58,7 +51,7 @@ $(document).ready(function(){
 	}
 	
 	function display(){
-		$("#update_button").click(function(){
+		$("#refresh").click(function(){
 			$.ajax({
 				type: "GET",
 				url: "/map_panel",

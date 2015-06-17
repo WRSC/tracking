@@ -1,12 +1,2 @@
-<img src="/step/step3F.png"/ height="50" width="195">
-<p><b><u>Update the map:</u></b></p>
-<button id="updatebutton" type="button">UPDATE</button>
-<a id="refresh" href<%= link_to "", :action => :mapp, remote: true%></a>
-<br></br>
-<div><i> You can click on a boat to see the description of its team </i></div>
-<div><i> The map refreshes itself on the time</i></div>
-<script>
- $("#updatebutton").click(function() {
-        $("#refresh").click();
-      });
-</script>
+<a id="refresh" href<%= link_to "ok", :action => :map_panel, remote: true%></a>
+<div id="map_panel"></div>

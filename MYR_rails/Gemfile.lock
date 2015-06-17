@@ -38,6 +38,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.7)
     arel (6.0.0)
+    autoprefixer-rails (5.1.11)
+      execjs
+      json
     bcrypt (3.1.10)
     bcrypt (3.1.10-x86-mingw32)
     bootstrap-sass (3.2.0.0)
@@ -140,8 +143,9 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  autoprefixer-rails
   bcrypt (~> 3.1.7)
-  bootstrap-sass (= 3.2.0.0)
+  bootstrap-sass (~> 3.2.0)
   coffee-rails (~> 4.1.0)
   fastimage
   gmaps4rails

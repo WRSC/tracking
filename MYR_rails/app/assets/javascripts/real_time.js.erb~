@@ -45,7 +45,7 @@ $(document).ready(function(){
 	}
 	
 	function updatemap(){
-		$("#choose_robots").click(function(){
+		$("#update_button").click(function(){
 			$.ajax({
 				type: "GET",
 				url: "/updatemap",
@@ -63,7 +63,7 @@ $(document).ready(function(){
 				type: "GET",
 				url: "/map_panel",
 				success: function(){
-					alert('ok')
+					
 				}       
 			});
 		});	

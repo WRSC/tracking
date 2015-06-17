@@ -1,4 +1,6 @@
 //=require rtmap
+//=require choice_robots
+//=require choice_teams
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap);
@@ -63,7 +65,7 @@ $(document).ready(function(){
 				type: "GET",
 				url: "/map_panel",
 				success: function(){
-					alert('ok')
+					
 				}       
 			});
 		});	

@@ -8,8 +8,10 @@ class RealTimeController < ApplicationController
 		render json: getMissionInfos
 	end
 
-	def map_panel
-		#------------------------------------------------------------------------------------
+	def updatemap
+	end
+	
+	def map_panel	#------------------------------------------------------------------------------------
 		#------------ GATHERING ALL THE DESIRED COORDINATES-----------------------------
 		@coordinatesCustom = [] #create an empty array where adding desired coordinates
 		tab = []

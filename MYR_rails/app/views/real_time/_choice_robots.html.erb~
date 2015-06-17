@@ -1,7 +1,10 @@
+
   <%@teams.each do |team| %>
     <% if Robot.find_by_team_id(team.id) != nil %>
-      <%if @tabteams.index(team.id.to_s) != nil %>            
+      <%if @tabteams.index(team.id.to_s) != nil %>      
+      	    
         <div><b> Robots of <%= team.name %></b></div>
+        <%= @tabrobots.inspect%>
         <% @tabrobots = Robot.where(team_id: team.id)%>
         <% @tabrobots.each do |robot| %>
           <% if robot.tracker_id != nil %>
@@ -13,8 +16,9 @@
         <div>&nbsp;</div>
       <%end%>
     <%end%> 
-<%end%>
+	<%end%>
+
 
 <button id="update_button" type="button">I am in choice_robots</button> 
-<div id="up"></div>
+<div id="update"></div>
 

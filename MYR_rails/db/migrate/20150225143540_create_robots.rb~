@@ -4,7 +4,6 @@ class CreateRobots < ActiveRecord::Migration
       t.string :name
       t.string :category
       t.integer :team_id, :null =>false
-      t.integer :tracker_id
 
       t.timestamps null: false
     end

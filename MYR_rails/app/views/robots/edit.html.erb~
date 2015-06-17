@@ -1,0 +1,6 @@
+<h1>Editing Robot</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @robot %> |
+<%= link_to 'Back', robots_path %>

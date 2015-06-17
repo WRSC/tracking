@@ -92,6 +92,6 @@ class RobotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def robot_params
-      params.require(:robot).permit(:name, :category, :team_id, :tracker_id)
+      params.require(:robot).permit(:name, :category, :team_id)
     end
 end

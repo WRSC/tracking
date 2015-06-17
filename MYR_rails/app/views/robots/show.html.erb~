@@ -20,7 +20,5 @@
   <%= @robot.tracker_id %>
 </p>
 
-<% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>
-	<%= link_to 'Edit', edit_robot_path(@robot) %> |
-<% end %>
+<%= link_to 'Edit', edit_robot_path(@robot) %> |
 <%= link_to 'Back', robots_path %>

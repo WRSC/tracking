@@ -10,6 +10,15 @@
       </ul>
     </div>
   <% end %>
+  
+<div id="content">
+	<section class="round">
+		<% flash.each do |key, value| %>
+			<div id="monflash" class="flash <%= key %>"><%= value %></div>
+		<% end %>
+	</section>
+	<%= yield %>
+</div>
 
   <div class="field">
     <%= f.label :name %><br>

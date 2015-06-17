@@ -1,0 +1,1 @@
+json.extract! @robot, :id, :name, :category, :team_id, :tracker_id, :created_at, :updated_at

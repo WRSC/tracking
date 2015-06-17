@@ -1,11 +1,12 @@
 <!--<img src="/step/step2F.png"/ height="50" width="195">-->
-<p><b><u>Select the robots:</u></b></p> 
+
   <%@teams.each do |team| %>
     <% if Robot.find_by_team_id(team.id) != nil %>
       <%if @tabteams.index(team.id.to_s) != nil %>            
         <div><b> Robots of <%= team.name %></b></div>
         <% @tabrobots = Robot.where(team_id: team.id)%>
         <% @tabrobots.each do |robot| %>
+        	<%= robot.tracker_id%>
           <% if robot.tracker_id != nil %>
             <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"> <%= robot.name %><img src="/icons/medium<%=robot.tracker_id.to_s%>.png"/><br>
           <% end %> 

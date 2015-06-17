@@ -1,0 +1,4 @@
+<% if @coordinate != nil && @coordinate != [] %>
+<% if Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).logo != nil	#si l equipe a un logo %>
+				<% url= Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).logo %>
+				<img src=<%=url%>> <h5>Robot: <h6><%= Robot.find_by_tracker_id(@coordinate.tracker_id).name %> <h5>Team: <h6> <%= Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).name %><%else%><h6> <% Robot.find_by_tracker_id(@coordinate.tracker_id).name %> <h5>Team: <h6> <%Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).name %><%end%><h5>Datetime: <h6><%=@coordinate.datetime%><%end%>

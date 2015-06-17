@@ -115,7 +115,6 @@ class RealTimeController < ApplicationController
 		end
 	end
 	#------------------------------------------------------------------------------------
-	end
 	
 	def choice_teams
 			#-------------- HTML PRESENTATION ----------------------------------

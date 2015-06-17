@@ -12,7 +12,8 @@
 				<ul>
 					<% if sign_A? %>
 						<%=li_actif(attempts_path) %><a href="<%= attempts_path%>"> Attempts </a></li>	
-						<%=li_actif(trackers_path) %><a href="<%= trackers_path%>"> Trackers </a></li>	
+						<%=li_actif(trackers_path) %><a href="<%= trackers_path%>"> Trackers </a></li>
+						<%=li_actif(trackers_path) %><a href="<%= coordinates_path%>"> Coordinates </a></li>	
 					<% end %>
 					<%=li_actif(teams_path) %><a href="<%= teams_path%>"> Teams </a></li>
 					<%=li_actif(robots_path) %><a href="<%= robots_path%>"> Robots </a></li>

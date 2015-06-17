@@ -179,6 +179,9 @@ class RealTimeController < ApplicationController
 		cookies[:robotslist] = robots.join(",") # modify the cookie after having delete undesired robots
 		#----------------------------------------------------------------------------------
  	end
+ 	
+ 	def infowindow
+ 	end
 
 	def getNewTrackers
 		last_refresh = params[:datetime]

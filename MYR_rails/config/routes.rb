@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     get 'getNewTrackers', to: 'real_time#getNewTrackers'
     get 'choice_teams' ,  to: 'real_time#choice_teams'
     get 'choice_robots',  to: 'real_time#choice_robots'
+    get 'updatemap',      to: 'real_time#updatemap' 
     
     get 'replay_map_panel', to: 'replay#replay_map_panel'
 

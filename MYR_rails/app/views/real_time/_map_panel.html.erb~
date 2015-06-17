@@ -1,41 +1,46 @@
-<!DOCTYPE html>
-<html>
-<% missionsArray = getCurrentMission %>
-<% nbMissions = missionsArray.size %>
-<% if ( nbMissions > 0 ) %>
-	<% if missionsArray.size > 1 %>
-		<p>Cannot display multiple missions at a time</p>
-		<p>Current missions are: 
-		<select name="Select mission" id="dropdown">
-			<option></option>
-			<% for m in missionsArray %>
-				<option value="<%= m.id %>"><%= m.name %></option>
-			<% end %>
-		</select>
-	</p>
-	<% else %>
-		<% mission = missionsArray[0] %>
-		<p>Current Mission is: <%= mission.name %></p>
-		<p>Started at: <%=mission.start.to_s(:time)%> and ends at :<%=mission.end.to_s(:time)%>
-		<% if mission.description != ""%>
-			<p>Description: <%= mission.description %></p>
-		<% end %>
-	<% end %>
-		</p>
-<% end %>
+<div id="map" style='width: 100%; height: 500px;'></div>
+	</div> 
+	<script>
+	var mapOptions = {
+		mapTypeId: google.maps.MapTypeId.HYBRID,
+		center: new google.maps.LatLng(53.2590145, -9.0294632),
+		zoom: 14,
+		zoomControl: true,
+		zoomControlOptions: {
+		  style: google.maps.ZoomControlStyle.SMALL,
+		  position: google.maps.ControlPosition.BOTTOM_LEFT
+		},
+		mapTypeControl: true,
+		mapTypeControlOptions: {
+		  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+		  position: google.maps.ControlPosition.BOTTOM_LEFT
+		},
+		streetViewControl: false,
+		panControl: false,
+		scaleControl: true,
+		overviewMapControl: false
+	}
 
-	<h2>Trackers</h2>
-	<p><%trackers = IsThereNewTrackers?("0", [])%></p>
-	<% if trackers != nil%>
-		<% for track in trackers%>
-			<label class="checkboxtext"><input name="tracker" type="checkbox" id="<%=track%>" class="custom">
-			<img src="/icons/medium<%=track%>.png"/ class="image_checkbox"> Tracker <%=track%></label>
-		
-		<%end%>
-	<h2>Options</h2>
-	<p>TODO</p>
-	<% else %>
-		<h1>No mission in progress currently.</h1>
-		<p>Please come back later !</p>
-	<% end %>
-</html>
+	handler = Gmaps.build('Google');
+	handler.buildMap({ provider: mapOptions,internal: {id: 'map'}}, function(){
+
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
+
+  <% #TO IMPROVE %>
+  <% robots = cookies[:robotslist]%>
+  <% tabrobots = robots.split(",")%>
+  <% tracks = [] %>
+  <%for i in 0..tabrobots.length-1%>
+  	<%tracks.push(Robot.find_by_id(tabrobots[i]).tracker_id)%>
+  <% end %>
+  
+  polylines = [];
+  <% for j in 0..tracks.length-1%>
+  	polylines = handler.addPolylines([<%=raw @hash2[tracks[j]].to_json %>],{ strokeColor: '<%= @colors[tracks[j]] %>', strokeWeight: 1 });
+  <% end %>
+  
+  handler.bounds.extendWith(markers);
+  handler.bounds.extendWith(polylines);
+  handler.fitMapToBounds();
+});
+</script>

@@ -8,6 +8,9 @@ class RealTimeController < ApplicationController
 		render json: getMissionInfos
 	end
 
+	def updatemap
+	end
+	
 	def map_panel
 		#------------------------------------------------------------------------------------
 		#------------ GATHERING ALL THE DESIRED COORDINATES-----------------------------

@@ -17,27 +17,58 @@ $(document).ready(function(){
 	//initializeMap();
 	initialScroll();
 	
-	//choose teams
+//--------------------------------------------------------
+	//choose teams <= choose robots <= updatemap
 	$("#choose_teams").click(function(){
 		$.ajax({
 			type: "GET",
 			url: "/choice_teams",
 			
 			success: function(){
+				choose_robots();
 			}       
 		});
 	});
 	
 	//choose robots
-	$("#choose_robots").click(function(){
-		$.ajax({
-			type: "GET",
-			url: "/choice_robots",
-			
-			success: function(){
-			}       
+	function choose_robots(){
+		$("#choose_robots").click(function(){
+				$.ajax({
+					type: "GET",
+					url: "/choice_robots",
+	
+					success: function(){
+						updatemap();
+					}       
+				});
 		});
-	});
+	}
+	
+	function updatemap(){
+		$("#update_button").click(function(){
+			$.ajax({
+				type: "GET",
+				url: "/updatemap",
+
+				success: function(){
+					display();
+				}       
+			});
+		});	
+	}
+	
+	function display(){
+		$("#update_button").click(function(){
+			$.ajax({
+				type: "GET",
+				url: "/map_panel",
+				success: function(){
+					alert('ok')
+				}       
+			});
+		});	
+	}
+//--------------------------------------------------------------------------------------------------
 
 	//gather newly added coordinates or add coordinates since begining of mission
 	$("#getNewCoordinates").click(function(){

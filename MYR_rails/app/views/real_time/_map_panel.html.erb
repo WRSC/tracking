@@ -1,6 +1,6 @@
 <script>
-var map
-function initializeMap() {
+
+function UpdateMap() {
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -23,20 +23,21 @@ function initializeMap() {
 		}
 
 		//map creation
-		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		
-		var myLatlng=new google.maps.Latlng(53.2590145,-9.0294632);
-		var marker= new google.maps.Marker({
-			position: myLatlng
-			title: "updated"
-			map: map
-		})
+		var myLatlng = new google.maps.LatLng(53.2590145, -9.0294632);
+		var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Hello World!'
+ 	 });
+	
 
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
 		var centerControl = new FullScreenControl(centerControlDiv, map);
 		centerControlDiv.index = 1;
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-	}
-	initializeMap();
-	</script>
+}
+UpdateMap()
+</script>

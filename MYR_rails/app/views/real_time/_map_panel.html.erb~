@@ -1,9 +1,41 @@
-	<p>test robots is <%= @testRobots%></p>
-	<p>test tab is <%= @testTab%></p>
-	<p>test tab0 is <%= @tab0%></p>
-	<p>test track_id is <%= @track_id%></p>
-	<p>test tabtrack is <%= @tabtrack%></p>
-	<p>hash is <%= @hash.inspect%></p>
-	<p>hash2 is <%= @hash2.inspect%></p>
-	<p>coordinatesCustom is <%= @coordinatesCustom%></p>
-	
+<script>
+var map
+function initializeMap() {
+		//map options
+		var mapOptions = {
+			mapTypeId: google.maps.MapTypeId.HYBRID,
+			center: new google.maps.LatLng(53.2590145, -9.0294632),
+			zoom: 14,
+			zoomControl: true,
+			zoomControlOptions: {
+				style: google.maps.ZoomControlStyle.SMALL,
+				position: google.maps.ControlPosition.BOTTOM_LEFT
+			},
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+				position: google.maps.ControlPosition.BOTTOM_LEFT
+			},
+			scaleControl: true,
+			streetViewControl: false,
+			panControl: false,
+			overviewMapControl: false
+		}
+
+		//map creation
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		
+		var myLatlng=new google.maps.Latlng(53.2590145,-9.0294632);
+		var marker= new google.maps.Marker({
+			position: myLatlng
+			title: "updated"
+			map: map
+		})
+
+		//add add button in the top right corner of the map to hide the right panel
+		var centerControlDiv = document.createElement('div');
+		var centerControl = new FullScreenControl(centerControlDiv, map);
+		centerControlDiv.index = 1;
+		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+	}
+	</script>

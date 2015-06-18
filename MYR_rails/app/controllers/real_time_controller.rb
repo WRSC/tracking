@@ -7,9 +7,6 @@ class RealTimeController < ApplicationController
 	def getMissionLength
 		render json: getMissionInfos
 	end
-
-	def updatemap
-	end
 	
 	def map_panel
 		#------------------------------------------------------------------------------------

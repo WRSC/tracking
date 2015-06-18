@@ -5,8 +5,6 @@ $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap);
 
-
-
 	//initializeMap();
 	initialScroll();
 	
@@ -34,25 +32,28 @@ $(document).ready(function(){
 	
 					success: function(){
 						initialize_choice_robots();
-						checkAllBox_of_teams();
-						updatemap();
+						checkAllBox_of_robots();
+						displayMap();
 					}       
 				});
 		});
 	}
 	
-	function updatemap(){
+	function displayMap(){
 		$("#update_button").click(function(){
 			$.ajax({
 				type: "GET",
-				url: "/updatemap",
-
+				url: "/map_panel",
+			
 				success: function(){
-					$("#refresh").click();
-				}       
-			});
-		});	
+				
+				}
+			})
+		});
+			
 	}
+	
+
 	
 	
 //--------------------------------------------------------------------------------------------------

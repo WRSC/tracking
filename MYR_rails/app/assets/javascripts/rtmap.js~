@@ -103,7 +103,7 @@ function FullScreenControl(controlDiv, map) {
 	function initializeMap() {
 		//map options
 		var mapOptions = {
-			mapTypeId: google.maps.MapTypeId.ROAD,
+			mapTypeId: google.maps.MapTypeId.HYBRID,
 			center: new google.maps.LatLng(53.2590145, -9.0294632),
 			zoom: 14,
 			zoomControl: true,

@@ -1,4 +1,4 @@
-
+	<%= 'what'%>
   <%@teams.each do |team| %>
     <% if Robot.find_by_team_id(team.id) != nil %>
       <%if @tabteams.index(team.id.to_s) != nil %>      

@@ -126,6 +126,7 @@ class RealTimeController < ApplicationController
 		@teams=Team.all #all the teams
 
 		#creation of @tabteams to help for the generation of the HTML code 
+		@testCookies=cookies
 		@strteams = cookies[:teamslist]
 		if (@strteams != nil) #cannot split nil
 			@tabteams = @strteams.split(",");

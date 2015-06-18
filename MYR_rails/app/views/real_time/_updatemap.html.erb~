@@ -1,2 +1,2 @@
 <a id="refresh" href<%= link_to "ok", :action => :map_panel, remote: true%></a>
-<div id="map_panel"></div>
+<div id="map-panel"></div>

@@ -1,5 +1,6 @@
     <% @teams.each do |team| %>
       <% if Robot.find_by_team_id(team.id) != nil %>
+    
         <% if @tabteams.index(team.id.to_s) != nil  %>
           <input type="checkbox" name="team<%= team.id %>" id="<%= team.id %>"><b>Team: <%= team.name %></b>
         <% else %>
@@ -13,6 +14,7 @@
       <% end %>
     <% end %>
     <br>
+
 		<button id="choose_robots" type="button">Select a Robot</button>
 		<div id="choice_robots"></div>
 

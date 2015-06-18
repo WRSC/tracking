@@ -44,23 +44,13 @@ $(document).ready(function(){
 				url: "/updatemap",
 
 				success: function(){
-					display();
+					$("#refresh").click();
 				}       
 			});
 		});	
 	}
 	
-	function display(){
-		$("#refresh").click(function(){
-			$.ajax({
-				type: "GET",
-				url: "/map_panel",
-				success: function(){
-					
-				}       
-			});
-		});	
-	}
+	
 //--------------------------------------------------------------------------------------------------
 
 	//gather newly added coordinates or add coordinates since begining of mission

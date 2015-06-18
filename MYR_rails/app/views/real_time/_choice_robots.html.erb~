@@ -1,4 +1,4 @@
-
+	<%= what%>
   <%@teams.each do |team| %>
     <% if Robot.find_by_team_id(team.id) != nil %>
       <%if @tabteams.index(team.id.to_s) != nil %>      
@@ -20,5 +20,8 @@
 
 
 <button id="update_button" type="button">Update</button> 
+<div><i> You can click on a boat to see the description of its team </i></div>
+<div><i> The map refreshes itself on the time</i></div>
+
 <div id="update"></div>
 

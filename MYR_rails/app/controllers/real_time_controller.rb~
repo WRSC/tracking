@@ -11,7 +11,8 @@ class RealTimeController < ApplicationController
 	def updatemap
 	end
 	
-	def map_panel	#------------------------------------------------------------------------------------
+	def map_panel
+		#------------------------------------------------------------------------------------
 		#------------ GATHERING ALL THE DESIRED COORDINATES-----------------------------
 		@coordinatesCustom = [] #create an empty array where adding desired coordinates
 		tab = []

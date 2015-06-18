@@ -1,6 +1,5 @@
 @charset "utf-8";
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 /*
 Template Name: Cortex
 Author: <a href="http://www.os-templates.com/">OS Templates</a>
@@ -331,7 +330,7 @@ input[type=checkbox]
 .checkboxtext
 {
   /* Increqse size of checkbox text */
-  font-size: 110%;
+  font-size: 100%;
 }
 
 .image_checkbox

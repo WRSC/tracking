@@ -1,4 +1,4 @@
-	<%= what%>
+
   <%@teams.each do |team| %>
     <% if Robot.find_by_team_id(team.id) != nil %>
       <%if @tabteams.index(team.id.to_s) != nil %>      
@@ -8,6 +8,7 @@
         <% @tabrobots = Robot.where(team_id: team.id)%>
         <% @tabrobots.each do |robot| %>
           <% if robot.tracker_id != nil %>
+          	<%=robot.id%>
             <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"> <%= robot.name %><img src="/icons/medium<%=robot.tracker_id.to_s%>.png"/><br>
           <% end %> 
         <% end %> 

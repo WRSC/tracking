@@ -1,3 +1,9 @@
-	<p>what</p> 
-	<p><%= @hash.inspect%></p>
+	<p>test robots is <%= @testRobots%></p>
+	<p>test tab is <%= @testTab%></p>
+	<p>test tab0 is <%= @tab0%></p>
+	<p>test track_id is <%= @track_id%></p>
+	<p>test tabtrack is <%= @tabtrack%></p>
+	<p>hash is <%= @hash.inspect%></p>
+	<p>hash2 is <%= @hash2.inspect%></p>
+	<p>coordinatesCustom is <%= @coordinatesCustom%></p>
 	

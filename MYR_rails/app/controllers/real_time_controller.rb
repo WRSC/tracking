@@ -25,15 +25,18 @@ class RealTimeController < ApplicationController
 		if (str != nil) #cannot split nil
 			tab = str.split(","); # see what happen if tab only have one element and no ','
 		end
-		
+		@testRobots=robots
+		@testTab=tab
 		tabtrack=[]
 		
 		for i in (0..(tab.length-1)) # skip the loop if tab = []
+			@tab0=Robot.find_by_id(tab[i])
+			@tracker_id=Tracker.find_by_id(Robot.find_by_id(tab[i]).tracker_id)
 			if (Tracker.find_by_id(Robot.find_by_id(tab[i]).tracker_id) !=nil)
 				tabtrack.push((Tracker.find_by_id(Robot.find_by_id(tab[i]).tracker_id)).id) #recursively add the coordinates
 			end
 		end
-		
+		@tabtrack=tabtrack		
 		for i in (0..(tabtrack.length-1)) # skip the loop if tab = []
 			@coordinatesCustom += Coordinate.where(tracker_id: tabtrack[i]); #recursively add the coordinates
 		end
@@ -124,7 +127,6 @@ class RealTimeController < ApplicationController
 		#-------- variables d instance passees a la vue -------------------
 		
 		@teams=Team.all #all the teams
-
 		#creation of @tabteams to help for the generation of the HTML code 
 		@testCookies=cookies
 		@strteams = cookies[:teamslist]

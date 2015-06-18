@@ -28,7 +28,7 @@ function checkAllBox_of_robots(){
 //-------------------------------------------------------------------------------
 
 //-----------INITIALIZATION--------------------------------------------
-function initialize_choice_robots(){
+function initialize_robots(){
 	$(document).ready(function(){
 		var d = 0;
 		  //initialize the checkboxs

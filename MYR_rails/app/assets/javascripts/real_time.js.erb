@@ -18,6 +18,8 @@ $(document).ready(function(){
 			url: "/choice_teams",
 			
 			success: function(){
+				initialize_choice_teams();
+				checkAllBox_of_teams();
 				choose_robots();
 			}       
 		});
@@ -31,6 +33,8 @@ $(document).ready(function(){
 					url: "/choice_robots",
 	
 					success: function(){
+						initialize_choice_robots();
+						checkAllBox_of_robots();
 						updatemap();
 					}       
 				});

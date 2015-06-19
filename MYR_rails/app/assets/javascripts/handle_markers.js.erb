@@ -66,6 +66,7 @@
 	}
 /*================================End Add Big Marker=======================================*/
 
+/*=================================Begin Add Draggable Marker==============================*/
 	//Add a draggable marker to the map
 	function addDraggableMarker(lat, lng,map){
 		var marker = new google.maps.Marker(
@@ -78,6 +79,7 @@
 		marker.setMap(map);
 		return marker;
 	}
+/*=================================End Add Draggable Marker================================*/
 
 	//Add all the given coordinates onto the map
 	function addAllThisMarkers(data){

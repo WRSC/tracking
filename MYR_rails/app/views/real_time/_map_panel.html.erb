@@ -1,54 +1,34 @@
 
-<!--------------------------debugger---------------------------------------------->
-<!--<style type="text/csss">
-	p{
-		color: red;
-	}
-</style>
-<p class="debugger"><%= raw @hash.to_json%></p>
-<p class="debugger"><%= @hash2.inspect%></p>
--->
-<!--------------------------end debugger---------------------------------------->
-<script>
-//=require rtmap
-function UpdateMap() {
-		//map options
-		var mapOptions = {
-			mapTypeId: google.maps.MapTypeId.HYBRID,
-			center: new google.maps.LatLng(53.2590145, -9.0294632),
-			zoom: 14,
-			zoomControl: true,
-			zoomControlOptions: {
-				style: google.maps.ZoomControlStyle.SMALL,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
-			},
-			mapTypeControl: true,
-			mapTypeControlOptions: {
-				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
-			},
-			scaleControl: true,
-			streetViewControl: false,
-			panControl: false,
-			overviewMapControl: false
-		}
+<% missionsArray = getCurrentMission %>
+<% nbMissions = missionsArray.size %>
+<% if ( nbMissions > 0 ) %>
+	<% if missionsArray.size > 1 %>
+		<p>Cannot display multiple missions at a time</p>
+		<p>Please choose a mission !!!</p>
+		<p>Current missions are: 
+			<select name="Select mission" id="dropdown">
+				<option></option>
+				<% for m in missionsArray %>
+				<option value="<%= m.id %>"><%= m.name %></option>
+				<% end %>
+			</select>
+		</p>
+	<% else %>
+		<% mission = missionsArray[0] %>
+		<p>Current Mission is: <%= mission.name %></p>
+		<p>Started at: <%=mission.start.to_s(:time)%> and ends at :<%=mission.end.to_s(:time)%>
+			<% if mission.description != ""%>
+				<p>Description: <%= mission.description %></p>
+			<% end %>
+		</p>
+	<% end %>
+	
+	<%= getMissionInfos.inspect%>
+	
+	<h2>Options</h2>
+	<p>TODO</p>
+<% else %>
+	<h1>No mission in progress currently.</h1>
+	<p>Please come back later !</p>
+<% end %>
 
-		//map creation
-		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		
-		/*var myLatlng = new google.maps.LatLng(53.2590145, -9.0294632);
-		var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Hello World!'
- 	 });*/
-		var marker=addBigMarker(53.2590145, -9.0294632,1,map)
-
-		//add add button in the top right corner of the map to hide the right panel
-		var centerControlDiv = document.createElement('div');
-		var centerControl = new FullScreenControl(centerControlDiv, map);
-		centerControlDiv.index = 1;
-		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-}
-UpdateMap()
-</script>

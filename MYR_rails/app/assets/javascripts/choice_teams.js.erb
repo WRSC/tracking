@@ -87,3 +87,21 @@ function addteam(id){
 }
 //-------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------------------
+function isPresent(id,str){
+	if (str == null || str == ""){
+    return false; //absent
+  }
+  else{
+  	var tab = str.split(",");
+  	var index = tab.indexOf(id);
+  	if(index > -1){
+  		return true;
+  	}
+  	else{
+  		return false;
+  	}
+  }
+}
+
+

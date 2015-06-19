@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html>
+
 <% missionsArray = getCurrentMission %>
 <% nbMissions = missionsArray.size %>
 <% if ( nbMissions > 0 ) %>
-<% if missionsArray.size > 1 %>
-<p>Cannot display multiple missions at a time</p>
-<p>Current missions are: 
-	<select name="Select mission" id="dropdown">
-		<option></option>
-		<% for m in missionsArray %>
-		<option value="<%= m.id %>"><%= m.name %></option>
-		<% end %>
-	</select>
-</p>
-<% else %>
-<% mission = missionsArray[0] %>
-<p>Current Mission is: <%= mission.name %></p>
-<p>Started at: <%=mission.start.to_s(:time)%> and ends at :<%=mission.end.to_s(:time)%>
-	<% if mission.description != ""%>
-	<p>Description: <%= mission.description %></p>
+	<% if missionsArray.size > 1 %>
+		<p>Cannot display multiple missions at a time</p>
+		<p>Current missions are: 
+			<select name="Select mission" id="dropdown">
+				<option></option>
+				<% for m in missionsArray %>
+				<option value="<%= m.id %>"><%= m.name %></option>
+				<% end %>
+			</select>
+		</p>
+	<% else %>
+		<% mission = missionsArray[0] %>
+		<p>Current Mission is: <%= mission.name %></p>
+		<p>Started at: <%=mission.start.to_s(:time)%> and ends at :<%=mission.end.to_s(:time)%>
+			<% if mission.description != ""%>
+				<p>Description: <%= mission.description %></p>
+			<% end %>
+		</p>
 	<% end %>
-</p>
-<% end %>
-<h2>Trackers</h2>
-<p><%trackers = IsThereNewTrackers?("0", [])%></p>
-<%if trackers != nil%>
-	<%for track in trackers%>
-		<label class="checkboxtext"><input name="tracker" type="checkbox" id="<%=track%>" class="custom">
-	<img src="/icons/medium<%=track%>.png"/ class="image_checkbox"> Tracker <%=track%></label>
-	<%end%>
-<%end%>
-<h2>Options</h2>
-<p>TODO</p>
+	
+	<h2>Options</h2>
+	<p>TODO</p>
 <% else %>
-<h1>No mission in progress currently.</h1>
-<p>Please come back later !</p>
+	<h1>No mission in progress currently.</h1>
+	<p>Please come back later !</p>
 <% end %>
-</html>
+

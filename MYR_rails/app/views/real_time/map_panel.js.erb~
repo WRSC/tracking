@@ -1,1 +1,1 @@
-$("#carte").html("<%= escape_javascript(render 'map_panel') %>")
+$("#map-canvas").html("<%= escape_javascript(render 'map_panel') %>")

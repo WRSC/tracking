@@ -24,8 +24,11 @@
 		
 <!----------------------sidebar of google map-------------------------------->
 		<div class="one_third" style='height: 100%'>
-			<button id="choose_teams" type="button">Select a team</button> 
-			<div id="choice_teams"></div>
+		
+		<div id="map-panel"></div>
+		<a id="refresh-panel" href<%= link_to "REFRESH PANEL", :action => :map_panel, remote: true%></a>
+		<button id="getLastData" type="button">Get trackers</button> 
+		<button id="getNewTrackers" type="button">Get trackers</button> 
+		<button id="getNewCoordinates" type="button">Get coordinates</button> 
 		</div>
 	</div> 
-

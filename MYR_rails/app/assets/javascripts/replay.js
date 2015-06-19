@@ -1,13 +1,62 @@
 //=require replay_map
+//=require choice_robots
+//=require choice_teams
+var map
 $(document).ready(function(){
 	//initialization
-	google.maps.event.addDomListener(window, 'load', initializeMap);
+	google.maps.event.addDomListener(window, 'load', initializeMap(map));
 
 	//display panel
-	$("#refresh-replay_panel").click();
+	//need to check $("#refresh-replay_panel").click();
 
 	//initializeMap();
 	initialScroll();
+	
+	/*=========================Begin choose teams and robots================================*/
+	//choose teams <= choose robots <= updatemap
+	$("#choose_teams").click(function(){
+		$.ajax({
+			type: "GET",
+			url: "/choice_teams",
+			
+			success: function(){
+				initialize_choice_teams();
+				checkAllBox_of_teams();
+				choose_robots();
+			}       
+		});
+	});
+	
+	//choose robots
+	function choose_robots(){
+		$("#choose_robots").click(function(){
+				$.ajax({
+					type: "GET",
+					url: "/choice_robots",
+	
+					success: function(){
+						initialize_choice_robots();
+						checkAllBox_of_robots();
+						displayMap();
+					}       
+				});
+		});
+	}
+	
+	function displayMap(){
+		$("#update_button").click(function(){
+			$.ajax({
+				type: "GET",
+				url: "/map_panel",
+			
+				success: function(){
+					alert('need to complete')
+				}
+			})
+		});
+			
+	}
+	/*===================End Choose teams and robots============================*/
 
 	//gather newly added coordinates or add coordinates since begining of mission
 	$("#getNewCoordinates").click(function(){
@@ -41,6 +90,7 @@ $(document).ready(function(){
 	});
 
 });
+
 
 //when the panel is displayed
 $("#replay_panel").ready(function(){

@@ -1,7 +1,7 @@
 //=require handle_markers
 //----------------------GLOBAL VARIABLES-------------------
 var map = null;
-var lastDatetime = "00000101";
+var lastDatetime = "0";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
 var desired_trackers = [];
@@ -100,7 +100,6 @@ function FullScreenControl(controlDiv, map) {
   });
 }
 
-/*========================= Begin initialize Google Map===============================================*/
 	//Map initialization
 	function initializeMap(map) {
 		//map options
@@ -133,51 +132,7 @@ function FullScreenControl(controlDiv, map) {
 		centerControlDiv.index = 1;
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 	}
-/*========================= End initialize Google Map===============================================*/
 
-/*=====================Update Map and Add Markers================================*/
-function updateMap(map) {
-		//map options
-		var mapOptions = {
-			mapTypeId: google.maps.MapTypeId.HYBRID,
-			center: new google.maps.LatLng(53.2590145, -9.0294632),
-			zoom: 14,
-			zoomControl: true,
-			zoomControlOptions: {
-				style: google.maps.ZoomControlStyle.SMALL,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
-			},
-			mapTypeControl: true,
-			mapTypeControlOptions: {
-				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
-			},
-			scaleControl: true,
-			streetViewControl: false,
-			panControl: false,
-			overviewMapControl: false
-		}
-
-		//map creation
-		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		
-		/*var myLatlng = new google.maps.LatLng(53.2590145, -9.0294632);
-		var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Hello World!'
- 	 });*/
- 
-		var marker=addBigMarker(53.2590145, -9.0294632,1,map)
-			addingBoil()
-		//add add button in the top right corner of the map to hide the right panel
-		var centerControlDiv = document.createElement('div');
-		var centerControl = new FullScreenControl(centerControlDiv, map);
-		centerControlDiv.index = 1;
-		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-}
-
-/*======================================End Update Map=====================================*/
 
 
 	//Set the center of the map
@@ -194,7 +149,7 @@ function updateMap(map) {
 		google.maps.event.addListener(map, 'click', function(a){
 			var desiredLat = a.latLng.lat();
 			var desiredLng = a.latLng.lng();
-			setCenter(desiredLat,desiredLng);
+			//setCenter(desiredLat,desiredLng);
 
 			var marker = addDraggableMarker(desiredLat,desiredLng);
 			google.maps.event.addListener(marker, 'dragend', function(a){
@@ -229,7 +184,70 @@ function updateMap(map) {
 //------------------------FROM SWARMON----------------------
 
 
+//-------------------------------------------------------------------------------
+function isPresent(id,str){
+	if (str == null || str == ""){
+    return false; //absent
+  }
+  else{
+  	var tab = str.split(",");
+  	var index = tab.indexOf(id);
+  	if(index > -1){
+  		return true;
+  	}
+  	else{
+  		return false;
+  	}
+  }
+}
 
+//----------------------------ADD AND REMOVE ROBOTS--------------------------------
+function addrobot(id){
+	var str = $.cookie("robotslist");
+	if(isPresent(id,str) == true){
+  }//do nothing
+  else{
+    //si le cookie est inexistant ou vide
+    if($.cookie("robotslist") == null || $.cookie("robotslist") == ""){
+    	$.cookie("robotslist",id);
+    }
+      //sinon ajout
+      else{
+      	$.cookie("robotslist",$.cookie("robotslist")+","+id);
+      }
+    }
+  }
 
+  function rmvrobot(id){
+  	var str = $.cookie("robotslist");
+  	var tab = str.split(",");
+  //index de l'élément à retirer
+  var index = tab.indexOf(id);
+  if(index > -1){
+    //retirer élément
+    tab.splice(index,1);
+    res = tab.toString();
+    $.cookie("robotslist",res);
+  }
+}
+//-------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------
+function isPresent(id,str){
+	if (str == null || str == ""){
+    return false; //absent
+  }
+  else{
+  	var tab = str.split(",");
+  	var index = tab.indexOf(id);
+  	if(index > -1){
+  		return true;
+  	}
+  	else{
+  		return false;
+  	}
+  }
+}
+//-------------------------------------------------------------------------------
 
 //------------------END SWARMON------------------------------

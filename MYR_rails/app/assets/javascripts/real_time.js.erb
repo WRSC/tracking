@@ -1,61 +1,23 @@
 //=require rtmap
-//=require choice_robots
-//=require choice_teams
+
 var map
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap(map));
 
+	$("#refresh-panel").click();
+
 	//initializeMap();
 	initialScroll();
 	
-//--------------------------------------------------------
-	//choose teams <= choose robots <= updatemap
-	$("#choose_teams").click(function(){
-		$.ajax({
-			type: "GET",
-			url: "/choice_teams",
-			
-			success: function(){
-				initialize_choice_teams();
-				checkAllBox_of_teams();
-				choose_robots();
-			}       
-		});
-	});
-	
-	//choose robots
-	function choose_robots(){
-		$("#choose_robots").click(function(){
-				$.ajax({
-					type: "GET",
-					url: "/choice_robots",
-	
-					success: function(){
-						initialize_choice_robots();
-						checkAllBox_of_robots();
-						displayMap();
-					}       
-				});
-		});
-	}
-	
-	function displayMap(){
-		$("#update_button").click(function(){
-			$.ajax({
-				type: "GET",
-				url: "/map_panel",
-			
-				success: function(){
-					
-				}
-			})
-		});
-			
-	}
-	
+
 	
 //--------------------------------------------------------------------------------------------------
+
+	$("#getLastData").click(function(){
+		alert(getLastDatetime())
+	
+	});
 
 	//gather newly added coordinates or add coordinates since begining of mission
 	$("#getNewCoordinates").click(function(){
@@ -77,7 +39,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: "GET",
 			url: "/getNewTrackers",
-			data: {datetime : getLastDatetime(), trackers: getKnownTrackers()},
+			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: 1},
 			dataType: "json",
 			success: function(data){// retrieve an array containing the not yet known trackers
 				if(data.length > 0){

@@ -1,11 +1,7 @@
 module RealTimeHelper
 
   NUM_MAX_COORDS = 1000 #constant
-  
-  def chooseTeams
-  	return 
-  end
-
+ 
   def getCurrentMission
 		now = Time.zone.now #time in UTC 00
     currentMission = Mission.where "start < ? AND ? < end", now, now
@@ -29,8 +25,16 @@ module RealTimeHelper
       	result.push(timeStart).push(timeEnd)
       	return result
       else
-      	#TO DO
-      	return 0
+      	list=[]
+      	for i in 0..(nbMissions-1)
+      		mission = missionsArray[0]
+		    	timeStart = mission.start.to_s(:number)
+		    	timeEnd = mission.end.to_s(:number)
+		    	result = []
+		    	result.push(timeStart).push(timeEnd)
+		    	list.push(result)
+      	end
+      	return list
       end
     else
       return []
@@ -39,9 +43,9 @@ module RealTimeHelper
 
   #input: datetime, array of tracker_id
   #output: array of tracker-id
-  def IsThereNewTrackers?(last_refresh, known_trackers)
+  def IsThereNewTrackers?(last_refresh, known_trackers, mission_id)
     trackers=[]
-    if (last_refresh != "0" && last_refresh != nil)#the map already contains coordinates
+    if (last_refresh != "00000101" && last_refresh != nil)#the map already contains coordinates
       datetime = last_refresh.to_datetime
       newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", datetime).where.not(tracker_id: known_trackers).order(tracker_id: :asc)
       #trackers = []
@@ -56,7 +60,7 @@ module RealTimeHelper
       return trackers
     else #the map does not have any coordinates
       if getMissionInfos.size > 0 #if there is currently a mission
-        start = getMissionInfos[0].to_datetime #missionsInfos = [start, end]
+        start = getMissionInfos[mission_id.to_i][0].to_datetime #missionsInfos = [start, end]
         newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", start).where.not(tracker_id: known_trackers).order(tracker_id: :asc)
         #trackers = []
         if (newCoords != [])

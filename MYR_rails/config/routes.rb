@@ -28,17 +28,17 @@ Rails.application.routes.draw do
   # Ajax
 
     get 'what', to: 'what#what'
-    get 'getMissionLength', to: 'real_time#getMissionLength'
-    get 'gatherCoordsBetweenDates', to: 'coordinates#gatherCoordsBetweenDates'
-    get 'gatherCoordsSince', to: 'coordinates#gatherCoordsSince'
-   	
-   	get 'map_panel',      to: 'real_time#map_panel' 
-    get 'getNewTrackers', to: 'real_time#getNewTrackers'
-    get 'choice_teams' ,  to: 'real_time#choice_teams'
-    get 'choice_robots',  to: 'real_time#choice_robots'
-    get 'updatemap',      to: 'real_time#updatemap' 
     
-    get 'replay_map_panel', to: 'replay#replay_map_panel'
+    get 'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
+    get 'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
+   	
+   	get 'map_panel'               ,  to: 'real_time#map_panel' 
+   	get 'getMissionLength'        ,  to: 'real_time#getMissionLength'
+    get 'getNewTrackers'          ,  to: 'real_time#getNewTrackers'
+    
+    get 'choice_teams'            ,  to: 'replay#choice_teams'
+    get 'choice_robots'           ,  to: 'replay#choice_robots'
+    get 'replay_map_panel'        ,  to: 'replay#replay_map_panel'
 
 
   # Authentication

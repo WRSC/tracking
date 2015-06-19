@@ -1,0 +1,5 @@
+<body>
+<p>what</p>
+<p><%= @last_refresh%></p>
+<p><%= @test%></p>
+</body>

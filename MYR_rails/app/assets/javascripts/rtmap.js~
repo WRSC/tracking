@@ -1,8 +1,9 @@
+//=require handle_markers
 //----------------------GLOBAL VARIABLES-------------------
 var map = null;
-var lastDatetime = "0";
+var lastDatetime = "00000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
-var known_trackers = [];
+var known_trackers = [1];
 var desired_trackers = [];
 
 /*
@@ -99,6 +100,7 @@ function FullScreenControl(controlDiv, map) {
   });
 }
 
+/*========================= Begin initialize Google Map===============================================*/
 	//Map initialization
 	function initializeMap(map) {
 		//map options
@@ -131,7 +133,51 @@ function FullScreenControl(controlDiv, map) {
 		centerControlDiv.index = 1;
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 	}
+/*========================= End initialize Google Map===============================================*/
 
+/*=====================Update Map and Add Markers================================*/
+function updateMap(map) {
+		//map options
+		var mapOptions = {
+			mapTypeId: google.maps.MapTypeId.HYBRID,
+			center: new google.maps.LatLng(53.2590145, -9.0294632),
+			zoom: 14,
+			zoomControl: true,
+			zoomControlOptions: {
+				style: google.maps.ZoomControlStyle.SMALL,
+				position: google.maps.ControlPosition.BOTTOM_LEFT
+			},
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+				position: google.maps.ControlPosition.BOTTOM_LEFT
+			},
+			scaleControl: true,
+			streetViewControl: false,
+			panControl: false,
+			overviewMapControl: false
+		}
+
+		//map creation
+		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		
+		/*var myLatlng = new google.maps.LatLng(53.2590145, -9.0294632);
+		var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Hello World!'
+ 	 });*/
+ 
+		var marker=addBigMarker(53.2590145, -9.0294632,1,map)
+			addingBoil()
+		//add add button in the top right corner of the map to hide the right panel
+		var centerControlDiv = document.createElement('div');
+		var centerControl = new FullScreenControl(centerControlDiv, map);
+		centerControlDiv.index = 1;
+		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+}
+
+/*======================================End Update Map=====================================*/
 
 
 	//Set the center of the map
@@ -140,195 +186,7 @@ function FullScreenControl(controlDiv, map) {
 	}
 
 
-	//Add a small marker to the map (a dot)
-	//tracker_id is optional with  default value of 12 for the rendering
-	function addSmallMarker(lat, lng, tracker_id){
-		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
-		var image = {
-			url: 'icons/dot'+tracker_id+'.png',
-			size: new google.maps.Size(5, 5),
-			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(3, 3)
-		};
-		var marker = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			icon: image
-		}
-		);
-		//always needed ?
-		marker.setMap(map);
-		//ADDED
-		return marker;
-	}
-	/*
-	//to complete
-	//Add a marker to the map
-	//tracker_id is optional with  default value of 12 for the rendering
-	function addMarker(lat, lng, tracker_id){
-		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
-		var image = 'icons/medium'+tracker_id%12+'.png';
-
-		var marker = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			icon: image
-		}
-		);
-		//always needed ?
-		marker.setMap(map);
-		//ADDED
-		return marker;
-	}
-	*/
-	//Add a big marker to the map
-	//tracker_id is optional with  default value of 12 for the rendering
-	function addBigMarker(lat, lng, tracker_id){
-		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
-		var image = 'icons/medium'+tracker_id%12+'.png';
-
-		var marker = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			icon: image
-		}
-		);
-		//always needed ?
-		marker.setMap(map);
-		// to ease later addition of coordinqtes
-		latest_markers[0].push(marker);
-		latest_markers[1].push(tracker_id);
-		// to create the side panel
-		known_trackers.push(tracker_id);
-		return marker;
-	}
-
-	//Add a draggable marker to the map
-	function addDraggableMarker(lat, lng){
-		var marker = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			draggable: true
-		}
-		);
-		//always needed ?
-		marker.setMap(map);
-		return marker;
-	}
-
-	//Add all the given coordinates onto the map
-	function addAllThisMarkers(data){
-		var lat, lng, tracker_id = 0;
-		for(var i=0; i < data.length ; i++){
-			lat = data[i].latitude;
-			lng = data[i].longitude;
-			tracker_id = data[i].tracker_id;
-			addMarker(lat,lng,tracker_id);
-		}
-	}
-
-	//Add the given coordiantes on the map and save this last state
-	function refreshWithNewMarkers(data){
-		var lastCoordinate = data[data.length-1];
-		var lastDate = lastCoordinate.datetime;
-		var lastLat = lastCoordinate.latitude;
-		var lastLng= lastCoordinate.longitude;
-
-		addAllThisMarkers(data);
-		setCenter(lastLat,lastLng);
-
-		saveLastDatetime(lastDate);
-	}
-
-	//Add the given coordiantes on the map and save this last state
-	function refreshWithNewMarkers2(data){
-		var lastCoordinate = data[data.length-1];
-		var lastDate = lastCoordinate.datetime;
-		var lastLat = lastCoordinate.latitude;
-		var lastLng= lastCoordinate.longitude;
-
-		addAllThesePolylines(data);
-
-		setCenter(lastLat,lastLng);
-		saveLastDatetime(lastDate);
-	}
-
-	function addAllThesePolylines(data){
-		var tracker_Gcoords = []
-		for(var i=0; i < data.length ; i++){ //iterate in the array
-			latitude = data[i].latitude;
-			longitude = data[i].longitude;
-			tracker_id = data[i].tracker_id;
-			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
-			if(i != data.length -1){ //not end of array
-				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
-					//addsmallmarker
-					addSmallMarker(latitude, longitude, tracker_id);
-				}
-				else{
-					//create polyline
-					createPolyline(tracker_Gcoords, tracker_id);
-					//addsbigmarker
-					addBigMarker(latitude, longitude, tracker_id);
-					//reset array
-					tracker_Gcoords = [];
-				}
-			}
-			else{ //end of array
-				//create polyline
-				createPolyline(tracker_Gcoords, tracker_id);
-				//addsbigmarker
-				addBigMarker(latitude, longitude, tracker_id);
-				//reset array
-				tracker_Gcoords = [];
-			}
-		}
-	}
-
-	function createPolyline(Gcoords, tracker_id, last_marker){
-
-		// colors:  		   red  , blue   , dark green, orange  , black    , purple   , white  , pink , fluo green, dark red, yellow , turquoise
-		var colors = ['','#CC0000','#0000CC','#003300','#FF3300','#000000','#660099','#FFFFFF','#CC00CC','#00CC00','#660000','#FFFF00','#33FFFF']
-		var index_of_marker = alreadyPresent(tracker_id);
-
-		if(index_of_marker != -1){
-			//get coords to add to polyline
-			var end_lat = latest_markers[0][index_of_marker].getPosition().lat();
-			var end_lng = latest_markers[0][index_of_marker].getPosition().lng();
-			var end_tracker_id = latest_markers[1][index_of_marker];
-			Gcoords.unshift(new google.maps.LatLng(end_lat, end_lng));
-
-			//remove this marker from the map
-			//QUESTION better to replace the icon ??
-			deleteEndMarker(index_of_marker);
-			addSmallMarker(end_lat, end_lng, end_tracker_id);
-		}
-
-		var polyline = new google.maps.Polyline({
-			path: Gcoords,
-			geodesic: true,
-			strokeColor: colors[tracker_id%12],
-			strokeOpacity: 1.0,
-			strokeWeight: 1
-		});
-		polyline.setMap(map);
-	}
-
-	function deleteEndMarker(index_of_marker){
-		latest_markers[0][index_of_marker].setMap(null);
-		latest_markers[0][index_of_marker] = [];
-	}
-
-	function alreadyPresent(tracker_id){
-		var index = -1;
-		for (var i = 0 ; i < latest_markers[1].length; i++) {
-			if (tracker_id == latest_markers[1][i]){ //already existing on the map
-				index = i;
-			};
-		};
-		return index;
-	}
-
+	
 //---------------------  BOILS  -----------------------------------
 	//Add a boil on the map when clicked and keep track of coordinates on dragend
 	//Save the coodinates in the database when clinking on "AddBoil" button
@@ -336,7 +194,7 @@ function FullScreenControl(controlDiv, map) {
 		google.maps.event.addListener(map, 'click', function(a){
 			var desiredLat = a.latLng.lat();
 			var desiredLng = a.latLng.lng();
-			//setCenter(desiredLat,desiredLng);
+			setCenter(desiredLat,desiredLng);
 
 			var marker = addDraggableMarker(desiredLat,desiredLng);
 			google.maps.event.addListener(marker, 'dragend', function(a){
@@ -371,70 +229,7 @@ function FullScreenControl(controlDiv, map) {
 //------------------------FROM SWARMON----------------------
 
 
-//-------------------------------------------------------------------------------
-function isPresent(id,str){
-	if (str == null || str == ""){
-    return false; //absent
-  }
-  else{
-  	var tab = str.split(",");
-  	var index = tab.indexOf(id);
-  	if(index > -1){
-  		return true;
-  	}
-  	else{
-  		return false;
-  	}
-  }
-}
 
-//----------------------------ADD AND REMOVE ROBOTS--------------------------------
-function addrobot(id){
-	var str = $.cookie("robotslist");
-	if(isPresent(id,str) == true){
-  }//do nothing
-  else{
-    //si le cookie est inexistant ou vide
-    if($.cookie("robotslist") == null || $.cookie("robotslist") == ""){
-    	$.cookie("robotslist",id);
-    }
-      //sinon ajout
-      else{
-      	$.cookie("robotslist",$.cookie("robotslist")+","+id);
-      }
-    }
-  }
 
-  function rmvrobot(id){
-  	var str = $.cookie("robotslist");
-  	var tab = str.split(",");
-  //index de l'élément à retirer
-  var index = tab.indexOf(id);
-  if(index > -1){
-    //retirer élément
-    tab.splice(index,1);
-    res = tab.toString();
-    $.cookie("robotslist",res);
-  }
-}
-//-------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------------------
-function isPresent(id,str){
-	if (str == null || str == ""){
-    return false; //absent
-  }
-  else{
-  	var tab = str.split(",");
-  	var index = tab.indexOf(id);
-  	if(index > -1){
-  		return true;
-  	}
-  	else{
-  		return false;
-  	}
-  }
-}
-//-------------------------------------------------------------------------------
 
 //------------------END SWARMON------------------------------

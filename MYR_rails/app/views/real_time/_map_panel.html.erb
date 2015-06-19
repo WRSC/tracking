@@ -1,5 +1,16 @@
-<script>
 
+<!--------------------------debugger---------------------------------------------->
+<!--<style type="text/csss">
+	p{
+		color: red;
+	}
+</style>
+<p class="debugger"><%= raw @hash.to_json%></p>
+<p class="debugger"><%= @hash2.inspect%></p>
+-->
+<!--------------------------end debugger---------------------------------------->
+<script>
+//=require rtmap
 function UpdateMap() {
 		//map options
 		var mapOptions = {
@@ -25,13 +36,13 @@ function UpdateMap() {
 		//map creation
 		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		
-		var myLatlng = new google.maps.LatLng(53.2590145, -9.0294632);
+		/*var myLatlng = new google.maps.LatLng(53.2590145, -9.0294632);
 		var marker = new google.maps.Marker({
       position: myLatlng,
       map: map,
       title: 'Hello World!'
- 	 });
-	
+ 	 });*/
+		var marker=addBigMarker(53.2590145, -9.0294632,1,map)
 
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');

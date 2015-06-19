@@ -27,6 +27,5 @@
 			<button id="choose_teams" type="button">Select a team</button> 
 			<div id="choice_teams"></div>
 		</div>
-		
 	</div> 
 

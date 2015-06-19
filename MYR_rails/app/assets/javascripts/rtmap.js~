@@ -100,7 +100,7 @@ function FullScreenControl(controlDiv, map) {
 }
 
 	//Map initialization
-	function initializeMap() {
+	function initializeMap(map) {
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.HYBRID,

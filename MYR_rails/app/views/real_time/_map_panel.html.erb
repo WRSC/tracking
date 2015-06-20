@@ -13,6 +13,7 @@
 				<% end %>
 			</select>
 		</p>
+		<button id="chooseMission" type="button">Ok</button> 
 	<% else %>
 		<% mission = missionsArray[0] %>
 		<p>Current Mission is: <%= mission.name %></p>
@@ -21,9 +22,15 @@
 				<p>Description: <%= mission.description %></p>
 			<% end %>
 		</p>
+	
 	<% end %>
 	
-	<%= getMissionInfos.inspect%>
+	<button id="getLastData" type="button">Get LastData</button> 
+			<button id="getNewTrackers" type="button">Get trackers</button> 
+			<button id="getNewCoordinates" type="button">Get coordinates</button>
+
+
+
 	
 	<h2>Options</h2>
 	<p>TODO</p>

@@ -4,23 +4,20 @@ var map
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap(map));
-
 	$("#refresh-panel").click();
-
+	
 	//initializeMap();
 	initialScroll();
 	
-
-	
 //--------------------------------------------------------------------------------------------------
 
-	$("#getLastData").click(function(){
-		alert(getLastDatetime())
-	
-	});
-
 	//gather newly added coordinates or add coordinates since begining of mission
-	$("#getNewCoordinates").click(function(){
+
+});
+
+function getNewCoordinates(){
+	$("#map-panel").on("click", "#getNewCoordinates", function() {
+		alert ('new coordinate')
 		$.ajax({
 			type: "GET",
 			url: "/gatherCoordsSince",
@@ -33,9 +30,12 @@ $(document).ready(function(){
 			}       
 		});
 	});
+}
 
 	//gather newly added coordinates or add coordinates since begining of mission
-	$("#getNewTrackers").click(function(){
+function getNewTrackers(){
+	$("#map-panel").on("click", "#getNewTrackers", function() {
+		alert('new trackers')
 		$.ajax({
 			type: "GET",
 			url: "/getNewTrackers",
@@ -45,17 +45,31 @@ $(document).ready(function(){
 				if(data.length > 0){
 					saveNewKnownTracker(data);
 					alert("Received data: "+data);
-					alert(data)
 				}
 			}       
 		});
 	});
+}
 
-});
+function getLastData(){		
+	 $("#map-panel").on("click", "#getLastData", function() {
+  	alert('hello')
+   })
+}
+
+function chooseMission(){
+	$("#map-panel").on("click", "#chooseMission", function() {
+		alert('choose mission')
+	})
+}
 
 //when the panel is displayed
 $("#map-panel").ready(function(){
-
+	
+	getLastData()
+	getNewTrackers()
+	getNewCoordinates()
+	chooseMission()
   //for all checkboxes of tracker, on click do ...
   $("#map-panel").on("click", "input[name*='tracker']", function() {
       //get id of the checkbox

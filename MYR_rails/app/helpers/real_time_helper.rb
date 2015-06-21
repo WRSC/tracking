@@ -8,6 +8,28 @@ module RealTimeHelper
     return currentMission
   end
 
+	def getMissionIds
+		now = Time.zone.now #time in UTC 00
+    missionsArray = Mission.where "start < ? AND ? < end", now, now
+    if missionsArray != []
+      #missionsArray = getCurrentMission
+      nbMissions = missionsArray.size
+      if nbMissions == 0
+      	#TO DO
+      	return 0
+      else
+      	result = []
+      	for i in 0..(nbMissions-1)
+      		mission = missionsArray[i]
+		    	result.push(mission.id.to_s)
+      	end
+      	return result
+      end
+    else
+      return []
+    end
+	end
+
   def getMissionInfos
     now = Time.zone.now #time in UTC 00
     missionsArray = Mission.where "start < ? AND ? < end", now, now
@@ -27,7 +49,7 @@ module RealTimeHelper
       else
       	list=[]
       	for i in 0..(nbMissions-1)
-      		mission = missionsArray[0]
+      		mission = missionsArray[i]
 		    	timeStart = mission.start.to_s(:number)
 		    	timeEnd = mission.end.to_s(:number)
 		    	result = []

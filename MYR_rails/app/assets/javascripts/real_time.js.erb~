@@ -57,19 +57,43 @@ function getLastData(){
    })
 }
 
-function chooseMission(){
+function choosetMission(){
+		missions=getAllCurrentMissions();
+		nbmissions=missions.length
+		if (nbmissions >1){
+			var e = $('#dropdown_select_mission :selected').val();
+			if (e=="select_mission"){
+				alert("Please choose a correct mission!!!")
+			}else{
+				saveCurrentMission(e)
+			}
+			//alert(getCurrentMission())
+		}
+}
+
+function selectMissions(){
 	$("#map-panel").on("click", "#chooseMission", function() {
-		alert('choose mission')
+		$.ajax({
+				type: "GET",
+				url: "/getMissions",
+				success: function(data){// retrieve an array containing the not yet known trackers
+					if(data.length > 0){
+						setAllCurrentMissions(data);
+						choosetMission();
+					}
+				}       
+			});
 	})
 }
 
 //when the panel is displayed
 $("#map-panel").ready(function(){
-	
+
+	selectMissions()
 	getLastData()
 	getNewTrackers()
 	getNewCoordinates()
-	chooseMission()
+	
   //for all checkboxes of tracker, on click do ...
   $("#map-panel").on("click", "input[name*='tracker']", function() {
       //get id of the checkbox

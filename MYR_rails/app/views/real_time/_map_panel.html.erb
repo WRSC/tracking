@@ -6,14 +6,15 @@
 		<p>Cannot display multiple missions at a time</p>
 		<p>Please choose a mission !!!</p>
 		<p>Current missions are: 
-			<select name="Select mission" id="dropdown">
-				<option></option>
+			<select name="Select mission" id="dropdown_select_mission">
+				<option value="select_mission">Select a mission</option>
 				<% for m in missionsArray %>
-				<option value="<%= m.id %>"><%= m.name %></option>
+				<option value="<%= m.id %>"><%= m.name %> <%= m.id%></option>
 				<% end %>
 			</select>
 		</p>
-		<button id="chooseMission" type="button">Ok</button> 
+		<button id="chooseMission" type="button" >Ok</button>
+		<p id="demo"></p>
 	<% else %>
 		<% mission = missionsArray[0] %>
 		<p>Current Mission is: <%= mission.name %></p>

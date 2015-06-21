@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     get 'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
    	
    	get 'map_panel'               ,  to: 'real_time#map_panel' 
-   	get 'getMissionLength'        ,  to: 'real_time#getMissionLength'
+   	get 'getMissions'             ,  to: 'real_time#getMissions'
     get 'getNewTrackers'          ,  to: 'real_time#getNewTrackers'
     
     get 'choice_teams'            ,  to: 'replay#choice_teams'

@@ -7,7 +7,7 @@ class RealTimeController < ApplicationController
 	def map_panel
 	end
 	
-	def getMissionLength
+	def getMissions
 		render json: getMissionInfos
 	end
 	
@@ -17,6 +17,6 @@ class RealTimeController < ApplicationController
 		known_trackers = params[:trackers]
 		current_mission_id = params[:mission_id]
 		@test= IsThereNewTrackers?(last_refresh, known_trackers, current_mission_id)
-		render json: @test
+		#render json: @test
 	end
 end

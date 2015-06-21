@@ -5,7 +5,8 @@ var lastDatetime = "00000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
 var desired_trackers = [];
-
+var all_current_missions=[];
+var current_mission;
 /*
 var tab = [2,12,1,5];
 tab.sort(function(a, b){return a-b});
@@ -53,6 +54,26 @@ jQuery.expr.filters.offscreen = function(el) {
 	//Getter on known_trackers
 	function getKnownTrackers(){
 		return known_trackers;
+	}
+	
+	//get current missions
+	function getAllCurrentMissions(missions){
+		return all_current_missions;
+	}
+	
+	//save current missions, need to clear all the missions before
+	function setAllCurrentMissions(missions){
+		all_current_missions=missions;
+	}
+	
+	//get current mission (only one)
+	function getCurrentMission(){
+		return current_mission
+	}
+	
+	//save a current mission (only a mission at a time in order to display)
+	function saveCurrentMission(mission_id){
+		current_mission=mission_id
 	}
 
 	//Setter on desired_trackers

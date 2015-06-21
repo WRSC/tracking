@@ -8,15 +8,13 @@ $(document).ready(function(){
 	
 	//initializeMap();
 	initialScroll();
-	
-//--------------------------------------------------------------------------------------------------
-
-	//gather newly added coordinates or add coordinates since begining of mission
-
 });
 
+	
+//--------------------------------------------------------------------------------------------------
+	//gather newly added coordinates or add coordinates since begining of mission
 function getNewCoordinates(){
-	$("#map-panel").on("click", "#getNewCoordinates", function() {
+	$("#getNewCoordinates").click( function() {
 		alert ('new coordinate')
 		$.ajax({
 			type: "GET",
@@ -32,31 +30,47 @@ function getNewCoordinates(){
 	});
 }
 
-	//gather newly added coordinates or add coordinates since begining of mission
 function getNewTrackers(){
-	$("#map-panel").on("click", "#getNewTrackers", function() {
-		alert('new trackers')
+	$("#getNewTrackers").click(function() {
+		//alert(getCurrentMission())
 		$.ajax({
 			type: "GET",
 			url: "/getNewTrackers",
-			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: 1},
+			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getIndexOfCurrentMission()},
 			dataType: "json",
 			success: function(data){// retrieve an array containing the not yet known trackers
 				if(data.length > 0){
-					saveNewKnownTracker(data);
-					alert("Received data: "+data);
+					alert(getIndexOfCurrentMission())
+					//saveNewKnownTracker(data);
+					//alert("Received data: "+data);
 				}
 			}       
 		});
 	});
 }
 
+function updateMap(){
+	$("#map-panel").on("click", "#trackersAndCoordis", function() {
+		$.ajax({
+			type: "GET",
+			url: "/update_map",
+			data: {mission_id: getCurrentMission()},
+			success: function(){
+				getLastData()
+				getNewTrackers()
+				getNewCoordinates()
+			}       
+		});
+	});
+}
+
 function getLastData(){		
-	 $("#map-panel").on("click", "#getLastData", function() {
+	 $("#getLastData").click( function() {
   	alert('hello')
    })
 }
 
+/*=========================== Begin select a mission==================================*/
 function choosetMission(){
 		missions=getAllCurrentMissions();
 		nbmissions=missions.length
@@ -66,9 +80,11 @@ function choosetMission(){
 				alert("Please choose a correct mission!!!")
 			}else{
 				saveCurrentMission(e)
+				$("#trackersAndCoordis").click();
 			}
-			//alert(getCurrentMission())
+			//alert(getCurrentMission())//just for debugger
 		}
+		
 }
 
 function selectMissions(){
@@ -85,14 +101,12 @@ function selectMissions(){
 			});
 	})
 }
+/*============================End select a mission=========================================*/
 
 //when the panel is displayed
 $("#map-panel").ready(function(){
-
 	selectMissions()
-	getLastData()
-	getNewTrackers()
-	getNewCoordinates()
+	updateMap()
 	
   //for all checkboxes of tracker, on click do ...
   $("#map-panel").on("click", "input[name*='tracker']", function() {

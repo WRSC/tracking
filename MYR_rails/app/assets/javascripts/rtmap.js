@@ -61,6 +61,12 @@ jQuery.expr.filters.offscreen = function(el) {
 		return all_current_missions;
 	}
 	
+	function getIndexOfCurrentMission(){
+		all=getAllCurrentMissions()
+		targ=getCurrentMission()
+		return all.index(targ)
+	}
+	
 	//save current missions, need to clear all the missions before
 	function setAllCurrentMissions(missions){
 		all_current_missions=missions;

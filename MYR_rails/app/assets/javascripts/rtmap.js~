@@ -66,6 +66,11 @@ jQuery.expr.filters.offscreen = function(el) {
 		all_current_missions=missions;
 	}
 	
+	//get current mission (only one)
+	function getCurrentMission(){
+		return current_mission
+	}
+	
 	//save a current mission (only a mission at a time in order to display)
 	function saveCurrentMission(mission_id){
 		current_mission=mission_id

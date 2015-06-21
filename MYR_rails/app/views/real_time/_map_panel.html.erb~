@@ -6,7 +6,7 @@
 		<p>Cannot display multiple missions at a time</p>
 		<p>Please choose a mission !!!</p>
 		<p>Current missions are: 
-			<select name="Select mission" id="dropdown">
+			<select name="Select mission" id="dropdown_select_mission">
 				<option value="select_mission">Select a mission</option>
 				<% for m in missionsArray %>
 				<option value="<%= m.id %>"><%= m.name %> <%= m.id%></option>
@@ -23,20 +23,9 @@
 				<p>Description: <%= mission.description %></p>
 			<% end %>
 		</p>
-	
 	<% end %>
-	
-	<button id="getLastData" type="button">Get LastData</button> 
-			<button id="getNewTrackers" type="button">Get trackers</button> 
-			<button id="getNewCoordinates" type="button">Get coordinates</button>
-
-
-
-	
-	<h2>Options</h2>
-	<p>TODO</p>
 <% else %>
 	<h1>No mission in progress currently.</h1>
 	<p>Please come back later !</p>
 <% end %>
-
+<div id="trackersAndCoordis"></div>

@@ -1,4 +1,5 @@
 //=require rtmap
+//=require handle_markers
 
 var map
 $(document).ready(function(){
@@ -15,15 +16,15 @@ $(document).ready(function(){
 	//gather newly added coordinates or add coordinates since begining of mission
 function getNewCoordinates(){
 	$("#getNewCoordinates").click( function() {
-		alert ('new coordinate')
 		$.ajax({
 			type: "GET",
 			url: "/gatherCoordsSince",
-			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers()},
+			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers(), mission_id: getCurrentMission()},
 			dataType: "json",
 			success: function(data){
 				if(data.length > 0){
 					refreshWithNewMarkers2(data);
+					//clearDesiredTrackers(getDesiredTrackers()); //need to check
 				}
 			}       
 		});
@@ -32,17 +33,16 @@ function getNewCoordinates(){
 
 function getNewTrackers(){
 	$("#getNewTrackers").click(function() {
-		//alert(getCurrentMission())
 		$.ajax({
 			type: "GET",
 			url: "/getNewTrackers",
-			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getCurrentMission()},
+			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getCurrentMission()}, //!!!!! Be careful, datetime can not begin with 0
 			dataType: "json",
 			success: function(data){// retrieve an array containing the not yet known trackers
 				if(data.length > 0){
-					alert(getIndexOfCurrentMission())
-					//saveNewKnownTracker(data);
-					//alert("Received data: "+data);
+					saveNewDesiredTracker(data)//need to check???? need to clear when finish
+					saveNewKnownTracker(data);
+					alert("Received data: "+data);
 				}
 			}       
 		});
@@ -55,19 +55,13 @@ function updateMap(){
 			type: "GET",
 			url: "/update_map",
 			data: {mission_id: getCurrentMission()},
+			
 			success: function(){
-				getLastData()
 				getNewTrackers()
 				getNewCoordinates()
 			}       
 		});
 	});
-}
-
-function getLastData(){		
-	 $("#getLastData").click( function() {
-  	alert('hello')
-   })
 }
 
 /*=========================== Begin select a mission==================================*/

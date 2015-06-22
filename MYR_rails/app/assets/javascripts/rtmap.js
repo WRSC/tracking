@@ -1,7 +1,7 @@
 //=require handle_markers
 //----------------------GLOBAL VARIABLES-------------------
 var map = null;
-var lastDatetime = "00000101";
+var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
 var desired_trackers = [];
@@ -74,7 +74,7 @@ jQuery.expr.filters.offscreen = function(el) {
 	
 	//get current mission (only one)
 	function getCurrentMission(){
-		return current_mission
+		return current_mission+''
 	}
 	
 	//save a current mission (only a mission at a time in order to display)

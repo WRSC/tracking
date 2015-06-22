@@ -19,27 +19,27 @@ Rails.application.routes.draw do
 
   # GET
 
-    get 'home', to: 'static_pages#home'
-    get 'contact', to: 'static_pages#contact'
-    get 'real-time', to: 'real_time#show'
-    get 'replay', to: 'replay#show'
-    get 'markersCreation', to:'admin_markers#show'
+    get 'home'            , to: 'static_pages#home'
+    get 'contact'         , to: 'static_pages#contact'
+    get 'real-time'       , to: 'real_time#show'
+    get 'replay'          , to: 'replay#show'
+    get 'markersCreation' , to:'admin_markers#show'
 
   # Ajax
 
-    get 'what', to: 'what#what'
+    get  'what', to: 'what#what'
     
-    get 'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
-    get 'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
+    get  'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
+    get  'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
    	
-   	get 'map_panel'               ,  to: 'real_time#map_panel' 
-   	get 'getMissions'             ,  to: 'real_time#getMissions'
-    get 'getNewTrackers'          ,  to: 'real_time#getNewTrackers'
-    get 'update_map'              ,  to: 'real_time#update_map' 
+   	get  'map_panel'               ,  to: 'real_time#map_panel' 
+   	get  'getMissions'             ,  to: 'real_time#getMissions'
+    get  'getNewTrackers'          ,  to: 'real_time#getNewTrackers'
+    get  'update_map'              ,  to: 'real_time#update_map' 
     
-    get 'choice_teams'            ,  to: 'replay#choice_teams'
-    get 'choice_robots'           ,  to: 'replay#choice_robots'
-    get 'replay_map_panel'        ,  to: 'replay#replay_map_panel'
+    get  'choice_teams'            ,  to: 'replay#choice_teams'
+    get  'choice_robots'           ,  to: 'replay#choice_robots'
+    get  'replay_map_panel'        ,  to: 'replay#replay_map_panel'
 
 
   # Authentication

@@ -16,13 +16,12 @@ class RealTimeController < ApplicationController
 	end
 	
 	def getNewTrackers
-		@test=getMissionInfos[0]
-		#last_refresh = params[:datetime]
-		#@last_refresh=last_refresh
-		#known_trackers = params[:trackers]
-		#current_mission_id = params[:mission_id]
-		#@test= IsThereNewTrackers?(last_refresh, known_trackers, current_mission_id)
-		#render json: @test
+		
+		last_refresh = params[:datetime]
+		known_trackers = params[:trackers]
+		current_mission_id = params[:mission_id]
+		@test= IsThereNewTrackers?(last_refresh, known_trackers, current_mission_id)
+		render json: 	@test
 	end
 	
 	

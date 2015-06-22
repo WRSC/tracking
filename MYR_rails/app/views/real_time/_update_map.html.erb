@@ -1,11 +1,6 @@
 
 	<h2>Trackers</h2>
-	<p><%trackers = IsThereNewTrackers?("00000101", [], @current_mission_id)%></p>
-	<% if trackers != nil %>
-		<% for track in trackers %>
-			<label class="checkboxtext"><input name="tracker" type="checkbox" id="<%=track%>" class="custom">
-			<img src="/icons/medium<%=track%>.png"/ class="image_checkbox"> Tracker <%=track%></label>
-		<% end %>
-	<% end %>
+	<%= @current_mission_id%>
+
 	<button id="getNewTrackers" type="button">Get trackers</button> 
 	<button id="getNewCoordinates" type="button">Get coordinates</button> 

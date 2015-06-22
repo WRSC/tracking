@@ -100,6 +100,10 @@ jQuery.expr.filters.offscreen = function(el) {
 	function getDesiredTrackers(){
 		return desired_trackers;
 	}
+	
+	function getMap(){
+		return map;
+	}
 
 //--------MAP----------------
 function FullScreenControl(controlDiv, map) {
@@ -129,7 +133,7 @@ function FullScreenControl(controlDiv, map) {
 
 /*========================= Begin initialize Google Map===============================================*/
 	//Map initialization
-	function initializeMap(map) {
+	function initializeMap() {
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.HYBRID,

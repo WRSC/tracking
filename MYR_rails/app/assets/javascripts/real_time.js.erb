@@ -4,7 +4,7 @@
 var map
 $(document).ready(function(){
 	//initialization
-	google.maps.event.addDomListener(window, 'load', initializeMap(map));
+	google.maps.event.addDomListener(window, 'load', initializeMap());
 	$("#refresh-panel").click();
 	
 	//initializeMap();
@@ -23,7 +23,7 @@ function getNewCoordinates(){
 			dataType: "json",
 			success: function(data){
 				if(data.length > 0){
-					refreshWithNewMarkers2(data);
+					refreshWithNewMarkers(data,getMap());
 					//clearDesiredTrackers(getDesiredTrackers()); //need to check
 				}
 			}       

@@ -82,27 +82,31 @@
 /*=================================End Add Draggable Marker================================*/
 
 	//Add all the given coordinates onto the map
-	function addAllThisMarkers(data){
+	function addAllThisMarkers(data,map){
 		var lat, lng, tracker_id = 0;
 		for(var i=0; i < data.length ; i++){
 			lat = data[i].latitude;
 			lng = data[i].longitude;
 			tracker_id = data[i].tracker_id;
-			addMarker(lat,lng,tracker_id);
+			addSmallMarker(lat,lng,tracker_id,map);
 		}
 	}
 
 	//Add the given coordiantes on the map and save this last state
-	function refreshWithNewMarkers(data){
+	function refreshWithNewMarkers(data,map){
 		var lastCoordinate = data[data.length-1];
 		var lastDate = lastCoordinate.datetime;
 		var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
-
-		addAllThisMarkers(data);
+		/*
+		alert(lastDate)
+		alert(lastLat)
+		alert(lastLng)
+		*/
+		addAllThisMarkers(data,map);
+		/*
 		setCenter(lastLat,lastLng);
-
-		saveLastDatetime(lastDate);
+		saveLastDatetime(lastDate);*/
 	}
 
 	//Add the given coordiantes on the map and save this last state
@@ -111,12 +115,15 @@
 		var lastDate = lastCoordinate.datetime;
 		var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
-		alert(lastLng)
 		/*
+		alert(lastDate)
+		alert(lastLat)
+		alert(lastLng)
+		*/
 		addAllThesePolylines(data);
 
 		setCenter(lastLat,lastLng);
-		saveLastDatetime(lastDate);*/
+		saveLastDatetime(lastDate);
 	}
 
 	function addAllThesePolylines(data){

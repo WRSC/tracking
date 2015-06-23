@@ -104,8 +104,8 @@
 		alert(lastLng)
 		*/
 		addAllThisMarkers(data,map);
-		/*
 		setCenter(lastLat,lastLng);
+		/*
 		saveLastDatetime(lastDate);*/
 	}
 

@@ -23,7 +23,7 @@ function getNewCoordinates(){
 			dataType: "json",
 			success: function(data){
 				if(data.length > 0){
-					refreshWithNewMarkers(data,map);
+					refreshWithNewMarkers2(data,getMap());
 					//clearDesiredTrackers(getDesiredTrackers()); //need to check
 				}
 			}       

@@ -5,28 +5,9 @@
 <% end %>
 </p>
 
-<style type="text/css">
-  text {font: 12px sans-serif;}
-  svg {display: block;}
-  
-  #chart1, svg {
-    margin: 10px;
-    padding: -20px;
-
-    height: 75%;
-  }
-</style>
-
 <div class="container-fluid">
   <div class="row">
-    <%= render 'members/control_panel' %>
-   </div>
    
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    
-    <h1>Dashboard</h1>
+   </div>
 
-    
-
-		
 </div>

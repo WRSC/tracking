@@ -31,12 +31,7 @@ Licence URI: http://www.os-templates.com/template-terms
 	  </div>
 	</a></div>
   <div class="one_third "><a href="<%=signin_path%>"> <!--sign in up-->
-    <div class="hexagon"><i class="icon-calendar"></i>
-    <p class="nospace"><strong>Login or Sign Up</strong><br>If you are a competitor you can create an account to add/join your team</p>
-    </div>
-  </a></div>
-  <div class="one_third "><a href="<%=signin_path%>"> <!--need to check-->
-    <div class="hexagon"><i class="icon-calendar"></i>
+    <div class="hexagon"><i class="icon-bug"></i>
     <p class="nospace"><strong>Login or Sign Up</strong><br>If you are a competitor you can create an account to add/join your team</p>
     </div>
   </a></div>

@@ -11,5 +11,5 @@ class Attempt < ActiveRecord::Base
     validates :end, presence: true
     validates :mission_id, presence: true
     validates :robot_id, presence: true
-		validates :tracker_id, presence: true
+		validates :robot_id, presence: true
 end

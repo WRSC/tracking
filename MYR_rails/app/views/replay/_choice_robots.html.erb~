@@ -8,7 +8,7 @@
         <% @tabrobots = Robot.where(team_id: team.id)%>
         <% @tabrobots.each do |robot| %>
           <% if robot.tracker_id != nil %>
-            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"> <%= robot.name %><img src="/icons/medium<%=robot.tracker_id.to_s%>.png"/><br>
+            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"><img src="/icons/medium<%=robot.tracker_id.to_s%>.png"/> <%= robot.name %><br>
           <% end %> 
         <% end %> 
         <div>&nbsp;</div>
@@ -19,7 +19,7 @@
 	<%end%>
 
 
-<button id="update_button" type="button">Update</button> 
+<button id="choose_mission" type="button">Select a mission</button> 
 
 
 

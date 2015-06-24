@@ -1,0 +1,47 @@
+
+<% missions = [] %>
+<% missions = Mission.where(team_id: nil) %>
+<% for i in @indteams %> 
+  <% missions += Mission.where(team_id: i) %>
+<% end %>
+<% tries = [] %>
+<% missions.each do |mission| %>
+  <% tries += Try.where(mission_id: mission.id)%>
+<% end %>
+<% tries2 = [] %>
+<% for i in @indrobots %>
+  <% tries2 = [] %>
+  <% for t in tries %>
+    <% if t.robot_id.to_s == i %>
+      <% tries2.push(t) %>
+    <% end %>
+  <% end %>
+<% end %>
+<% indmissions = [] %>
+<% for try in tries2 %>
+<% index = Mission.find_by_id(try.mission_id).id %>
+  <% if indmissions.index(index) == nil %>
+    <% indmissions.push(index) %>
+  <% end %>
+<% end %>
+<% indmissions.sort! %>
+
+<select name="mission" id="dropdown">
+<option></option>
+<% for i in indmissions %>
+  <option value="<%= i %>"><%= Mission.find_by_id(i).name %></option>
+<% end %>
+</select>
+<form></form>
+<a id="refreshtries" href<%= link_to "", :action => :choicetries, remote: true%></a>
+<script>
+//------------------- MISSIONS ----------------------------------------------
+$(document).ready(function () {
+  $.cookie("rmissionslist",$("#dropdown option:selected").val());
+});
+$("#dropdown").on("change", function () {
+ $.cookie("rmissionslist",$("#dropdown option:selected").val());
+ $("#refreshtries").click();
+});
+//------------------------------------------------------------------------------
+</script>

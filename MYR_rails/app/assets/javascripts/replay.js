@@ -13,7 +13,7 @@ $(document).ready(function(){
 	initialScroll();
 	
 	/*=========================Begin choose teams and robots================================*/
-	//choose teams <= choose robots <= updatemap
+	//choose teams <= choose robots <= choose mission <= choose attemps
 	$("#choose_teams").click(function(){
 		$.ajax({
 			type: "GET",
@@ -21,7 +21,8 @@ $(document).ready(function(){
 			
 			success: function(){
 				initialize_choice_teams();
-				checkAllBox_of_teams();
+				checkAllBox_of_teams();  
+			//==============finish choose teams, now to choose robots
 				choose_robots();
 			}       
 		});
@@ -37,7 +38,27 @@ $(document).ready(function(){
 					success: function(){
 						initialize_choice_robots();
 						checkAllBox_of_robots();
-						displayMap();
+			//=============finish choose robots, now choose a mission
+							choose_missions();
+						//displayMap();
+					}       
+				});
+		});
+	}
+	
+	//choose missions
+	function choose_missions(){
+		$("#choose_missions").click(function(){
+				$.ajax({
+					type: "GET",
+					url: "/choice_missions",
+	
+					success: function(){
+			//here we use the dropdown checkbox, we could only choose a mission at a time			
+			//=============finish choose robots, now choose a mission
+							alert('choose mission successfully');
+							//choose_missions();
+						//displayMap();
 					}       
 				});
 		});

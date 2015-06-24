@@ -177,6 +177,26 @@ class ReplayController < ApplicationController
 		#----------------------------------------------------------------------------------
  	end
  	
+ 	def choice_missions
+ 		#--------------Help the generation of html for missions----------------------------
+		strrobots = cookies[:rrobotslist]
+		if (strrobots != nil)
+			@indrobots = strrobots.split(",") #list of index of the robots to diplay
+		else
+			@indrobots = []
+		end	
+
+		strteams = cookies[:rteamslist] 
+		if (strteams != nil) #cannot split nil
+			@indteams = strteams.split(","); #list of index of the team to display
+		else
+			@indteams = []
+		end	
+
+		@strmissions = cookies[:rmissionslist]
+		#----------------------------------------------------------------------------------
+ 	end
+ 	
  	def infowindow
  	end
 

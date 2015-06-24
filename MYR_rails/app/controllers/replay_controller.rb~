@@ -2,7 +2,7 @@ class ReplayController < ApplicationController
 	def show 
 	end
 	
-	def map_panel
+	def replay_map_panel
 		#------------------------------------------------------------------------------------
 		#------------ GATHERING ALL THE DESIRED COORDINATES-----------------------------
 		@coordinatesCustom = [] #create an empty array where adding desired coordinates
@@ -175,6 +175,9 @@ class ReplayController < ApplicationController
 
 		cookies[:robotslist] = robots.join(",") # modify the cookie after having delete undesired robots
 		#----------------------------------------------------------------------------------
+ 	end
+ 	
+ 	def choice_missions
  	end
  	
  	def infowindow

@@ -7,6 +7,6 @@ class Coordinate < ActiveRecord::Base
     validates :latitude, presence: true
     validates :longitude, presence: true
     validates :datetime, presence: true
-    validates :tracker_id, presence: true
+    validates :datetime, presence: tracker_id
 end
 

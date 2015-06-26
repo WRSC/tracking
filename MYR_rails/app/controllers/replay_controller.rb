@@ -134,10 +134,6 @@ class ReplayController < ApplicationController
 		#----------------------------------------------------------------------------------
  	end
  	
- 	
- 	def choice_datetimes
- 	end
- 	
  	def choice_onerobot
  	end
  	
@@ -159,6 +155,28 @@ class ReplayController < ApplicationController
 
 		@strmissions = cookies[:missionslist]
 		#----------------------------------------------------------------------------------
+ 	end
+ 	
+ 	def choice_attempts
+ 		#--------------Help the generation of html for missions----------------------------
+		strrobots = cookies[:robotslist]
+		if (strrobots != nil)
+			@indrobots = strrobots.split(",") #list of index of the robots to diplay
+		else
+			@indrobots = []
+		end	
+
+		strteams = cookies[:teamslist] 
+		if (strteams != nil) #cannot split nil
+			@indteams = strteams.split(","); #list of index of the team to display
+		else
+			@indteams = []
+		end	
+		@strmissions = cookies[:missionslist]
+		#----------------------------------------------------------------------------------
+ 	end
+ 	
+ 	def choice_datetimes
  	end
  	
  	def infowindow

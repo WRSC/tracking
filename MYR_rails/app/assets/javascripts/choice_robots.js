@@ -1,4 +1,4 @@
-
+//=require choice_onerobot
 
 //-----------INITIALIZATION--------------------------------------------
 function run_choice_robots(){
@@ -57,38 +57,6 @@ function run_choice_robots(){
 			else{} 
     })
   })  
-}
-
-function requestRefreshReplayMissions(){
-		$.ajax({
-		type: "GET",
-		url: "/choice_replay_missions",
-		
-		success: function(){
-			//alert('choice one robot')
-			choose_mission();
-		}       
-	});
-}
-
-function choose_mission(){
-	$.cookie("missionslist",$("#dropdown option:selected").val());
-	$("#dropdown").on("change", function () {
-		$.cookie("missionslist",$("#dropdown option:selected").val());
-		alert($("#dropdown option:selected").val())
-		$("#refreshtries").click();
-	});
-}
-
-function requestRefreshOnerobot(){
-		$.ajax({
-		type: "GET",
-		url: "/choice_onerobot",
-		
-		success: function(){
-			requestRefreshReplayMissions()
-		}       
-	});
 }
 
 function requestRefreshDatetimes(){

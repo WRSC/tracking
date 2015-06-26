@@ -1,0 +1,38 @@
+<p><b><u>Select attempts:</u></b></p>
+<% missions = [] %>
+<% missions = Mission.where(team_id: nil) %>
+<% for i in @indteams %> 
+  <% missions += Mission.where(team_id: i) %>
+<% end %>
+<% tries = [] %>
+<% missions.each do |mission| %>
+  <% tries += Try.where(mission_id: mission.id)%>
+<% end %>
+<% tries2 = [] %>
+<% for i in @indrobots %>
+  <% tries2 = [] %>
+  <% for t in tries %>
+    <% if t.robot_id.to_s == i %>
+      <% tries2.push(t) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% tries3 = [] %>
+<% for t in tries2 %>
+  <% if t.mission_id == @strmissions.to_i %>
+    <% tries3.push(t) %>
+  <% end %>
+<% end %>
+
+
+<select id="dropdown2">
+  <option></option>
+  <% for t in tries3 %>
+    <option value="<%= t.id %>"><%= t.name %></option>
+  <% end %>
+</select>
+
+<a id="refreshupdate" href<%= link_to "", :action => :updatemapp2, remote: true%></a>
+<script>
+

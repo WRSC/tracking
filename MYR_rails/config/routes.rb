@@ -39,7 +39,9 @@ Rails.application.routes.draw do
     
     get  'choice_teams'            ,  to: 'replay#choice_teams'
     get  'choice_robots'           ,  to: 'replay#choice_robots'
-    get  'choice_missions'         ,  to: 'replay#choice_missions'
+    get  'choice_onerobot'         ,  to: 'replay#choice_onerobot'
+    get  'choice_replay_missions'  ,  to: 'replay#choice_replay_missions'
+    get  'choice_datetimes'        ,  to: 'replay#choice_datetimes'
     get  'replay_map_panel'        ,  to: 'replay#replay_map_panel'
 
 

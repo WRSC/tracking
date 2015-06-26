@@ -1,29 +1,7 @@
 
-//-------------------  ACTIONS OF THE CHECKBOXES -------------------------------
-//pour toutes les checkboxes
-function checkAllBox_of_teams(){
-  $( "input[name*='team']" ).each(function () { 
-    //si on clique dessus
-    $(this).click(function() {
-      //récupére l'id de la checkbox
-      var id = $(this).attr('id');
-      //si coché
-      if($(this).is(':checked')){
-        addteam(id);
-      }
-      //si décoché
-      else{
-        rmvteam(id);
-      }
-      $("#refreshrobots").click();
-      $("#refreshteams").click();
-    })
-  })  
-}
-//-------------------------------------------------------------------------------
-
+function run_choice_teams(){
 //--------------INITIALIZATION-------------------------------------------------
-function initialize_choice_teams(){
+	var count=0
 	$(document).ready(function(){
 		//initialize the checkboxs
 		// FOR NOW => si pas de cookie -> rien n est coché
@@ -40,6 +18,7 @@ function initialize_choice_teams(){
 		  var index = tab.indexOf(id);
 		  if(index > -1){
 		    $(this).prop('checked',true);
+		  	count=count+1;
 		  }
 		  else{
 		    $(this).prop('checked',false);
@@ -48,12 +27,50 @@ function initialize_choice_teams(){
 		//initial display of the page
 		//if at least one checkbox is checked
 		$( "input[name*='team']" ).each(function () { 
-		  if($(this).is(':checked')){
-		    $("#refreshrobots").click();
-		  }
-		})
+  	  if($(this).is(':checked')){
+  	    requestRefreshRobots();
+  	  }
+  	})
 	})
+		
+//-------------------  ACTIONS OF THE CHECKBOXES -------------------------------
+//pour toutes les checkboxes
+  $( "input[name*='team']" ).each(function () { 
+    //si on clique dessus
+    $(this).click(function() {
+      //récupére l'id de la checkbox
+      var id = $(this).attr('id');
+      //si coché
+      if($(this).is(':checked')){
+        addteam(id);
+        count=count+1;
+      }
+      //si décoché
+      else{
+        rmvteam(id);
+        count=count-1;
+      }
+      if (count == 0){
+        $("#refreshonerobot").click();
+      }
+      requestRefreshRobots();
+     	//need to do, when we choose teams, need to Emphasize
+    })
+  })  
 }
+
+function requestRefreshRobots(){
+		$.ajax({
+		type: "GET",
+		url: "/choice_robots",
+		
+		success: function(){
+			run_choice_robots();
+		}       
+	});
+}
+
+//-------------------------------------------------------------------------------
 //------------------------------CHOICE TEAMS---------------------------------------
 //------------------------ ADD AND REMOVE TEAMS------------------------------------
 function addteam(id){
@@ -68,7 +85,7 @@ function addteam(id){
     //sinon ajout
     else{
     	$.cookie("teamslist",$.cookie("teamslist")+","+id);
-    	alert('add team cookie');
+    	//alert('add team cookie');
     }
   }
 }

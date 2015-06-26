@@ -10,11 +10,26 @@ function checkAllBox_of_robots(){
       //si coché
       if($(this).is(':checked')){
         addrobot(id);
+        c=c+1;
       }
       //si décoché
       else{
         rmvrobot(id);
+        c=c-1;
       }
+				
+			if (c==1){
+				//quand on coche une checkbox pour la premiere fois
+				$("#refreshdatetimes0").click(); //affiche le volet pour missions tries
+				$("#refreshmissions").click(); //affiche le champ pour missions
+			}
+			else if (c > 1){
+				$("#refreshdatetimes").click();
+			}
+			else{
+				$("#refreshdatetimes0").click();
+			}
+      
       if (c==0){
         //quand on coche une checkbox pour la premiere fois
         $("#updatemap").click(); //affiche le champ update

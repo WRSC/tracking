@@ -1,0 +1,16 @@
+/*when there is only one robot missions => attempts => update*/
+function run_choice_onerobot(){
+		//choose replay missions
+		requestRefreshReplayMissions()
+}
+
+function requestRefreshReplayMissions(){
+		$.ajax({
+			type: "GET",
+			url: "/choice_replay_missions",
+		
+			success: function(){
+				alert('replay missions')
+			}       
+		});
+}

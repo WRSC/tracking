@@ -24,10 +24,11 @@ function run_choice_robots(){
 		
 		if (c==1){
 				//quand on coche une checkbox pour la premiere fois
-				
 				requestRefreshReplayMissions();//affiche le volet pour missions tries
 		}else if (c > 1){
 			requestRefreshDatetimes();
+		}else{
+			
 		}
 	})
 
@@ -48,7 +49,6 @@ function run_choice_robots(){
         rmvrobot(id);
         c=c-1;
       }
-      
 			if (c==1){
 				//quand on coche une checkbox pour la premiere fois
 				requestRefreshReplayMissions();//affiche le volet pour missions tries
@@ -56,11 +56,10 @@ function run_choice_robots(){
 				requestRefreshDatetimes();
 			}
 			else{//when c is negative, which means browser remeber the option before
-				requestRefreshReplayMissions();
+				//requestRefreshReplayMissions();
 			} 
     })
   })  
-
 }
 
 function requestRefreshReplayMissions(){
@@ -74,7 +73,6 @@ function requestRefreshReplayMissions(){
 	});
 }
 
-
 function requestRefreshDatetimes(){
 		$.ajax({
 		type: "GET",
@@ -85,8 +83,6 @@ function requestRefreshDatetimes(){
 		}       
 	});
 }
-
-
 
 //-------------------------------------------------------------------------------
 //----------------------------ADD AND REMOVE ROBOTS--------------------------------

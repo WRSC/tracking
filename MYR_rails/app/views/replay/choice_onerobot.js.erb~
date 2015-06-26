@@ -1,1 +1,1 @@
-$("#onerobot").html("<%= escape_javascript(render 'choice_onerobot') %>")
+$("#choice_onerobot").html("<%= escape_javascript(render 'choice_onerobot') %>")

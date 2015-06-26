@@ -2,8 +2,9 @@
 
 <p><b><u>Select datetimes:</u></b></p>
 <b>Start:</b></br>
+<div id="select_datetimes">
 <%= select_datetime(Time.now.utc - 1.hours, prefix: 'start') %>
-
+</div>
 <br></br>
 <b>End:</b></br>
 <%= select_datetime(Time.now.utc, prefix: 'end') %>

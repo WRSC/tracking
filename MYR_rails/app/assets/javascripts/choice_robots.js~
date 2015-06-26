@@ -21,15 +21,14 @@ function run_choice_robots(){
 	      $(this).prop('checked',false);
 	    }
 		})
-		
+	
 		if (c==1){
 				//quand on coche une checkbox pour la premiere fois
-				requestRefreshReplayMissions();//affiche le volet pour missions tries
+				requestRefreshOnerobot();//affiche le volet pour missions tries
 		}else if (c > 1){
 			requestRefreshDatetimes();
-		}else{
-			
-		}
+		}else{}
+		
 	})
 
 //-------------------  ACTIONS OF THE CHECKBOXES -------------------------------
@@ -49,16 +48,13 @@ function run_choice_robots(){
         rmvrobot(id);
         c=c-1;
       }
-      alert(c)
 			if (c==1){
 				//quand on coche une checkbox pour la premiere fois
-				requestRefreshReplayMissions();//affiche le volet pour missions tries
+				requestRefreshOnerobot()//affiche le volet pour missions tries
 			}else if (c > 1){
 				requestRefreshDatetimes();
 			}
-			else{//when c is negative, which means browser remeber the option before
-				//requestRefreshReplayMissions();
-			} 
+			else{} 
     })
   })  
 }
@@ -70,6 +66,27 @@ function requestRefreshReplayMissions(){
 		
 		success: function(){
 			//alert('choice one robot')
+			choose_mission();
+		}       
+	});
+}
+
+function choose_mission(){
+	$.cookie("missionslist",$("#dropdown option:selected").val());
+	$("#dropdown").on("change", function () {
+		$.cookie("missionslist",$("#dropdown option:selected").val());
+		alert($("#dropdown option:selected").val())
+		$("#refreshtries").click();
+	});
+}
+
+function requestRefreshOnerobot(){
+		$.ajax({
+		type: "GET",
+		url: "/choice_onerobot",
+		
+		success: function(){
+			//alert('choice onerobot')
 		}       
 	});
 }

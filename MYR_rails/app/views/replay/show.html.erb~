@@ -26,14 +26,13 @@
 			<div class="one_third" style='height: 100%'>
 				
 				<!--button id="choose_teams" type="button">Select teams</button-->
-				<a id="refreshteams" href<%= link_to "", :action => :choice_teams, remote: true%></a>
+				
 				<div id="choice_teams"></div>
 				
 				<div id="replay_map-panel"></div>
 
 				<div id = "datetimesandonerobot">				
-				<a id="onerobot" href<%= link_to "", :action => :choice_onerobot, remote: true%></a>
-				<a id="choose_datetimes" href<%= link_to "", :action => :choice_datetimes, remote: true%></a>
+				
 				</div>
 				 
 		</div>

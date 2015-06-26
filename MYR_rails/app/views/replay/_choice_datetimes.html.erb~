@@ -1,14 +1,20 @@
 
+<style>
+	#select_datetimes{
+	
+	}
+</style>
 
 <p><b><u>Select datetimes:</u></b></p>
 <b>Start:</b></br>
+<div id="select_datetimes">
 <%= select_datetime(Time.now.utc - 1.hours, prefix: 'start') %>
-
+</div>
 <br></br>
 <b>End:</b></br>
 <%= select_datetime(Time.now.utc, prefix: 'end') %>
 <br></br>
 <button id="updatebutton" type="button">UPDATE</button></br>
-<a id="refresh" href<%= link_to "", :action => :mapp2, remote: true%></a>
+
 <FONT size = 1>Longer is the selected time span, fewer are the displayed points for a given period.</FONT>
 

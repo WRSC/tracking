@@ -1,4 +1,5 @@
 <p><u><b>Select Robots</b></u></p>
+
   <%@teams.each do |team| %>
     <% if Robot.find_by_team_id(team.id) != nil %>
       <%if @tabteams.index(team.id.to_s) != nil %>      
@@ -16,12 +17,12 @@
       <%else%>
         <div>&nbsp;</div>
       <%end%>
+      
     <%end%> 
 	<%end%>
 
-<div id="choose_replay_missions"></div>
-
-
+<div id="onerobot"></div>
+<div id="choose_datetimes"></div>
 
 
 

@@ -40,20 +40,20 @@ function run_choice_teams(){
     $(this).click(function() {
       //récupére l'id de la checkbox
       var id = $(this).attr('id');
+      
       //si coché
       if($(this).is(':checked')){
         addteam(id);
         count=count+1;
-      }
-      //si décoché
-      else{
+      }else{//si décoché
         rmvteam(id);
         count=count-1;
+        
       }
-      if (count == 0){
-        $("#refreshonerobot").click();
-      }
+      
+     
       requestRefreshRobots();
+      
      	//need to do, when we choose teams, need to Emphasize
     })
   })  
@@ -69,6 +69,8 @@ function requestRefreshRobots(){
 		}       
 	});
 }
+
+
 
 //-------------------------------------------------------------------------------
 //------------------------------CHOICE TEAMS---------------------------------------
@@ -101,6 +103,7 @@ function addteam(id){
     res = tab.toString();
     $.cookie("teamslist",res);
   }
+  
 }
 //-------------------------------------------------------------------------------
 

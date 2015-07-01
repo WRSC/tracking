@@ -1,10 +1,13 @@
 <p><b><u>Select attempts:</u></b></p>
-<% attempts = Mission.find(@strmissions).attempts %>
+<% m= Mission.find(@strmissions[0]) %>
 
-
-<select name="mission" id="dropdown">
-<option></option>
-<% for i in 1..attempts.size %>
-  <option value="<%= Attempt.find(i).id %>"><%= Attempt.find(i).name %></option>
+<select name="mission" id="attempts_dropdown">
+<option>Please choose an attempt</option>
+<% for i in 0..(m.attempts.size-1)%>
+  <option value="<%= m.attempts[i].id %>"><%= m.attempts[i].name %></option>
 <% end %>
+
 </select>
+
+
+

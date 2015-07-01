@@ -176,6 +176,20 @@ class ReplayController < ApplicationController
 		#----------------------------------------------------------------------------------
  	end
  	
+ 	def update_replay_map
+ 	
+ 	end
+ 	
+ 	def getAttemptInfos
+ 		ttime=[]
+ 		attempt = cookies[:attemptslist]
+ 		tstart=Attempt.find(attempt).start
+ 		ttime.push(tstart)
+ 		tend=Attempt.find(attempt).end
+ 		ttime.push(tend)
+ 		render json: ttime 
+ 	end
+ 	
  	def choice_datetimes
  	end
  	

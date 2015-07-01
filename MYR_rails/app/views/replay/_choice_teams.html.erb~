@@ -19,6 +19,5 @@
     <br>
 
 		<!--button id="choose_robots" type="button">Select Robots</button-->
-		<a id="refreshrobots" href<%= link_to "", :action => :choice_robots, remote: true%></a>
 		<div id="choice_robots"></div>
 

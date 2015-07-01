@@ -21,7 +21,7 @@ function run_choice_robots(){
 	      $(this).prop('checked',false);
 	    }
 		})
-	
+
 		if (c==1){
 				//quand on coche une checkbox pour la premiere fois
 				requestRefreshOnerobot();//affiche le volet pour missions tries
@@ -48,6 +48,7 @@ function run_choice_robots(){
         rmvrobot(id);
         c=c-1;
       }
+      
 			if (c==1){
 				//quand on coche une checkbox pour la premiere fois
 				requestRefreshOnerobot()//affiche le volet pour missions tries
@@ -69,6 +70,8 @@ function requestRefreshDatetimes(){
 		}       
 	});
 }
+
+
 
 //-------------------------------------------------------------------------------
 //----------------------------ADD AND REMOVE ROBOTS--------------------------------

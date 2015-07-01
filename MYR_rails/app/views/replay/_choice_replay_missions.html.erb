@@ -1,21 +1,14 @@
+
 <p><u><b>Select a mission</b></u></p>
 <!--If we need to choose missions, there is always only one robot-->
-<% m= []%>
-<% @indrobots.each do |ind_rob|%>
-	<% rob=Robot.find(ind_rob) %>
-	<% m.push(rob.missions) %>
-<% end %><!--If we need to choose missions, there is always only one robot-->
-<% m= []%>
-<% @indrobots.each do |ind_rob|%>
-	<% rob=Robot.find(ind_rob) %>
-	<% m.push(rob.missions) %>
-<% end %>
+<% missions= []%>
+<% robid= @indrobots[0]%>
+<% rob=Robot.find(robid)%>
 
-<select name="mission" id="dropdown">
-<option></option>
-<% for i in 1..m.size %>
-  <option value="<%= Mission.find(i).id %>"><%= Mission.find(i).name %></option>
+<select name="mission" id="replay_missions_dropdown">
+<option>Please choose a mission</option>
+<% for i in 0..(rob.missions.size-1)%>
+  <option value="<%= rob.missions[i].id %>"><%= rob.missions[i].name %></option>
 <% end %>
 </select>
-
 

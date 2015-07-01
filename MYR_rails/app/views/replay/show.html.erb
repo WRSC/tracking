@@ -4,8 +4,7 @@
 	<%= javascript_include_tag 'replay', 'data-turbolinks-track' => true %>
 </head>
 
-	<div id="above_the_map">
-</div>
+	<div id="above_the_map"></div>
 
 	<style type="text/css">
 		#map_frame_container{
@@ -14,7 +13,7 @@
 		}
 	</style>
 	
-	<div id="map_frame_container" style='width: 99%; height: 93%'>
+	<div id="map_frame_container" style='width: 100%; height: 70%'>
 		<div id="map-container" class="two_third first" style='height: 100%'>
 			<div id="map-canvas"></div>
 		</div>
@@ -23,18 +22,16 @@
 			.gm-style label { width: auto; display: inline; }
 		</style>
 		
-			<div class="one_third" style='height: 100%'>
-				
-				<!--button id="choose_teams" type="button">Select teams</button-->
-				
-				<div id="choice_teams"></div>
-				<div id="choice_onerobot"></div>
-				<div id="replay_map-panel"></div>
-
-				<div id = "datetimesandonerobot">				
-				
-				</div>
-				 
+		<div class="one_third">
+			<div  id="choice_teams"></div>
+			<div  id="choice_robots"></div>
+			<div  id="onerobot"></div>
+			
+			<div id="replay_map-panel"></div>
 		</div>
-	</div> 
-<
+				 
+	</div>
+		
+	
+
+

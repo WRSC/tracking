@@ -1,10 +1,11 @@
 /*choose one robot*/
 function requestRefreshOnerobot(){
-		$.ajax({
+	$.ajax({
 		type: "GET",
 		url: "/choice_onerobot",
-		
+	
 		success: function(){
+		
 			requestRefreshReplayMissions()
 		}       
 	});
@@ -21,42 +22,60 @@ function requestRefreshReplayMissions(){
 	});
 }
 
+
 function choose_mission(){
-	$.cookie("missionslist",$("#dropdown option:selected").val());
-	$("#dropdown").on("change", function () {
-		$.cookie("missionslist",$("#dropdown option:selected").val());
-		choose_attempts();
+	$.cookie("missionslist",$("#replay_missions_dropdown option:selected").val());
+	$("#replay_missions_dropdown").on("change", function () {
+		$.cookie("missionslist",$("#replay_missions_dropdown option:selected").val());
+	  //alert($("#replay_missions_dropdown option:selected").val())
+		requestRefreshAttempts();
 	});
 }
 
-function choose_attempts(){
-
+function requestRefreshAttempts(){
 	$.ajax({
 		type: "GET",
 		url: "/choice_attempts",
 		
 		success: function(){
+			choose_attempts();
 		}       
 	});
 }
 
-//--------------------- TRIES --------------------------------------------------
+function choose_attempts(){
+	$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
+	$("#attempts_dropdown").on("change", function () {
+		//alert($("#attempts_dropdown option:selected").val())
+		$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
+		requestRefreshUpdateButton();
+	});
+}
 
-$(document).ready(function () {
-   $.cookie("rtrieslist","");
-});
+function requestRefreshUpdateButton(){
+	$.ajax({
+		type: "GET",
+		url: "/update_replay_map",
+		
+		success: function(){
+			$('#updatebutton').click(function(){
+				alert('updated')
+				requestRefreshMapFromAttempt();
+			})
+		}       
+	});
+}
 
-var c = 0;
-$("#dropdown2").on("change", function () {
-  $.cookie("rtrieslist",$("#dropdown2 option:selected").val());
-  if (c==0){
-  //quand on coche une checkbox pour la premiere fois
-  $.cookie("rdatetimes","");//ne tiens plus compte du datetime
-  $("#refreshupdate").click(); //affiche le champ update
-  c=1;
-  }
-});
-
+function requestRefreshMapFromAttempt(){
+	$.ajax({
+		type: "GET",
+		url: "/getAttemptInfos",
+		
+		success: function(data){
+			alert(data)
+		}       
+	});
+}
 
 
 

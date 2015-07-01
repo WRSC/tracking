@@ -20,9 +20,9 @@
       
     <%end%> 
 	<%end%>
+<div class="three_quarter" id="onerobot"></div>
 
-<div id="onerobot"></div>
-<div id="choose_datetimes"></div>
+
 
 
 

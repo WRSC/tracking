@@ -43,7 +43,9 @@ Rails.application.routes.draw do
     get  'choice_replay_missions'  ,  to: 'replay#choice_replay_missions'
     get  'choice_datetimes'        ,  to: 'replay#choice_datetimes'
     get  'choice_attempts'         ,  to: 'replay#choice_attempts'
-    get  'replay_map_panel'        ,  to: 'replay#replay_map_panel'
+    get  'update_replay_map'       ,  to: 'replay#update_replay_map'
+    get  'choice_attempts'         ,  to: 'replay#choice_attempts'
+    get  'getAttemptInfos'         ,  to: 'replay#getAttemptInfos'
 
 
   # Authentication

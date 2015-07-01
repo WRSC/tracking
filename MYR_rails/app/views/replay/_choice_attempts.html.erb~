@@ -1,38 +1,18 @@
 <p><b><u>Select attempts:</u></b></p>
-<% missions = [] %>
-<% missions = Mission.where(team_id: nil) %>
-<% for i in @indteams %> 
-  <% missions += Mission.where(team_id: i) %>
-<% end %>
-<% tries = [] %>
-<% missions.each do |mission| %>
-  <% tries += Try.where(mission_id: mission.id)%>
-<% end %>
-<% tries2 = [] %>
-<% for i in @indrobots %>
-  <% tries2 = [] %>
-  <% for t in tries %>
-    <% if t.robot_id.to_s == i %>
-      <% tries2.push(t) %>
-    <% end %>
-  <% end %>
+<% m= Mission.find(@strmissions[0]) %>
+
+<select name="mission" id="attempts_dropdown">
+<option>Please choose an attempt</option>
+<% for i in 0..(m.attempts.size-1)%>
+  <option value="<%= m.attempts[i].id %>"><%= m.attempts[i].name %></option>
 <% end %>
 
-<% tries3 = [] %>
-<% for t in tries2 %>
-  <% if t.mission_id == @strmissions.to_i %>
-    <% tries3.push(t) %>
-  <% end %>
-<% end %>
-
-
-<select id="dropdown2">
-  <option></option>
-  <% for t in tries3 %>
-    <option value="<%= t.id %>"><%= t.name %></option>
-  <% end %>
 </select>
+<br>
+<button id="updatebutton" type="button">UPDATE</button>
 
-<a id="refreshupdate" href<%= link_to "", :action => :updatemapp2, remote: true%></a>
-<script>
+<div><i> You can click on a boat to see the description of its team.</i></div>
+<div><i> You can click on the small square dots to display the corresponding datetime.</i></div>
+
+
 

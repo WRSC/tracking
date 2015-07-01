@@ -22,7 +22,6 @@ function requestRefreshReplayMissions(){
 	});
 }
 
-
 function choose_mission(){
 	$.cookie("missionslist",$("#replay_missions_dropdown option:selected").val());
 	$("#replay_missions_dropdown").on("change", function () {
@@ -59,7 +58,6 @@ function requestRefreshUpdateButton(){
 		
 		success: function(){
 			$('#updatebutton').click(function(){
-				alert('updated')
 				requestRefreshMapFromAttempt();
 			})
 		}       
@@ -72,24 +70,26 @@ function requestRefreshMapFromAttempt(){
 		url: "/getAttemptInfos",
 		
 		success: function(data){
-			alert(data)
+			//alert(data)
+			requestGatherCoordsBetweenDates(data);
 		}       
 	});
 }
-/*
-function getCoordinatesFromAttempt(){
+
+
+function requestGatherCoordsBetweenDates(timedata){
+	//alert(timedata[0])
+	
 	$.ajax({
 		type: "GET",
 		url: "/gatherCoordsBetweenDates",
-		data: {tstart : , tend:},
+		data: {tstart : timedata[0], tend: timedata[1]},
 		dataType: "json",
 		success: function(data){
-			if(data.length > 0){
-				refreshWithNewMarkers2(data,getMap());
-				//clearDesiredTrackers(getDesiredTrackers()); //need to check
-			}
+			alert(data)
+			refreshWithNewMarkers2(data,getMap());
 		}       
-	})
+	});
 }
 
-*/
+

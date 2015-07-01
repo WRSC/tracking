@@ -42,4 +42,24 @@ function choose_attempts(){
 	});
 }
 
+//--------------------- TRIES --------------------------------------------------
+
+$(document).ready(function () {
+   $.cookie("rtrieslist","");
+});
+
+var c = 0;
+$("#dropdown2").on("change", function () {
+  $.cookie("rtrieslist",$("#dropdown2 option:selected").val());
+  if (c==0){
+  //quand on coche une checkbox pour la premiere fois
+  $.cookie("rdatetimes","");//ne tiens plus compte du datetime
+  $("#refreshupdate").click(); //affiche le champ update
+  c=1;
+  }
+});
+
+
+
+
 

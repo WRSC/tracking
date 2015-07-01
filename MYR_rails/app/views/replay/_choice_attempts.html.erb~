@@ -28,34 +28,11 @@
 
 <select id="dropdown2">
   <option></option>
-
   <% for t in tries3 %>
-
     <option value="<%= t.id %>"><%= t.name %></option>
-
   <% end %>
 </select>
 
 <a id="refreshupdate" href<%= link_to "", :action => :updatemapp2, remote: true%></a>
 <script>
-//--------------------- TRIES --------------------------------------------------
 
-$(document).ready(function () {
-   $.cookie("rtrieslist","");
-});
-
-var c = 0;
-$("#dropdown2").on("change", function () {
-  $.cookie("rtrieslist",$("#dropdown2 option:selected").val());
-  if (c==0){
-  //quand on coche une checkbox pour la premiere fois
-  $.cookie("rdatetimes","");//ne tiens plus compte du datetime
-  $("#refreshupdate").click(); //affiche le champ update
-  c=1;
-  }
-});
-
-
-
-//-------------------------------------------------------------------------
-</script>

@@ -16,7 +16,6 @@ function requestRefreshReplayMissions(){
 		url: "/choice_replay_missions",
 		
 		success: function(){
-			//alert('choice one robot')
 			choose_mission();
 		}       
 	});
@@ -31,13 +30,12 @@ function choose_mission(){
 }
 
 function choose_attempts(){
+
 	$.ajax({
 		type: "GET",
 		url: "/choice_attempts",
 		
 		success: function(){
-			alert('choice attempts')
-			
 		}       
 	});
 }
@@ -60,8 +58,5 @@ $("#dropdown2").on("change", function () {
 });
 
 
-
-//-------------------------------------------------------------------------
-</script>
 
 

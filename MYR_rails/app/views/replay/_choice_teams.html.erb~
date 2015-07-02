@@ -1,3 +1,6 @@
+<br>
+<img src="/step/step2F.png" height="50" width="150">
+
 <p><u><b>Select Teams</b></u></p>  	
 
     <% @teams.each do |team| %>
@@ -18,6 +21,5 @@
    <% end %>
     <br>
 
-		<!--button id="choose_robots" type="button">Select Robots</button-->
-		<div id="choice_robots"></div>
-
+	
+	

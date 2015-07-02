@@ -327,6 +327,11 @@ input[type=checkbox]
   padding: 10px;
 }
 
+.checkboxtext
+{
+  /* Increase size of checkbox text */
+  font-size: 100%;
+}
 
 .image_checkbox
 {

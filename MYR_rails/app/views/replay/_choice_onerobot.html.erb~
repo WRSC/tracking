@@ -1,7 +1,7 @@
-<div class="three_quarter" id="choice_onerobot">
+
 	<div id="choice_replay_missions"></div>
 
 	<div id="choice_attempts"></div>
 
 	<div id="choice_update"></div>
-</div>
+

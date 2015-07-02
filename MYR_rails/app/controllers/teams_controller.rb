@@ -25,7 +25,8 @@ class TeamsController < ApplicationController
   # POST /teams.json
   def create
     @team = Team.new(team_params)
-
+    user = Member.find_by_id(current_user.id)
+    @team.leader_id = user.id
     respond_to do |format|
       if @team.save
         format.html { redirect_to @team, notice: 'Team was successfully created.' }
@@ -35,19 +36,35 @@ class TeamsController < ApplicationController
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
+    user.team_id = @team.id
   end
 
   # PATCH/PUT /teams/1
   # PATCH/PUT /teams/1.json
   def update
-    respond_to do |format|
-      if @team.update(team_params)
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
-        format.json { render :show, status: :ok, location: @team }
+    if sign_in?
+      if authenticateA_P2(@member)
+        if params[:member][:role] != "administrator" || (sign_in? && is_admin?)
+          respond_to do |format|
+            if @team.update(team_params)
+              format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+              format.json { render :show, status: :ok, location: @team }
+            else
+              format.html { render :edit }
+              format.json { render json: @team.errors, status: :unprocessable_entity }
+            end
+          end
+        else
+          flash.now[:error] = "Ask an administrator for becoming administrator"
+          render 'edit'
+        end
       else
-        format.html { render :edit }
-        format.json { render json: @team.errors, status: :unprocessable_entity }
+        flash.now[:error] = "You can not modify this Account: "+@member.name
+        render 'edit'
       end
+    else
+      flash.now[:error] = "You are not connected, you have to Signin or Signup"
+      render 'edit'
     end
   end
 
@@ -69,6 +86,6 @@ class TeamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def team_params
-      params.require(:team).permit(:name, :logo, :description)
+      params.require(:team).permit(:name, :logo, :description, :leader_id)
     end
 end

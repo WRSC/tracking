@@ -1,0 +1,89 @@
+
+	
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<meta name="description" content="Multi-Level Push Menu: Off-screen navigation with multiple levels" />
+		<meta name="keywords" content="multi-level, menu, navigation, off-canvas, off-screen, mobile, levels, nested, transform" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+	
+		<div class="container">
+			<!-- Push Wrapper -->
+			<div class="mp-pusher" id="mp-pusher">
+
+				<!-- mp-menu -->
+				<nav id="mp-menu" class="mp-menu">
+					<div class="mp-level">
+						<ul>
+							<li class="icon ">
+								<% myteam_path="/members/"+current_user.id.to_s %>
+								<a class="icon icon-my-team" href=<%= myteam_path %>>My Team</a>
+							</li>
+							
+							<li class="icon ">
+								<a class="icon icon-robots" href="/robots">Robots</a>
+							</li>
+							
+							<li class="icon ">
+								<a class="icon icon-missions" href="/missions">Missions</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<!-- /mp-menu -->
+				
+				<div class="scroller"><!-- this is for emulating position fixed of the nav -->
+					<div class="scroller-inner">			
+						<div class="content clearfix">
+							<div class="block block-0 clearfix">
+								<p><a href="#" id="trigger" class="menu-trigger"></a></p>
+							</div>
+							
+							<p>
+								<strong>Name:</strong> <%= @member.name %>
+							</p>
+
+							<p>
+								<strong>Email:</strong> <%= @member.email %>
+							</p>
+
+							<p>
+								<% for i in 0..25 %>
+									&nbsp;
+								<% end %>
+								<strong>Role:</strong> <%= @member.role %>
+							</p>
+
+							<p>
+								<% for i in 0..25 %>
+									&nbsp;
+								<% end %>
+								<strong>Team:</strong>
+								<% @member.team_id %>
+								<% myVar= Team.find_by_id(@member.team_id) %>
+								<% if myVar != nil %>
+									<%= myVar.name %>
+								<% else %>
+									<%= "" %>
+								<% end %>
+							</p>
+							<% for i in 0..25 %>
+									&nbsp;
+								<% end %>
+							<% if sign_in? && (is_admin? || @member.id == cookies.signed[:user_id]) %>
+								<%= link_to 'Edit', edit_member_path(@member) %> |
+							<% end %>
+							<%= link_to 'Back', members_path %>
+							
+						</div>
+					</div><!-- /scroller-inner -->
+				</div><!-- /scroller -->
+			</div><!-- /pusher -->
+		</div><!-- /container -->
+		<script src="js/classie.js"></script>
+		<script src="js/mlpushmenu.js"></script>
+		<script>
+			new mlPushMenu( document.getElementById( 'mp-menu' ), document.getElementById( 'trigger' ) );
+		</script>
+	

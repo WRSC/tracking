@@ -1,6 +1,6 @@
 //=require handle_markers
 //----------------------GLOBAL VARIABLES-------------------
-var map = null;
+
 var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
@@ -137,7 +137,7 @@ function FullScreenControl(controlDiv, map) {
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.HYBRID,
-			center: new google.maps.LatLng(53.2590145, -9.0294632),
+			center: new google.maps.LatLng(60.103462, 19.928225),
 			zoom: 14,
 			zoomControl: true,
 			zoomControlOptions: {
@@ -214,9 +214,4 @@ function FullScreenControl(controlDiv, map) {
 	}
 
 //------------------------FROM SWARMON----------------------
-
-
-
-
-
 //------------------END SWARMON------------------------------

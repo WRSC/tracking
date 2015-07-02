@@ -105,8 +105,8 @@
 		*/
 		addAllThisMarkers(data,map);
 		setCenter(lastLat,lastLng);
-		
-		saveLastDatetime(lastDate);
+		if (lastDate!=null)
+			saveLastDatetime(lastDate);
 	}
 
 	//Add the given coordiantes on the map and save this last state

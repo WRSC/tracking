@@ -145,7 +145,9 @@ nav ul, nav ol{margin:0; padding:0; list-style:none;}
 ---------------------------------------------------------------------------------------------------------------*/
 form, fieldset, legend{margin:0; padding:0; border:none;}
 legend{display:none;}
-label, input, textarea, select{display:block; resize:none; font-size:inherit; box-sizing:border-box;}
+label, textarea {display:block; resize:none; font-size:inherit; box-sizing:border-box;}
+select  { resize:none; font-size:inherit; box-sizing:border-box;}
+input{ resize:none; font-size:inherit; box-sizing:border-box;}
 label{margin-bottom:5px;}
 
 /* Comment Area */
@@ -329,7 +331,7 @@ input[type=checkbox]
 
 .checkboxtext
 {
-  /* Increqse size of checkbox text */
+  /* Increase size of checkbox text */
   font-size: 100%;
 }
 

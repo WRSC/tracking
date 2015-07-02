@@ -1,3 +1,5 @@
+<br>
+<img src="/step/step2F.png" height="50" width="150">
 <p><u><b>Select Robots</b></u></p>
 
   <%@teams.each do |team| %>
@@ -10,8 +12,13 @@
         <% @tabrobots.each do |robot| %>
         	
           <% if robot.missions != nil and robot.missions !=[]%>
-            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"><img src="/icons/medium<%=robot.tracker_id.to_s%>.png"/> <%= robot.name %><br>
+            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"><%= robot.name %><img src="/icons/medium<%=robot.id %>.png"/><br>
           <% end %> 
+          <style>
+          	input{
+          		
+          	}
+          </style>
         <% end %> 
         <div>&nbsp;</div>
       <%else%>

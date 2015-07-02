@@ -1,6 +1,14 @@
 <h1>Editing Team</h1>
 
+<% if sign_in? && (is_admin? || @member.id == cookies.signed[:user_id]) %>
+
 <%= render 'form' %>
 
 <%= link_to 'Show', @team %> |
+
+<% else %>
+	<h2> You cannot access this page. You need to be logged as Team Leader to access it.</h2>
+
+<% end %>
+
 <%= link_to 'Back', teams_path %>

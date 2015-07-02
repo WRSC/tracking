@@ -60,6 +60,7 @@
 									&nbsp;
 								<% end %>
 								<strong>Team:</strong>
+								<% @member.team_id %>
 								<% myVar= Team.find_by_id(@member.team_id) %>
 								<% if myVar != nil %>
 									<%= myVar.name %>

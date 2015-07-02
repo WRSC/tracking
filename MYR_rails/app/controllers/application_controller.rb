@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include TeamsHelper
   protected
+
+  # check if psw correct and the role is administrator with no arguments
   def authenticate
     authenticate_or_request_with_http_basic do |name, password|
       if m=Member.find_by_name(name) 
@@ -22,7 +24,7 @@ class ApplicationController < ActionController::Base
 	password=""
   end
   
-
+  # check if psw correct and the role is administrator with arguments
   def authenticatebis(name, password)
       if m=Member.find_by_name(name) 
         if (m.authenticate(password))
@@ -36,7 +38,7 @@ class ApplicationController < ActionController::Base
     
   end
   
-  
+  # Check if the user is a leader, or an admin
   def authenticateA_L
     authenticate_or_request_with_http_basic do |name, password|
       if m=Member.find_by_name(name) 
@@ -58,21 +60,23 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
-  def authenticateA_P
-    authenticate_or_request_with_http_basic do |name, password|
-      if m=Member.find_by_name(name) 
-        if (m.authenticate(password) && (m.id == cookies.signed[:user_id]))
-		  true
-		else
-		  false
-		end
-      else
-        false
-      end
-    end
+
+    # check if the user is the team leader or admin through arg
+  def authenticateA_L2(nameTeam)
+	rep=false
+	m=Team.find_by_name(nameTeam)
+	if is_leader(m.name) 
+		rep=true
+	elsif (is_admin?)
+		rep = true
+	end
+	return rep
   end
-   
+  
+
+
+
+  # check if the user is in the team or admin thanks to cooky
   def authenticateA_M
     authenticate_or_request_with_http_basic do |name, password|
       if m=Member.find_by_name(name) 
@@ -91,6 +95,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # check if the user is in the team or admin through arg
   def authenticateA_M2(nameTeam)
 	  if m=Team.find_by_name(name) 
 		if(isInTeam? || is_admin?)
@@ -107,18 +112,23 @@ class ApplicationController < ActionController::Base
 	  end
   end
 
-  def authenticateA_L2(nameTeam)
-	rep=false
-	m=Team.find_by_name(nameTeam)
-	if is_leader(m.name) 
-		rep=true
-	elsif (is_admin?)
-		rep = true
-	end
-	return rep
+
+    # check if authenticated
+  def authenticateA_P
+    authenticate_or_request_with_http_basic do |name, password|
+      if m=Member.find_by_name(name) 
+        if (m.authenticate(password) && (m.id == cookies.signed[:user_id]))
+		  true
+		else
+		  false
+		end
+      else
+        false
+      end
+    end
   end
-  
-  
+   
+    # check if the user is authenticated or admin through arg
   def authenticateA_P2(myMember)
 	rep=false
 	m=Member.find_by_name(myMember.name)

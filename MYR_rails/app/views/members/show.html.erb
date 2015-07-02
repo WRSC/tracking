@@ -4,10 +4,32 @@
   <img src=<%= @member.logo %>>
 <% end %>
 </p>
+<p>
+  <strong>Name:</strong>
+  <%= @member.name %>
+</p>
 
-<div class="container-fluid">
-  <div class="row">
-    <%= render 'members/control_panel' %>
-   </div>
+<p>
+  <strong>Email:</strong>
+  <%= @member.email %>
+</p>
 
-</div>
+<p>
+  <strong>Role:</strong>
+  <%= @member.role %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <% myVar= Team.find_by_id(@member.team_id) %>
+  <% if myVar != nil %>
+    <%= myVar.name %>
+  <% else %>
+    <%= "" %>
+  <% end %>
+</p>
+
+<% if sign_in? && (is_admin? || @member.id == cookies.signed[:user_id]) %>
+  <%= link_to 'Edit', edit_member_path(@member) %> |
+<% end %>
+<%= link_to 'Back', members_path %>

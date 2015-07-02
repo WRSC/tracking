@@ -2,7 +2,6 @@
   //Add a small marker to the map (a dot)
 	//tracker_id is optional with  default value of 12 for the rendering
 	function addSmallMarker(lat, lng, tracker_id, map){
-		alert(map)
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
 			url: 'icons/dot'+tracker_id+'.png',

@@ -92,7 +92,7 @@ function FullScreenControl(controlDiv, map) {
 
 		//map creation
 		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		setMap()
+		setMap(map)
 		
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');

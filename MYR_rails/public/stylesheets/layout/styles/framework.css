@@ -28,6 +28,10 @@ body{margin:0; padding:0; font-size:14px; line-height:1.6em;}
 a{outline:none; text-decoration:none;}
 
 .fl_left, .imgl{float:left;}
+.fl_middle, .imgm{
+ text-align: center;
+ margin-right: auto;
+ margin-left: auto;}
 .fl_right, .imgr{float:right;}
 
 img{width:auto; max-width:100%; height:auto; margin:0; padding:0; border:none; line-height:normal; vertical-align:middle;}

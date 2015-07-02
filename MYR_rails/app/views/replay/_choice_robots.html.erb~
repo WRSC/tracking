@@ -10,8 +10,13 @@
         <% @tabrobots.each do |robot| %>
         	
           <% if robot.missions != nil and robot.missions !=[]%>
-            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"><img src="/icons/medium<%=robot.tracker_id.to_s%>.png"/> <%= robot.name %><br>
+            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"> <%= robot.name %><img src="/icons/medium<%=robot.id %>.png"/><br>
           <% end %> 
+          <style>
+          	input{
+          		
+          	}
+          </style>
         <% end %> 
         <div>&nbsp;</div>
       <%else%>
@@ -20,7 +25,7 @@
       
     <%end%> 
 	<%end%>
-<div class="three_quarter" id="onerobot"></div>
+
 
 
 

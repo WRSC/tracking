@@ -1,7 +1,7 @@
 //=require handle_markers
 //----------------------GLOBAL VARIABLES-------------------
-var map = null;
-var lastDatetime = "00000101";
+var map=null
+var lastDatetime = "0";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
 var desired_trackers = [];
@@ -32,46 +32,13 @@ jQuery.expr.filters.offscreen = function(el) {
 	}
 
 //-------------GETTERS AND SETTERS----------------------------
-	//Setter on lastDatetime
-	function saveLastDatetime(datetime){
-		lastDatetime = datetime;
+	
+	function getMap(){
+		return map;
 	}
-
-	//Getter on lastDatetime
-	function getLastDatetime(){
-		return lastDatetime;
-	}
-
-	//Setter on known_trackers
-	function saveNewKnownTracker(new_tracker){
-		var arrayLength = new_tracker.length;
-		for (var i = 0; i < arrayLength; i++) {
-			known_trackers.push(new_tracker[i]);
-		}
-	}
-
-	//Getter on known_trackers
-	function getKnownTrackers(){
-		return known_trackers;
-	}
-
-	//Setter on desired_trackers
-	function saveNewDesiredTracker(new_tracker){
-			desired_trackers.push(new_tracker);
-	}
-
-	function removeDesiredTracker(this_tracker){
-		//get index of the tracker
-		var index = desired_trackers.indexOf(this_tracker);
-  	if(index > -1){
-	    //remove this element
-	    desired_trackers.splice(index,1);
-		}
-	}
-
-	//Getter on desired_trackers
-	function getDesiredTrackers(){
-		return desired_trackers;
+	
+	function setMap(desired_map){
+		map=desired_map
 	}
 
 //--------MAP----------------
@@ -125,60 +92,14 @@ function FullScreenControl(controlDiv, map) {
 
 		//map creation
 		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
+		setMap()
+		
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
 		var centerControl = new FullScreenControl(centerControlDiv, map);
 		centerControlDiv.index = 1;
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 	}
-	
-	/*=====================Update Map and Add Markers================================*/
-function updateMap(map) {
-		//map options
-		var mapOptions = {
-			mapTypeId: google.maps.MapTypeId.ROAD,
-			center: new google.maps.LatLng(53.2590145, -9.0294632),
-			zoom: 14,
-			zoomControl: true,
-			zoomControlOptions: {
-				style: google.maps.ZoomControlStyle.SMALL,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
-			},
-			mapTypeControl: true,
-			mapTypeControlOptions: {
-				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
-			},
-			scaleControl: true,
-			streetViewControl: false,
-			panControl: false,
-			overviewMapControl: false
-		}
-
-		//map creation
-		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		
-		/*var myLatlng = new google.maps.LatLng(53.2590145, -9.0294632);
-		var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Hello World!'
- 	 });*/
- 
-		var marker=addBigMarker(53.2590145, -9.0294632,1,map)
-			addingBoil()
-		//add add button in the top right corner of the map to hide the right panel
-		var centerControlDiv = document.createElement('div');
-		var centerControl = new FullScreenControl(centerControlDiv, map);
-		centerControlDiv.index = 1;
-		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-}
-
-/*======================================End Update Map=====================================*/
-
-
-
 
 	//Set the center of the map
 	function setCenter(lat, lng){

@@ -1,6 +1,6 @@
 //=require handle_markers
 //----------------------GLOBAL VARIABLES-------------------
-var map = null;
+
 var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
@@ -214,9 +214,4 @@ function FullScreenControl(controlDiv, map) {
 	}
 
 //------------------------FROM SWARMON----------------------
-
-
-
-
-
 //------------------END SWARMON------------------------------

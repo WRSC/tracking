@@ -5,10 +5,6 @@ var map
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap(map));
-
-	//display panel
-	//need to check $("#refresh-replay_panel").click();
-
 	//initializeMap();
 	initialScroll();
 	requestRefreshTeams();

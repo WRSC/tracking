@@ -2,6 +2,7 @@
   //Add a small marker to the map (a dot)
 	//tracker_id is optional with  default value of 12 for the rendering
 	function addSmallMarker(lat, lng, tracker_id, map){
+		alert('enter add small marker')
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
 			url: 'icons/dot'+tracker_id+'.png',
@@ -66,6 +67,7 @@
 	}
 /*================================End Add Big Marker=======================================*/
 
+/*=================================Begin Add Draggable Marker==============================*/
 	//Add a draggable marker to the map
 	function addDraggableMarker(lat, lng,map){
 		var marker = new google.maps.Marker(
@@ -78,29 +80,34 @@
 		marker.setMap(map);
 		return marker;
 	}
+/*=================================End Add Draggable Marker================================*/
 
 	//Add all the given coordinates onto the map
-	function addAllThisMarkers(data){
+	function addAllThisMarkers(data,map){
 		var lat, lng, tracker_id = 0;
 		for(var i=0; i < data.length ; i++){
 			lat = data[i].latitude;
 			lng = data[i].longitude;
 			tracker_id = data[i].tracker_id;
-			addMarker(lat,lng,tracker_id);
+			addSmallMarker(lat,lng,tracker_id,map);
 		}
 	}
 
 	//Add the given coordiantes on the map and save this last state
-	function refreshWithNewMarkers(data){
+	function refreshWithNewMarkers(data,map){
 		var lastCoordinate = data[data.length-1];
 		var lastDate = lastCoordinate.datetime;
 		var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
-
-		addAllThisMarkers(data);
+		/*
+		alert(lastDate)
+		alert(lastLat)
+		alert(lastLng)
+		*/
+		addAllThisMarkers(data,map);
 		setCenter(lastLat,lastLng);
-
-		saveLastDatetime(lastDate);
+		if (lastDate!=null)
+			saveLastDatetime(lastDate);
 	}
 
 	//Add the given coordiantes on the map and save this last state
@@ -109,7 +116,11 @@
 		var lastDate = lastCoordinate.datetime;
 		var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
-
+		/*
+		alert(lastDate)
+		alert(lastLat)
+		alert(lastLng)
+		*/
 		addAllThesePolylines(data);
 
 		setCenter(lastLat,lastLng);

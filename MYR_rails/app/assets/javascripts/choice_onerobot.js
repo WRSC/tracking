@@ -1,3 +1,6 @@
+//=require replay
+//=require handle_markers
+//=require replay_map
 /*choose one robot*/
 function requestRefreshOnerobot(){
 	$.ajax({
@@ -86,8 +89,7 @@ function requestGatherCoordsBetweenDates(timedata){
 		data: {tstart : timedata[0], tend: timedata[1]},
 		dataType: "json",
 		success: function(data){
-			alert(data)
-			//refreshWithNewMarkers2(data,getMap());
+			refreshWithNewMarkers2(data,getMap());
 		}       
 	});
 }

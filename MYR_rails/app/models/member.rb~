@@ -1,4 +1,6 @@
 class Member < ActiveRecord::Base
+	attr_accessor :remember_token
+	before_save { self.email = email.downcase }
 # Associations
 	belongs_to :team
 
@@ -13,14 +15,40 @@ class Member < ActiveRecord::Base
     validate :valid_size
     def valid_size
         if self.logo != ""
-            if FastImage.size("self.logo")!= nil
-                if FastImage.size("self.logo")[0] > 150
+            if FastImage.size(self.logo)!= nil
+                if FastImage.size(self.logo)[0] > 150
                     errors.add(:logo, "width must be under 150 pixels")
                 end
-                if FastImage.size("self.logo")[1] > 150
+                if FastImage.size(self.logo)[1] > 150
                     errors.add(:logo, "height must be under 150 pixels")
                 end
             end
         end
     end
+    
+    def User.digest(string)
+		  cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+		                                                BCrypt::Engine.cost
+		  BCrypt::Password.create(string, cost: cost)
+		end
+    
+    def Member.new_token
+    	SecureRandom.urlsafe_base64
+  	end
+  	
+  	def remember
+			self.remember_token = Member.new_token
+			update_attribute(:remember_digest, Member.digest(remember_token))
+		end
+		
+		 # Returns true if the given token matches the digest.
+		def authenticated?(remember_token)
+			return false if remember_token.nil?
+			BCrypt::Password.new(remember_digest).is_password?(remember_token)
+		end
+		
+		# Forgets a user.
+		def forget
+			update_attribute(:remember_digest, nil)
+		end
 end

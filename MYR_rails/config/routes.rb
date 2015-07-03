@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :missions
     resources :markers
     resources :sessions
+    
+    resources :account_activations, only: [:edit]
 
   # GET
 

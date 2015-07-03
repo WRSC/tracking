@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   before_action :set_session, only: [:show, :edit, :update, :destroy]
-
+	
   # GET /sessions/new
   def new
     @titre = "Identification"
@@ -22,15 +22,15 @@ class SessionsController < ApplicationController
       end
     end
 =end
-	
-  user = authenticatebis(params[:session][:name], params[:session][:password])
-  if user == true
+	user = Member.find_by_name(params[:session][:name])
+  flag = authenticatebis(params[:session][:name], params[:session][:password])
+  if flag == true
     sign_in(Member.find_by_name(params[:session][:name]))
+    params[:session][:remember_me] == '1' ? remember(user) : forget(user)
     #flash[:success] = params[:session][:name]+" is connected"
-    user_path='/members/'+params[:session][:id]
-    redirect_to user_path
+    redirect_to '/home'
 
-  elsif user==-1
+  elsif flag==-1
     flash.now[:error] = "Invalid Password."
     @titre = "Identification"
     render 'new'
@@ -49,8 +49,8 @@ class SessionsController < ApplicationController
   # DELETE /sessions/1.json
   def delete
   #flash[:success] = Member.find_by_id(cookies.signed[:user_id]).name+" is disconnect"
-    sign_out
-  redirect_to '/home'
+    sign_out if sing_in?
+  	redirect_to '/home'
   end
 
 end

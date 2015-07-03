@@ -24,9 +24,11 @@
         <td><%= link_to team.logo , tm_path %></td>
         <td><%= team.description %></td>
         <td><%= Member.find(team.leader_id.to_i).name %></td>
-        <td><%= team.id %></td>
-        <td><%= Member.find(team.leader_id.to_i).team_id %></td>
-        <td><%= (link_to 'Show', team) + ' ' + (link_to 'Edit', edit_team_path(team)) + ' ' + (link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' }) %></td>
+        <% if sign_in? && (is_leader(team.name) || is_admin?) %>
+          <td><%= (link_to 'Show', team) + ' ' + (link_to 'Edit', edit_team_path(team)) + ' ' + (link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' }) %></td>
+        <% else %>
+          <td><%= link_to 'Show', team %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

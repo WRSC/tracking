@@ -24,10 +24,10 @@
 
 <h1>
 	<strong>Robots of <%= @team.name%>:</strong><br>
-	<% if @team.robot.size==0 %>
+	<% if @team.robots.size==0 %>
 		 <%= @team.name%> has not created any robot yet !!!
 	<% else %>
-		<%= @team.name%> has <%= @team.robot.size %> robots 
+		<%= @team.name%> has <%= @team.robots.size %> robots 
 		<%= render 'showRobots'%>
 	<% end %>
 </h1>

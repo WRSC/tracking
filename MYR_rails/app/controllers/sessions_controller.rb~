@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
   flag = authenticatebis(params[:session][:name], params[:session][:password])
   if flag == true
     sign_in(Member.find_by_name(params[:session][:name]))
-    params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+    #params[:session][:remember_me] == '1' ? remember(user) : forget(user)
     #flash[:success] = params[:session][:name]+" is connected"
     redirect_to '/home'
 
@@ -49,7 +49,7 @@ class SessionsController < ApplicationController
   # DELETE /sessions/1.json
   def delete
   #flash[:success] = Member.find_by_id(cookies.signed[:user_id]).name+" is disconnect"
-    sign_out if sing_in?
+    sign_out if sign_in?
   	redirect_to '/home'
   end
 

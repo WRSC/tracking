@@ -17,6 +17,7 @@
       <%= f.password_field :password, class: 'form-control' %>
 			</br>
 			<%= f.label :remember_me, class: "checkbox inline" do %>
+			
 			<%= f.check_box :remember_me %>
 				<span>Remember me on this computer</span>
 			<% end %>

@@ -1,7 +1,7 @@
 class Team < ActiveRecord::Base
 # Associations
-	has_many :member		
-	has_many :robot		
+	has_many :members		
+	has_many :robots		
 
 
 # Validations

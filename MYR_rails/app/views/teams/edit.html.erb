@@ -1,6 +1,6 @@
 <h1>Editing Team</h1>
 
-<% if sign_in? && (is_admin? || @member.id == cookies.signed[:user_id]) %>
+<% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>
 
 <%= render 'form' %>
 

@@ -12,29 +12,37 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name %>
     <%= f.text_field :name %>
-  </div>
+  </div><br>
   <div class="field">
-    <%= f.label :start %><br>
+    <%= f.label :start %>
     <%= f.datetime_select :start %>
-  </div>
+  </div><br>
   <div class="field">
-    <%= f.label :end %><br>
+    <%= f.label :end %>
     <%= f.datetime_select :end %>
-  </div>
+  </div><br>
   <div class="field">
-    <%= f.label :robot_id %><br>
-    <%= f.number_field :robot_id %>
-  </div>
+    <%= f.label :robot_id %>
+    <% if Robot.all!=nil %>
+			<%= f.collection_select(:robot_id, Robot.all, :id, :name) %>
+		<% end %>
+  </div><br>
   <div class="field">
-    <%= f.label :mission_id %><br>
-    <%= f.number_field :mission_id %>
-  </div>
+    <%= f.label :mission_id %>
+    <% if Mission.all!=nil %>
+			<%= f.collection_select(:mission_id, Mission.all, :id, :name) %>
+		<% end %>
+  </div><br>
+  <!--need to check uniqueness, a tracker could be only used by a team in a moment-->
   <div class="field">
-    <%= f.label :tracker_id %><br>
-    <%= f.number_field :tracker_id %>
-  </div>
+    <%= f.label :tracker_id %>
+    <% if Tracker.all!=nil %>
+			<%= f.collection_select(:tracker_id, Tracker.all, :id, :id ) %>
+		<% end %>
+  </div><br>
+ 
   <div class="actions">
     <%= f.submit %>
   </div>

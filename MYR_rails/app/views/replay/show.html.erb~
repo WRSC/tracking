@@ -11,15 +11,13 @@
 			margin-left:10px;
 			margin-top: 10px;
 		}
-		#map-canvas{
-			margin:auto;
-		}
 	</style>
 	
-	<div id="map_frame_container" style='width: 80%; height: 70%'>
-		<div id="map-container"  style='height: 100%'>
+	<div id="map_frame_container" style='width: 95%; height: 70%'>
+		<div id="map-container" class="two_third" style='height: 100%'>
 			<div id="map-canvas"></div>
 		</div>
+		<div class="one_third"></div>
 		<style>
 			.gm-style img { max-width: none; }
 			.gm-style label { width: auto; display: inline; }

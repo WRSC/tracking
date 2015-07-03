@@ -20,16 +20,16 @@
 </div>
 <p>
   <div class="field">
-    <strong><%= f.label :name %><br></strong>
+    <strong><%= f.label :name %></strong>
     <%= f.text_field :name %>
-  </div>
+  </div><br>
     <div class="field">
-    <strong><%= f.label :category %><br></strong>
+    <strong><%= f.label :category %></strong>
     <%= f.select :category, ['Small','Medium','Big','Motor'] %>
-  </div>
+  </div><br>
   
   <div class="field">
-    <strong><%= f.label :team_id %><br></strong>
+    <strong><%= f.label :team_id %></strong>
 	<% if is_admin? %>
 		<% if Team.all!=nil %>
 			<%= f.collection_select(:team_id, Team.all, :id, :name) %>
@@ -39,33 +39,8 @@
 			<%= f.collection_select(:team_id, [myTeam], :id, :name)  %>
 		<% end %>
 	<% end %>
-  </div>
+  </div><br>
 	
-	<% if is_admin? %>
-	  <div class="field">
-		<strong><%= f.label :tracker_id %><br></strong>
-		<% allTrakersAvailable=[] %>
-		<% allTrackers = [] %>
-		<% allTrakersNotAvailable = [] %>
-		<% if Tracker.first != nil  %>
-			<% allTrackers = Tracker.ids %>
-			<% if Robot.first != nil %>
-				<% for i in Robot.ids %>
-					<% if Robot.find(i) != nil %> 
-						<% allTrakersNotAvailable <<  Robot.find(i).tracker_id %>
-					<% end %>
-				<% end %>
-			<% end %>
-			<% allTrakersAvailable = allTrackers - allTrakersNotAvailable %>
-			<% if @robot.tracker_id != nil  %>
-				<% allTrakersAvailable = [@robot.tracker_id] + [nil] + allTrakersAvailable  %>
-			<% else %>
-				<% allTrakersAvailable = [@robot.tracker_id] + allTrakersAvailable  %>
-			<% end %>
-		<% end %>
-		<%= f.select :tracker_id, allTrakersAvailable %>
-	  </div>
-  <% end %>
  </p>
  <p>
   <div class="actions">

@@ -10,7 +10,6 @@
       </ul>
     </div>
   <% end %>
-  
 <div id="content">
 	<section class="round">
 		<% flash.each do |key, value| %>
@@ -19,24 +18,33 @@
 	</section>
 	<%= yield %>
 </div>
-
+<p>
   <div class="field">
-    <%= f.label :name %><br>
+    <strong><%= f.label :name %></strong>
     <%= f.text_field :name %>
+  </div><br>
+    <div class="field">
+    <strong><%= f.label :category %></strong>
+    <%= f.select :category, ['Small','Medium','Big','Motor'] %>
   </div>
+  
   <div class="field">
-    <%= f.label :category %><br>
-    <%= f.text_field :category %>
-  </div>
-  <div class="field">
-    <%= f.label :team_id %><br>
-    <%= f.number_field :team_id %>
-  </div>
-  <div class="field">
-    <%= f.label :tracker_id %><br>
-    <%= f.number_field :tracker_id %>
-  </div>
+    <strong><%= f.label :team_id %></strong>
+	<% if is_admin? %>
+		<% if Team.all!=nil %>
+			<%= f.collection_select(:team_id, Team.all, :id, :name) %>
+		<% end %>
+	<% else %>
+		<% if myTeam!=nil %>
+			<%= f.collection_select(:team_id, [myTeam], :id, :name)  %>
+		<% end %>
+	<% end %>
+  </div><br>
+	
+ </p>
+ <p>
   <div class="actions">
     <%= f.submit %>
   </div>
+</p>
 <% end %>

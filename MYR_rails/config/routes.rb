@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     get  'update_replay_map'       ,  to: 'replay#update_replay_map'
     get  'choice_attempts'         ,  to: 'replay#choice_attempts'
     get  'getAttemptInfos'         ,  to: 'replay#getAttemptInfos'
+    
 
 
   # Authentication

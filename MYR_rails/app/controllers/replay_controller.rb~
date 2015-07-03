@@ -193,6 +193,12 @@ class ReplayController < ApplicationController
  	def choice_datetimes
  	end
  	
+ 	def getDatetimesInfos
+		datetime="10010101"
+		#datetime = cookies[:rdatetimes]
+		render json: datetime 
+ 	end
+ 	
  	def infowindow
  	end
 

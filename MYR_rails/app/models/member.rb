@@ -1,7 +1,8 @@
 class Member < ActiveRecord::Base
-	attr_accessor :remember_token
+	attr_accessor :remember_token, :activation_token
 	before_save { self.email = email.downcase }
 # Associations
+	before_create :create_activation_digest
 	belongs_to :team
 
 
@@ -30,6 +31,7 @@ class Member < ActiveRecord::Base
 		  cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
 		                                                BCrypt::Engine.cost
 		  BCrypt::Password.create(string, cost: cost)
+		  #need to check cost https://www.railstutorial.org/book/log_in_log_out
 		end
     
     def Member.new_token
@@ -51,4 +53,18 @@ class Member < ActiveRecord::Base
 		def forget
 			update_attribute(:remember_digest, nil)
 		end
+		
+		private
+
+		  # Converts email to all lower-case.
+		  def downcase_email
+		    self.email = email.downcase
+		  end
+
+		  # Creates and assigns the activation token and digest.
+		  def create_activation_digest
+		    self.activation_token  = User.new_token
+		    self.activation_digest = User.digest(activation_token)
+		  end
+		
 end

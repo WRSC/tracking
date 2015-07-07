@@ -31,9 +31,12 @@ class MembersController < ApplicationController
 
       respond_to do |format|
         if @member.save
-          sign_in(@member)
-          format.html { redirect_to @member, notice: 'Member was successfully created.' }
-          format.json { render :show, status: :created, location: @member }
+          #sign_in(@member)
+          @member.send_activation_email
+     			flash[:info] = "Please check your email to activate your account."
+      		redirect_to root_url
+          #format.html { redirect_to @member, notice: 'Member was successfully created.' }
+          #format.json { render :show, status: :created, location: @member }
         else
           format.html { render :new }
           format.json { render json: @member.errors, status: :unprocessable_entity }

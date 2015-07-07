@@ -25,10 +25,17 @@ class SessionsController < ApplicationController
 	user = Member.find_by_name(params[:session][:name])
   flag = authenticatebis(params[:session][:name], params[:session][:password])
   if flag == true
-    sign_in(Member.find_by_name(params[:session][:name]))
-    params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-    #flash[:success] = params[:session][:name]+" is connected"
-    redirect_to '/home'
+  	if user.activated?
+			sign_in(Member.find_by_name(params[:session][:name]))
+			params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+			#flash[:success] = params[:session][:name]+" is connected"
+			redirect_back_or user
+		else
+			 message  = "Account not activated. "
+       message += "Check your email for the activation link."
+       flash[:warning] = message
+       redirect_to root_url
+		end
 
   elsif flag==-1
     flash.now[:error] = "Invalid Password."

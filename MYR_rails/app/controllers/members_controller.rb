@@ -29,7 +29,7 @@ class MembersController < ApplicationController
     	
       @member = Member.new(member_params)
 
-      respond_to do |format|
+      #respond_to do |format|
         if @member.save
           #sign_in(@member)
           @member.send_activation_email
@@ -38,10 +38,11 @@ class MembersController < ApplicationController
           #format.html { redirect_to @member, notice: 'Member was successfully created.' }
           #format.json { render :show, status: :created, location: @member }
         else
-          format.html { render :new }
-          format.json { render json: @member.errors, status: :unprocessable_entity }
+          #format.html { render :new }
+          #format.json { render json: @member.errors, status: :unprocessable_entity }
+          render 'new'
         end
-      end
+      #end
     else
       flash[:error] = "Ask an administrator for becoming administrator"
       redirect_to '/members/new'

@@ -87,8 +87,8 @@ class Member < ActiveRecord::Base
 
 		  # Creates and assigns the activation token and digest.
 		  def create_activation_digest
-		    self.activation_token  = User.new_token
-		    self.activation_digest = User.digest(activation_token)
+		    self.activation_token  = Member.new_token
+		    self.activation_digest = Member.digest(activation_token)
 		  end
 		
 end

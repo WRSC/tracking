@@ -29,12 +29,12 @@ class SessionsController < ApplicationController
 			sign_in(Member.find_by_name(params[:session][:name]))
 			params[:session][:remember_me] == '1' ? remember(user) : forget(user)
 			#flash[:success] = params[:session][:name]+" is connected"
-			redirect_back_or user
+			redirect_to user
 		else
 			 message  = "Account not activated. "
        message += "Check your email for the activation link."
        flash[:warning] = message
-       redirect_to root_url
+       redirect_to signin_path
 		end
 
   elsif flag==-1

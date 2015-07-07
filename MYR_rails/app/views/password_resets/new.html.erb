@@ -1,12 +1,14 @@
 
 <h1>Forgot password</h1>
+<%= @sent %>
 <%= flash.inspect %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(:password_reset, url: password_resets_path) do |f| %>
+    	</br>
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
-
+			</br></br>
       <%= f.submit "Submit", class: "btn btn-primary" %>
     <% end %>
   </div>

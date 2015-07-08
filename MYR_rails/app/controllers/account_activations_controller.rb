@@ -1,4 +1,7 @@
 class AccountActivationsController < ApplicationController
+
+	def show
+	end
 	
   def edit
     user = Member.find_by(email: params[:email])

@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     resources :sessions
     
     resources :account_activations, only: [:edit]
-    resources :password_resets,     only: [:new, :create, :edit, :update]
+    resources :password_resets,     only: [:new, :create, :edit, :update, :sent_password_reset_email]
 
   # GET
 
@@ -30,7 +30,10 @@ Rails.application.routes.draw do
     get 'contact'         , to: 'static_pages#contact'
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
-    get 'markersCreation' , to:'admin_markers#show'
+    get 'markersCreation' , to: 'admin_markers#show'
+    
+    get 'password_resets/sent_password_reset_email'
+    get 'account_activations/wait_for_activated'
 
   # Ajax
 

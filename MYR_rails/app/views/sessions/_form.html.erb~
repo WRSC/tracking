@@ -1,6 +1,6 @@
 
 
-<div class="row">
+<div class="row_signin">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(:session, url: sessions_path) do |f| %>
 			<section class="round">
@@ -9,24 +9,27 @@
     		<% end %>
   		</section>
   		<%= yield %>
-  		<br>
+  		
 			<%= f.label :name %>
 		  <%= f.text_field :name %>
-		  <br>
-      <%= f.label :password %>
-      <%= link_to "(forgot password)", new_password_reset_path %>
+			<br></br>
+      <%= f.label :password, "Password" %>
       <%= f.password_field :password, class: 'form-control' %>
 			</br>
-			
 			<%= f.label :remember_me, class: "checkbox inline" do %>
 			<%= f.check_box :remember_me %>
-				<span>Remember me on this computer</span>
+				<span id="remeber-me">Remember me on this computer</span>
 			<% end %>
-
+			<style>
+				#remeber-me{
+					color: white;
+				}
+			</style>
+			<br>
       <%= f.submit "Sign in", class: "btn btn-primary" %>
       
     <% end %>
-		<br>
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+
+    <p><%= link_to "(forgot password) ", new_password_reset_path %>New user? <%= link_to "Sign up now!", signup_path %></p>
   </div>
 </div>

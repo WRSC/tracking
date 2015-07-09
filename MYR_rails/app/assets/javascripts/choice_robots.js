@@ -28,7 +28,7 @@ function run_choice_robots(){
 		}else if (c > 1){
 			requestRefreshDatetimes();
 		}else{
-			requestRefreshOnerobot();
+			requestRefreshOnerobot(false);
 		}
 		
 	})

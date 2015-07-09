@@ -51,12 +51,34 @@ for rob_id in 1..9
 	end
 end
 
+#Tracker 1~8 => robot 1
+#Tracker 1 2 => robot 1 mission 1 => attempt1 attempt2
+#Tracker 3 4 => robot 1 mission 2 => attempt3 attempt4
+#Tracker 5 6 => robot 1 mission 3 => attempt5 attempt6
+#Tracker 7 8 => robot 1 mission 4 => attempt7 attempt8
+
+#Coordinate 1 => attempt1
+Coordinate.create!(latitude:  0,
+								longitude: 0,
+								datetime:   "20150709112326",
+             		tracker_id: 1)
+             		
+Coordinate.create!(latitude:  0,
+								longitude: 5,
+								datetime:   "20150709112526",
+             		tracker_id: 1)
+
+Coordinate.create!(latitude:  5,
+								longitude: 0,
+								datetime:   "20150709112726",
+             		tracker_id: 1)
+
 
 #Mission 1
 Mission.create!(name:  "Triangular Course Contest",
 								start: "20150601000000",
 								end:   "20150801000000",
-             		description: "It was the first mission.")
+             		description: "It was the first mission")
 
 #Mission 2
 Mission.create!(name:  "Station-Keeping Contest",

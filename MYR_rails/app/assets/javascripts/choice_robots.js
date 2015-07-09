@@ -27,7 +27,9 @@ function run_choice_robots(){
 				requestRefreshOnerobot(true);//affiche le volet pour missions tries
 		}else if (c > 1){
 			requestRefreshDatetimes();
-		}else{}
+		}else{
+			requestRefreshOnerobot();
+		}
 		
 	})
 

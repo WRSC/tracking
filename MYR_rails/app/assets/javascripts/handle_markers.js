@@ -4,7 +4,7 @@
 	function addSmallMarker(lat, lng, tracker_id, map){
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
-			url: 'icons/dot'+tracker_id+'.png',
+			url: 'icons/big'+tracker_id+'.png',
 			size: new google.maps.Size(5, 5),
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(3, 3)
@@ -47,7 +47,7 @@
 /*==============================Begin Add Big Marker============================================*/
 	function addBigMarker(lat, lng, tracker_id, map){
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
-		var image = 'icons/medium'+tracker_id%12+'.png';
+		var image = 'icons/dot'+tracker_id%12+'.png';
 
 		var marker = new google.maps.Marker(
 		{
@@ -61,7 +61,7 @@
 		latest_markers[0].push(marker);
 		latest_markers[1].push(tracker_id);
 		// to create the side panel
-		known_trackers.push(tracker_id);
+		//known_trackers.push(tracker_id);
 		return marker;
 	}
 /*================================End Add Big Marker=======================================*/
@@ -87,7 +87,7 @@
 		for(var i=0; i < data.length ; i++){
 			lat = data[i].latitude;
 			lng = data[i].longitude;
-			tracker_id = data[i].tracker_id;
+			tracker_id = data[i].mission_id;
 			addSmallMarker(lat,lng,tracker_id,map);
 		}
 	}
@@ -95,7 +95,7 @@
 	//Add the given coordiantes on the map and save this last state
 	function refreshWithNewMarkers(data,map){
 		var lastCoordinate = data[data.length-1];
-		var lastDate = lastCoordinate.datetime;
+		//var lastDate = lastCoordinate.datetime;
 		var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
 		/*
@@ -105,11 +105,11 @@
 		*/
 		addAllThisMarkers(data,map);
 		setCenter(lastLat,lastLng);
-		if (lastDate!=null)
-			saveLastDatetime(lastDate);
+		//if (lastDate!=null)
+		//	saveLastDatetime(lastDate);
 	}
 
-	//Add the given coordiantes on the map and save this last state
+	//Add the given coordinates on the map and save this last state
 	function refreshWithNewMarkers2(data){
 		var lastCoordinate = data[data.length-1];
 		var lastDate = lastCoordinate.datetime;
@@ -131,7 +131,7 @@
 		for(var i=0; i < data.length ; i++){ //iterate in the array
 			latitude = data[i].latitude;
 			longitude = data[i].longitude;
-			tracker_id = data[i].tracker_id;
+			tracker_id = data[i].tracker_id;		
 			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
 			if(i != data.length -1){ //not end of array
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
@@ -157,6 +157,46 @@
 			}
 		}
 	}
+
+	/*// Function to display a buoy
+	function addBuoy(lat, lng, map){
+		var image = 'icons/medium1.png';
+
+		var marker = new google.maps.Marker(
+		{
+			position: new google.maps.LatLng(lat,lng),
+			icon: image
+		}
+		);
+		//always needed ?
+		marker.setMap(map);
+		// to ease later addition of coordinqtes
+		latest_markers[0].push(marker);
+		// to create the side panel
+		//known_trackers.push(tracker_id);
+		return marker;
+	}
+
+	// Function to display all the buoys of a mission
+	function refreshBuoys(data){
+		var tracker_Gcoords = []
+		for(var i=0; i < data.length ; i++){ //iterate in the array
+			latitude = data[i].latitude;
+			longitude = data[i].longitude;
+			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
+			if(i != data.length -1){ //not end of array
+					addBuoy(latitude, longitude);
+			}
+			else{ //end of array
+				//create polyline
+				createPolyline(tracker_Gcoords);
+				//addsbigmarker
+				addBuoy(latitude, longitude,2);
+				//reset array
+				tracker_Gcoords = [];
+			}
+		}
+	}*/
 
 	function createPolyline(Gcoords, tracker_id, last_marker){
 

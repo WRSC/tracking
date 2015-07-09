@@ -4,10 +4,10 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @team %> |
+<%= link_to 'Show', @team %> | <%= link_to 'Destroy', @team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team.' } %> | 
 
 <% else %>
-	<h2> You cannot access this page. You need to be logged as Team Leader to access it.</h2>
+	<h2> You cannot access this page. You need to be a Team Leader to access it.</h2>
 
 <% end %>
 

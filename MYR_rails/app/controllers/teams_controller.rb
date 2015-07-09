@@ -43,8 +43,9 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1.json
   def update
     if sign_in?
+      @member=current_user
       if authenticateA_P2(@member)
-        if @member.params[:member][:role] != "administrator" || (sign_in? && is_admin?)
+        if @member.role != "administrator" || (sign_in? && is_admin?)
           respond_to do |format|
             if @team.update(team_params)
               format.html { redirect_to @team, notice: 'Team was successfully updated.' }
@@ -71,6 +72,9 @@ class TeamsController < ApplicationController
   # DELETE /teams/1
   # DELETE /teams/1.json
   def destroy
+    @team.robots.each do |robot|
+      robot.destroy
+    end
     @team.destroy
     respond_to do |format|
       format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }

@@ -1,6 +1,15 @@
 <h1>Editing Tracker</h1>
 
-<%= render 'form' %>
+<% if is_admin? %>
 
-<%= link_to 'Show', @tracker %> |
-<%= link_to 'Back', trackers_path %>
+	<%= render 'form' %>
+
+	<%= link_to 'Show', @tracker %> |
+
+	<%= link_to 'Back', trackers_path %>
+
+<% else %>
+
+	<h2> You do not have the rights to see the content of this page. </h2>
+
+<% end %>

@@ -1,5 +1,14 @@
 <h1>New Attempt</h1>
 
-<%= render 'form' %>
+<% if is_leader? || is_admin? %>
+
+	<%= render 'form' %>
+
+<% else %>
+
+	<h2> You need to be Team Leader to create attemps. </h2>
+
+<% end %>
 
 <%= link_to 'Back', attempts_path %>
+

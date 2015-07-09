@@ -32,4 +32,7 @@
 <% if sign_in? && (is_admin? || @member.id == cookies.signed[:user_id]) %>
   <%= link_to 'Edit', edit_member_path(@member) %> |
 <% end %>
+<% if is_admin? %>
+   <%= link_to 'Destroy', @member, method: :delete, data: { confirm: 'Destroy this member ?' } %> |
+<% end %>
 <%= link_to 'Back', members_path %>

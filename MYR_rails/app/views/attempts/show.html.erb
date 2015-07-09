@@ -1,34 +1,46 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @attempt.name %>
-</p>
+<% if !current_user.nil? %>
+  <% if heIsInTeam?(current_user.name) || is_admin? %>
 
-<p>
-  <strong>Start:</strong>
-  <%= @attempt.start %>
-</p>
+    <p>
+      <strong>Name:</strong>
+      <%= @attempt.name %>
+    </p>
 
-<p>
-  <strong>End:</strong>
-  <%= @attempt.end %>
-</p>
+    <p>
+      <strong>Start:</strong>
+      <%= @attempt.start %>
+    </p>
 
-<p>
-  <strong>Robot:</strong>
-  <%= @attempt.robot_id %>
-</p>
+    <p>
+      <strong>End:</strong>
+      <%= @attempt.end %>
+    </p>
 
-<p>
-  <strong>Mission:</strong>
-  <%= @attempt.mission_id %>
-</p>
+    <p>
+      <strong>Robot:</strong>
+      <%= @attempt.robot_id %>
+    </p>
 
-<p>
-  <strong>Tracker:</strong>
-  <%= @attempt.tracker_id %>
-</p>
+    <p>
+      <strong>Mission:</strong>
+      <%= @attempt.mission_id %>
+    </p>
 
-<%= link_to 'Edit', edit_attempt_path(@attempt) %> |
+    <p>
+      <strong>Tracker:</strong>
+      <%= @attempt.tracker_id %>
+    </p>
+
+    <% if is_leaderById(Robot.find(@attempt.robot_id).team_id) || is_admin? %>
+      <%= link_to 'Edit', edit_attempt_path(@attempt) %> | <%= link_to 'Destroy', @attempt, method: :delete, data: { confirm: 'Destroy this attempt ?' } %> |
+   <% end %>
+
+   <% else %>
+
+      <h2> You can not access this page. </h2>
+
+  <% end %>
+<% end %>
 <%= link_to 'Back', attempts_path %>

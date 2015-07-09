@@ -1,5 +1,13 @@
 <h1>New Robot</h1>
 
+<% if sign_in? && (is_leader? || is_admin?) %>
+
 <%= render 'form' %>
+
+<% else %>
+
+You are not a Team Leader, you cannot create Robots.
+
+<% end %>
 
 <%= link_to 'Back', robots_path %>

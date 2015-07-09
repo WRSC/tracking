@@ -25,9 +25,15 @@
   </div><br>
   <div class="field">
     <%= f.label :robot_id %>
-    <% if Robot.all!=nil %>
-			<%= f.collection_select(:robot_id, Robot.all, :id, :name) %>
-		<% end %>
+    <% if is_admin? %>
+      <% if Robot.all!=nil %>
+  			<%= f.collection_select(:robot_id, Robot.all, :id, :name) %>
+  		<% end %>
+    <% else %>
+      <% if ((myrobs=Robot.where("team_id = ?", current_user.team_id)) != nil) %>
+        <%= f.collection_select(:robot_id, myrobs.all , :id, :name) %>
+      <% end %>
+    <% end %>
   </div><br>
   <div class="field">
     <%= f.label :mission_id %>
@@ -39,6 +45,7 @@
   <div class="field">
     <%= f.label :tracker_id %>
     <% if Tracker.all!=nil %>
+      Make sure you select the tracker that was given to you.
 			<%= f.collection_select(:tracker_id, Tracker.all, :id, :id ) %>
 		<% end %>
   </div><br>

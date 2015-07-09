@@ -2,36 +2,49 @@
 
 <h1>Listing Attempts</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Robot</th>
-      <th>Mission</th>
-      <th>Tracker</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% if !current_user.nil? %>
+  <% if heIsInTeam?(current_user.name) || is_admin? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Robot</th>
+          <th>Mission</th>
+          <th>Tracker ID</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @attempts.each do |attempt| %>
-      <tr>
-        <td><%= attempt.name %></td>
-        <td><%= attempt.start %></td>
-        <td><%= attempt.end %></td>
-        <td><%= attempt.robot_id %></td>
-        <td><%= attempt.mission_id %></td>
-        <td><%= attempt.tracker_id %></td>
-        <td><%= link_to 'Show', attempt %></td>
-        <td><%= link_to 'Edit', edit_attempt_path(attempt) %></td>
-        <td><%= link_to 'Destroy', attempt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <tbody>
+        <% @attempts.each do |attempt| %>
+          <tr>
+            <td><%= attempt.name %></td>
+            <td><%= attempt.start %></td>
+            <td><%= attempt.end %></td>
+            <td><%= link_to Robot.find_by_id(attempt.robot_id).name, Robot.find_by_id(attempt.robot_id) %></td>
+            <td><%= link_to Mission.find_by_id(attempt.mission_id).name, Mission.find_by_id(attempt.mission_id) %></td>
+            <td><%= attempt.tracker_id %></td>
+            <td><%= link_to 'Show', attempt %></td>
+            <% if is_leaderById(Robot.find(attempt.robot_id).team_id) || is_admin? %>
+              <td><%= link_to 'Edit', edit_attempt_path(attempt) %></td>
+              <td><%= link_to 'Destroy', attempt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+    <% if is_leader? || is_admin? %>
+      <%= link_to 'New Attempt', new_attempt_path %>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+  <% else %>
 
-<%= link_to 'New Attempt', new_attempt_path %>
+    <h2>You need to be in a team to see your team's attempts.</h2>
+
+  <% end %>
+<% end %>

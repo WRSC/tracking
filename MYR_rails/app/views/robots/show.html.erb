@@ -16,11 +16,11 @@
 </p>
 
 <p>
-  <strong>Tracker</strong>
+  <strong>Tracker:</strong>
   <%= @robot.tracker_id %>
 </p>
 
 <% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>
-	<%= link_to 'Edit', edit_robot_path(@robot) %> |
+	<%= link_to 'Edit', edit_robot_path(@robot) %> | <%= link_to 'Destroy', @robot, method: :delete, data: { confirm: 'Destroy this robot ?' } %> |
 <% end %>
 <%= link_to 'Back', robots_path %>

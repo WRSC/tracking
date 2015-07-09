@@ -1,14 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Token:</strong>
-  <%= @tracker.token %>
-</p>
+<% if is_admin? %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @tracker.description %>
-</p>
+	<p>
+	  <strong>Token:</strong>
+	  <%= @tracker.token %>
+	</p>
 
-<%= link_to 'Edit', edit_tracker_path(@tracker) %> |
-<%= link_to 'Back', trackers_path %>
+	<p>
+	  <strong>ID:</strong>
+	  <%= @tracker.id %>
+	</p>
+
+	<p>
+	  <strong>Description:</strong>
+	  <%= @tracker.description %>
+	</p>
+
+	<%= link_to 'Edit', edit_tracker_path(@tracker) %> | <%= link_to 'Destroy', @tracker, method: :delete, data: { confirm: 'Destroy this tracker ?' } %> |
+	<%= link_to 'Back', trackers_path %>
+
+<% else %>
+
+	<h2> You do not have the rights to see the content of this page. </h2>
+
+<% end %>

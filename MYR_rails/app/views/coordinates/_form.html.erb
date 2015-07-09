@@ -12,21 +12,23 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :latitude %><br>
+    <%= f.label :latitude %>
     <%= f.text_field :latitude %>
-  </div>
+  </div><br>
   <div class="field">
-    <%= f.label :longitude %><br>
+    <%= f.label :longitude %>
     <%= f.text_field :longitude %>
-  </div>
+  </div><br>
   <div class="field">
-    <%= f.label :datetime %><br>
+    <%= f.label :datetime %>
     <%= f.datetime_select :datetime %>
-  </div>
+  </div><br>
   <div class="field">
-    <%= f.label :tracker_id %><br>
-    <%= f.number_field :tracker_id %>
-  </div>
+    <%= f.label :tracker_id %>
+    <% if Tracker.all!=nil %>
+        <%= f.collection_select(:tracker_id, Tracker.all, :id, :id) %>
+    <% end %>
+  </div><br>
   <div class="actions">
     <%= f.submit %>
   </div>

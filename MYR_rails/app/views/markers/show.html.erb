@@ -1,34 +1,47 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @marker.name %>
-</p>
+<% if sign_in? %>
+  <% if isInTeam? || is_admin? %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @marker.description %>
-</p>
+    <p>
+      <strong>Name:</strong>
+      <%= @marker.name %>
+    </p>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @marker.latitude %>
-</p>
+    <p>
+      <strong>Description:</strong>
+      <%= @marker.description %>
+    </p>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @marker.longitude %>
-</p>
+    <p>
+      <strong>Latitude:</strong>
+      <%= @marker.latitude %>
+    </p>
 
-<p>
-  <strong>Datetime:</strong>
-  <%= @marker.datetime %>
-</p>
+    <p>
+      <strong>Longitude:</strong>
+      <%= @marker.longitude %>
+    </p>
 
-<p>
-  <strong>Mission:</strong>
-  <%= @marker.mission_id %>
-</p>
+    <p>
+      <strong>Datetime:</strong>
+      <%= @marker.datetime %>
+    </p>
 
-<%= link_to 'Edit', edit_marker_path(@marker) %> |
+    <p>
+      <strong>Mission:</strong>
+      <%= @marker.mission_id %>
+    </p>
+
+  <% else %>
+
+    <h2>You cannot access this page. </h2>
+
+  <% end %>
+<% end %>
+
+<% if is_admin? %>
+  <%= link_to 'Edit', edit_marker_path(@marker) %> |
+<% end %>
+
 <%= link_to 'Back', markers_path %>

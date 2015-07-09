@@ -20,5 +20,7 @@
   <%= @coordinate.tracker_id %>
 </p>
 
-<%= link_to 'Edit', edit_coordinate_path(@coordinate) %> |
+<% if is_admin? %>
+	<%= link_to 'Edit', edit_coordinate_path(@coordinate) %> | <%= link_to 'Destroy', @coordinate, method: :delete, data: { confirm: 'Destroy this coordinate ?' } %> |
+<% end %>
 <%= link_to 'Back', coordinates_path %>

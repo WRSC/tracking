@@ -10,5 +10,17 @@
   <%= @mission.description %>
 </p>
 
-<%= link_to 'Edit', edit_mission_path(@mission) %> |
+<p>
+  <strong>Start:</strong>
+  <%= @mission.start %>
+</p>
+
+<p>
+  <strong>End:</strong>
+  <%= @mission.end %>
+</p>
+
+<% if is_admin? %>
+<%= link_to 'Edit', edit_mission_path(@mission) %> | <%= link_to 'Destroy', @mission, method: :delete, data: { confirm: 'Destroy this mission ?' } %> |
+<% end %>
 <%= link_to 'Back', missions_path %>

@@ -1,12 +1,12 @@
 class Tracker < ActiveRecord::Base
 # Associations
-has_many :attempt		
-has_many :coordinate		
+has_many :attempts		
+has_many :coordinates	
 
 
 # Validations
 before_create :generate_token
-validates :token, presence: true, uniqueness: true
+#validates :token, presence: true, uniqueness: true
 private
 def generate_token
     begin

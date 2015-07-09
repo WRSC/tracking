@@ -1,6 +1,13 @@
 <h1>Editing Mission</h1>
 
+<% if is_admin? %>
+
 <%= render 'form' %>
 
+<% else %>
+
+<h2> Only an admin can edit Missions.</h2>
+
+<% end %>
 <%= link_to 'Show', @mission %> |
 <%= link_to 'Back', missions_path %>

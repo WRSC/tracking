@@ -44,7 +44,7 @@
     
     <% if sign_in? %>
     <% if is_admin? %>
-      <th class="column-member-sed" colspan="2"></th>
+      <th class="column-member-sed" colspan="3"></th>
     <% else %>
       <% if is_leader? %>
         <th>Invite</th>
@@ -83,6 +83,7 @@
       <% end %>
       <% nameteam=tabToString(rep) %>
       <td><%= nameteam %></td>
+      <td><%= link_to 'Show', member_path(member) %></td>
       <% if sign_in? %>
         <% if is_admin? %>
           <td><%= link_to 'Edit', edit_member_path(member) %></td>

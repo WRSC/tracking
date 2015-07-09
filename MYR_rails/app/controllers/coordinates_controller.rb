@@ -73,10 +73,11 @@ class CoordinatesController < ApplicationController
   	datetime=params[:datetime]
   	
   	trackers=[] #need to check if it is needed to change js array into json
-  	params[:trackers].each do |k,v|
-  		trackers << v
+  	if (params[:trackers] != nil) 
+      params[:trackers].each do |k,v|
+    		trackers << v
+    	end
   	end
-  	
 
     if (datetime != "10000101" && datetime != nil)#the map already contains coordinates
       if (trackers != nil)# trackers identifiers are specified

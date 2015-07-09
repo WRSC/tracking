@@ -36,6 +36,9 @@ Rails.application.routes.draw do
    	get  'getMissions'             ,  to: 'real_time#getMissions'
     get  'getNewTrackers'          ,  to: 'real_time#getNewTrackers'
     get  'update_map'              ,  to: 'real_time#update_map' 
+    get  'options_panel'           ,  to: 'real_time#options_panel'
+    get  'update_map_auto'         ,  to: 'real_time#update_map_auto'
+    get  'getMissionBuoys'         ,  to: 'real_time#getMissionBuoys'
     
     get  'choice_teams'            ,  to: 'replay#choice_teams'
     get  'choice_robots'           ,  to: 'replay#choice_robots'

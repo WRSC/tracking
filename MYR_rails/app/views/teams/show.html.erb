@@ -31,6 +31,8 @@
 		<%= render 'showRobots'%>
 	<% end %>
 </h1>
-
-<%= link_to 'Edit', edit_team_path(@team) %> |
+<br>
+<% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>
+<%= link_to 'Edit', edit_team_path(@team) %> | <%= link_to 'Destroy', @team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team.' } %> | 
+<% end %>
 <%= link_to 'Back', teams_path %>

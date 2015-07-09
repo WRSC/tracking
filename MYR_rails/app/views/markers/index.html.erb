@@ -2,36 +2,48 @@
 
 <h1>Listing Markers</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Datetime</th>
-      <th>Mission</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% if sign_in? %>
+  <% if isInTeam? || is_admin? %>
 
-  <tbody>
-    <% @markers.each do |marker| %>
-      <tr>
-        <td><%= marker.name %></td>
-        <td><%= marker.description %></td>
-        <td><%= marker.latitude %></td>
-        <td><%= marker.longitude %></td>
-        <td><%= marker.datetime %></td>
-        <td><%= marker.mission_id %></td>
-        <td><%= link_to 'Show', marker %></td>
-        <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
-        <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Datetime</th>
+          <th>Mission</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-<br>
+      <tbody>
+        <% @markers.each do |marker| %>
+          <tr>
+            <td><%= marker.name %></td>
+            <td><%= marker.description %></td>
+            <td><%= marker.latitude %></td>
+            <td><%= marker.longitude %></td>
+            <td><%= marker.datetime %></td>
+            <td><%= marker.mission_id %></td>
+            <td><%= link_to 'Show', marker %></td>
+            <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
+            <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Marker', new_marker_path %>
+    <br>
+
+    <% else %>
+
+    <h2>You cannot access this page. </h2>
+
+  <% end %>
+<% end %>
+
+<% if is_admin? %>
+  <%= link_to 'New Marker', new_marker_path %>
+<% end %>

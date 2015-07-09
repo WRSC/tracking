@@ -1,6 +1,14 @@
 <h1>Editing Marker</h1>
 
-<%= render 'form' %>
+<% if is_admin? %>
+
+	<%= render 'form' %>
+
+<% else %>
+
+   	<h2>You cannot access this page. </h2>
+
+<% end %>
 
 <%= link_to 'Show', @marker %> |
 <%= link_to 'Back', markers_path %>

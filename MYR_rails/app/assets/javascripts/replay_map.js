@@ -1,4 +1,5 @@
 //=require handle_markers
+//=require FullScreenControl
 //----------------------GLOBAL VARIABLES-------------------
 var map=null
 var lastDatetime = "0";
@@ -63,6 +64,7 @@ function FullScreenControl(controlDiv, map) {
   // Setup the click event listeners: change the class of the map container
   google.maps.event.addDomListener(controlUI, 'click', function() {
   	$("#map-container").toggleClass("fullscreen");
+  	//https://developers.google.com/maps/documentation/javascript/reference#Map
   	google.maps.event.trigger(map, 'resize');
   });
 }

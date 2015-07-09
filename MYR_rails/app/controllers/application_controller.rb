@@ -26,16 +26,15 @@ class ApplicationController < ActionController::Base
   
   # check if psw correct and the role is administrator with arguments
   def authenticatebis(name, password)
-      if m=Member.find_by_name(name) 
-        if (m.authenticate(password))
-		  true
-		else
-		  return -1
-		end
-      else
-        return -2
-      end
-    
+    if m=Member.find_by_name(name) 
+    	if (m.authenticate(password))
+			  true
+			else
+			  return -1
+			end
+  	else
+    	return -2
+    end
   end
   
   # Check if the user is a leader, or an admin

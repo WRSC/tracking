@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :create, :wait_for_activated]
+  
 
   # GET /members
   # GET /members.json
@@ -10,6 +11,7 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
+  	@member = Member.find(params[:id])
   end
 
   # GET /members/new
@@ -28,16 +30,20 @@ class MembersController < ApplicationController
     	
       @member = Member.new(member_params)
 
-      respond_to do |format|
+      #respond_to do |format|
         if @member.save
-          sign_in(@member)
-          format.html { redirect_to @member, notice: 'Member was successfully created.' }
-          format.json { render :show, status: :created, location: @member }
+          #sign_in(@member)
+          @member.send_activation_email
+     			flash[:info] = "Please check your email to activate your account."
+      		redirect_to '/account_activations/wait_for_activated'
+          #format.html { redirect_to @member, notice: 'Member was successfully created.' }
+          #format.json { render :show, status: :created, location: @member }
         else
-          format.html { render :new }
-          format.json { render json: @member.errors, status: :unprocessable_entity }
+          #format.html { render :new }
+          #format.json { render json: @member.errors, status: :unprocessable_entity }
+          render 'new'
         end
-      end
+      #end
     else
       flash[:error] = "Ask an administrator for becoming administrator"
       redirect_to '/members/new'
@@ -110,6 +116,7 @@ class MembersController < ApplicationController
       render 'edit'
     end
   end
+  
 
 
   def invite
@@ -144,7 +151,9 @@ class MembersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_member
-    @member = Member.find(params[:id])
+  	if @member && @member.activated
+   		@member = Member.find(params[:id])
+   	end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

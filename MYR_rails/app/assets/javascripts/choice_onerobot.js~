@@ -1,6 +1,7 @@
 //=require replay
 //=require handle_markers
 //=require replay_map
+//=require choice_robots
 /*choose one robot*/
 function requestRefreshOnerobot(){
 	$.ajax({
@@ -50,18 +51,24 @@ function choose_attempts(){
 	$("#attempts_dropdown").on("change", function () {
 		//alert($("#attempts_dropdown option:selected").val())
 		$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
-		requestRefreshUpdateButton();
+		requestRefreshUpdateButton(1);
 	});
 }
 
-function requestRefreshUpdateButton(){
+function requestRefreshUpdateButton(nb){
 	$.ajax({
 		type: "GET",
 		url: "/update_replay_map",
 		
 		success: function(){
 			$('#updatebutton').click(function(){
-				requestRefreshMapFromAttempt();
+				if (nb==1)
+					requestRefreshMapFromAttempt();
+				else{
+					if (nb==2){
+						rgetDatetimesInfos()
+					}
+				}
 			})
 		}       
 	});
@@ -89,7 +96,7 @@ function requestGatherCoordsBetweenDates(timedata){
 		data: {tstart : timedata[0], tend: timedata[1]},
 		dataType: "json",
 		success: function(data){
-			refreshWithNewMarkers(data,getMap());
+			refreshWithNewMarkers2(data,getMap());
 		}       
 	});
 }

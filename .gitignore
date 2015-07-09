@@ -1,2 +1,3 @@
 MYR_rails/app/views/real_time/UpdateMap.js.erb~
 *.sqlite3
+*.yml

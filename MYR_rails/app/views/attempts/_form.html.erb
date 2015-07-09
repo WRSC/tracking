@@ -45,8 +45,8 @@
   <div class="field">
     <%= f.label :tracker_id %>
     <% if Tracker.all!=nil %>
-      Make sure you select the tracker that was given to you.
 			<%= f.collection_select(:tracker_id, Tracker.all, :id, :id ) %>
+			Make sure you select the tracker that was given to you.
 		<% end %>
   </div><br>
  

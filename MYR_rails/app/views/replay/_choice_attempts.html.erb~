@@ -1,18 +1,17 @@
-<p><b><u>Select attempts:</u></b></p>
-<% m= Mission.find(@strmissions[0]) %>
 
-<select name="mission" id="attempts_dropdown">
-<option>Please choose an attempt</option>
-<% for i in 0..(m.attempts.size-1)%>
-  <option value="<%= m.attempts[i].id %>"><%= m.attempts[i].name %></option>
+<!--%= @test[:missionslist].inspect%-->
+<% if @strmissions[0]!="0"%>
+	<p><b><u>Select attempts:</u></b></p>
+	<% m= Mission.find(@strmissions[0]) %>
+	<!--%= m.inspect%-->
+	<select name="mission" id="attempts_dropdown">
+	<option value="default"></option>
+	<% for i in 0..(m.attempts.size-1)%>
+		<option value="<%= m.attempts[i].id %>"><%= m.attempts[i].name %></option>
+	<% end %>
+	</select>
+<% else %>
 <% end %>
-
-</select>
-<br>
-<button id="updatebutton" type="button">UPDATE</button>
-
-<div><i> You can click on a boat to see the description of its team.</i></div>
-<div><i> You can click on the small square dots to display the corresponding datetime.</i></div>
 
 
 

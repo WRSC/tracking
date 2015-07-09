@@ -177,7 +177,7 @@ class ReplayController < ApplicationController
  	end
  	
  	def update_replay_map
- 	
+ 		@attempt = cookies[:attemptslist]
  	end
  	
  	def getAttemptInfos
@@ -191,12 +191,6 @@ class ReplayController < ApplicationController
  	end
  	
  	def choice_datetimes
- 	end
- 	
- 	def getDatetimesInfos
-		datetime="10010101"
-		#datetime = cookies[:rdatetimes]
-		render json: datetime 
  	end
  	
  	def infowindow

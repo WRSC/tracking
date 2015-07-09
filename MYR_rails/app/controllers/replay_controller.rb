@@ -177,7 +177,7 @@ class ReplayController < ApplicationController
  	end
  	
  	def update_replay_map
- 	
+ 		@attempts = cookies[:attemptslist]
  	end
  	
  	def getAttemptInfos

@@ -3,14 +3,17 @@
 //=require replay_map
 //=require choice_robots
 /*choose one robot*/
-function requestRefreshOnerobot(){
+function requestRefreshOnerobot(flag){
 	$.ajax({
 		type: "GET",
 		url: "/choice_onerobot",
 	
 		success: function(){
-		
-			requestRefreshReplayMissions()
+			if (flag){
+				requestRefreshReplayMissions()
+			}else{
+				//if flag==false, it will not display choose mission
+			}
 		}       
 	});
 }
@@ -30,7 +33,6 @@ function choose_mission(){
 	$.cookie("missionslist",$("#replay_missions_dropdown option:selected").val());
 	$("#replay_missions_dropdown").on("change", function () {
 		$.cookie("missionslist",$("#replay_missions_dropdown option:selected").val());
-	  //alert($("#replay_missions_dropdown option:selected").val())
 		requestRefreshAttempts();
 	});
 }
@@ -49,7 +51,6 @@ function requestRefreshAttempts(){
 function choose_attempts(){
 	$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
 	$("#attempts_dropdown").on("change", function () {
-		//alert($("#attempts_dropdown option:selected").val())
 		$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
 		requestRefreshUpdateButton(1);
 	});
@@ -66,7 +67,7 @@ function requestRefreshUpdateButton(nb){
 					requestRefreshMapFromAttempt();
 				else{
 					if (nb==2){
-						getDatetimesInfos()
+						getDatetimesInfos()  //It is in the file of choice_robots.js
 					}
 				}
 			})

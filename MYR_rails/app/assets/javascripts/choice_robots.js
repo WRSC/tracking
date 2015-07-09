@@ -24,7 +24,7 @@ function run_choice_robots(){
 
 		if (c==1){
 				//quand on coche une checkbox pour la premiere fois
-				requestRefreshOnerobot();//affiche le volet pour missions tries
+				requestRefreshOnerobot(true);//affiche le volet pour missions tries
 		}else if (c > 1){
 			requestRefreshDatetimes();
 		}else{}
@@ -51,11 +51,13 @@ function run_choice_robots(){
       
 			if (c==1){
 				//quand on coche une checkbox pour la premiere fois
-				requestRefreshOnerobot()//affiche le volet pour missions tries
+				requestRefreshOnerobot(true)//affiche le volet pour missions tries
 			}else if (c > 1){
 				requestRefreshDatetimes();
 			}
-			else{} 
+			else if (c==0){
+				requestRefreshOnerobot(false);
+			} 
     })
   })  
 }
@@ -70,8 +72,8 @@ function requestRefreshDatetimes(){
 		}       
 	});
 }
-//------------------------------------------------------------------------------
-//-------------------BEGIN DATETIMES -----------------------------------------------
+//------------------------------------------------------------------------------------------------
+//---------------------------------BEGIN DATETIMES -----------------------------------------------
 function getstartselectedvalue(){
 	var year = $("#start_year option:selected").val();
 	var month =$("#start_month option:selected").val();

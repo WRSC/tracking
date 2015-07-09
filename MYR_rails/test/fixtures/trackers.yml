@@ -1,5 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+<<<<<<< HEAD
 one:
   token: MyString
   description: MyString
@@ -11,3 +12,12 @@ two:
   description: MyString
   created_at: 2015-07-03 15:11:14
   updated_at: 2015-07-03 15:11:14
+=======
+#one:
+#  token: MyString
+#  description: 1
+
+#two:
+#  token: MyString
+#  description: 1
+>>>>>>> create_test

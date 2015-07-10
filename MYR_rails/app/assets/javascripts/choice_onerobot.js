@@ -2,6 +2,7 @@
 //=require handle_markers
 //=require replay_map
 //=require choice_robots
+
 /*choose one robot*/
 function requestRefreshOnerobot(flag){
 	$.ajax({
@@ -67,7 +68,7 @@ function requestRefreshUpdateButton(nb){
 					requestRefreshMapFromAttempt();
 				else{
 					if (nb==2){
-						getDatetimesInfos()  //It is in the file of choice_robots.js
+						getDatetimesInfos()  //It was in the file choice_robots
 					}
 				}
 			})
@@ -75,31 +76,38 @@ function requestRefreshUpdateButton(nb){
 	});
 }
 
+
 function requestRefreshMapFromAttempt(){
 	$.ajax({
 		type: "GET",
-		url: "/getAttemptInfos",
+		url: "/getSingleAttemptInfos",
 		
 		success: function(data){
 			//alert(data)
-			requestGatherCoordsBetweenDates(data);
+			//tstart: data[0]; tend: data[1]; trackers: data[2] 
+
+			requestGatherCoordsBetweenDates(data[0],data[1],data[2]);
 		}       
 	});
 }
 
-
-function requestGatherCoordsBetweenDates(timedata){
-	//alert(timedata[0])
 	
+function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data contains start, end, tracker_id[]
+	//alert(desired_data[2])
+
+	
+	//alert (trackers)
 	$.ajax({
 		type: "GET",
 		url: "/gatherCoordsBetweenDates",
-		data: {tstart : timedata[0], tend: timedata[1]},
+		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
+			alert(data)
 			refreshWithNewMarkers2(data,getMap());
 		}       
 	});
 }
+
 
 

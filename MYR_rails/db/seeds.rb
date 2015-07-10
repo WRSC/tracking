@@ -57,7 +57,7 @@ end
 #Tracker 5 6 => robot 1 mission 3 => attempt5 attempt6
 #Tracker 7 8 => robot 1 mission 4 => attempt7 attempt8
 
-#Coordinate 1 => attempt1
+#Coordinate  => attempt1
 Coordinate.create!(latitude:  0,
 								longitude: 0,
 								datetime:   "20150709112326",
@@ -73,6 +73,37 @@ Coordinate.create!(latitude:  5,
 								datetime:   "20150709112726",
              		tracker_id: 1)
 
+#Coordinate => attempt2
+Coordinate.create!(latitude:  5,
+								longitude: 5,
+								datetime:   "20150709132700",
+             		tracker_id: 2)
+             		
+Coordinate.create!(latitude:  5,
+								longitude: 10,
+								datetime:   "20150709132712",
+             		tracker_id: 2)
+
+Coordinate.create!(latitude:  10,
+								longitude: 5,
+								datetime:   "20150709132721",
+             		tracker_id: 2)
+             		
+#Coordinate => attempt3
+Coordinate.create!(latitude:  30,
+								longitude: 5,
+								datetime:   "20150709132700",
+             		tracker_id: 3)
+             		
+Coordinate.create!(latitude:  30,
+								longitude: 10,
+								datetime:   "20150709132712",
+             		tracker_id: 3)
+
+Coordinate.create!(latitude:  35,
+								longitude: 5,
+								datetime:   "20150709132721",
+             		tracker_id: 3)
 
 #Mission 1
 Mission.create!(name:  "Triangular Course Contest",

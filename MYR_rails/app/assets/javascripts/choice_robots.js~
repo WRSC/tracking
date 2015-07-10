@@ -23,12 +23,13 @@ function run_choice_robots(){
 		})
 
 		if (c==1){
+			
 				//quand on coche une checkbox pour la premiere fois
 				requestRefreshOnerobot(true);//affiche le volet pour missions tries
 		}else if (c > 1){
 			requestRefreshDatetimes();
 		}else{
-			requestRefreshOnerobot();
+			requestRefreshOnerobot(false);
 		}
 		
 	})
@@ -218,9 +219,39 @@ function choose_datetimes(){
 //---------------------------END DATETIMES---------------------------------------------------
 
 function getDatetimesInfos(){
-	datetime=readcookie()
+	//alert('entered')
+	datetime=readcookie() //read datetimes
+	robs=readRoblistInCookie()
+	requestGetTrackersFromDatetimes(robs,datetime)
+}
+
+function requestGetTrackersFromDatetimes(roblist,datetime){
 	tabtime=datetime.split("_")	
-	requestGatherCoordsBetweenDates(tabtime)
+	tstart=tabtime[0]
+	tend=tabtime[1]
+	tabrobs=roblist.split(",")
+	robs=[]
+	for (var i=0;i<tabrobs.length;i++ ){
+		robs.push(tabrobs[i])
+	}
+	$.ajax({
+		type: "GET",
+		url: "/getTrackersFromDatetimes",
+		data: {robs: robs, tstart: tstart, tend: tend},
+		dataType: "json",
+		success: function(data){
+			if (data.length > 0){
+				trackers=data
+				//alert(data)
+				//alert(datetime)
+				requestGatherCoordsBetweenDates(datetime,trackers)
+			}
+		}       
+	});
+}
+
+function readRoblistInCookie(){
+	return $.cookie("robotslist")
 }
 
 

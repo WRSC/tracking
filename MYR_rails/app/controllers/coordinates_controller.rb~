@@ -72,18 +72,18 @@ class CoordinatesController < ApplicationController
   	m_id=params[:mission_id]
   	datetime=params[:datetime]
   	
-  	trackers=[] #need to check if it is needed to change js array into json
-  	params[:trackers].each do |k,v|
-  		trackers << v
+  	trackers=[] # change js array into tracker_ids
+  	if (params[:trackers] != nil) 
+      params[:trackers].each do |k,v|
+    		trackers << v
+    	end
   	end
-  	
 
     if (datetime != "10000101" && datetime != nil)#the map already contains coordinates
       if (trackers != nil)# trackers identifiers are specified
         # order(tracker_id: :asc)  is just here for performance boost -> prevent some action to be made js side by Google Map API
         newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", datetime).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
       else
-        #newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", datetime).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
         newCoords = []
       end
       render json: newCoords.to_json #(:only =>[:datetime,:tracker_id,:latitude,:longitude])  -> remove ID but is not a direct SQL request
@@ -92,23 +92,21 @@ class CoordinatesController < ApplicationController
         start = Mission.find(m_id).start.to_s(:number).to_datetime #missionsInfos = [start, end]
         if (trackers != nil)# trackers identifiers are specified
           newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", start).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
-          render json: newCoords.to_json
         else
-        	render json: m_id
-          #newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", start).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
-#          newCoords = []
+          newCoords = []
         end
-#        render json: newCoords.to_json #(:only =>[:datetime,:tracker_id,:latitude,:longitude])  -> remove ID but is not a direct SQL request
-
+        render json: newCoords.to_json #(:only =>[:datetime,:tracker_id,:latitude,:longitude])  -> remove ID but is not a direct SQL request
       end
     end
   end
 
   def gatherCoordsBetweenDates
-    if (params[:tstart] != nil && params[:tend] != nil)
+    trackers=params[:trackers]
+		
+		if (params[:tstart] != nil && params[:tend] != nil)
       tstart = params[:tstart].to_datetime
       tend = params[:tend].to_datetime
-      newCoords = Coordinate.where "? <datetime AND datetime < ?", tstart, tend
+      newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude])
     end
   end

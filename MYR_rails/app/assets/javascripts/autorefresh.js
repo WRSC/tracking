@@ -2,7 +2,6 @@
 
 function AR_checkbox_cookie(){
 	$("input[id='aRCB']").each(function(){
-		alert("checking");
 		  var id = $(this).attr('id');
 		  var str = $.cookie("autorefresh");
 		  //index de l'élément à retirer
@@ -63,11 +62,10 @@ function getNewTrackers(){
 			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getCurrentMission()}, //!!!!! Be careful, datetime can not begin with 0
 			dataType: "json",
 			success: function(data){// retrieve an array containing the not yet known trackers
-				alert(data)
 				if(data.length > 0){
 					saveNewDesiredTracker(data);//need to check???? need to clear when finish
 					saveNewKnownTracker(data);
-					alert("Received data: "+data);
+					//alert("Received data: "+data);
 				}
 			}       
 		});
@@ -88,7 +86,7 @@ function getNewCoordinatesAuto(){
 			}       
 		});
 }
-
+// not sure but
 //getNewCoordinatesAuto is used in getNewTrackersAuto because somehow getNewCoordinatesAuto don't find the trackers otherwise
 function getNewTrackersAuto(){
 		$.ajax({
@@ -131,6 +129,10 @@ function autoUpdate(){
 			
 			success: function(){
 				getNewTrackersAuto()
+				setInterval(function() {
+					getNewTrackersAuto()
+					getNewCoordinatesAuto()
+				}, 10000);
 			}       
 		});
 }

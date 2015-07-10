@@ -10,6 +10,8 @@ $(document).ready(function(){
 	$("#refresh-panel").click();
 	$("#options-panel-bis").click();
 	AR_checkbox_cookie();
+	dispBuoys_checkbox_cookie();
+
 	//initializeMap();
 	initialScroll();
 });
@@ -30,9 +32,9 @@ function choosetMission(){
 
 			//alert(getCurrentMission())//just for debugger
 		}
+		loadMissionBuoys();
 		displayMissionsBuoys();
-		manual_or_auto_refresh();
-		
+		manual_or_auto_refresh();	
 }
 
 function selectMissions(){

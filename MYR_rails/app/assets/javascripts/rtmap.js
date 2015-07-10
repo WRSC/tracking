@@ -1,8 +1,10 @@
 //=require handle_markers
+//=require handle_buoys
 //----------------------GLOBAL VARIABLES-------------------
 
 var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
+var latest_buoys = [[],[]]; //[0] for buoys and [1] for mission id
 var known_trackers = [];
 var desired_trackers = [];
 var all_current_missions=[];
@@ -134,6 +136,12 @@ function FullScreenControl(controlDiv, map) {
 /*========================= Begin initialize Google Map===============================================*/
 	//Map initialization
 	function initializeMap() {
+		//reset the global variables
+		latest_markers = [[],[]];
+		latest_buoys = [[],[]];
+		desired_trackers = [];
+		known_trackers = [];
+		lastDatetime = "10000101";
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -172,7 +180,16 @@ function FullScreenControl(controlDiv, map) {
 		map.panTo(new google.maps.LatLng(lat,lng));
 	}
 
+/*========================= End initialize Google Map===============================================*/
 
+//Fit the zoom to see all the displayed points
+	function adaptZoom(){
+		var bounds = new google.maps.LatLngBounds();
+		for(var i=0; i < latest_markers[0].length ; i++){
+			bounds.extend(latest_markers[0][i].getPosition());
+		}
+		map.fitBounds(bounds);
+	}
 	
 //---------------------  BOILS  -----------------------------------
 	//Add a boil on the map when clicked and keep track of coordinates on dragend

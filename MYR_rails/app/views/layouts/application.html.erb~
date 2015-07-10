@@ -12,8 +12,6 @@
   <%= stylesheet_link_tag 'layout/styles/form.css', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'layout/styles/table.css', media: 'all', 'data-turbolinks-track' => true %>
   
- 
-   <%= stylesheet_link_tag 'sidebar/css/normalize.css', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>

@@ -1,0 +1,13 @@
+Controller:
+	static_page: home                         (Done)
+							 contact                      (Done)
+Model:
+	member:
+		name:
+			test "name should be present"         (done)
+			test "name should not be too short"   (done)
+			test "name should not be too long"    (done)
+		email:
+			test "email should be present"         (done)
+			test "email should not be too short    (done)
+			test "email should not be too long"    (done)

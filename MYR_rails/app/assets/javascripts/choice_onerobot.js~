@@ -64,6 +64,7 @@ function requestRefreshUpdateButton(nb){
 		
 		success: function(){
 			$('#updatebutton').click(function(){
+				initializeMap(map)
 				if (nb==1)
 					requestRefreshMapFromAttempt();
 				else{
@@ -85,8 +86,8 @@ function requestRefreshMapFromAttempt(){
 		success: function(data){
 			//alert(data)
 			//tstart: data[0]; tend: data[1]; trackers: data[2] 
-			alert (data[0])
-			requestGatherCoordsBetweenDates(data);
+
+			requestGatherCoordsBetweenDates(data[0],data[1],data[2]);
 		}       
 	});
 }

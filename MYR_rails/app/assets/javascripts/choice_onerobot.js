@@ -104,8 +104,9 @@ function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data co
 		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
-			alert(data)
+			//alert(data)
 			refreshWithNewMarkers2(data,getMap());
+			
 		}       
 	});
 }

@@ -119,8 +119,9 @@
 		addAllThisMarkers(data,map);
 		adaptZoom();
 		//setCenter(lastLat,lastLng);
-		if (lastDate!=null)
+		if (lastDate!=null){
 			saveLastDatetime(lastDate);
+		}
 	}
 
 	//Add the given coordinates on the map and save this last state
@@ -141,7 +142,9 @@
 
 		//setCenter(lastLat,lastLng);
 		adaptZoom();
-		saveLastDatetime(lastDate);
+		if (lastDate!=null){
+			saveLastDatetime(lastDate);
+		}
 	}
 
 	function addAllThesePolylines(data){

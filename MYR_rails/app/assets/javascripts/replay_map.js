@@ -108,6 +108,16 @@ function FullScreenControl(controlDiv, map) {
 		map.panTo(new google.maps.LatLng(lat,lng));
 	}
 
+//Fit the zoom to see all the displayed points
+	function adaptZoom(){
+		var bounds = new google.maps.LatLngBounds();
+		for(var i=0; i < latest_markers[0].length ; i++){
+			bounds.extend(latest_markers[0][i].getPosition());
+		}
+		map.fitBounds(bounds);
+	}
+	
+
 //---------------------  BOILS  -----------------------------------
 	//Add a boil on the map when clicked and keep track of coordinates on dragend
 	//Save the coodinates in the database when clinking on "AddBoil" button

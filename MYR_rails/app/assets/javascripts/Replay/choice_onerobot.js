@@ -1,7 +1,3 @@
-//=require replay
-//=require handle_markers
-//=require replay_map
-//=require choice_robots
 
 /*choose one robot*/
 function requestRefreshOnerobot(flag){

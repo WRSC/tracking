@@ -1,4 +1,3 @@
-//=require choice_onerobot
 
 //-----------INITIALIZATION--------------------------------------------
 function run_choice_robots(){

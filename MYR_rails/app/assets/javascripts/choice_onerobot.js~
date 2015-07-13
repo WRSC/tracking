@@ -1,7 +1,7 @@
-//=require replay
-//=require handle_markers
-//=require replay_map
-//=require choice_robots
+//=require Replay/main
+//=require Replay/replay_map
+//=require Replay/choice_robots
+//=require Markers/handle_markers
 
 /*choose one robot*/
 function requestRefreshOnerobot(flag){
@@ -106,7 +106,7 @@ function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data co
 		success: function(data){
 			//alert(data)
 			refreshWithNewMarkers2(data,getMap());
-			adaptZoom()
+			
 		}       
 	});
 }

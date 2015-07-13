@@ -1,5 +1,5 @@
-//=require handle_markers
-//=require FullScreenControl
+//=require ../Markers/handle_markers
+
 //----------------------GLOBAL VARIABLES-------------------
 var map=null
 var lastDatetime = "0";

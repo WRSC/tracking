@@ -25,9 +25,13 @@
 <!----------------------sidebar of google map-------------------------------->
 		<div class="one_third" style='height: 100%'>
 			<div id="map-panel"></div>
-			<button id="getLastData" type="button">Get LastData</button> 
-			<button id="getNewTrackers" type="button">Get trackers</button> 
-			<button id="getNewCoordinates" type="button">Get coordinates</button> 
-			<a id="refresh-panel" href<%= link_to "REFRESH PANEL", :action => :map_panel, remote: true%></a>
+			 
+			<div id="trackersAndCoordis"></div>
+
+			<a id="refresh-panel" href<%= link_to "", :action => :map_panel, remote: true%></a>
+
+			<div id="options-panel"></div>
+
+			<a id="options-panel-bis" href<%= link_to "", :action => :options_panel, remote: :true%></a>
 		</div>
 	</div> 

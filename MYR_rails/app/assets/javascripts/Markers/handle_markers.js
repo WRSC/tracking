@@ -24,7 +24,8 @@
 		return marker;
 	}
 /*=============================End Add a Small Marker========================================*/
-	
+
+/*	
 	//to complete
 	//Add a marker to the map
 	//tracker_id is optional with  default value of 12 for the rendering
@@ -49,7 +50,7 @@
 		latest_markers[1].push(tracker_id);
 		return marker;
 	}
-	
+*/	
 	//Add a big marker to the map
 	//tracker_id is optional with  default value of 12 for the rendering
 
@@ -79,8 +80,10 @@
 	}
 /*================================End Add Big Marker=======================================*/
 
+
 /*=================================Begin Add Draggable Marker==============================*/
-	//Add a draggable marker to the map
+/*
+//Add a draggable marker to the map
 	function addDraggableMarker(lat, lng,map){
 		var marker = new google.maps.Marker(
 		{
@@ -91,7 +94,7 @@
 		//always needed ?
 		marker.setMap(map);
 		return marker;
-	}
+	}*/
 /*=================================End Add Draggable Marker================================*/
 
 	//Add all the given coordinates onto the map
@@ -105,10 +108,11 @@
 		}
 	}
 
+/*
 	//Add the given coordiantes on the map and save this last state
 	function refreshWithNewMarkers(data,map){
 		var lastCoordinate = data[data.length-1];
-		var lastDate = lastCoordinate.datetime;
+		var lastDate = lastCoordinate.datetime;*/
 		/*var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
 		
@@ -116,16 +120,17 @@
 		alert(lastLat)
 		alert(lastLng)
 		*/
+		/*
 		addAllThisMarkers(data,map);
 		adaptZoom();
 		//setCenter(lastLat,lastLng);
 		if (lastDate!=null){
 			saveLastDatetime(lastDate);
 		}
-	}
+	}*/
 
 	//Add the given coordinates on the map and save this last state
-	function refreshWithNewMarkers2(data){
+	function refreshWithNewMarkers2(data,map){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
 		if (latest_markers[0].length>0){
 			latest_markers[0][latest_markers[0].length-1].setMap(null);
 		}
@@ -138,7 +143,7 @@
 		alert(lastLat)
 		alert(lastLng)
 		*/
-		addAllThesePolylines(data);
+		addAllThesePolylines(data,map);
 
 		//setCenter(lastLat,lastLng);
 		adaptZoom();
@@ -147,7 +152,7 @@
 		}
 	}
 
-	function addAllThesePolylines(data){
+	function addAllThesePolylines(data,map){
 		var tracker_Gcoords = []
 		for(var i=0; i < data.length ; i++){ //iterate in the array
 			latitude = data[i].latitude;

@@ -1,7 +1,7 @@
 
 
 <head>
-	<%= javascript_include_tag 'replay', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'Replay/main', 'data-turbolinks-track' => true %>
 </head>
 
 	<div id="above_the_map"></div>
@@ -13,7 +13,7 @@
 		}
 	</style>
 	
-	<div id="map_frame_container" style='width: 95%; height: 70%'>
+	<div id="map_frame_container" style='width: 98%; height: 70%'>
 		<div id="map-container" class="two_third" style='height: 100%'>
 			<div id="map-canvas"></div>
 		</div>

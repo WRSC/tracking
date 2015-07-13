@@ -1,0 +1,40 @@
+<%= form_for(@liste) do |f| %>
+  <% if @liste.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@liste.errors.count, "error") %> prohibited this liste from being saved:</h2>
+
+      <ul>
+      <% @liste.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :latitude %>
+    <%= f.text_field :latitude %>
+  </div><br>
+  <div class="field">
+    <%= f.label :longitude %>
+    <%= f.text_field :longitude %>
+  </div><br>
+  <div class="field">
+    <%= f.label :datetime %>
+    <%= f.text_field :datetime %>
+  </div><br>
+  <div class="field">
+    <%= f.label :tracker_id %>
+    <% if Tracker.all!=nil %>
+        <%= f.collection_select(:tracker_id, Tracker.all, :id, :id) %>
+    <% end %>
+  </div><br>
+  <div class="field">
+    <%= f.label :token %>
+    <%= f.text_field :token %>
+  </div><br>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

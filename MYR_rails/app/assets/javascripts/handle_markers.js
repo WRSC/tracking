@@ -202,6 +202,7 @@
 			strokeWeight: 1
 		});
 		polyline.setMap(map);
+		lines.push(polyline);
 	}
 
 	function deleteEndMarker(index_of_marker){

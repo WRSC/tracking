@@ -11,13 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150707073446) do
-=======
-
-ActiveRecord::Schema.define(version: 20150707073446) do
-
->>>>>>> 3f2979acc9dc656d8bb343c3e026fbaf87abfeda
+ActiveRecord::Schema.define(version: 20150713080850) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -37,6 +31,16 @@ ActiveRecord::Schema.define(version: 20150707073446) do
     t.datetime "updated_at", null: false
     t.float    "latitude"
     t.float    "longitude"
+  end
+
+  create_table "listes", force: :cascade do |t|
+    t.string   "latitude"
+    t.string   "longitude"
+    t.string   "datetime"
+    t.integer  "tracker_id"
+    t.string   "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "markers", force: :cascade do |t|

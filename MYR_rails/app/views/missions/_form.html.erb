@@ -12,22 +12,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
+  <br>
     <p>Please select start and end times in UTC +00</p>
     <div class="field">
-    <%= f.label :start %><br>
+    <%= f.label :start %>
     <%= f.datetime_select :start %>
   </div>
+  <br>
   <div class="field">
-    <%= f.label :end %><br>
+    <%= f.label :end %>
     <%= f.datetime_select :end %>
   </div>
+  <br>
+  
   <div class="field">
-    <%= f.label :description %><br>
+    <%= f.label :description %>
     <%= f.text_area :description %>
   </div>
+  <br>
 
   <div class="actions">
     <%= f.submit %>

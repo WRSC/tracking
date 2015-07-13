@@ -9,6 +9,7 @@ $(document).ready(function(){
 	google.maps.event.addDomListener(window, 'load', initializeMap());
 	$("#refresh-panel").click();
 	$("#options-panel-bis").click();
+
 	AR_checkbox_cookie();
 	dispBuoys_checkbox_cookie();
 
@@ -32,9 +33,11 @@ function choosetMission(){
 
 			//alert(getCurrentMission())//just for debugger
 		}
+		$("#robots-panel-bis").click();
 		loadMissionBuoys();
 		displayMissionsBuoys();
-		manual_or_auto_refresh();	
+		manual_or_auto_refresh();
+			
 }
 
 function selectMissions(){
@@ -44,9 +47,19 @@ function selectMissions(){
 				url: "/getMissions",
 				success: function(data){// retrieve an array containing the not yet known trackers
 					if(data.length > 0){
-						initializeMap();
+						eraseMap();
+						if (myReset!= null){
+      						clearInterval(myReset);
+      					}
 						setAllCurrentMissions(data);
 						choosetMission();
+						$.ajax({
+							type: "GET",
+							url: "/robots_panel",
+							success: function(data){// retrieve an array containing the not yet known trackers
+							}       
+						});
+
 					}
 				}       
 			});

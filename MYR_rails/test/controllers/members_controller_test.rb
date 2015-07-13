@@ -11,12 +11,13 @@ class MembersControllerTest < ActionController::TestCase
     assert_response :success
 #    assert_not_nil assigns(:members)
   end
-=begin
+
   test "should get new" do
     get :new
     assert_response :success
   end
 
+=begin
   test "should create member" do
     assert_difference('Member.count') do
       post :create, member: { email: @member.email, logo: @member.logo, name: @member.name, password: @member.password, role: @member.role, team_id: @member.team_id }

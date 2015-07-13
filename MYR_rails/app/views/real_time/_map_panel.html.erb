@@ -8,7 +8,7 @@
 			<select name="Select mission" id="dropdown_select_mission">
 				<option value="select_mission">Select a mission</option>
 				<% for m in missionsArray %>
-				<option value="<%= m.id %>"><%= m.name %> <%= m.id%></option>
+				<option value="<%= m.id %>">Mission <%= m.id%> : <%= m.name%> </option>
 				<% end %>
 			</select>
 		</p>
@@ -16,13 +16,14 @@
 	<% else %>
 		<% mission = missionsArray[0] %>
 		<p>Current Mission is: <%= mission.name %></p>
-		<p>Started at: <%=mission.start.to_s(:time)%> and ends at :<%=mission.end.to_s(:time)%>
+		<p>Started at: <%=mission.start.to_s(:time)%> and ends at :<%=mission.end.to_s(:time)%> UTC
 			<% if mission.description != ""%>
+				<br>
 				<p>Description: <%= mission.description %></p>
 			<% end %>
 		</p>
 		<button id="getNewTrackers" type="button">Get trackers</button> 
-			<button id="getNewCoordinates" type="button">Get coordinates</button> 
+		<button id="getNewCoordinates" type="button">Get coordinates</button> 
 	<% end %>
 <% else %>
 	<h1>No mission in progress currently.</h1>

@@ -22,6 +22,10 @@ class RealTimeController < ApplicationController
 		@current_mission_id= params[:mission_id]
 	end
 
+	def robots_panel
+		@current_mission_id= params[:mission_id]
+	end
+
 	def getNewTrackers
 		
 		last_refresh = params[:datetime]

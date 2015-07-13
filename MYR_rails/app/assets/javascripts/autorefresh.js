@@ -1,5 +1,6 @@
 // Js handling the autorefresh option or the manual option
 
+// Supposed to memorize the state of the check box
 function AR_checkbox_cookie(){
 	$("input[id='aRCB']").each(function(){
 		  var id = $(this).attr('id');
@@ -14,20 +15,32 @@ function AR_checkbox_cookie(){
   	});
 }
 
+
+
 function manual_or_auto_refresh(){	
+
+// If the checkbox is checked before using the call of function, this will run the function associated
 	$("input[id='aRCB']").each(function(){
 		if($(this).is(':checked')){
         	autoUpdate()
        	}else{//si décoché
+       		if (myReset!= null){
+      			clearInterval(myReset);
+      		}
         	updateMap()
 		}
 	});
 
+
+// Detect the click on the check box
 	$("#aRCB").click(function(){
       if($(this).is(':checked')){
         autoUpdate()
         $.cookie("autorefresh",1);
       }else{//si décoché
+      	if (myReset!= null){
+      		clearInterval(myReset);
+      	}
         updateMap()
 		$.cookie("autorefresh",0);
       }
@@ -105,7 +118,6 @@ function getNewTrackersAuto(){
 }
 
 function updateMap(){
-//	$("#map-panel").on("click", "#trackersAndCoordis", function() {
 		$.ajax({
 			type: "GET",
 			url: "/update_map",
@@ -116,7 +128,6 @@ function updateMap(){
 				getNewCoordinates()
 			}       
 		});
-//	});
 }
 
 
@@ -129,7 +140,7 @@ function autoUpdate(){
 			
 			success: function(){
 				getNewTrackersAuto()
-				setInterval(function() {
+				myReset = setInterval(function() {
 					getNewTrackersAuto()
 					getNewCoordinatesAuto()
 				}, 10000);

@@ -9,6 +9,8 @@ var known_trackers = [];
 var desired_trackers = [];
 var all_current_missions=[];
 var current_mission;
+var myReset;
+var lines = []; // keep the lines in memories
 /*
 var tab = [2,12,1,5];
 tab.sort(function(a, b){return a-b});
@@ -141,6 +143,7 @@ function FullScreenControl(controlDiv, map) {
 		latest_buoys = [[],[]];
 		desired_trackers = [];
 		known_trackers = [];
+		lines = [];
 		lastDatetime = "10000101";
 		//map options
 		var mapOptions = {
@@ -172,6 +175,29 @@ function FullScreenControl(controlDiv, map) {
 		centerControlDiv.index = 1;
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 	}
+
+/*========================= Clear Google Map===============================================*/
+
+function eraseMap() {
+		//stop displaying the points
+		for(var i=0; i < latest_markers[0].length ; i++){
+			latest_markers[0][i].setMap(null);
+		}
+		for(var i=0; i < latest_buoys[0].length ; i++){
+			latest_buoys[0][i].setMap(null);
+		}
+		for(var i=0; i < lines.length ; i++){
+			lines[i].setMap(null);
+		}
+		//reset the global variables
+		latest_markers = [[],[]];
+		latest_buoys = [[],[]];
+		desired_trackers = [];
+		known_trackers = [];
+		lines = [];
+		lastDatetime = "10000101";
+	}
+
 /*========================= End initialize Google Map===============================================*/
 
 
@@ -187,6 +213,9 @@ function FullScreenControl(controlDiv, map) {
 		var bounds = new google.maps.LatLngBounds();
 		for(var i=0; i < latest_markers[0].length ; i++){
 			bounds.extend(latest_markers[0][i].getPosition());
+		}
+		for(var i=0; i < latest_buoys[0].length ; i++){
+			bounds.extend(latest_buoys[0][i].getPosition());
 		}
 		map.fitBounds(bounds);
 	}

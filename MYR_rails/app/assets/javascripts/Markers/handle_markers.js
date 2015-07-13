@@ -1,4 +1,4 @@
-/*============================ Begin Add a Small Marker================================================*/  
+/*============================ Begin Add a Small Marker====================================*/  
   //Add a small marker to the map (a dot)
 	//tracker_id is optional with  default value of 12 for the rendering
 	function addSmallMarker(lat, lng, tracker_id, map){
@@ -183,7 +183,7 @@
 		}
 	}
 
-	function createPolyline(Gcoords, tracker_id, last_marker){
+	function createPolyline(Gcoords, tracker_id){
 
 		// colors:  		   red  , blue   , dark green, orange  , black    , purple   , white  , pink , fluo green, dark red, yellow , turquoise
 		var colors = ['','#CC0000','#0000CC','#003300','#FF3300','#000000','#660099','#FFFFFF','#CC00CC','#00CC00','#660000','#FFFF00','#33FFFF']

@@ -1,4 +1,3 @@
-//=require ../Markers/handle_markers
 
 //----------------------GLOBAL VARIABLES-------------------
 var map=null
@@ -70,7 +69,7 @@ function FullScreenControl(controlDiv, map) {
 }
 
 	//Map initialization
-	function initializeMap(map) {
+	function initializeMap() {
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.ROAD,
@@ -94,13 +93,13 @@ function FullScreenControl(controlDiv, map) {
 
 		//map creation
 		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		setMap(map)
 		
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
 		var centerControl = new FullScreenControl(centerControlDiv, map);
 		centerControlDiv.index = 1;
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+		setMap(map)
 	}
 
 	//Set the center of the map

@@ -61,7 +61,8 @@ Rails.application.routes.draw do
     get  'choice_attempts'         ,  to: 'replay#choice_attempts'
     get  'update_replay_map'       ,  to: 'replay#update_replay_map'
     get  'choice_attempts'         ,  to: 'replay#choice_attempts'
-    get  'getAttemptInfos'         ,  to: 'replay#getAttemptInfos'
+    get  'getSingleAttemptInfos'   ,  to: 'replay#getSingleAttemptInfos'
+    get  'getTrackersFromDatetimes',  to: 'replay#getTrackersFromDatetimes'
     
 
 

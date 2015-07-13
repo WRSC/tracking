@@ -1,11 +1,15 @@
-//=require replay_map
-//=require choice_robots
-//=require choice_teams
-var map
+//=require Replay/replay_map
+//=require Replay/choice_teams
+//=require Replay/choice_robots
+//=require Replay/choice_onerobot
+//=require ../Markers/handle_markers
+
+
+//need to check, when we did not change the option, but click the button update, it will display the initial page of google map and then reload the desired page
+
 $(document).ready(function(){
 	//initialization
-	google.maps.event.addDomListener(window, 'load', initializeMap(map));
-	alert(getMap())
+	google.maps.event.addDomListener(window, 'load', initializeMap());
 	//initializeMap();
 	initialScroll();
 	requestRefreshTeams();

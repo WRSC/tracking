@@ -1,8 +1,13 @@
-//=require rtmap
-//=require handle_markers
-//=require autorefresh
-//=require rt_print_buoys
+//=require Real_time/rtmap
+//=require Real_time/autorefresh
 
+//=require ../Markers/handle_markers
+//=require ../Markers/handle_buoys
+//=require ../Markers/rt_print_buoys
+
+
+//need to check if we need to add the option that permet not choose adapt zoom when we choose the autorefresh
+//need to check if the map in real_time is used in replay, need to check function in the handle_markers; especially with the variable map
 var map
 $(document).ready(function(){
 	//initialization

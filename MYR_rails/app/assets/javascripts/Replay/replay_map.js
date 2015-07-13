@@ -1,5 +1,4 @@
-//=require handle_markers
-//=require FullScreenControl
+
 //----------------------GLOBAL VARIABLES-------------------
 var map=null
 var lastDatetime = "0";
@@ -70,7 +69,7 @@ function FullScreenControl(controlDiv, map) {
 }
 
 	//Map initialization
-	function initializeMap(map) {
+	function initializeMap() {
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.ROAD,
@@ -94,19 +93,29 @@ function FullScreenControl(controlDiv, map) {
 
 		//map creation
 		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		setMap(map)
 		
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
 		var centerControl = new FullScreenControl(centerControlDiv, map);
 		centerControlDiv.index = 1;
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+		setMap(map)
 	}
 
 	//Set the center of the map
 	function setCenter(lat, lng){
 		map.panTo(new google.maps.LatLng(lat,lng));
 	}
+
+//Fit the zoom to see all the displayed points
+	function adaptZoom(){
+		var bounds = new google.maps.LatLngBounds();
+		for(var i=0; i < latest_markers[0].length ; i++){
+			bounds.extend(latest_markers[0][i].getPosition());
+		}
+		map.fitBounds(bounds);
+	}
+	
 
 //---------------------  BOILS  -----------------------------------
 	//Add a boil on the map when clicked and keep track of coordinates on dragend

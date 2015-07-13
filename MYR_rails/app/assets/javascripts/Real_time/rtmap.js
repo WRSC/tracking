@@ -1,5 +1,3 @@
-//=require handle_markers
-//=require handle_buoys
 //----------------------GLOBAL VARIABLES-------------------
 
 var lastDatetime = "10000101";

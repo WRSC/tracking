@@ -1,5 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2acbef92c9639750148ad87116decf035d9936f9
 #one:
 #  token: MyString
 #  description: 1
@@ -7,3 +11,7 @@
 #two:
 #  token: MyString
 #  description: 1
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2acbef92c9639750148ad87116decf035d9936f9

@@ -177,26 +177,38 @@ class ReplayController < ApplicationController
  	end
  	
  	def update_replay_map
- 	
+ 		@attempts = cookies[:attemptslist]
  	end
  	
- 	def getAttemptInfos
- 		ttime=[]
- 		attempt = cookies[:attemptslist]
- 		tstart=Attempt.find(attempt).start
- 		ttime.push(tstart)
- 		tend=Attempt.find(attempt).end
- 		ttime.push(tend)
- 		render json: ttime 
+ 	def getSingleAttemptInfos
+ 		data=[]#Need start time, end time, tracker_id [] (each attempt has only one tracker)
+ 		attempt_id = cookies[:attemptslist]
+ 		attempt=Attempt.find_by(id: attempt_id)
+ 		tstart=attempt.start
+ 		data.push(tstart)
+ 		tend=attempt.end
+ 		data.push(tend)
+ 		tracker_id=attempt.tracker_id
+ 		data.push(tracker_id)
+ 		render json: data
+ 	end
+ 	
+ 	def getTrackersFromDatetimes
+
+ 		trackers=[]
+ 		rob_ids=params[:robs]
+ 		robs=rob_ids.split(",")
+ 		tstart=params[:tstart].to_datetime
+ 		tend=params[:tend].to_datetime
+ 		
+		attempts=Attempt.where(robot_id: robs).where("start > ? AND end < ?", tstart, tend)
+ 		attempts.each do |attempt|
+			trackers.push(attempt.tracker_id)
+		end
+ 		render json: trackers
  	end
  	
  	def choice_datetimes
- 	end
- 	
- 	def getDatetimesInfos
-		datetime="10010101"
-		#datetime = cookies[:rdatetimes]
-		render json: datetime 
  	end
  	
  	def infowindow

@@ -28,18 +28,88 @@ Member.create!(name:  "testAdmin",
 end
 
 i=1
-20.times do |n|
+72.times do |n|
 	token=i
 	Tracker.create!(token:  "#{i}",
              		  description: "It was the #{i} tracker.")
   i=i+1
 end
 
+i=1
+for rob_id in 1..9
+	for m_id in 1..4
+		for att in 1..2
+			name = Faker::Name.name
+			Attempt.create!(name: name,
+											start: "20150601000000",
+											end:   "20150801000000",
+											robot_id: rob_id,
+											mission_id: m_id,
+											tracker_id: i)
+			i=i+1
+		end
+	end
+end
+
+#Tracker 1~8 => robot 1
+#Tracker 1 2 => robot 1 mission 1 => attempt1 attempt2
+#Tracker 3 4 => robot 1 mission 2 => attempt3 attempt4
+#Tracker 5 6 => robot 1 mission 3 => attempt5 attempt6
+#Tracker 7 8 => robot 1 mission 4 => attempt7 attempt8
+
+#Coordinate  => attempt1
+Coordinate.create!(latitude:  0,
+								longitude: 0,
+								datetime:   "20150709112326",
+             		tracker_id: 1)
+             		
+Coordinate.create!(latitude:  0,
+								longitude: 5,
+								datetime:   "20150709112526",
+             		tracker_id: 1)
+
+Coordinate.create!(latitude:  5,
+								longitude: 0,
+								datetime:   "20150709112726",
+             		tracker_id: 1)
+
+#Coordinate => attempt2
+Coordinate.create!(latitude:  5,
+								longitude: 5,
+								datetime:   "20150709132700",
+             		tracker_id: 2)
+             		
+Coordinate.create!(latitude:  5,
+								longitude: 10,
+								datetime:   "20150709132712",
+             		tracker_id: 2)
+
+Coordinate.create!(latitude:  10,
+								longitude: 5,
+								datetime:   "20150709132721",
+             		tracker_id: 2)
+             		
+#Coordinate => attempt3
+Coordinate.create!(latitude:  30,
+								longitude: 5,
+								datetime:   "20150709132700",
+             		tracker_id: 3)
+             		
+Coordinate.create!(latitude:  30,
+								longitude: 10,
+								datetime:   "20150709132712",
+             		tracker_id: 3)
+
+Coordinate.create!(latitude:  35,
+								longitude: 5,
+								datetime:   "20150709132721",
+             		tracker_id: 3)
+
 #Mission 1
 Mission.create!(name:  "Triangular Course Contest",
 								start: "20150601000000",
 								end:   "20150801000000",
-             		description: "It was the first mission.")
+             		description: "It was the first mission")
 
 #Mission 2
 Mission.create!(name:  "Station-Keeping Contest",

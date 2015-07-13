@@ -1,4 +1,3 @@
-//=require choice_onerobot
 
 //-----------INITIALIZATION--------------------------------------------
 function run_choice_robots(){
@@ -23,11 +22,14 @@ function run_choice_robots(){
 		})
 
 		if (c==1){
+			
 				//quand on coche une checkbox pour la premiere fois
-				requestRefreshOnerobot();//affiche le volet pour missions tries
+				requestRefreshOnerobot(true);//affiche le volet pour missions tries
 		}else if (c > 1){
 			requestRefreshDatetimes();
-		}else{}
+		}else{
+			requestRefreshOnerobot(false);
+		}
 		
 	})
 
@@ -51,11 +53,13 @@ function run_choice_robots(){
       
 			if (c==1){
 				//quand on coche une checkbox pour la premiere fois
-				requestRefreshOnerobot()//affiche le volet pour missions tries
+				requestRefreshOnerobot(true)//affiche le volet pour missions tries
 			}else if (c > 1){
 				requestRefreshDatetimes();
 			}
-			else{} 
+			else if (c==0){
+				requestRefreshOnerobot(false);
+			} 
     })
   })  
 }
@@ -70,8 +74,8 @@ function requestRefreshDatetimes(){
 		}       
 	});
 }
-//------------------------------------------------------------------------------
-//-------------------BEGIN DATETIMES -----------------------------------------------
+//------------------------------------------------------------------------------------------------
+//---------------------------------BEGIN DATETIMES -----------------------------------------------
 function getstartselectedvalue(){
 	var year = $("#start_year option:selected").val();
 	var month =$("#start_month option:selected").val();
@@ -214,9 +218,40 @@ function choose_datetimes(){
 //---------------------------END DATETIMES---------------------------------------------------
 
 function getDatetimesInfos(){
-	datetime=readcookie()
+	//alert('entered')
+	datetime=readcookie() //read datetimes
+	robs=readRoblistInCookie()
+	requestGetTrackersFromDatetimes(robs,datetime)
+}
+
+function requestGetTrackersFromDatetimes(roblist,datetime){
 	tabtime=datetime.split("_")	
-	requestGatherCoordsBetweenDates(tabtime)
+	tstart=tabtime[0]
+	tend=tabtime[1]
+	tabrobs=roblist.split(",")
+	robs=[]
+	for (var i=0;i<tabrobs.length;i++ ){
+		robs.push(tabrobs[i])
+	}
+	$.ajax({
+		type: "GET",
+		url: "/getTrackersFromDatetimes",
+		data: {robs: robs, tstart: tstart, tend: tend},
+		dataType: "json",
+		success: function(data){
+			if (data.length > 0){
+				trackers=data
+				//alert(data)
+				//alert(datetime)
+				tabtime=datetime.split("_")	
+				requestGatherCoordsBetweenDates(tabtime[0],tabtime[1],trackers)
+			}
+		}       
+	});
+}
+
+function readRoblistInCookie(){
+	return $.cookie("robotslist")
 }
 
 

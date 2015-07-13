@@ -71,7 +71,7 @@ class CoordinatesController < ApplicationController
   	m_id=params[:mission_id]
   	datetime=params[:datetime]
   	
-  	trackers=[] #need to check if it is needed to change js array into json
+  	trackers=[] # change js array into tracker_ids
   	if (params[:trackers] != nil) 
       params[:trackers].each do |k,v|
     		trackers << v
@@ -100,10 +100,12 @@ class CoordinatesController < ApplicationController
   end
 
   def gatherCoordsBetweenDates
-    if (params[:tstart] != nil && params[:tend] != nil)
+    trackers=params[:trackers]
+		
+		if (params[:tstart] != nil && params[:tend] != nil)
       tstart = params[:tstart].to_datetime
       tend = params[:tend].to_datetime
-      newCoords = Coordinate.where "? <datetime AND datetime < ?", tstart, tend
+      newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude])
     end
   end

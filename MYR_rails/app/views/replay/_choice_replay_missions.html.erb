@@ -1,14 +1,15 @@
-
+	<br>
+<img src="/step/step3F.png" height="50" width="150">
 <p><u><b>Select a mission</b></u></p>
 <!--If we need to choose missions, there is always only one robot-->
 <% missions= []%>
 <% robid= @indrobots[0]%>
-<% rob=Robot.find(robid)%>
-
+<% rob=Robot.find_by(id: robid)%>
+<!--need to check uniqueness of mission,eg: 2 attempts belong to the same mission -->
 <select name="mission" id="replay_missions_dropdown">
-<option>Please choose a mission</option>
-<% for i in 0..(rob.missions.size-1)%>
-  <option value="<%= rob.missions[i].id %>"><%= rob.missions[i].name %></option>
+<option value="0"></option>
+<% for i in 0..(rob.missions.uniq.size-1)%>
+  <option value="<%= rob.missions.uniq[i].id %>"><%= rob.missions.uniq[i].name %></option>
 <% end %>
 </select>
 

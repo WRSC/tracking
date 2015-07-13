@@ -1,16 +1,16 @@
-//=require replay
-//=require handle_markers
-//=require replay_map
-//=require choice_robots
+
 /*choose one robot*/
-function requestRefreshOnerobot(){
+function requestRefreshOnerobot(flag){
 	$.ajax({
 		type: "GET",
 		url: "/choice_onerobot",
 	
 		success: function(){
-		
-			requestRefreshReplayMissions()
+			if (flag){
+				requestRefreshReplayMissions()
+			}else{
+				//if flag==false, it will not display choose mission
+			}
 		}       
 	});
 }
@@ -30,7 +30,6 @@ function choose_mission(){
 	$.cookie("missionslist",$("#replay_missions_dropdown option:selected").val());
 	$("#replay_missions_dropdown").on("change", function () {
 		$.cookie("missionslist",$("#replay_missions_dropdown option:selected").val());
-	  //alert($("#replay_missions_dropdown option:selected").val())
 		requestRefreshAttempts();
 	});
 }
@@ -49,7 +48,6 @@ function requestRefreshAttempts(){
 function choose_attempts(){
 	$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
 	$("#attempts_dropdown").on("change", function () {
-		//alert($("#attempts_dropdown option:selected").val())
 		$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
 		requestRefreshUpdateButton(1);
 	});
@@ -62,11 +60,12 @@ function requestRefreshUpdateButton(nb){
 		
 		success: function(){
 			$('#updatebutton').click(function(){
+				initializeMap(getMap())
 				if (nb==1)
 					requestRefreshMapFromAttempt();
 				else{
 					if (nb==2){
-						getDatetimesInfos()
+						getDatetimesInfos()  //It was in the file choice_robots
 					}
 				}
 			})
@@ -74,31 +73,39 @@ function requestRefreshUpdateButton(nb){
 	});
 }
 
+
 function requestRefreshMapFromAttempt(){
 	$.ajax({
 		type: "GET",
-		url: "/getAttemptInfos",
+		url: "/getSingleAttemptInfos",
 		
 		success: function(data){
 			//alert(data)
-			requestGatherCoordsBetweenDates(data);
+			//tstart: data[0]; tend: data[1]; trackers: data[2] 
+
+			requestGatherCoordsBetweenDates(data[0],data[1],data[2]);
 		}       
 	});
 }
 
-
-function requestGatherCoordsBetweenDates(timedata){
-	//alert(timedata[0])
 	
+function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data contains start, end, tracker_id[]
+	//alert(desired_data[2])
+
+	
+	//alert (trackers)
 	$.ajax({
 		type: "GET",
 		url: "/gatherCoordsBetweenDates",
-		data: {tstart : timedata[0], tend: timedata[1]},
+		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
+			//alert(data)
 			refreshWithNewMarkers2(data,getMap());
+			
 		}       
 	});
 }
+
 
 

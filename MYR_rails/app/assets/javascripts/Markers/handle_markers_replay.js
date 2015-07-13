@@ -145,7 +145,7 @@
 		*/
 		addAllThesePolylines(data,tag_map);
 		//setCenter(lastLat,lastLng);
-		adaptZoom(tag_map);
+		adaptZoom();
 		if (lastDate!=null){
 			saveLastDatetime(lastDate);
 		}

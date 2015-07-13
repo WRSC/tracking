@@ -99,6 +99,10 @@ function FullScreenControl(controlDiv) {
 		var centerControl = new FullScreenControl(centerControlDiv);
 		centerControlDiv.index = 1;
 		replay_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+	
+		//when we reload map, clear all the data in golabl variable	
+		latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
+		
 	}
 
 	//Set the center of the map

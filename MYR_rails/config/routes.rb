@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     get 'contact'         , to: 'static_pages#contact'
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
-    get 'markersCreation' , to:'admin_markers#show'
+    get 'markersCreation' , to: 'admin_markers#show'
 
   # Ajax
 

@@ -94,6 +94,23 @@ function FullScreenControl(controlDiv) {
 		//map creation
 		replay_map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		
+		var contentString = '<p><font color=\'black\'>Aland university</font></p>'
+ 
+
+		var infowindow = new google.maps.InfoWindow({
+				content: contentString
+		});
+/*
+		var marker = new google.maps.Marker({
+				position:  new google.maps.LatLng(60.103462, 19.928225),
+				map: replay_map,
+				title: 'Aland University'
+		});
+*/		
+		initialmarker=addDraggableMarker(60.103462, 19.928225,  replay_map)
+		addInfoWindow(infowindow,initialmarker)
+		
+		
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
 		var centerControl = new FullScreenControl(centerControlDiv);
@@ -103,6 +120,12 @@ function FullScreenControl(controlDiv) {
 		//when we reload map, clear all the data in golabl variable	
 		latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 		
+	}
+	
+	function addInfoWindow(infowindow,marker){
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.open(replay_map,marker);
+		});
 	}
 
 	//Set the center of the map

@@ -1,7 +1,7 @@
 /*============================ Begin Add a Small Marker====================================*/  
   //Add a small marker to the map (a dot)
 	//tracker_id is optional with  default value of 12 for the rendering
-	function addSmallMarker(lat, lng, tracker_id, map){
+	function addSmallMarker(lat, lng, tracker_id){
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
 			url: 'icons/small'+tracker_id%12+'.png',
@@ -55,7 +55,7 @@
 	//tracker_id is optional with  default value of 12 for the rendering
 
 /*==============================Begin Add Big Marker============================================*/
-	function addBigMarker(lat, lng, tracker_id, map){
+	function addBigMarker(lat, lng, tracker_id){
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
 			url: 'icons/big'+tracker_id%12+'.png',
@@ -70,7 +70,7 @@
 		}
 		);
 		//always needed ?
-		marker.setMap(map);
+		marker.setMap(replay_map);
 		// to ease later addition of coordinqtes
 		latest_markers[0].push(marker);
 		latest_markers[1].push(tracker_id);
@@ -82,9 +82,9 @@
 
 
 /*=================================Begin Add Draggable Marker==============================*/
-/*
+
 //Add a draggable marker to the map
-	function addDraggableMarker(lat, lng,map){
+	function addDraggableMarker(lat, lng){
 		var marker = new google.maps.Marker(
 		{
 			position: new google.maps.LatLng(lat,lng),
@@ -92,19 +92,19 @@
 		}
 		);
 		//always needed ?
-		marker.setMap(map);
+		marker.setMap(replay_map);
 		return marker;
-	}*/
+	}
 /*=================================End Add Draggable Marker================================*/
 
 	//Add all the given coordinates onto the map
-	function addAllThisMarkers(data,map){
+	function addAllThisMarkers(data){
 		var lat, lng, tracker_id = 0;
 		for(var i=0; i < data.length ; i++){
 			lat = data[i].latitude;
 			lng = data[i].longitude;
 			tracker_id = data[i].tracker_id;
-			addSmallMarker(lat,lng,tracker_id,map);
+			addSmallMarker(lat,lng,tracker_id);
 		}
 	}
 
@@ -130,7 +130,7 @@
 	}*/
 
 	//Add the given coordinates on the map and save this last state
-	function refreshWithNewMarkers2(data,tag_map){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
+	function refreshWithNewMarkers2(data,tstart,tend){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
 		if (latest_markers[0].length>0){
 			latest_markers[0][latest_markers[0].length-1].setMap(null);
 		}
@@ -143,7 +143,7 @@
 		alert(lastLat)
 		alert(lastLng)
 		*/
-		addAllThesePolylines(data,tag_map);
+		addAllThesePolylines(data,tstart,tend);
 		//setCenter(lastLat,lastLng);
 		adaptZoom();
 		if (lastDate!=null){
@@ -151,7 +151,7 @@
 		}
 	}
 
-	function addAllThesePolylines(data,tag_map){
+	function addAllThesePolylines(data,tstart,tend){
 		var tracker_Gcoords = []
 		for(var i=0; i < data.length ; i++){ //iterate in the array
 			latitude = data[i].latitude;
@@ -160,29 +160,52 @@
 			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
 			if(i != data.length -1){ //not end of array
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
-					addSmallMarker(latitude, longitude, tracker_id,tag_map);
+					addSmallMarker(latitude, longitude, tracker_id);
 				}
 				else{ //derniere coordonnee du meme tracker si tracker different apres
 					//create polyline
-					createPolyline(tracker_Gcoords, tracker_id,tag_map);
-					//addsbigmarker
-					addBigMarker(latitude, longitude, tracker_id,tag_map);
+					createPolyline(tracker_Gcoords, tracker_id);
+					//addbigmarker
+					endBigMarker=addBigMarker(latitude, longitude, tracker_id);
+					/*
+					requestGetInfoWindow(tracker_id,tstart,tend)
+					var endContentString = '<p><font color=\'black\'>It was the end</font></p>'
+					var endInfowindow = new google.maps.InfoWindow({
+							content: endContentString
+					});
+
+					addInfoWindow(endInfowindow,endBigMarker)
+					*/
 					//reset array
 					tracker_Gcoords = [];
 				}
 			}
 			else{ //end of array
 				//create polyline
-				createPolyline(tracker_Gcoords, tracker_id,tag_map);
+				createPolyline(tracker_Gcoords, tracker_id);
 				//addsbigmarker
-				addBigMarker(latitude, longitude, tracker_id,tag_map);
+				endBigMarker=addBigMarker(latitude, longitude, tracker_id);
+				$.ajax({
+					type: "GET",
+					url: "/infowindow",
+					data: {tracker_id: tracker_id, timestart: tstart, timeend: tend},
+					dataType: "html",
+					success: function(data){
+						alert(data)
+						var endInfowindow = new google.maps.InfoWindow({
+								content: data
+						});
+						addInfoWindow(endInfowindow,endBigMarker)
+					}       
+				});
+			
 				//reset array
 				tracker_Gcoords = [];
 			}
 		}
 	}
 
-	function createPolyline(Gcoords, tracker_id,tag_map){
+	function createPolyline(Gcoords, tracker_id){
 
 		// colors:  		   red  , blue   , dark green, orange  , black    , purple   , white  , pink , fluo green, dark red, yellow , turquoise
 		var colors = ['','#CC0000','#0000CC','#003300','#FF3300','#000000','#660099','#FFFFFF','#CC00CC','#00CC00','#660000','#FFFF00','#33FFFF']
@@ -208,7 +231,7 @@
 			strokeOpacity: 1.0,
 			strokeWeight: 1
 		});
-		polyline.setMap(tag_map);
+		polyline.setMap(replay_map);
 		//lines.push(polyline);
 	}
 

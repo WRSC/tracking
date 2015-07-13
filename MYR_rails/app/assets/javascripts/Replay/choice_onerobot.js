@@ -100,7 +100,7 @@ function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data co
 		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
-			refreshWithNewMarkers2(data,replay_map);
+			refreshWithNewMarkers2(data,tstart,tend);
 			
 		}       
 	});

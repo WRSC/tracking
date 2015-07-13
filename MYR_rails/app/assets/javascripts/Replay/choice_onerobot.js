@@ -60,7 +60,7 @@ function requestRefreshUpdateButton(nb){
 		
 		success: function(){
 			$('#updatebutton').click(function(){
-				initializeMap(getMap())
+				initializeMap()
 				if (nb==1)
 					requestRefreshMapFromAttempt();
 				else{
@@ -100,8 +100,7 @@ function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data co
 		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
-			//alert(data)
-			refreshWithNewMarkers2(data,getMap());
+			refreshWithNewMarkers2(data,replay_map);
 			
 		}       
 	});

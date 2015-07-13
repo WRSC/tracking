@@ -1,7 +1,7 @@
 
 //----------------------GLOBAL VARIABLES-------------------
-var map=null
-var lastDatetime = "0";
+var replay_map=null
+var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
 var desired_trackers = [];
@@ -33,16 +33,16 @@ jQuery.expr.filters.offscreen = function(el) {
 
 //-------------GETTERS AND SETTERS----------------------------
 	
-	function getMap(){
-		return map;
+	function getReplayMap(){
+		return replay_map;
 	}
 	
-	function setMap(desired_map){
-		map=desired_map
+	function setReplayMap(desired_map){
+		replay_map=desired_map
 	}
 
 //--------MAP----------------
-function FullScreenControl(controlDiv, map) {
+function FullScreenControl(controlDiv) {
 	//see https://developers.google.com/maps/documentation/javascript/examples/control-custom
 
   // Set CSS for the control border
@@ -64,7 +64,7 @@ function FullScreenControl(controlDiv, map) {
   google.maps.event.addDomListener(controlUI, 'click', function() {
   	$("#map-container").toggleClass("fullscreen");
   	//https://developers.google.com/maps/documentation/javascript/reference#Map
-  	google.maps.event.trigger(map, 'resize');
+  	google.maps.event.trigger(replay_map, 'resize');
   });
 }
 
@@ -92,14 +92,13 @@ function FullScreenControl(controlDiv, map) {
 		}
 
 		//map creation
-		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		replay_map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
-		var centerControl = new FullScreenControl(centerControlDiv, map);
+		var centerControl = new FullScreenControl(centerControlDiv);
 		centerControlDiv.index = 1;
-		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-		setMap(map)
+		replay_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 	}
 
 	//Set the center of the map
@@ -113,7 +112,7 @@ function FullScreenControl(controlDiv, map) {
 		for(var i=0; i < latest_markers[0].length ; i++){
 			bounds.extend(latest_markers[0][i].getPosition());
 		}
-		map.fitBounds(bounds);
+		replay_map.fitBounds(bounds);
 	}
 	
 

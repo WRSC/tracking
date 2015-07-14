@@ -1,1 +1,25 @@
-<font color="black">ok</font>
+<% if @attempts.size == 1 %>
+	<% attempt=@attempts.first %>
+	<% rob = Robot.find_by(id: attempt.robot_id) %>
+	<% if rob.team.logo !=nil %>		
+		<img src="<%= rob.team.logo%>" alt="Team logo">
+	<% end %>
+	<div id="infowindow">
+	<!--Robot-->
+	<p><b>Robot:</b> <%= rob.name %></p>
+	<!--Team-->
+	<p><b>Team:</b> <%= rob.team.name %></p>
+	<!--Attempt-->
+	<p><b>Attempt:</b> <%= attempt.name %></p>
+	<!--Mission-->
+	<p><b>Mission:</b> <%= Mission.find_by(id: attempt.mission_id).name %></p>
+	<!--Datetime-->
+	<p><b>Datetime:</b> <%= @datetime %> UTC</p>
+	</div>
+	<style>
+		#infowindow{
+			color: black;
+		}
+	</style>
+<% else %>
+<% end %>

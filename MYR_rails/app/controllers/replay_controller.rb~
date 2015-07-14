@@ -212,12 +212,10 @@ class ReplayController < ApplicationController
  	
  	def infowindow
  		tracker_id=params[:tracker_id]
- 		tstart=params[:timestart]
- 		tend=params[:timeend]
- 		render json: tend
- 		attempt=Attempt.where("start == ? AND end == ? AND tracker_id == ?", tstart, tend, 'tracker_id')
- 		data=[]
- 		
+ 		tstart=params[:timestart].to_datetime
+ 		tend=params[:timeend].to_datetime
+ 		datetime=params[:datetime].to_datetime
+ 		@attempts=Attempt.where("start == ? AND end == ? AND tracker_id == ?", tstart, tend, tracker_id)
  	end
 
 end

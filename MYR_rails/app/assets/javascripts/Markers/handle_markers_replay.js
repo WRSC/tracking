@@ -157,6 +157,7 @@
 			latitude = data[i].latitude;
 			longitude = data[i].longitude;
 			tracker_id = data[i].tracker_id;		
+			datetime=data[i].datetime
 			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
 			if(i != data.length -1){ //not end of array
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
@@ -188,7 +189,7 @@
 				$.ajax({
 					type: "GET",
 					url: "/infowindow",
-					data: {tracker_id: tracker_id, timestart: tstart, timeend: tend},
+					data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime},
 					dataType: "html",
 					success: function(data){
 						alert(data)

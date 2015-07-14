@@ -1,6 +1,16 @@
-<h1>Editing Robot</h1>
+<h1>Editing robot</h1>
+
+<% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>
 
 <%= render 'form' %>
 
 <%= link_to 'Show', @robot %> |
+
+<%= link_to 'Destroy', @robot, method: :delete, data: { confirm: 'Destroy this robot ?' } %> |
+
+<% else %> <h2>You cannot acces this page. You need to be the Team Leader of the robot's team to access it.</h2>
+
+
+<% end %>
+
 <%= link_to 'Back', robots_path %>

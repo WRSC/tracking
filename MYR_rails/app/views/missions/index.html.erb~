@@ -14,11 +14,13 @@
   <tbody>
     <% @missions.each do |mission| %>
       <tr>
-        <td><%= mission.name %></td>
+        <td><%= link_to mission.name, mission %></td>
         <td><%= mission.description %></td>
         <td><%= link_to 'Show', mission %></td>
-        <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
-        <td><%= link_to 'Destroy', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if is_admin? %>
+          <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
+          <td><%= link_to 'Destroy', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +28,9 @@
 
 <br>
 
-<%= link_to 'New Mission', new_mission_path %>
+
+<% if sign_in(current_user) %>
+  <% if is_admin? %>
+  	<%= link_to 'New Mission', new_mission_path %>
+   <% end %> 
+<% end %>

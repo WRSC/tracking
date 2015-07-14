@@ -9,18 +9,14 @@ class MembersControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_select "title", "Member | Index"
+    assert_select "title", "Members | Index"
 #    assert_not_nil assigns(:members)
   end
-<<<<<<< HEAD
 
-=======
-  
-=begin
->>>>>>> 2acbef92c9639750148ad87116decf035d9936f9
   test "should get new" do
     get :new
     assert_response :success
+    assert_select "title", "Members | New"
   end
 
 =begin

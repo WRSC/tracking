@@ -9,8 +9,7 @@
     <tr>
 	
       <th>Name
-		<!--a href= robots ><button id="sortbuttonT" name="NameRbis" onclick="myFunctionSort(this.name)" ></button></a-->
-		<a href= robots ><i id="sortbuttonT" name="NameRbis"  class="icon-sort-by-alphabet" onclick="myFunctionSort(this.name)" ></a>
+		<a href= robots ><button id="sortbuttonT" name="NameRbis" onclick="myFunctionSort(this.name)" ></button></a>
 		<a href= robots ><button id="sortbuttonD" name="NameR" onclick="myFunctionSort(this.name)" ></button></a></th>	
 	  
 	  

@@ -1,3 +1,4 @@
+<% provide(:title, "Teams | Edit") %>
 <h1>Editing Team</h1>
 
 <% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>

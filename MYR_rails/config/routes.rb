@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :listes
-
   get 'password_resets/new'
 
   get 'password_resets/edit'

@@ -3,7 +3,7 @@
 <% if @strmissions[0]!="0"%>
 	<p><b><u>Select attempts:</u></b></p>
 	<% m= Mission.find(@strmissions[0]) %>
-	<%= @indrobots.inspect%>
+
 	<!--%= m.inspect%-->
 	<% attempts= Attempt.where(mission_id: m.id).where(robot_id: @indrobots)%>
 	<select name="mission" id="attempts_dropdown">

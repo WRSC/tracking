@@ -130,7 +130,7 @@
 	}*/
 
 	//Add the given coordinates on the map and save this last state
-	function refreshWithNewMarkers2(data,tstart,tend){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
+	function refreshWithNewMarkers2(data,tstart,tend,singleAttempt){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
 		if (latest_markers[0].length>0){
 			latest_markers[0][latest_markers[0].length-1].setMap(null);
 		}
@@ -143,7 +143,7 @@
 		alert(lastLat)
 		alert(lastLng)
 		*/
-		addAllThesePolylines(data,tstart,tend);
+		addAllThesePolylines(data,tstart,tend,singleAttempt);
 		//setCenter(lastLat,lastLng);
 		adaptZoom();
 		if (lastDate!=null){
@@ -151,8 +151,9 @@
 		}
 	}
 
-	function addAllThesePolylines(data,tstart,tend){
+	function addAllThesePolylines(data,tstart,tend,singleAttempt){
 		var tracker_Gcoords = []
+		
 		for(var i=0; i < data.length ; i++){ //iterate in the array
 			latitude = data[i].latitude;
 			longitude = data[i].longitude;
@@ -165,20 +166,22 @@
 				}
 				else{ //derniere coordonnee du meme tracker si tracker different apres
 					//create polyline
+					//alert('changing tracker')
 					createPolyline(tracker_Gcoords, tracker_id);
 					//addbigmarker
-					endBigMarker=addBigMarker(latitude, longitude, tracker_id);
+					var changeBigMarker=addBigMarker(latitude, longitude, tracker_id);
 					$.ajax({
 						type: "GET",
 						url: "/infowindow",
-						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime},
+						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt},
 						dataType: "html",
 						success: function(data){
+							//alert('change tracker')
 							alert(data)
-							var endInfowindow = new google.maps.InfoWindow({
+							var changeInfowindow = new google.maps.InfoWindow({
 									content: data
 							});
-							addInfoWindow(endInfowindow,endBigMarker)
+							addInfoWindow(changeInfowindow,changeBigMarker)
 						}       
 					});
 					//reset array
@@ -193,10 +196,10 @@
 				$.ajax({
 					type: "GET",
 					url: "/infowindow",
-					data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime},
+					data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime,singleAttempt: singleAttempt},
 					dataType: "html",
 					success: function(data){
-						alert(data)
+						//alert('end of array')
 						var endInfowindow = new google.maps.InfoWindow({
 								content: data
 						});

@@ -16,7 +16,7 @@ function requestRefreshOnerobot(flag){
 }
 
 function requestRefreshReplayMissions(){
-		$.ajax({
+	$.ajax({
 		type: "GET",
 		url: "/choice_replay_missions",
 		
@@ -84,13 +84,13 @@ function requestRefreshMapFromAttempt(){
 			//alert(data)
 			//tstart: data[0]; tend: data[1]; trackers: data[2] 
 
-			requestGatherCoordsBetweenDates(data[0],data[1],data[2]);
+			requestGatherCoordsBetweenDates(data[0],data[1],data[2],true);
 		}       
 	});
 }
 
 	
-function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data contains start, end, tracker_id[]
+function requestGatherCoordsBetweenDates(tstart,tend,trackers,singleAttempt){//desired_data contains start, end, tracker_id[]
 	//alert(desired_data[2])
 
 	
@@ -101,7 +101,7 @@ function requestGatherCoordsBetweenDates(tstart,tend,trackers){//desired_data co
 		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
-			refreshWithNewMarkers2(data,tstart,tend);
+			refreshWithNewMarkers2(data,tstart,tend,singleAttempt);
 			
 		}       
 	});

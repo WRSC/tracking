@@ -1,4 +1,4 @@
-
+<div id="infowindow-title"><p><b><center><u>It was the end.</u></center></b><p></div>
 <% if @attempts.size == 1 %>
 	<% attempt=@attempts.first %>
 	<% rob = Robot.find_by(id: attempt.robot_id) %>
@@ -18,7 +18,7 @@
 	<p><b>Datetime:</b> <%= @datetime %> UTC</p>
 	</div>
 	<style>
-		#infowindow{
+		#infowindow, #infowindow-title{
 			color: black;
 		}
 	</style>

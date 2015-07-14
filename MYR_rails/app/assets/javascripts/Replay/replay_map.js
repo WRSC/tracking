@@ -78,17 +78,18 @@ function FullScreenControl(controlDiv) {
 			zoomControl: true,
 			zoomControlOptions: {
 				style: google.maps.ZoomControlStyle.SMALL,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
+				position: google.maps.ControlPosition.RIGHT_BOTTOM
 			},
 			mapTypeControl: true,
 			mapTypeControlOptions: {
 				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
+				position: google.maps.ControlPosition.TOP_CENTER
 			},
+		
 			scaleControl: true,
 			streetViewControl: false,
-			panControl: false,
-			overviewMapControl: false
+			panControl: true,
+			overviewMapControl: true
 		}
 
 		//map creation
@@ -116,7 +117,8 @@ function FullScreenControl(controlDiv) {
 		var centerControl = new FullScreenControl(centerControlDiv);
 		centerControlDiv.index = 1;
 		replay_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-	
+		replay_map.setTilt(45);
+		
 		//when we reload map, clear all the data in golabl variable	
 		latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 		

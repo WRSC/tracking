@@ -13,13 +13,20 @@
 					<% if sign_A? %>
 						<%=li_actif(attempts_path) %><a href="<%= attempts_path%>"> Attempts </a></li>	
 						<%=li_actif(trackers_path) %><a href="<%= trackers_path%>"> Trackers </a></li>
-						<%=li_actif(trackers_path) %><a href="<%= coordinates_path%>"> Trackers </a></li>	
+						<%=li_actif(coordinates_path) %><a href="<%= coordinates_path%>"> Coordinates </a></li>
+						<%=li_actif(markers_path) %><a href="<%= markers_path%>"> Markers </a></li>
+					<% elsif !current_user.nil? %>
+						<% if heIsInTeam?(current_user.name) %>
+							<%=li_actif(attempts_path) %><a href="<%= attempts_path%>"> Attempts </a></li>
+							<%=li_actif(coordinates_path) %><a href="<%= coordinates_path%>"> Coordinates </a></li>
+						<% end %>
 					<% end %>
 					<%=li_actif(teams_path) %><a href="<%= teams_path%>"> Teams </a></li>
 					<%=li_actif(robots_path) %><a href="<%= robots_path%>"> Robots </a></li>
+					<%=li_actif(robots_path) %><a href="<%= members_path%>"> Robots </a></li>
 					<%=li_actif(missions_path) %><a href="<%= missions_path%>"> Missions </a></li>
-					<%=li_actif(coordinates_path) %><a href="<%= real_time_path%>"> Real Time </a></li>
-					<%=li_actif(missions_path) %><a href="<%= replay_path%>"> Replay </a></li>	
+					<%=li_actif(real_time_path) %><a href="<%= real_time_path%>"> Real Time </a></li>
+					<%=li_actif(replay_path) %><a href="<%= replay_path%>"> Replay </a></li>	
 			
 				</ul>
 				</li>
@@ -32,7 +39,10 @@
 						<%=current_user.name%>
 						<%=li_actif([teams_path,members_path]) %><a class="drop" href="#">My Account </a>
 						<ul>
-							<%=li_actif(teams_path) %><a href="<%= members_path %>"> My Team </a></li>	
+							<% teamprefix=teams_path%>
+							<% teampostfix=current_user.team_id.to_s %>
+							<% current_user_team_path=teams_path+'/'+current_user.team_id.to_s %>
+							<%=li_actif(teams_path) %><a href="<%= current_user_team_path %>"> My Team </a></li>	
 							<% prefix=members_path%>	
 							<% postfix=current_user.id.to_s %>
 							<% current_user_path= prefix+'/'+postfix %>

@@ -7,7 +7,7 @@
 
 //need to check, when we did not change the option, but click the button update, it will display the initial page of google map and then reload the desired page
 
-
+//need to check when choose a robot which has an attempt but without any coordinate, it also will display coordinates in map
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap());

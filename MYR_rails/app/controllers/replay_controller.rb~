@@ -214,7 +214,7 @@ class ReplayController < ApplicationController
  		tracker_id=params[:tracker_id]
  		tstart=params[:timestart].to_datetime
  		tend=params[:timeend].to_datetime
- 		datetime=params[:datetime].to_datetime
+ 		@datetime=params[:datetime].to_datetime
  		@attempts=Attempt.where("start == ? AND end == ? AND tracker_id == ?", tstart, tend, tracker_id)
  	end
 

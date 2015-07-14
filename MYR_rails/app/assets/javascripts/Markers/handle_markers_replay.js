@@ -168,15 +168,19 @@
 					createPolyline(tracker_Gcoords, tracker_id);
 					//addbigmarker
 					endBigMarker=addBigMarker(latitude, longitude, tracker_id);
-					/*
-					requestGetInfoWindow(tracker_id,tstart,tend)
-					var endContentString = '<p><font color=\'black\'>It was the end</font></p>'
-					var endInfowindow = new google.maps.InfoWindow({
-							content: endContentString
+					$.ajax({
+						type: "GET",
+						url: "/infowindow",
+						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime},
+						dataType: "html",
+						success: function(data){
+							alert(data)
+							var endInfowindow = new google.maps.InfoWindow({
+									content: data
+							});
+							addInfoWindow(endInfowindow,endBigMarker)
+						}       
 					});
-
-					addInfoWindow(endInfowindow,endBigMarker)
-					*/
 					//reset array
 					tracker_Gcoords = [];
 				}

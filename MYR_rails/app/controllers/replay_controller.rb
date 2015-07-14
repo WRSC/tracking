@@ -197,8 +197,8 @@ class ReplayController < ApplicationController
  		trackers=[]
  		rob_ids=params[:robs]
  		robs=rob_ids.split(",")
- 		tstart=params[:timestart].to_datetime
- 		tend=params[:timeend].to_datetime
+ 		tstart=params[:tstart].to_datetime
+ 		tend=params[:tend].to_datetime
  		
 		attempts=Attempt.where(robot_id: robs).where("start > ? AND end < ?", tstart, tend)
  		attempts.each do |attempt|

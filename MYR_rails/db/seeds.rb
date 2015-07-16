@@ -57,6 +57,8 @@ end
 #Tracker 5 6 => robot 1 mission 3 => attempt5 attempt6
 #Tracker 7 8 => robot 1 mission 4 => attempt7 attempt8
 
+#markers
+
 #http://programming-tut.blogspot.com/2009/09/ruby-on-rails-time.html
 #Coordinate  => attempt1
 lat=0

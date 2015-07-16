@@ -27,7 +27,6 @@ class RealTimeController < ApplicationController
 	end
 
 	def getNewTrackers
-		
 		last_refresh = params[:datetime]
 		known_trackers = params[:trackers]
 		current_mission_id = params[:mission_id]

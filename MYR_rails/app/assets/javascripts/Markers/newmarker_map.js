@@ -60,7 +60,7 @@ function FullScreenControl(controlDiv, map) {
   });
 }
 
-/*===================== Begin initialize Google Map==================================*/
+/*============== Begin initialize Google Map============================*/
 	//Map initialization
 	function initializeMap() {
 		//reset the global variables

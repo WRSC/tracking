@@ -22,9 +22,14 @@
 		<div id="select-mission">	
 			<div id="select-mission">
 				<p><b><u>Select a mission</u></b></p>
-				<select name="mission" id="replay_missions_dropdown">
+<!--Do not need to display all the missions, just display the mission in a year, which means Time.now - 6 month ~Time.now + 6 month-->			
+				<select name="mission" id="marker_missions_dropdown">
 					<option value="0"></option>
-				</select>
+					<% for i in 0..(@missions.size-1)%>
+  					<option value="<%= @missions[i].id %>"><%= @missions[i].name %></option>
+					<% end %>
+				</select><br />
+				<font size = 1>It just display all the missions in one year, which means <br /> from now - 6 monthes to now + 6 monthes </font>
 			</div>
 		</div>
 		

@@ -2,7 +2,7 @@
 //=require Replay/choice_teams
 //=require Replay/choice_robots
 //=require Replay/choice_onerobot
-//=require ../Markers/handle_markers_replay
+//=require Replay/handle_markers_replay
 
 
 //need to check, when we did not change the option, but click the button update, it will display the initial page of google map and then reload the desired page

@@ -1,7 +1,8 @@
+//=require Markers/newmarker_map
 $(document).ready(function(){
 	
 	initializeMap();
 	initialScroll();
-	addingBoil();
+	choose_datetimes();
 
 });

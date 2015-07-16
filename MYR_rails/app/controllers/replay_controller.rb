@@ -217,6 +217,9 @@ class ReplayController < ApplicationController
   #if singleAttempt = true, it is from choosing attempt
   #if singleAttempt = false, it is from choosing datetims 
  		singleAttempt=params[:singleAttempt]
+ 		@lat=params[:lat]
+ 		@lng=params[:lng]
+ 		@isEnd=params[:isEnd]
  		@datetime=params[:datetime].to_datetime
  		@attmepts=[]
 	  if singleAttempt==true 

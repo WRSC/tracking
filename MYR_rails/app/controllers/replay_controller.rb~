@@ -224,8 +224,6 @@ class ReplayController < ApplicationController
 	  else 
 		  @attempts=Tracker.find_by(id: tracker_id).attempts.where("start < ? AND end > ?",@datetime,@datetime) 
 	 	end
- 		
- 	
  	end
 
 end

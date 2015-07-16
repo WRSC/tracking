@@ -1,8 +1,33 @@
+	function addDot(lat, lng, tracker_id){
+		//alert(lat,lng)
+		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
+		var image = {
+			url: 'icons/test0.png',
+			size: new google.maps.Size(16, 19),
+			origin: new google.maps.Point(0,0),
+			anchor: new google.maps.Point(8, 19)
+		};
+		//alert(tracker_id)
+		var marker = new google.maps.Marker(
+			{
+				position: new google.maps.LatLng(lat,lng),
+				icon: image
+			}
+		);
+		//always needed ?
+		marker.setMap(replay_map);
+		latest_markers[0].push(marker);
+		latest_markers[1].push(tracker_id);
+		//ADDED
+		return marker;
+	}
+
 /*============================ Begin Add a Small Marker====================================*/  
   //Add a small marker to the map (a dot)
 	//tracker_id is optional with  default value of 12 for the rendering
 	
 	function addSmallMarker(lat, lng, tracker_id, tstart, tend, datetime, singleAttempt){
+		//alert(lat,lng)
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
 			url: 'icons/small'+tracker_id%12+'.png',
@@ -18,11 +43,11 @@
 			}
 		);
 		//always needed ?
-		//marker.setMap(map);
+		marker.setMap(replay_map);
 		$.ajax({
 						type: "GET",
 						url: "/infowindow",
-						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt},
+						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt,isEnd: false, lat: lat, lng:lng},
 						dataType: "html",
 						success: function(data){
 							//alert('change tracker')
@@ -32,44 +57,17 @@
 							});
 							addInfoWindow(changeInfowindow,marker)
 						}
-		}) 
+		})/* 
 		latest_markers[0].push(marker);
 		latest_markers[1].push(tracker_id);
-		//ADDED
+		*///ADDED
 		return marker;
 	}
-/*=============================End Add a Small Marker========================================*/
+/*===============End Add a Small Marker=========================*/
 
-/*	
-	//to complete
-	//Add a marker to the map
-	//tracker_id is optional with  default value of 12 for the rendering
-	function addMarker(lat, lng, tracker_id){
-		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
-		var image = {
-			url: 'icons/medium'+tracker_id%12+'.png',
-			size: new google.maps.Size(25, 29),
-			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(13, 29)
-		};
-		var marker = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			icon: image
-		}
-		);
-		//always needed ?
-		marker.setMap(map);
-		//ADDED
-		latest_markers[0].push(marker);
-		latest_markers[1].push(tracker_id);
-		return marker;
-	}
-*/	
+/*==================Begin Add Big Marker==============================*/
 	//Add a big marker to the map
 	//tracker_id is optional with  default value of 12 for the rendering
-
-/*==============================Begin Add Big Marker============================================*/
 	function addBigMarker(lat, lng, tracker_id,tstart,tend,datetime, singleAttempt){
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
@@ -90,7 +88,7 @@
 		$.ajax({
 						type: "GET",
 						url: "/infowindow",
-						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt},
+						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt, isEnd: true, lat: lat, lng:lng},
 						dataType: "html",
 						success: function(data){
 							//alert('change tracker')
@@ -107,10 +105,9 @@
 		//known_trackers.push(tracker_id);
 		return marker;
 	}
-/*================================End Add Big Marker=======================================*/
+/*============================End Add Big Marker====================================*/
 
-
-/*=================================Begin Add Draggable Marker==============================*/
+/*==============================Begin Add Draggable Marker===========================*/
 
 //Add a draggable marker to the map
 	function addDraggableMarker(lat, lng){
@@ -124,7 +121,7 @@
 		marker.setMap(replay_map);
 		return marker;
 	}
-/*=================================End Add Draggable Marker================================*/
+/*===================End Add Draggable Marker========================*/
 
 	//Add all the given coordinates onto the map
 	function addAllThisMarkers(data){
@@ -195,8 +192,9 @@
 			
 			if(i != data.length -1){ //not end of array
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
-					addSmallMarker(latitude, longitude, tracker_id,tstart, tend, datetime, singleAttempt);
-					
+					//addDot(latitude, longitude, tracker_id);	
+					//if (i%10==0)//every 10 coordinates add a small marker
+						addSmallMarker(latitude, longitude, tracker_id,tstart, tend, datetime, singleAttempt);	
 				}
 				else{ //derniere coordonnee du meme tracker si tracker different apres
 					//create polyline

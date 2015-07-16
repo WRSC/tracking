@@ -1,4 +1,8 @@
-<div id="infowindow-title"><p><b><center><u>It was the end.</u></center></b><p></div>
+<% if @isEnd == "true" %>
+	<div id="infowindow-title"><p><b><center><u>It was the end.</u></center></b><p></div>
+<% else %>
+	<div id="infowindow-title"><p><b><center><u>Data Info:</u></center></b><p></div>
+<% end %>
 <% if @attempts.size == 1 %>
 	<% attempt=@attempts.first %>
 	<% rob = Robot.find_by(id: attempt.robot_id) %>
@@ -6,14 +10,12 @@
 		<img src="<%= rob.team.logo%>" alt="Team logo">
 	<% end %>
 	<div id="infowindow">
-	<!--Robot-->
-	<p><b>Robot:</b> <%= rob.name %></p>
-	<!--Team-->
-	<p><b>Team:</b> <%= rob.team.name %></p>
-	<!--Attempt-->
-	<p><b>Attempt:</b> <%= attempt.name %></p>
-	<!--Mission-->
-	<p><b>Mission:</b> <%= Mission.find_by(id: attempt.mission_id).name %></p>
+	<!--Team--><!--Robot-->
+	<p><b>Team:</b> <%= rob.team.name %> &nbsp <b>Robot:</b> <%= rob.name %></p>
+
+	<!--Mission--><!--Attempt-->
+	<p><b>Mission:</b> <%= Mission.find_by(id: attempt.mission_id).name %> &nbsp <b>Attempt <%= attempt.id%>: </b> <%= attempt.name %></p>
+	
 	<!--Datetime-->
 	<p><b>Datetime:</b> <%= @datetime %> UTC</p>
 	</div>

@@ -1,7 +1,24 @@
 function addFixPolyline(){
-	tabinput=prompt("Please respect the format of input data, otherwise it could not recognize the data: lat,lng;lat,lng;...","lat,lng; lat,lng...")
+	input=prompt("Please respect the format of input data, otherwise it could not recognize the data: lat,lng;lat,lng;...","lat,lng; lat,lng...")
 	/*====== need to check if th input data format is correct =====*/
-	alert (tabinput)	
+	tabinput=input.split(";")
+	var coord=[]
+	for (i=0;i<tabinput.length;i++){
+		latlng=tabinput[i].split(",")
+		lat=latlng[0]
+		lng=latlng[1]
+		coord.push(new google.maps.LatLng(lat, lng))
+		markers.push(addFixMarker(lat, lng))
+	}
+  var fixPath = new google.maps.Polyline({
+    path: coord,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  fixPath.setMap(map_marker)
+	adaptZoom()
 }
 
 function addCustomPolyline(){
@@ -33,5 +50,14 @@ function addLatLng(event) {
     title: '#' + path.getLength(),
     map: map_marker
   });
+  markers.push(marker)
+}
+
+function adaptZoom(){
+		var bounds = new google.maps.LatLngBounds();
+		for(var i=0; i < markers[0].length ; i++){
+			bounds.extend(markers[0][i].getPosition());
+		}
+		map_marker.fitBounds(bounds);
 }
 

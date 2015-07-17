@@ -4,6 +4,10 @@
 //=require Markers/Point
 //=require Markers/Line
 //=require Markers/Polygon
+
+/*======variable global======*/
+markers=[];
+
 $(document).ready(function(){
 	
 	initializeMap();

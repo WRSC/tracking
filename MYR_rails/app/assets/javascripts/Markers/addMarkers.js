@@ -1,15 +1,24 @@
 function addPLP(){
 //check if we had selected the mission 
 	//alert($("#marker_missions_dropdown option:selected").val())
+		/*============== Points ================*/
 		$("#buoy-fix").click(function(){
 			addFixBuoy()
 		})	
 		$("#buoy-draggable").click(function(){
 			addDraggableBuoy()
 		})	
-		$("#AddLine").click(function(){
-			addLine()
+		
+		/*============== Lines ================*/
+		$("#polyline-fix").click(function(){
+			addFixPolyline()
 		})
+		
+		$("#polyline-custom").click(function(){
+			addCustomPolyline()
+		})
+		
+		/*============== Polygons ================*/
 		$("#AddPolygon").click(function(){
 			addPolygon()
 		})

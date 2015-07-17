@@ -99,6 +99,8 @@ function FullScreenControl(controlDiv) {
 		var centerControl = new FullScreenControl(centerControlDiv);
 		centerControlDiv.index = 1;
 		map_marker.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+		
+
 	}
 
 /*============ Clear Google Map================================*/

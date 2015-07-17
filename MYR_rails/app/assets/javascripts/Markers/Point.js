@@ -4,14 +4,17 @@ https://thenounproject.com/term/map-marker/51274/
 change color of marker
 http://www.benramey.com/2012/03/15/change-the-color-of-an-icon-with-gimp/
 
+https://developers.google.com/maps/documentation/javascript/examples/marker-remove
+
 */
 
 //---------------------  Buoy  -----------------------------------
 	//Add a buoy on the map when clicked and keep track of coordinates on dragend
 	//Save the coodinates in the database when clinking on "AddBuoy" button
-	function addBuoy(lat,lng){
-		alert('addBuoy')
-		var lat = prompt("Please enter latitude", "Harry Potter");
+	function addFixBuoy(){
+		alert('addFixBuoy')
+		var lat = prompt("Please enter latitude", "0");
+		var lng = prompt("Please enter longitude", "0");
 		addFixMarker(lat,lng)
 		//addDraggableMarker(lat, lng)
 		setCenter(lat, lng)
@@ -51,19 +54,32 @@ http://www.benramey.com/2012/03/15/change-the-color-of-an-icon-with-gimp/
 
 	}
 	
+	function addDraggableBuoy(){
+		
+		//var lat = prompt("Please enter latitude", "0");
+		//var lng = prompt("Please enter longitude", "0");
+		
+		alert('You can click directly on the map in order to add draggable markers.')
+		google.maps.event.addListener(map_marker, 'click', function(event) {
+    	//alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng());
+    	addDraggableMarker(event.latLng.lat(),event.latLng.lng());
+  	});
+	}
+	
 	//Add a draggable marker to the map
-	function addDraggableMarker(lat, lng){
+	function addDraggableMarker(lat,lng){
+		//alert(lng)
 		var marker = new google.maps.Marker(
 		{
 			position: new google.maps.LatLng(lat,lng),
 			//icon: image,
 			draggable: true
-		}
-		);
+		});
 		//always needed ?
 		marker.setMap(map_marker);
 		return marker;
 	}
+	
 	
 	function addFixMarker(lat, lng){
 

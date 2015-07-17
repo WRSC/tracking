@@ -79,7 +79,8 @@
 		var marker = new google.maps.Marker(
 		{
 			position: new google.maps.LatLng(lat,lng),
-			icon: image
+			icon: image,
+			
 		}
 		);
 		//always needed ?

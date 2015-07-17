@@ -1,0 +1,5 @@
+
+	function addPolygon(){
+		alert('addpolygon')
+	}
+

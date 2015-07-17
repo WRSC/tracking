@@ -57,7 +57,7 @@ function FullScreenControl(controlDiv) {
   // Set image for the control interior
   var controlImage = document.createElement('img');
   controlImage.isMap = true;
-  controlImage.src = "/icons/expand-icon-small.PNG";
+  controlImage.src = "icons/expand-icon-small.PNG";
   controlUI.appendChild(controlImage);
 
   // Setup the click event listeners: change the class of the map container

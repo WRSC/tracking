@@ -1,0 +1,3 @@
+	function addLine(){
+		alert('addline')
+	}

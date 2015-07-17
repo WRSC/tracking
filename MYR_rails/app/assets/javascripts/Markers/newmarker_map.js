@@ -35,7 +35,7 @@ jQuery.expr.filters.offscreen = function(el) {
 	}
 
 //--------MAP----------------
-function FullScreenControl(controlDiv, map) {
+function FullScreenControl(controlDiv) {
 	//see https://developers.google.com/maps/documentation/javascript/examples/control-custom
 
   // Set CSS for the control border
@@ -50,7 +50,7 @@ function FullScreenControl(controlDiv, map) {
   // Set image for the control interior
   var controlImage = document.createElement('img');
   controlImage.isMap = true;
-  controlImage.src = "/icons/expand-icon-small.PNG";
+  controlImage.src = "/icons/expand-icon-small.png";
   controlUI.appendChild(controlImage);
 
   // Setup the click event listeners: change the class of the map container
@@ -92,13 +92,13 @@ function FullScreenControl(controlDiv, map) {
 		}
 
 		//map creation
-		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		map_marker = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
-		var centerControl = new FullScreenControl(centerControlDiv, map);
+		var centerControl = new FullScreenControl(centerControlDiv);
 		centerControlDiv.index = 1;
-		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+		map_marker.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 	}
 
 /*============ Clear Google Map================================*/

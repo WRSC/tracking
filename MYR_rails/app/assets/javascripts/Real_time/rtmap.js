@@ -3,12 +3,17 @@
 var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var latest_buoys = [[],[]]; //[0] for buoys and [1] for mission id
+var lines = [[],[]]; // keep the lines in memories, [0] for lines and [1] for mission id
 var known_trackers = [];
 var desired_trackers = [];
 var all_current_missions=[];
 var current_mission;
 var myReset;
-var lines = []; // keep the lines in memories
+var refreshRate = 10000;
+var MAX_NUM_COORDS = 1000;
+var index_first_marker = 0;
+var index_next_new_marker = 0;
+var first_launch = true;
 /*
 var tab = [2,12,1,5];
 tab.sort(function(a, b){return a-b});
@@ -33,7 +38,7 @@ jQuery.expr.filters.offscreen = function(el) {
 			scrollTop: $("#above_the_map").offset().top
 		}, 2000);
 	}
-
+ 
 //-------------GETTERS AND SETTERS----------------------------
 	//Setter on lastDatetime
 	function saveLastDatetime(datetime){
@@ -103,8 +108,24 @@ jQuery.expr.filters.offscreen = function(el) {
 		return desired_trackers;
 	}
 	
-	function getMap(){
+	function getMyMap(){
 		return map;
+	}
+
+	function getRefreshRate(){
+		return refreshRate;
+	}
+
+	function setRefrestRate(newRefreshRate){
+		refreshRate=newRefreshRate;
+	}
+
+	function getMaxCoords(){
+		return MAX_NUM_COORDS;
+	}
+
+	function setMaxCoords(newMaxCoords){
+		MAX_NUM_COORDS=newMaxCoords;
 	}
 
 //--------MAP----------------
@@ -141,8 +162,16 @@ function FullScreenControl(controlDiv, map) {
 		latest_buoys = [[],[]];
 		desired_trackers = [];
 		known_trackers = [];
-		lines = [];
+		lines = [[],[]];;
 		lastDatetime = "10000101";
+      	if (myReset!= null){
+      		clearInterval(myReset);
+      	}
+		refreshRate = $('#dropdown_select_refreshRate :selected').val();
+		MAX_NUM_COORDS = $('#dropdown_select_maxCoords :selected').val();
+		index_first_marker = 0;
+		index_next_new_marker = 0;
+		first_launch = true;
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -184,20 +213,67 @@ function eraseMap() {
 		for(var i=0; i < latest_buoys[0].length ; i++){
 			latest_buoys[0][i].setMap(null);
 		}
-		for(var i=0; i < lines.length ; i++){
-			lines[i].setMap(null);
+		for(var i=0; i < lines[0].length ; i++){
+			lines[0][i].setMap(null);
 		}
 		//reset the global variables
 		latest_markers = [[],[]];
 		latest_buoys = [[],[]];
 		desired_trackers = [];
 		known_trackers = [];
-		lines = [];
+		lines = [[],[]];
 		lastDatetime = "10000101";
+      	if (myReset!= null){
+      		clearInterval(myReset);
+      	}
+		refreshRate = $('#dropdown_select_refreshRate :selected').val();
+		MAX_NUM_COORDS = $('#dropdown_select_maxCoords :selected').val();
+		index_first_marker = 0;
+		index_next_new_marker = 0;
+		first_launch = true;
 	}
 
-/*========================= End initialize Google Map===============================================*/
+function showTrackers(data){
+	for(var i=0; i < data.length ; i++){
+		tracker_id=data[i];
+		disp = false;
+		// boucle for allant du dernier marker ajouté (modulo(...)) jusqu'au plus ancien first_marker
+		for(var j=moduloPositif(index_first_marker-1,latest_markers[0].length); j != index_first_marker; j=moduloPositif(j-1,MAX_NUM_COORDS)){
+			if (!disp && tracker_id==latest_markers[1][j]){
+				latest_markers[0][j].setMap(map);
+				disp=true;
+			}
+		}
+		if (!disp && tracker_id==latest_markers[1][index_first_marker]){
+			latest_markers[0][j].setMap(map);
+			disp=true;
+		}
+		for(var j=0;j<lines[0].length;j++){
+			if (tracker_id==lines[1][j]){
+				lines[0][j].setMap(map);
+			}
+		}
+	}
+}
 
+function hideTrackers(data){
+	for(var i=0; i < data.length ; i++){
+		tracker_id=data[i];
+		// boucle for allant du dernier marker ajouté (modulo(...)) jusqu'au plus ancien first_marker
+		for(var j=0; j < latest_markers[0].length; j++){
+			if ( tracker_id==latest_markers[1][j]){
+				latest_markers[0][j].setMap(null);
+			}
+		}
+		for(var j=0;j<lines[0].length;j++){
+			if (tracker_id==lines[1][j]){
+				lines[0][j].setMap(null);
+			}
+		}
+	}
+}
+
+/*========================= End initialize Google Map===============================================*/
 
 	//Set the center of the map
 	function setCenter(lat, lng){
@@ -209,15 +285,25 @@ function eraseMap() {
 //Fit the zoom to see all the displayed points
 	function adaptZoom(){
 		var bounds = new google.maps.LatLngBounds();
-		for(var i=0; i < latest_markers[0].length ; i++){
+// boucle for allant du marker le plus ancien (first_marker) dans le tableau jusqu'au plus récent moduloPositif(index_first_marker-1,latest_markers[0].length)
+		for(var i=index_first_marker; i != moduloPositif(index_first_marker-1,latest_markers[0].length); i=(i+1)%MAX_NUM_COORDS){
 			bounds.extend(latest_markers[0][i].getPosition());
 		}
+		bounds.extend(latest_markers[0][moduloPositif(index_first_marker-1,latest_markers[0].length)].getPosition());
 		for(var i=0; i < latest_buoys[0].length ; i++){
 			bounds.extend(latest_buoys[0][i].getPosition());
 		}
 		map.fitBounds(bounds);
 	}
 	
+	function moduloPositif(a,b){
+		if (a<0){
+			return b+a
+		}
+		else{
+			return a%b
+		}
+	}
 //---------------------  BOILS  -----------------------------------
 	//Add a boil on the map when clicked and keep track of coordinates on dragend
 	//Save the coodinates in the database when clinking on "AddBoil" button
@@ -238,7 +324,8 @@ function eraseMap() {
 			);
 
 			$("#AddBoil").click(function(){
-				alert(desiredLat+" and "+desiredLng);
+				
+				(desiredLat+" and "+desiredLng);
 
 				//to be completed using partial or jquery UI
 				$.ajax({

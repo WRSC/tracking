@@ -21,7 +21,7 @@ function loadMissionBuoys(){
 				url: "/getMissionBuoys",
 				success: function(data){
 					if(data.length > 0){
-						loadWithNewBuoys(data,getMap());
+						loadWithNewBuoys(data,getMyMap());
 					}
 				}       
 		});
@@ -53,9 +53,7 @@ function getBuoys(){
 				url: "/getMissionBuoys",
 				success: function(data){
 					if(data.length > 0){
-						//refreshBuoys(data,getMap());
-						//refreshWithNewMarkers2(data,getMap());
-						refreshWithNewBuoys(data,getMap());
+						refreshWithNewBuoys(data,getMyMap());
 					}
 				}       
 		});
@@ -68,9 +66,7 @@ function hideBuoys(){
 				url: "/getMissionBuoys",
 				success: function(data){
 					if(data.length > 0){
-						//refreshBuoys(data,getMap());
-						//refreshWithNewMarkers2(data,getMap());
-						refreshWithoutBuoys(data,getMap());
+						refreshWithoutBuoys(data,getMyMap());
 					}
 				}       
 		});

@@ -3,14 +3,50 @@ class CoordinatesController < ApplicationController
 
   include RealTimeHelper
 
-  NUM_MAX_COORDS = 1000 #constant
+  #NUM_MAX_COORDS = 1000 #constant
   #WARNING limitation is not the one required
   #TO DO global limitation of number of coordinates
 
   # GET /coordinates
   # GET /coordinates.json
-  def index
-    @coordinates = Coordinate.all
+  def index  
+    mesDateTimes=[]
+    if cookies[:rdatetimes]!= nil && cookies[:rdatetimes]!= ""
+      mesDateTimes=cookies[:rdatetimes].split("_") 
+    elsif cookies[:rtrieslist]!= nil && cookies[:rtrieslist]!= ""
+      trySelect=Try.find_by_id(cookies[:rtrieslist].to_i)
+      if trySelect!=nil
+        mesDateTimes=[trySelect.start.to_s,trySelect.end.to_s]
+      end
+    end
+    if mesDateTimes != nil && mesDateTimes != []
+      nbptsmax=599
+      allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1])[0..nbptsmax]
+      if allCoordinate!=[]
+        if sign_A?
+          @coordinates = allCoordinate
+        else
+          if myTeam != nil
+            if Robot.find_by_team_id(myTeam.id) != nil
+              mytrackers = Tracker.find_by_id(Robot.find_by_team_id(myTeam.id).tracker_id)
+              if mytrackers != nil
+                @coordinates = allCoordinate.where(tracker_id: mytrackers.id)
+              else
+                @coordinates =[]
+              end
+            else
+              @coordinates =[]
+            end
+          else
+            @coordinates =[]
+          end
+        end
+      else
+        @coordinates =[]
+      end
+    else
+      @coordinates =[]
+    end
   end
 
   # GET /coordinates/1
@@ -30,14 +66,42 @@ class CoordinatesController < ApplicationController
   # POST /coordinates
   # POST /coordinates.json
   def create
-    @coordinate = Coordinate.new(coordinate_params)
-    respond_to do |format|
-      if @coordinate.save
-        format.html { redirect_to @coordinate, notice: 'Coordinate was successfully created.' }
-        format.json { render :show, status: :created, location: @coordinate }
-      else
-        format.html { render :new }
-        format.json { render json: @coordinate.errors, status: :unprocessable_entity }
+
+    myTra=Tracker.find_by_id(params[:coordinate][:tracker_id])
+    if myTra!=nil 
+      if  myTra.token ==params[:coordinate][:token]
+        @coordinate = Coordinate.new(coordinate_params)
+        #-------création des coordinates a partir d'une liste------
+          #création des variables
+        lat = []
+        long = []
+        date = 0
+        
+        tok = @coordinate.token
+        tr_id = @coordinate.tracker_id
+        
+        #split des strings reçus
+        lat = @coordinate.latitude.split("_")
+        long = @coordinate.longitude.split("_")
+        date = @coordinate.datetime.split("_")
+        
+        #création des coordinates
+        # parcours du tableau
+        for i in (0..(lat.length-1))
+          Coordinate.create(:latitude => lat[i], :longitude => long[i], :datetime => date[i], :tracker_id => tr_id, :token => tok)
+        end
+        #--------------------------------------------------------
+
+
+        respond_to do |format|
+          if (lat.length>0 && long.length>0 && date.length >0)
+            format.html { redirect_to @coordinate, notice: 'Coordinate was successfully created.' }
+            format.json { render :show, status: :created, location: @coordinate }
+          else
+            format.html { render :new }
+            format.json { render json: @coordinate.errors, status: :unprocessable_entity }
+          end
+        end
       end
     end
   end
@@ -70,7 +134,10 @@ class CoordinatesController < ApplicationController
   def gatherCoordsSince
   	m_id=params[:mission_id]
   	datetime=params[:datetime]
+    numMaxCoords = params[:numCoords]
   	
+
+
   	trackers=[] # change js array into tracker_ids
   	if (params[:trackers] != nil) 
       params[:trackers].each do |k,v|
@@ -81,7 +148,7 @@ class CoordinatesController < ApplicationController
     if (datetime != "10000101" && datetime != nil)#the map already contains coordinates
       if (trackers != nil)# trackers identifiers are specified
         # order(tracker_id: :asc)  is just here for performance boost -> prevent some action to be made js side by Google Map API
-        newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", datetime).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
+        newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).where("datetime > ?", datetime).where(tracker_id: trackers).limit(numMaxCoords))).where("datetime > ?", datetime).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
       else
         newCoords = []
       end
@@ -90,7 +157,7 @@ class CoordinatesController < ApplicationController
       if getMissionInfos.size > 0 #if there is currently a mission
         start = Mission.find(m_id).start.to_s(:number).to_datetime #missionsInfos = [start, end]
         if (trackers != nil)# trackers identifiers are specified
-          newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", start).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
+          newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).where("datetime > ?", start).where(tracker_id: trackers).limit(numMaxCoords))).where("datetime > ?", start).where(tracker_id: trackers).where("datetime > ?", datetime).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
         else
           newCoords = []
         end
@@ -176,6 +243,6 @@ class CoordinatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def coordinate_params
-      params.require(:coordinate).permit(:latitude, :longitude, :datetime, :tracker_id)
+      params.require(:coordinate).permit(:latitude, :longitude, :datetime, :tracker_id, :token)
     end
   end

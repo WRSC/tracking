@@ -9,7 +9,6 @@
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(8, 19)
 		};
-		//alert(tracker_id)
 		var marker = new google.maps.Marker(
 		{
 			position: new google.maps.LatLng(lat,lng),
@@ -17,9 +16,23 @@
 		}
 		);
 		//always needed ?
-		//marker.setMap(map);
-		latest_markers[0].push(marker);
-		latest_markers[1].push(tracker_id);
+		//marker.setMap(null);
+		if (latest_markers[0].length < MAX_NUM_COORDS){
+			latest_markers[0].push(marker);
+			latest_markers[1].push(tracker_id);
+			index_next_new_marker=(index_next_new_marker+1)%MAX_NUM_COORDS;
+		}
+		else{
+			//latest_markers[0][latest_markers[0].length-1].setMap(null);
+			if (latest_markers[0][index_next_new_marker].getMap()!=null){
+				latest_markers[0][index_next_new_marker].setMap(null);
+			}
+			latest_markers[0][index_next_new_marker]=[];
+			latest_markers[0][index_next_new_marker]=marker;
+			latest_markers[1][index_next_new_marker]=tracker_id;
+			index_first_marker = (index_first_marker+1)%MAX_NUM_COORDS;
+			index_next_new_marker=(index_next_new_marker+1)%MAX_NUM_COORDS;
+		}
 		//ADDED
 		return marker;
 	}
@@ -72,8 +85,24 @@
 		//always needed ?
 		marker.setMap(map);
 		// to ease later addition of coordinqtes
-		latest_markers[0].push(marker);
-		latest_markers[1].push(tracker_id);
+		// to control the number of coordinates on the map
+		if (latest_markers[0].length < MAX_NUM_COORDS){
+			latest_markers[0].push(marker);
+			latest_markers[1].push(tracker_id);
+			index_next_new_marker=(index_next_new_marker+1)%MAX_NUM_COORDS;
+
+		}
+		else{
+			//latest_markers[0][latest_markers[0].length-1].setMap(null);
+			if (latest_markers[0][index_next_new_marker].getMap()!=null){
+				latest_markers[0][index_next_new_marker].setMap(null);
+			}
+			latest_markers[0][index_next_new_marker]=[];
+			latest_markers[0][index_next_new_marker]=marker;
+			latest_markers[1][index_next_new_marker]=tracker_id;
+			index_first_marker = (index_first_marker+1)%MAX_NUM_COORDS;
+			index_next_new_marker=(index_next_new_marker+1)%MAX_NUM_COORDS;
+		}
 		// to create the side panel
 		//known_trackers.push(tracker_id);
 		return marker;
@@ -131,11 +160,16 @@
 
 	//Add the given coordinates on the map and save this last state
 	function refreshWithNewMarkers2(data,map){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
-		if (latest_markers[0].length>0){
+		/*if (latest_markers[0].length>0){
 			latest_markers[0][latest_markers[0].length-1].setMap(null);
-		}
+		}*/
 		var lastCoordinate = data[data.length-1];
-		var lastDate = lastCoordinate.datetime;
+		var lastDate = 10000101;
+		for(var i=data.length-1; i > 0 ; i--){ //iterate in the array
+			if (data[i].datetime > lastDate){
+				lastDate = data[i].datetime;
+			}
+		}
 		/*var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
 		
@@ -147,7 +181,7 @@
 
 		//setCenter(lastLat,lastLng);
 		adaptZoom();
-		if (lastDate!=null){
+		if (lastDate!=10000101){
 			saveLastDatetime(lastDate);
 		}
 	}
@@ -159,13 +193,14 @@
 			longitude = data[i].longitude;
 			tracker_id = data[i].tracker_id;		
 			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
-			if(i != data.length -1){ //not end of array
+			if(i != (data.length-1)){ //not end of array
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
 					addSmallMarker(latitude, longitude, tracker_id,map);
 				}
 				else{ //derniere coordonnee du meme tracker si tracker different apres
 					//create polyline
 					createPolyline(tracker_Gcoords, tracker_id);
+	
 					//addsbigmarker
 					addBigMarker(latitude, longitude, tracker_id,map);
 					//reset array
@@ -176,8 +211,10 @@
 				//create polyline
 				createPolyline(tracker_Gcoords, tracker_id);
 				//addsbigmarker
+
 				addBigMarker(latitude, longitude, tracker_id,map);
 				//reset array
+
 				tracker_Gcoords = [];
 			}
 		}
@@ -188,7 +225,7 @@
 		// colors:  		   red  , blue   , dark green, orange  , black    , purple   , white  , pink , fluo green, dark red, yellow , turquoise
 		var colors = ['','#CC0000','#0000CC','#003300','#FF3300','#000000','#660099','#FFFFFF','#CC00CC','#00CC00','#660000','#FFFF00','#33FFFF']
 		var index_of_marker = alreadyPresent(tracker_id);
-
+		//alert(index_of_marker)
 		if(index_of_marker != -1){
 			//get coords to add to polyline
 			var end_lat = latest_markers[0][index_of_marker].getPosition().lat();
@@ -197,6 +234,7 @@
 			Gcoords.unshift(new google.maps.LatLng(end_lat, end_lng));
 
 			//remove this marker from the map
+			latest_markers[0][index_of_marker].setMap(null);
 			//QUESTION better to replace the icon ??
 			//deleteEndMarker(index_of_marker);
 			//addSmallMarker(end_lat, end_lng, end_tracker_id);
@@ -210,7 +248,8 @@
 			strokeWeight: 1
 		});
 		polyline.setMap(map);
-		lines.push(polyline);
+		lines[0].push(polyline);
+		lines[1].push(tracker_id);
 	}
 
 	function deleteEndMarker(index_of_marker){

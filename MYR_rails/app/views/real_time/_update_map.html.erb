@@ -1,5 +1,5 @@
 <% m= Mission.find(@current_mission_id) %>
-<p>Mission selected started at: <%=m.start.to_s(:time)%> and ends at :<%=m.end.to_s(:time)%> UTC
+<p>Mission selected started at <%=m.start%> and ends at <%=m.end%>
 	<% if m.description != ""%>
 		<br>
 		<p>Description: <%= m.description %></p>
@@ -7,16 +7,3 @@
 </p>
 <button id="getNewTrackers" type="button">Get trackers</button> 
 <button id="getNewCoordinates" type="button">Get coordinates</button> 
-<h2>Robots in the mission</h2>
-<%= @current_mission_id %>
-<% currentAttempts=Attempt.where("mission_id = ?", @current_mission_id).order(robot_id: :asc) %>
-<% currentAttempts.each_cons(2) do |attempt, nextAttempt| %>
-	<%= attempt.name %>
-	<p> lala </p>
-	<% if (attempt.robot_id != nextAttempt.robot_id) %>
-	<input type="checkbox" name="robot<%= attempt.robot_id %>" id="<%= attempt.robot_id %>"><%= Robot.find(attempt.robot_id).name %><img src="/icons/medium<%=attempt.robot_id %>.png"/>
-	<br>
-	<% end %>
-	<input type="checkbox" name="robot<%= currentAttempts.last.robot_id %>" id="<%= currentAttempts.last.robot_id %>"><%= Robot.find(currentAttempts.last.robot_id).name %><img src="/icons/medium<%=currentAttempts.last.robot_id %>.png"/>
-	<br>
-<% end %>

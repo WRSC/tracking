@@ -15,50 +15,16 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-remo
 		alert('addFixBuoy')
 		var lat = prompt("Please enter latitude", "0");
 		var lng = prompt("Please enter longitude", "0");
-		addFixMarker(lat,lng)
+		fixPoint=addFixMarker(lat,lng)
 		//addDraggableMarker(lat, lng)
 		setCenter(lat, lng)
 		
-
-		/*
-		google.maps.event.addListener(map, 'click', function(a){
-			var desiredLat = a.latLng.lat();
-			var desiredLng = a.latLng.lng();
-			setCenter(desiredLat,desiredLng);
-
-			var marker = addDraggableMarker(desiredLat,desiredLng);
-			google.maps.event.addListener(marker, 'dragend', function(a){
-				var markerLat = a.latLng.lat();
-				var markerLng = a.latLng.lng();
-
-				desiredLat = markerLat;
-				desiredLng = markerLng;
-			});
-
-			alert(desiredLat+" and "+desiredLng);
-
-			//to be completed using partial or jquery UI
-			$.ajax({
-				url: '/markers',
-				type: 'POST',
-				data: $.param({
-					marker: {
-						name: "test2",
-						latitude: desiredLat,
-						longitude: desiredLng
-					}
-				}),
-				success: function(data) { alert("Marker has ben succesfully created"); }
-			});
-		});*/
-
+		// Add a listener for the click event.
+		google.maps.event.addListener(fixPoint, 'click', showPoint);
+		infoWindow = new google.maps.InfoWindow();
 	}
 	
 	function addDraggableBuoy(){
-		
-		//var lat = prompt("Please enter latitude", "0");
-		//var lng = prompt("Please enter longitude", "0");
-		
 		alert('You can click directly on the map in order to add draggable markers.')
 		google.maps.event.addListener(map_marker, 'click', function(event) {
     	//alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng());
@@ -95,4 +61,23 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-remo
 	function setCenter(lat, lng){
 		map_marker.panTo(new google.maps.LatLng(lat,lng));
 	}
+
+
+	function showPoint(event) {
+		// Since this polygon has only one path, we can call getPath()
+		// to return the MVCArray of LatLngs.
+	
+
+		var contentString = '<font color="black"><b>Coordinate of Fix Buoy :</b><br>'
+                        + '<b>latitude:</b>&nbsp'+event.latLng.lat() + ',&nbsp' + 
+												'<b>longitude:</b>&nbsp'+event.latLng.lng() + '<br></font>';
+
+  // Replace the info window's content and position.
+  infoWindow.setContent(contentString);
+  infoWindow.setPosition(event.latLng);
+
+  infoWindow.open(map_marker);
+}
+
+
 	

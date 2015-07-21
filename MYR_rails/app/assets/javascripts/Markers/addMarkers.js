@@ -19,8 +19,11 @@ function addPLP(){
 		})
 		
 		/*============== Polygons ================*/
-		$("#AddPolygon").click(function(){
-			addPolygon()
+		$("#polygon-fix").click(function(){
+			addFixPolygon()
+		})
+		$("#polygon-custom").click(function(){
+			addCustomPolygon()
 		})
 	
 }

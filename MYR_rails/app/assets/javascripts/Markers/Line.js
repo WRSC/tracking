@@ -8,7 +8,7 @@ function addFixPolyline(){
 		lat=latlng[0]
 		lng=latlng[1]
 		coord.push(new google.maps.LatLng(lat, lng))
-		markers.push(addFixMarker(lat, lng))
+		markers.push(addFixMarker(lat, lng))//in Point.js
 	}
   var fixPath = new google.maps.Polyline({
     path: coord,

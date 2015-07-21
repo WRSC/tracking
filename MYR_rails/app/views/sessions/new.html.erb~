@@ -1,5 +1,5 @@
 
-<div id="newSession">
+<div id="newIndicate">
 <h1>New Session</h1>
 </div>
 <%= render 'form' %>

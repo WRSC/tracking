@@ -1,11 +1,14 @@
-
 //----------------------GLOBAL VARIABLES-------------------
-var replay_map=null
+
 var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
+var latest_buoys = [[],[]]; //[0] for buoys and [1] for mission id
 var known_trackers = [];
 var desired_trackers = [];
-
+var all_current_missions=[];
+var current_mission;
+var myReset;
+var lines = []; // keep the lines in memories
 /*
 var tab = [2,12,1,5];
 tab.sort(function(a, b){return a-b});
@@ -31,18 +34,8 @@ jQuery.expr.filters.offscreen = function(el) {
 		}, 2000);
 	}
 
-//-------------GETTERS AND SETTERS----------------------------
-	
-	function getReplayMap(){
-		return replay_map;
-	}
-	
-	function setReplayMap(desired_map){
-		replay_map=desired_map
-	}
-
 //--------MAP----------------
-function FullScreenControl(controlDiv) {
+function FullScreenControl(controlDiv, map) {
 	//see https://developers.google.com/maps/documentation/javascript/examples/control-custom
 
   // Set CSS for the control border
@@ -63,13 +56,20 @@ function FullScreenControl(controlDiv) {
   // Setup the click event listeners: change the class of the map container
   google.maps.event.addDomListener(controlUI, 'click', function() {
   	$("#map-container").toggleClass("fullscreen");
-  	//https://developers.google.com/maps/documentation/javascript/reference#Map
-  	google.maps.event.trigger(replay_map, 'resize');
+  	google.maps.event.trigger(map, 'resize');
   });
 }
 
+/*===================== Begin initialize Google Map==================================*/
 	//Map initialization
 	function initializeMap() {
+		//reset the global variables
+		latest_markers = [[],[]];
+		latest_buoys = [[],[]];
+		desired_trackers = [];
+		known_trackers = [];
+		lines = [];
+		lastDatetime = "10000101";
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.ROAD,
@@ -78,62 +78,60 @@ function FullScreenControl(controlDiv) {
 			zoomControl: true,
 			zoomControlOptions: {
 				style: google.maps.ZoomControlStyle.SMALL,
-				position: google.maps.ControlPosition.RIGHT_BOTTOM
+				position: google.maps.ControlPosition.BOTTOM_LEFT
 			},
 			mapTypeControl: true,
 			mapTypeControlOptions: {
 				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-				position: google.maps.ControlPosition.TOP_CENTER
+				position: google.maps.ControlPosition.BOTTOM_LEFT
 			},
-		
 			scaleControl: true,
 			streetViewControl: false,
-			panControl: true,
-			overviewMapControl: true
+			panControl: false,
+			overviewMapControl: false
 		}
 
 		//map creation
-		replay_map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		
-		var contentString = '<p><font color=\'black\'>Aland university</font></p>'
- 
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-		var infowindow = new google.maps.InfoWindow({
-				content: contentString
-		});
-/*
-		var marker = new google.maps.Marker({
-				position:  new google.maps.LatLng(60.103462, 19.928225),
-				map: replay_map,
-				title: 'Aland University'
-		});
-*/		
-		initialmarker=addDraggableMarker(60.103462, 19.928225,  replay_map)
-		addInfoWindow(infowindow,initialmarker)
-		
-		
 		//add add button in the top right corner of the map to hide the right panel
 		var centerControlDiv = document.createElement('div');
-		var centerControl = new FullScreenControl(centerControlDiv);
+		var centerControl = new FullScreenControl(centerControlDiv, map);
 		centerControlDiv.index = 1;
-		replay_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-		replay_map.setTilt(45);
-		
-		//when we reload map, clear all the data in golabl variable	
-		latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
-		
+		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 	}
-	
-	function addInfoWindow(infowindow,marker){
-		google.maps.event.addListener(marker, 'click', function() {
-			infowindow.open(replay_map,marker);
-		});
+
+/*============ Clear Google Map================================*/
+
+function eraseMap() {
+		//stop displaying the points
+		for(var i=0; i < latest_markers[0].length ; i++){
+			latest_markers[0][i].setMap(null);
+		}
+		for(var i=0; i < latest_buoys[0].length ; i++){
+			latest_buoys[0][i].setMap(null);
+		}
+		for(var i=0; i < lines.length ; i++){
+			lines[i].setMap(null);
+		}
+		//reset the global variables
+		latest_markers = [[],[]];
+		latest_buoys = [[],[]];
+		desired_trackers = [];
+		known_trackers = [];
+		lines = [];
+		lastDatetime = "10000101";
 	}
+
+/*======== End initialize Google Map===============================*/
+
 
 	//Set the center of the map
 	function setCenter(lat, lng){
 		map.panTo(new google.maps.LatLng(lat,lng));
 	}
+
+/*======= End initialize Google Map=================================*/
 
 //Fit the zoom to see all the displayed points
 	function adaptZoom(){
@@ -141,46 +139,10 @@ function FullScreenControl(controlDiv) {
 		for(var i=0; i < latest_markers[0].length ; i++){
 			bounds.extend(latest_markers[0][i].getPosition());
 		}
-		replay_map.fitBounds(bounds);
+		for(var i=0; i < latest_buoys[0].length ; i++){
+			bounds.extend(latest_buoys[0][i].getPosition());
+		}
+		map.fitBounds(bounds);
 	}
 	
-
-//---------------------  BOILS  -----------------------------------
-	//Add a boil on the map when clicked and keep track of coordinates on dragend
-	//Save the coodinates in the database when clinking on "AddBoil" button
-	function addingBoil(){
-		google.maps.event.addListener(map, 'click', function(a){
-			var desiredLat = a.latLng.lat();
-			var desiredLng = a.latLng.lng();
-			//setCenter(desiredLat,desiredLng);
-
-			var marker = addDraggableMarker(desiredLat,desiredLng);
-			google.maps.event.addListener(marker, 'dragend', function(a){
-				var markerLat = a.latLng.lat();
-				var markerLng = a.latLng.lng();
-
-				desiredLat = markerLat;
-				desiredLng = markerLng;
-			}
-			);
-
-			$("#AddBoil").click(function(){
-				alert(desiredLat+" and "+desiredLng);
-
-				//to be completed using partial or jquery UI
-				$.ajax({
-					url: '/markers',
-					type: 'POST',
-					data: $.param({
-						marker: {
-							name: "test2",
-							latitude: desiredLat,
-							longitude: desiredLng
-						}
-					}),
-					success: function(data) { alert("Marker has ben succesfully created"); }
-				});
-			});
-		});
-	}
 

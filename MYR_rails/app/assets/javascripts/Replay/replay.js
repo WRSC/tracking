@@ -2,11 +2,12 @@
 //=require Replay/choice_teams
 //=require Replay/choice_robots
 //=require Replay/choice_onerobot
-//=require ../Markers/handle_markers
+//=require Replay/handle_markers_replay
 
 
 //need to check, when we did not change the option, but click the button update, it will display the initial page of google map and then reload the desired page
 
+//need to check if we need to remeber choosing missions and attempts
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap());

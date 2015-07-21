@@ -244,7 +244,7 @@ function requestGetTrackersFromDatetimes(roblist,datetime){
 				//alert(data)
 				//alert(datetime)
 				tabtime=datetime.split("_")	
-				requestGatherCoordsBetweenDates(tabtime[0],tabtime[1],trackers)
+				requestGatherCoordsBetweenDates(tabtime[0],tabtime[1],trackers,false)
 			}
 		}       
 	});

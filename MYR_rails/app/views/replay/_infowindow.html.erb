@@ -1,4 +1,26 @@
-<% if @coordinate != nil && @coordinate != [] %>
-<% if Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).logo != nil	#si l equipe a un logo %>
-				<% url= Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).logo %>
-				<img src=<%=url%>> <h5>Robot: <h6><%= Robot.find_by_tracker_id(@coordinate.tracker_id).name %> <h5>Team: <h6> <%= Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).name %><%else%><h6> <% Robot.find_by_tracker_id(@coordinate.tracker_id).name %> <h5>Team: <h6> <%Team.find_by_id(Robot.find_by_tracker_id(@coordinate.tracker_id).team_id).name %><%end%><h5>Datetime: <h6><%=@coordinate.datetime%><%end%>
+<div id="infowindow-title"><p><b><center><u>It was the end.</u></center></b><p></div>
+<% if @attempts.size == 1 %>
+	<% attempt=@attempts.first %>
+	<% rob = Robot.find_by(id: attempt.robot_id) %>
+	<% if rob.team.logo !=nil %>		
+		<img src="<%= rob.team.logo%>" alt="Team logo">
+	<% end %>
+	<div id="infowindow">
+	<!--Robot-->
+	<p><b>Robot:</b> <%= rob.name %></p>
+	<!--Team-->
+	<p><b>Team:</b> <%= rob.team.name %></p>
+	<!--Attempt-->
+	<p><b>Attempt:</b> <%= attempt.name %></p>
+	<!--Mission-->
+	<p><b>Mission:</b> <%= Mission.find_by(id: attempt.mission_id).name %></p>
+	<!--Datetime-->
+	<p><b>Datetime:</b> <%= @datetime %> UTC</p>
+	</div>
+	<style>
+		#infowindow, #infowindow-title{
+			color: black;
+		}
+	</style>
+<% else %>
+<% end %>

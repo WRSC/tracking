@@ -173,7 +173,7 @@ class CoordinatesController < ApplicationController
       tstart = params[:tstart].to_datetime
       tend = params[:tend].to_datetime
       newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers)
-      render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude])
+      render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
     end
   end
 

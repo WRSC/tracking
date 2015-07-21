@@ -1,3 +1,4 @@
+<% provide(:title, "Attempt | Edit") %>
 <h1>Editing Attempt</h1>
 
 <% if is_leaderById(Robot.find(@attempt.robot_id).team_id) || is_admin? %>

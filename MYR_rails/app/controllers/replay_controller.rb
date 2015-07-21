@@ -211,6 +211,22 @@ class ReplayController < ApplicationController
  	end
  	
  	def infowindow
+ 		tracker_id=params[:tracker_id]
+ 		tstart=params[:timestart].to_datetime
+ 		tend=params[:timeend].to_datetime
+  #if singleAttempt = true, it is from choosing attempt
+  #if singleAttempt = false, it is from choosing datetims 
+ 		singleAttempt=params[:singleAttempt]
+ 		@lat=params[:lat]
+ 		@lng=params[:lng]
+ 		@isEnd=params[:isEnd]
+ 		@datetime=params[:datetime].to_datetime
+ 		@attmepts=[]
+	  if singleAttempt==true 
+		  @attempts=Attempt.where("start == ? AND end == ? AND tracker_id == ?", tstart, tend, tracker_id)
+	  else 
+		  @attempts=Tracker.find_by(id: tracker_id).attempts.where("start < ? AND end > ?",@datetime,@datetime) 
+	 	end
  	end
 
 end

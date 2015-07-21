@@ -1,6 +1,7 @@
 
 <head>
-	<%= javascript_include_tag 'real_time', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'Real_time/real_time', 'data-turbolinks-track' => true %>
+	<% provide(:title, "Real-Time") %>
 </head>
 
 	<style type="text/css">
@@ -29,6 +30,10 @@
 			<div id="trackersAndCoordis"></div>
 
 			<a id="refresh-panel" href<%= link_to "", :action => :map_panel, remote: true%></a>
+
+			<div id="robots-panel"></div>
+
+			<a id="robots-panel-bis" href<%= link_to "", :action => :robots_panel, remote: :true%></a>
 
 			<div id="options-panel"></div>
 

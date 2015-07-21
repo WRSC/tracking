@@ -94,21 +94,27 @@ Marker.create!(latitude: 21.39,
                 longitude: 18.39,
                 mission_id: 1)
 
-#Coordinate  => attempt1
-Coordinate.create!(latitude:  0,
-								longitude: 0,
-								datetime:   "20150709112326",
-             		tracker_id: 1)
-             		
-Coordinate.create!(latitude:  0,
-								longitude: 5,
-								datetime:   "20150709112526",
-             		tracker_id: 1)
+#markers
 
-Coordinate.create!(latitude:  5,
-								longitude: 0,
-								datetime:   "20150709112726",
-             		tracker_id: 1)
+#http://programming-tut.blogspot.com/2009/09/ruby-on-rails-time.html
+#Coordinate  => attempt1
+lat=0
+lng=0
+i=0
+t=Time.now
+100.times do |n|
+	Coordinate.create!(latitude:  lat,
+									longitude: lng,
+									datetime:   t.strftime("%Y%m%d%H%M%S"),
+		           		tracker_id: 1)
+
+	lng=5*Math.cos(i)
+	t=t+5
+	lat=5*Math.sin(i)
+	i=i+0.1
+end
+             		
+
 
 #Coordinate => attempt2
 Coordinate.create!(latitude:  5,

@@ -15,6 +15,8 @@ class MarkersController < ApplicationController
   # GET /markers/new
   def new
     @marker = Marker.new
+    t=Time.now
+    
   end
 
   # GET /markers/1/edit

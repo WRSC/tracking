@@ -4,10 +4,11 @@
 	<p><b><u>Select attempts:</u></b></p>
 	<% m= Mission.find(@strmissions[0]) %>
 	<!--%= m.inspect%-->
+	<% attempts= Attempt.where(mission_id: m.id).where(robot_id: @indrobots)%>
 	<select name="mission" id="attempts_dropdown">
 	<option value="0"></option>
-	<% for i in 0..(m.attempts.size-1)%>
-		<option value="<%= m.attempts[i].id %>"><%= m.attempts[i].name %></option>
+	<% for i in 0..(attempts.size-1)%>
+		<option value="<%= attempts[i].id %>"><%= attempts[i].name %></option>
 	<% end %>
 	</select>
 <% else %>

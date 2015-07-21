@@ -25,6 +25,15 @@ function addPLP(){
 		$("#polygon-custom").click(function(){
 			addCustomPolygon()
 		})
+		
+		/*============= Circles =================*/
+		$("#circle-fix").click(function(){
+			addFixCircle()
+		})
+		$("#circle-custom").click(function(){
+			addCustomCircle()
+		})
+		
 	
 }
 

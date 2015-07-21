@@ -31,12 +31,11 @@ Rails.application.routes.draw do
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
-<<<<<<< HEAD
+
     
     get 'password_resets/sent_password_reset_email'
     get 'account_activations/wait_for_activated'
-=======
->>>>>>> Sylvain
+
 
   # Ajax
 

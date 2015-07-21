@@ -4,6 +4,7 @@
 //=require Markers/Point
 //=require Markers/Line
 //=require Markers/Polygon
+//=require Markers/Circle
 
 /*======variable global======*/
 markers=[];

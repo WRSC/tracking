@@ -1,5 +1,7 @@
 //=require Real_time/rtmap
 //=require Real_time/autorefresh
+//=require Real_time/displayRobots
+
 
 //=require Real_time/handle_markers
 //=require Real_time/handle_buoys
@@ -35,15 +37,17 @@ function choosetMission(){
 			if (e=="select_mission"){
 				alert("Please choose a correct mission!!!")
 			}else{
+				alert("Loading up to "+getMaxCoords()+" coordinates associated to this mission. This can take several seconds.")
 				saveCurrentMission(e)
+				loadMissionBuoys();
+				displayMissionsBuoys();
+				manual_or_auto_refresh();
 			}
 
 			//alert(getCurrentMission())//just for debugger
 		}
-		$("#robots-panel-bis").click();
-		loadMissionBuoys();
-		displayMissionsBuoys();
-		manual_or_auto_refresh();
+
+
 			
 }
 
@@ -60,13 +64,6 @@ function selectMissions(){
       					}
 						setAllCurrentMissions(data);
 						choosetMission();
-						$.ajax({
-							type: "GET",
-							url: "/robots_panel",
-							success: function(data){// retrieve an array containing the not yet known trackers
-							}       
-						});
-
 					}
 				}       
 			});

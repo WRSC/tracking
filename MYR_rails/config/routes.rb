@@ -31,9 +31,12 @@ Rails.application.routes.draw do
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
+<<<<<<< HEAD
     
     get 'password_resets/sent_password_reset_email'
     get 'account_activations/wait_for_activated'
+=======
+>>>>>>> Sylvain
 
   # Ajax
 
@@ -50,6 +53,8 @@ Rails.application.routes.draw do
     get  'robots_panel'            ,  to: 'real_time#robots_panel'
     get  'update_map_auto'         ,  to: 'real_time#update_map_auto'
     get  'getMissionBuoys'         ,  to: 'real_time#getMissionBuoys'
+    get  'trackerOfRobot'          ,  to: 'real_time#trackerOfRobot'
+    get  'manageDispRobot'         ,  to: 'real_time#manageDispRobot'
     
     get  'choice_teams'            ,  to: 'replay#choice_teams'
     get  'choice_robots'           ,  to: 'replay#choice_robots'

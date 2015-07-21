@@ -13,7 +13,7 @@
 
 <p>
   <strong>Datetime:</strong>
-  <%= @coordinate.datetime %>
+  <%= Time.parse(@coordinate.datetime).utc %>
 </p>
 
 <p>

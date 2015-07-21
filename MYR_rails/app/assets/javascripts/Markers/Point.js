@@ -1,6 +1,7 @@
 /*
 https://thenounproject.com/term/map-marker/51274/
 
+color of icons RGB: 241 111 107
 change color of marker
 http://www.benramey.com/2012/03/15/change-the-color-of-an-icon-with-gimp/
 

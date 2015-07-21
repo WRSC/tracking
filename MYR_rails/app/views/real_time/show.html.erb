@@ -23,20 +23,18 @@
 		.gm-style label { width: auto; display: inline; }
 		</style>
 		
-<!-------------------sidebar of google map----------------------------->
-		<div class="one_third" style='height: 100%'>
-			<div id="map-panel"></div>
-			 
-			<div id="trackersAndCoordis"></div>
 
+<!----------------------sidebar of google map-------------------------------->
+		<div class="one_third" style='height: 100%;overflow:scroll'>
+
+			<div id="map-panel"></div>
 			<a id="refresh-panel" href<%= link_to "", :action => :map_panel, remote: true%></a>
+
+			<div id="trackersAndCoordis"></div>
 
 			<div id="robots-panel"></div>
 
-			<a id="robots-panel-bis" href<%= link_to "", :action => :robots_panel, remote: :true%></a>
-
 			<div id="options-panel"></div>
-
 			<a id="options-panel-bis" href<%= link_to "", :action => :options_panel, remote: :true%></a>
 		</div>
 	</div> 

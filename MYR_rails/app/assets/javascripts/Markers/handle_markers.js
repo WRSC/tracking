@@ -159,13 +159,8 @@
 	}*/
 
 	//Add the given coordinates on the map and save this last state
-<<<<<<< HEAD:MYR_rails/app/assets/javascripts/Markers/handle_markers.js
 	function refreshWithNewMarkers2(data,map){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
 		/*if (latest_markers[0].length>0){
-=======
-	function refreshWithNewMarkers2(data,tag_map){//var latest_markers = [[],[]]; [0] for markers and [1] for tracker id
-		if (latest_markers[0].length>0){
->>>>>>> af198cd2110cd508d04c759911f640da29f58ed0:MYR_rails/app/assets/javascripts/Real_time/handle_markers.js
 			latest_markers[0][latest_markers[0].length-1].setMap(null);
 		}*/
 		var lastCoordinate = data[data.length-1];
@@ -182,20 +177,16 @@
 		alert(lastLat)
 		alert(lastLng)
 		*/
-		addAllThesePolylines(data,tag_map);
+		addAllThesePolylines(data,map);
+
 		//setCenter(lastLat,lastLng);
-<<<<<<< HEAD:MYR_rails/app/assets/javascripts/Markers/handle_markers.js
 		adaptZoom();
 		if (lastDate!=10000101){
-=======
-		adaptZoom(tag_map);
-		if (lastDate!=null){
->>>>>>> af198cd2110cd508d04c759911f640da29f58ed0:MYR_rails/app/assets/javascripts/Real_time/handle_markers.js
 			saveLastDatetime(lastDate);
 		}
 	}
 
-	function addAllThesePolylines(data,tag_map){
+	function addAllThesePolylines(data,map){
 		var tracker_Gcoords = []
 		for(var i=0; i < data.length ; i++){ //iterate in the array
 			latitude = data[i].latitude;
@@ -204,32 +195,24 @@
 			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
 			if(i != (data.length-1)){ //not end of array
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
-					addSmallMarker(latitude, longitude, tracker_id,tag_map);
+					addSmallMarker(latitude, longitude, tracker_id,map);
 				}
 				else{ //derniere coordonnee du meme tracker si tracker different apres
 					//create polyline
-<<<<<<< HEAD:MYR_rails/app/assets/javascripts/Markers/handle_markers.js
 					createPolyline(tracker_Gcoords, tracker_id);
 	
-=======
-					createPolyline(tracker_Gcoords, tracker_id,tag_map);
->>>>>>> af198cd2110cd508d04c759911f640da29f58ed0:MYR_rails/app/assets/javascripts/Real_time/handle_markers.js
 					//addsbigmarker
-					addBigMarker(latitude, longitude, tracker_id,tag_map);
+					addBigMarker(latitude, longitude, tracker_id,map);
 					//reset array
 					tracker_Gcoords = [];
 				}
 			}
 			else{ //end of array
 				//create polyline
-				createPolyline(tracker_Gcoords, tracker_id,tag_map);
+				createPolyline(tracker_Gcoords, tracker_id);
 				//addsbigmarker
-<<<<<<< HEAD:MYR_rails/app/assets/javascripts/Markers/handle_markers.js
 
 				addBigMarker(latitude, longitude, tracker_id,map);
-=======
-				addBigMarker(latitude, longitude, tracker_id,tag_map);
->>>>>>> af198cd2110cd508d04c759911f640da29f58ed0:MYR_rails/app/assets/javascripts/Real_time/handle_markers.js
 				//reset array
 
 				tracker_Gcoords = [];
@@ -237,7 +220,7 @@
 		}
 	}
 
-	function createPolyline(Gcoords, tracker_id,tag_map){
+	function createPolyline(Gcoords, tracker_id){
 
 		// colors:  		   red  , blue   , dark green, orange  , black    , purple   , white  , pink , fluo green, dark red, yellow , turquoise
 		var colors = ['','#CC0000','#0000CC','#003300','#FF3300','#000000','#660099','#FFFFFF','#CC00CC','#00CC00','#660000','#FFFF00','#33FFFF']
@@ -264,14 +247,9 @@
 			strokeOpacity: 1.0,
 			strokeWeight: 1
 		});
-<<<<<<< HEAD:MYR_rails/app/assets/javascripts/Markers/handle_markers.js
 		polyline.setMap(map);
 		lines[0].push(polyline);
 		lines[1].push(tracker_id);
-=======
-		polyline.setMap(tag_map);
-		lines.push(polyline);
->>>>>>> af198cd2110cd508d04c759911f640da29f58ed0:MYR_rails/app/assets/javascripts/Real_time/handle_markers.js
 	}
 
 	function deleteEndMarker(index_of_marker){

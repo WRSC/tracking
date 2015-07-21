@@ -1,6 +1,6 @@
 module RealTimeHelper
 
-  NUM_MAX_COORDS = 1000 #constant
+  #NUM_MAX_COORDS = 1000 #constant
  
   def getCurrentMission
 		now = Time.zone.now #time in UTC 00
@@ -65,7 +65,7 @@ module RealTimeHelper
 
   #input: datetime, array of tracker_id
   #output: array of tracker-id
-  def IsThereNewTrackers?(last_refresh, known_trackers, m_id)
+  def IsThereNewTrackers?(last_refresh, known_trackers, m_id, numMaxCoords)
     trackers=[]
     attempts=Attempt.where("mission_id = ?",m_id)
     #.order(tracker_id: :asc)
@@ -79,7 +79,7 @@ module RealTimeHelper
     # .where({ tracker_id: allTrackers})
     if (last_refresh != "10000101" && last_refresh != nil)#the map already contains coordinates
       datetime = last_refresh.to_datetime
-      newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", datetime).where.not(tracker_id: known_trackers).order(tracker_id: :asc)
+      newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).limit(numMaxCoords).where("datetime > ?", datetime).where.not(tracker_id: known_trackers))).where("datetime > ?", datetime).where.not(tracker_id: known_trackers).order(tracker_id: :asc)
       if (newCoords != [])
         newCoords.each_cons(2) do |element, next_element|
           if next_element.tracker_id != element.tracker_id
@@ -96,7 +96,7 @@ module RealTimeHelper
     else #the map does not have any coordinates
       if getMissionInfos.size > 0 #if there is currently a mission
         start = Mission.find(m_id).start.to_s(:number).to_datetime #missionsInfos = [start, end]
-        newCoords = (Coordinate.where(id: Coordinate.order(created_at: :desc).limit(NUM_MAX_COORDS))).where("datetime > ?", start).where.not(tracker_id: known_trackers).order(tracker_id: :asc)
+        newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).limit(numMaxCoords).where("datetime > ?", start).where.not(tracker_id: known_trackers))).where("datetime > ?", start).where.not(tracker_id: known_trackers).order(tracker_id: :asc)
 
         if (newCoords != [])
         	if newCoords.size > 1

@@ -5,6 +5,7 @@ class CreateCoordinates < ActiveRecord::Migration
       t.decimal :longitude
       t.datetime :datetime
       t.integer :tracker_id
+      t.string :token
 
       t.timestamps null: false
     end

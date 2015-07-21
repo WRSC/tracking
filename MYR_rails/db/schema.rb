@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713080850) do
+ActiveRecord::Schema.define(version: 20150713123700) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -25,22 +25,13 @@ ActiveRecord::Schema.define(version: 20150713080850) do
   end
 
   create_table "coordinates", force: :cascade do |t|
-    t.datetime "datetime"
     t.integer  "tracker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float    "latitude"
-    t.float    "longitude"
-  end
-
-  create_table "listes", force: :cascade do |t|
+    t.string   "datetime"
+    t.string   "token"
     t.string   "latitude"
     t.string   "longitude"
-    t.string   "datetime"
-    t.integer  "tracker_id"
-    t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "markers", force: :cascade do |t|

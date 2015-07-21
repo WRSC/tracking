@@ -9,6 +9,8 @@
 
 //need to check if we need to remeber choosing missions and attempts
 //need to check if we need a ajax request for displaying a infowindow
+
+//need to check chose start and end time to display all coordiantes
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap());

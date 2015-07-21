@@ -12,7 +12,8 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-remo
 	//Add a buoy on the map when clicked and keep track of coordinates on dragend
 	//Save the coodinates in the database when clinking on "AddBuoy" button
 	function addFixBuoy(){
-		alert('addFixBuoy')
+		//alert('addFixBuoy')
+		//need to check if the input data is right To do
 		var lat = prompt("Please enter latitude", "0");
 		var lng = prompt("Please enter longitude", "0");
 		fixPoint=addFixMarker(lat,lng)
@@ -26,10 +27,17 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-remo
 	
 	function addDraggableBuoy(){
 		alert('You can click directly on the map in order to add draggable markers.')
+		
 		google.maps.event.addListener(map_marker, 'click', function(event) {
     	//alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng());
-    	addDraggableMarker(event.latLng.lat(),event.latLng.lng());
+    	draggablePoint=addDraggableMarker(event.latLng.lat(),event.latLng.lng());
+			
+			// Add a listener for the click event.
+			google.maps.event.addListener(draggablePoint, 'click', showPoint);
+			infoWindow = new google.maps.InfoWindow();
   	});
+			
+	
 	}
 	
 	//Add a draggable marker to the map
@@ -68,7 +76,7 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-remo
 		// to return the MVCArray of LatLngs.
 	
 
-		var contentString = '<font color="black"><b>Coordinate of Fix Buoy :</b><br>'
+		var contentString = '<font color="black"><b>Coordinate of Buoy :</b><br>'
                         + '<b>latitude:</b>&nbsp'+event.latLng.lat() + ',&nbsp' + 
 												'<b>longitude:</b>&nbsp'+event.latLng.lng() + '<br></font>';
 

@@ -8,6 +8,8 @@
 
 //need to check if we need to add the option that permet not choose adapt zoom when we choose the autorefresh
 //need to check if the map in real_time is used in replay, need to check function in the handle_markers; especially with the variable map
+
+//need to check real-time display robots
 var map
 $(document).ready(function(){
 	//initialization

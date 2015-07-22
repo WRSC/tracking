@@ -33,7 +33,7 @@
     <%= f.password_field :password %>
  
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, :placeholder => "Repeat password" %>
+    <%= f.password_field :password_confirmation %>
  
     <%= f.label :email %>
     <%= f.text_field :email %>

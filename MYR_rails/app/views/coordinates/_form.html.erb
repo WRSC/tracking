@@ -24,6 +24,14 @@
     <%= f.text_field :datetime %>
   </div><br>
   <div class="field">
+    <%= f.label :speed %>
+    <%= f.text_field :speed %>
+  </div><br>
+  <div class="field">
+    <%= f.label :course %>
+    <%= f.text_field :course %>
+  </div><br>
+  <div class="field">
     <%= f.label :tracker_id %>
     <% if Tracker.all!=nil %>
         <%= f.collection_select(:tracker_id, Tracker.all, :id, :id) %>

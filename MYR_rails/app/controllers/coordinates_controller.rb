@@ -84,14 +84,15 @@ class CoordinatesController < ApplicationController
         lat = @coordinate.latitude.split("_")
         long = @coordinate.longitude.split("_")
         date = @coordinate.datetime.split("_")
-        vitesse = @coordinate.speed.split("_")
-        orientation = @coordinate.course.split("_")
+        #vitesse = @coordinate.speed.split("_")
+        #orientation = @coordinate.course.split("_")
         
         #création des coordinates
         # parcours du tableau
         for i in (0..(lat.length-1))
-          Coordinate.create(:latitude => lat[i], :longitude => long[i], :datetime => date[i], :tracker_id => tr_id, :token => tok, :speed => vitesse[i], :course => orientation[i])
+          Coordinate.create(:latitude => lat[i], :longitude => long[i], :datetime => date[i], :tracker_id => tr_id, :token => tok)
         end
+        #, :speed => vitesse[i], :course => orientation[i]
         #--------------------------------------------------------
 
 
@@ -245,6 +246,7 @@ class CoordinatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def coordinate_params
-      params.require(:coordinate).permit(:latitude, :longitude, :datetime, :tracker_id, :token, :speed, :course)
+      params.require(:coordinate).permit(:latitude, :longitude, :datetime, :tracker_id, :token)
+      #, :speed, :course
     end
   end

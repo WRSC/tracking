@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713123700) do
+ActiveRecord::Schema.define(version: 20150721114724) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20150713123700) do
     t.string   "token"
     t.string   "latitude"
     t.string   "longitude"
+    t.string   "speed"
+    t.string   "course"
   end
 
   create_table "markers", force: :cascade do |t|

@@ -8,6 +8,9 @@ function addPLP(){
 		$("#buoy-draggable").click(function(){
 			addDraggableBuoy()
 		})	
+		$("#saveBuoy").click(function(){
+			saveBuoyMarker()
+		})	
 		
 		/*============== Lines ================*/
 		$("#polyline-fix").click(function(){

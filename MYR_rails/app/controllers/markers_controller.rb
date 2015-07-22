@@ -102,6 +102,6 @@ class MarkersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def marker_params
-      params.require(:marker).permit(:name, :description, :latitude, :longitude, :datetime, :mission_id)
+      params.require(:marker).permit(:latitude, :longitude, :datetime, :mission_id, :mtype)
     end
 end

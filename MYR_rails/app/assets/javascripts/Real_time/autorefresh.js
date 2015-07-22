@@ -36,6 +36,9 @@ function manual_or_auto_refresh(){
 	$("#aRCB").click(function(){
       if($(this).is(':checked')){
         autoUpdate()
+        myReset = setInterval(function() {
+					getNewTrackersAuto();
+				}, getRefreshRate());
         $.cookie("autorefresh",1);
       }else{//si décoché
       	if (myReset!= null){

@@ -28,6 +28,7 @@ class RealTimeController < ApplicationController
      	params[:trackers].each do |k,v|
     		@trackers << v
     	end
+    	@current_mission_id = params[:mission_id]
   	end
 
 	end

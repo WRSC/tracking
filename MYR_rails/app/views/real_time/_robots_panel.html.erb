@@ -5,7 +5,7 @@
 	<% tracks.push(t) %>
 <% end %>
 
-<% currentAttempts=Attempt.where(tracker_id: tracks).order(robot_id: :asc) %>
+<% currentAttempts=Attempt.where(tracker_id: tracks).where("mission_id = ?", @current_mission_id).where("start < ? AND end > ?",DateTime.now,DateTime.now).order(robot_id: :asc) %>
 <% if currentAttempts.length > 1 %>
 	<input type="checkbox" name="All" id="allRobots">Display all the robots
 		<br>

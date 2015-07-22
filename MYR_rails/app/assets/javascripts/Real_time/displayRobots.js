@@ -2,7 +2,7 @@ function loadMissionRobots(){
 				$.ajax({
 					type: "GET",
 					url: "/robots_panel",
-					data: {trackers: getDesiredTrackers()},
+					data: {trackers: getDesiredTrackers(), mission_id: getCurrentMission()},
 					success: function(){
 						display_robots();
 					}       
@@ -15,10 +15,10 @@ function display_robots(){
 		// FOR NOW => si pas de cookie -> rien n est coché
 		$( "input[name='All']" ).each(function () {
 			$(this).prop('checked',true);
-			 $( "input[name*='robot']" ).each(function () {
+			$( "input[name*='robot']" ).each(function () {
 			 	var id = $(this).attr('id');
-			     $(this).prop('checked',true);
-			     //requestShowRobot(true,id);
+			    $(this).prop('checked',true);
+			    //requestShowRobot(true,id);
 			})
 
 		 	$(this).click(function(){
@@ -65,6 +65,7 @@ function display_robots(){
 //-------------------  ACTIONS OF THE CHECKBOXES -------------------------------
 //pour toutes les checkboxes
   $( "input[name*='robot']" ).each(function () {
+  	$(this).prop('checked',true);
     //si on clique dessus
     $(this).click(function() {
       //récupére l'id de la checkbox

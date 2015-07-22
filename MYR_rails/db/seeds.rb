@@ -50,32 +50,32 @@ end
 #One tracker per robot
 
 #Coordinates to test the performance
-for k in 0..29
-  for j in 0..23
-    for i in 0..59
-      date = 20150601000000+ i*100 + j*10000 + k*1000000;
-      lat = 1+(i+j*60+k*60*24).to_f/1000;
-      long = (i+j*60+k*60*24).to_f/1000-1;
-      Coordinate.create!(latitude:  lat,
-                    longitude: long,
-                    datetime:   date,
-                    tracker_id: 1)
-    end
-  end
-end
+# for k in 0..29
+#   for j in 0..23
+#     for i in 0..59
+#       date = 20150601000000+ i*100 + j*10000 + k*1000000;
+#       lat = 1+(i+j*60+k*60*24).to_f/1000;
+#       long = (i+j*60+k*60*24).to_f/1000-1;
+#       Coordinate.create!(latitude:  lat,
+#                     longitude: long,
+#                     datetime:   date,
+#                     tracker_id: 1)
+#     end
+#   end
+# end
 
-#for k in 0..29
-  for j in 0..23
-    for i in 0..59
-      date = 20150601000000+ i*100 + j*10000;
-      lat = 7+(i+j*60).to_f/1000;
-      long = 4+(i+j*60).to_f/1000;
-      Coordinate.create!(latitude:  lat,
-                    longitude: long,
-                    datetime:   date,
-                    tracker_id: 2)
-    end
-  end
+# #for k in 0..29
+#   for j in 0..23
+#     for i in 0..59
+#       date = 20150601000000+ i*100 + j*10000;
+#       lat = 7+(i+j*60).to_f/1000;
+#       long = 4+(i+j*60).to_f/1000;
+#       Coordinate.create!(latitude:  lat,
+#                     longitude: long,
+#                     datetime:   date,
+#                     tracker_id: 2)
+#     end
+#   end
 #end
 
 Marker.create!(latitude: 1,
@@ -98,21 +98,21 @@ Marker.create!(latitude: 21.39,
 
 #http://programming-tut.blogspot.com/2009/09/ruby-on-rails-time.html
 #Coordinate  => attempt1
-lat=0
-lng=0
-i=0
-t=Time.now
-100.times do |n|
-	Coordinate.create!(latitude:  lat,
-									longitude: lng,
-									datetime:   t.strftime("%Y%m%d%H%M%S"),
-		           		tracker_id: 1)
+# lat=0
+# lng=0
+# i=0
+# t=Time.now
+# 100.times do |n|
+# 	Coordinate.create!(latitude:  lat,
+# 									longitude: lng,
+# 									datetime:   t.strftime("%Y%m%d%H%M%S"),
+# 		           		tracker_id: 1)
 
-	lng=5*Math.cos(i)
-	t=t+5
-	lat=5*Math.sin(i)
-	i=i+0.1
-end
+# 	lng=5*Math.cos(i)
+# 	t=t+5
+# 	lat=5*Math.sin(i)
+# 	i=i+0.1
+# end
              		
 
 

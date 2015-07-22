@@ -91,7 +91,6 @@ function getNewCoordinates(){
 			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords()},
 			dataType: "json",
 			success: function(data){
-				//alert(getLastDatetime())
 				if(data.length > 0){
 					refreshWithNewMarkers2(data,getMyMap());
 					//clearDesiredTrackers(getDesiredTrackers()); //need to check

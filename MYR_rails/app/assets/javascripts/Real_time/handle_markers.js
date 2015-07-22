@@ -164,10 +164,11 @@
 			latest_markers[0][latest_markers[0].length-1].setMap(null);
 		}*/
 		var lastCoordinate = data[data.length-1];
-		var lastDate = 10000101;
-		for(var i=data.length-1; i > 0 ; i--){ //iterate in the array
+		var lastDate = getLastDatetime();
+		for(var i=0; i < data.length ; i++){ //iterate in the array
 			if (data[i].datetime > lastDate){
 				lastDate = data[i].datetime;
+				alert(lastDate)
 			}
 		}
 		/*var lastLat = lastCoordinate.latitude;

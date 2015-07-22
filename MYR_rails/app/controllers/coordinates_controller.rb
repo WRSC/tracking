@@ -3,6 +3,7 @@ class CoordinatesController < ApplicationController
 
   include RealTimeHelper
 
+
   #NUM_MAX_COORDS = 1000 #constant
   #WARNING limitation is not the one required
   #TO DO global limitation of number of coordinates
@@ -158,7 +159,7 @@ class CoordinatesController < ApplicationController
       render json: newCoords.to_json #(:only =>[:datetime,:tracker_id,:latitude,:longitude])  -> remove ID but is not a direct SQL request
     else #the map does not have any coordinates
       if getMissionInfos.size > 0 #if there is currently a mission
-        start = Mission.find(m_id).start.to_s(:number).to_datetime #missionsInfos = [start, end]
+        start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #.to_s(:number).to_datetime #missionsInfos = [start, end]
         if (trackers != nil)# trackers identifiers are specified
           newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).where("datetime > ?", start).where(tracker_id: trackers).limit(numMaxCoords))).where("datetime > ?", start).where(tracker_id: trackers).where("datetime > ?", datetime).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
         else

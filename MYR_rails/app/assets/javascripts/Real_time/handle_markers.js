@@ -168,7 +168,6 @@
 		for(var i=0; i < data.length ; i++){ //iterate in the array
 			if (data[i].datetime > lastDate){
 				lastDate = data[i].datetime;
-				alert(lastDate)
 			}
 		}
 		/*var lastLat = lastCoordinate.latitude;

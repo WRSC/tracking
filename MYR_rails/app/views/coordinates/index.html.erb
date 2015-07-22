@@ -36,8 +36,8 @@
           <tr>
             <td><%= coordinate.latitude %></td>
             <td><%= coordinate.longitude %></td>
-<!--             <td><%= coordinate.speed %></td>
-            <td><%= coordinate.course %></td> -->
+            <td><%= coordinate.speed %></td>
+            <td><%= coordinate.course %></td>
             <td><%= Time.parse(coordinate.datetime).utc %></td>
             <td><%= coordinate.tracker_id %></td>
             <td><%= link_to 'Show', coordinate %></td>

@@ -8,18 +8,24 @@ http://www.benramey.com/2012/03/15/change-the-color-of-an-icon-with-gimp/
 https://developers.google.com/maps/documentation/javascript/examples/marker-remove
 
 */
-BuoyMarkers=[]
+Buoylat=""
+Buoylng=""
 	function saveBuoyMarker(){
-		alert('saving')
-		$.ajax({
-						type: "POST",
-						url: "/markers",
-						data: {marker: BuoyMarkers},
-						dataType: "json",
-						success: function(data){
-							alert('saved')
-						}
-		}) 	
+		if ($("#marker_missions_dropdown option:selected").val()==0){
+			alert('Please choose a mission')
+		}else{
+			mission_id=$("#marker_missions_dropdown option:selected").val()
+			p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "point", "datetime": getCurrentTime(), "mission_id": mission_id}
+			$.ajax({
+							type: "POST",
+							url: "/markers",
+							data: {	marker: p},
+							dataType: "json",
+							success: function(data){
+								alert('saved')
+							}
+			}) 	
+		}
 	}
 
 //---------------------  Buoy  -----------------------------------
@@ -30,12 +36,11 @@ BuoyMarkers=[]
 		//need to check if the input data is right To do
 		var lat = prompt("Please enter latitude", "0");
 		var lng = prompt("Please enter longitude", "0");
-		datetime=getCurrentTime()
 		fixPoint=addFixMarker(lat,lng)
 		//addDraggableMarker(lat, lng)
 		setCenter(lat, lng)
-		p={"latitude": lat, "longitude": lng, "mtype": "point", "datetime": datetime, "mission_id": 1}
-		BuoyMarkers.push(p)
+		Buoylat+=lat+"_"
+		Buoylng+=lng+"_"
 		// Add a listener for the click event.
 		google.maps.event.addListener(fixPoint, 'click', showPoint);
 		infoWindow = new google.maps.InfoWindow();
@@ -49,9 +54,9 @@ BuoyMarkers=[]
 			lat=event.latLng.lat()
 			lng=event.latLng.lng()
     	draggablePoint=addDraggableMarker(lat,lng);
-			datetime=getCurrentTime()
-			p={"latitude": lat, "longitude": lng, "mtype": "point", "datetime": datetime, "mission_id": 1}
-			BuoyMarkers.push(p)
+			
+			Buoylat+=lat+"_"
+			Buoylng+=lng+"_"
 
 			// Add a listener for the click event.
 			google.maps.event.addListener(draggablePoint, 'click', showPoint);

@@ -6,6 +6,8 @@
 //=require Markers/Polygon
 //=require Markers/Circle
 
+//need to check adaptzoom
+
 /*======variable global======*/
 markers=[];
 
@@ -13,6 +15,6 @@ $(document).ready(function(){
 	
 	initializeMap();
 	initialScroll();
-	choose_mission_markers();
+	addPLP()//add points || lines || polygones
 
 });

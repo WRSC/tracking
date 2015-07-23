@@ -3,5 +3,4 @@ function choose_mission_markers(){
 	$("#marker_missions_dropdown").on("change", function () {
 		$.cookie("missions_marker",$("#marker_missions_dropdown option:selected").val());
 	});
-	addPLP()//add points || lines || polygones
 }

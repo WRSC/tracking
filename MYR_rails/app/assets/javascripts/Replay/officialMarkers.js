@@ -1,22 +1,31 @@
 function drawOfficialMarkers(data){
 	alert('enterd draw markers')
-		alert(data.length)
 	for (i=0;i<data.length;i++){
+		alert(i)
 		alert(data[i].mtype)
+		if (data[i].mtype=="Point"){
+			drawPoint(data[i]);
+		}else{
+			if (data[i].mtype=="Polygon"){
+				drawPolygon(data[i]);
+			}
+		}
+/*
 		switch (data[i].mtype){
 			case "Point":
-				drawPoint(data[i])
-				break
+				drawPoint(data[i]);
+				break;
 			case "Line":
-				drawLine(data[i])
-				break
+				drawLine(data[i]);
+				break;
 			case "Polygon":
-				drawPolygon(data[i])
-				break
+				drawPolygon(data[i]);
+			
+				break;
 			case "Circle":
-				drawCircle(data[i])
-				break
-		}
+				drawCircle(data[i]);
+				break;
+		}*/
 	}
 }
 
@@ -24,11 +33,23 @@ function drawPoint(data){
 	alert('enter draw point')
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
+	alert(tablat.length)
 	for (i=0;i<tablat.length;i++){	
 		fixPoint=addFixMarker(tablat[i],tablng[i])
 	}
-
 }
+
+function addFixMarker(lat, lng){
+	//alert('lat is '+lat+' lng is '+lng)
+	var marker = new google.maps.Marker(
+	{
+		position: new google.maps.LatLng(lat,lng),
+		//icon: image
+	});
+	marker.setMap(replay_map);
+	return marker;
+}
+	
 
 function drawLine(data){
 	alert('enter draw line')

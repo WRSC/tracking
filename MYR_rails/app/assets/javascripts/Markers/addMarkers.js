@@ -43,7 +43,9 @@ function addPLP(){
 		$("#circle-custom").click(function(){
 			addCustomCircle()
 		})
-		
+		$("#saveCircle").click(function(){
+			saveCircleMarker()
+		})	
 	
 }
 

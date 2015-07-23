@@ -1,19 +1,13 @@
 function drawOfficialMarkers(data){
 	alert('enterd draw markers')
-	for (i=0;i<data.length;i++){
+	out=-1
+	for (var i=0;i<data.length;i++){
 		alert(i)
 		alert(data[i].mtype)
-		if (data[i].mtype=="Point"){
-			drawPoint(data[i]);
-		}else{
-			if (data[i].mtype=="Polygon"){
-				drawPolygon(data[i]);
-			}
-		}
-/*
 		switch (data[i].mtype){
 			case "Point":
 				drawPoint(data[i]);
+				out=i
 				break;
 			case "Line":
 				drawLine(data[i]);
@@ -25,18 +19,24 @@ function drawOfficialMarkers(data){
 			case "Circle":
 				drawCircle(data[i]);
 				break;
-		}*/
+		}
 	}
+	alert('out is '+out)
 }
 
 function drawPoint(data){
 	alert('enter draw point')
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
-	alert(tablat.length)
-	for (i=0;i<tablat.length;i++){	
-		fixPoint=addFixMarker(tablat[i],tablng[i])
+	alert('tablat length is '+tablat.length)
+	for (var i=0;i<tablat.length;i++){	
+		alert(i)
+		if (tablat[i]!="" && tablng[i]!=""){
+			alert(tablat[i])
+			fixPoint=addFixMarker(tablat[i],tablng[i])
+		}
 	}
+	return
 }
 
 function addFixMarker(lat, lng){
@@ -62,7 +62,7 @@ function drawPolygon(data){
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
 	coord=[]
-	for (i=0;i<tablat.length;i++){
+	for (var i=0;i<tablat.length;i++){
 		coord.push(new google.maps.LatLng(tablat[i], tablng[i]))
 	}
 	polygon = new google.maps.Polygon({

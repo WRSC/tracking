@@ -5,7 +5,7 @@ function displayMarkersOrnot(){
 	$(document).ready(function(){
 		//initialize the checkboxs
 		// FOR NOW => si pas de cookie -> rien n est coché
-		$( "input[name='display-official-markers']" ).(function () {
+		$( "input[name='display-official-markers']" ).each(function () {
 
 		  var id = $(this).attr('id');
 		  var str = $.cookie("displayOM");//display Official Markers
@@ -33,27 +33,42 @@ function displayMarkersOrnot(){
 */
 	})
 	
-	
 //-------------------  ACTIONS OF THE CHECKBOXE -------------------------------
 //pour toutes les checkboxes
-  $( "input[name='display-official-markers']"  ).(function () { 
+  $( "input[name='display-official-markers']"  ).each(function () { 
     //si on clique dessus
     $(this).click(function() {
+      alert('changed')
       //récupére l'id de la checkbox
       var id = $(this).attr('id');
-      
       //si coché
       if($(this).is(':checked')){
-        addteam(id);
-        
+		    $.cookie("displayOM",'true');//display Official Markersa
+        requestOfficialMarkersInfo()
       }else{//si décoché
-        rmvteam(id);
-        
+		    $.cookie("displayOM",'false');//display Official Markers
       }
-     
-      requestRefreshRobots();
-      
      	//need to do, when we choose teams, need to Emphasize
     })
-  })  
+  })
+  requestOfficialMarkersInfo()
 }
+
+function requestOfficialMarkersInfo(){
+	$.ajax({
+		type: "GET",
+		url: "/officialMarkersInfo",
+	
+		success: function(data){
+	  	drawOfficialMarkers(data)
+    }     
+	})  
+}
+
+
+
+
+
+
+
+

@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     get  'getSingleAttemptInfos'   ,  to: 'replay#getSingleAttemptInfos'
     get  'getTrackersFromDatetimes',  to: 'replay#getTrackersFromDatetimes'
     get  'infowindow'              ,  to: 'replay#infowindow'
+		get  'officialMarkersInfo'     ,  to: 'replay#officialMarkersInfo'
     
 
 

@@ -15,7 +15,7 @@ Buoylng=""
 			alert('Please choose a mission')
 		}else{
 			mission_id=$("#marker_missions_dropdown option:selected").val()
-			p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "point", "datetime": getCurrentTime(), "mission_id": mission_id}
+			p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
 			$.ajax({
 							type: "POST",
 							url: "/markers",

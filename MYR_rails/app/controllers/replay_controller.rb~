@@ -209,6 +209,17 @@ class ReplayController < ApplicationController
  	
  	def choice_datetimes
  	end
+
+	def officialMarkersInfo
+		strmissions = cookies[:missionslist]
+		if (strmission != nil) #cannot split nil
+			tabm = strmissions.split(","); 
+		else
+			tabm = []
+		end	
+		markerinfos=Marker.where(mission_id: tabm)
+		render json: markerinfos.to_json(:only =>[:mtype,:latitude,:longitude,:datetime])
+	end
  	
  	def infowindow
  		tracker_id=params[:tracker_id]
@@ -217,6 +228,9 @@ class ReplayController < ApplicationController
   #if singleAttempt = true, it is from choosing attempt
   #if singleAttempt = false, it is from choosing datetims 
  		singleAttempt=params[:singleAttempt]
+ 		@lat=params[:lat]
+ 		@lng=params[:lng]
+ 		@isEnd=params[:isEnd]
  		@datetime=params[:datetime].to_datetime
  		@attmepts=[]
 	  if singleAttempt==true 

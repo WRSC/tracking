@@ -162,8 +162,8 @@
 		if (latest_markers[0].length>0){
 			latest_markers[0][latest_markers[0].length-1].setMap(null);
 		}
-		var lastCoordinate = data[data.length-1];
-		var lastDate = lastCoordinate.datetime;
+		//var lastCoordinate = data[data.length-1];
+		//var lastDate = lastCoordinate.datetime;
 		/*var lastLat = lastCoordinate.latitude;
 		var lastLng= lastCoordinate.longitude;
 		

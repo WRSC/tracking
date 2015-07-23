@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-
-  get 'password_resets/new'
-
-  get 'password_resets/edit'
-
   # Default root
 
     root 'static_pages#home'  

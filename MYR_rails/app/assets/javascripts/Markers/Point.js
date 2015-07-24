@@ -10,6 +10,7 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-remo
 */
 Buoylat=""
 Buoylng=""
+BuoyMarkers=[]//this table keep all the information about pont buoys
 	function saveBuoyMarker(){
 		if ($("#marker_missions_dropdown option:selected").val()==0){
 			alert('Please choose a mission')
@@ -37,8 +38,8 @@ Buoylng=""
 		var lat = prompt("Please enter latitude", "0");
 		var lng = prompt("Please enter longitude", "0");
 		fixPoint=addFixMarker(lat,lng)
-		//addDraggableMarker(lat, lng)
-		setCenter(lat, lng)
+		BuoyMarkers.push(fixPoint)
+    //addDraggableMarker(lat, lng)
 		Buoylat+=lat+"_"
 		Buoylng+=lng+"_"
 		// Add a listener for the click event.
@@ -54,7 +55,7 @@ Buoylng=""
 			lat=event.latLng.lat()
 			lng=event.latLng.lng()
     	draggablePoint=addDraggableMarker(lat,lng);
-			
+			BuoyMarkers.push(draggablePoint)
 			Buoylat+=lat+"_"
 			Buoylng+=lng+"_"
 
@@ -102,16 +103,35 @@ Buoylng=""
 		// to return the MVCArray of LatLngs.
 	
 
-		var contentString = '<font color="black"><b>Coordinate of Buoy :</b><br>'
-                        + '<b>latitude:</b>&nbsp'+event.latLng.lat() + ',&nbsp' + 
-												'<b>longitude:</b>&nbsp'+event.latLng.lng() + '<br></font>';
+		var contentString = '<font color="black"><b>Coordinate of Buoy :</b><br>'+
+                        '<b>latitude:</b>&nbsp'+event.latLng.lat() + ',&nbsp' + 
+												'<b>longitude:</b>&nbsp'+event.latLng.lng() + '<br>'+'</font>'
 
+			+'<input type="image" id="delete-point-buoy" src="/icons/delete_point_buoy.png" alt="delete me" height="20" width="20" title="delete me" style="float: right;" /></input><br>'
   // Replace the info window's content and position.
-  infoWindow.setContent(contentString);
-  infoWindow.setPosition(event.latLng);
+    infoWindow.setContent(contentString);
+    infoWindow.setPosition(event.latLng);
+    infoWindow.open(map_marker);
+    $("#delete-point-buoy").click(function(){
+      var ind=findIndex(event.latLng.lat(),event.latLng.lng())
+      infoWindow.close()
+      BuoyMarkers[ind].setMap(null)
+      BuoyMarkers[ind]=""
 
-  infoWindow.open(map_marker);
-	}
+    })
+	  
+  }
+
+  function findIndex(lat,lng){
+    for (var i=0;i<BuoyMarkers.length;i++){
+      
+      if ( BuoyMarkers[i]!="" && lat==BuoyMarkers[i].position.lat() && lng==BuoyMarkers[i].position.lng() ){
+        alert(i)
+        return i
+      }
+    }
+    return -1
+  }
 
 	function getCurrentTime(){
 		currentTime=new Date()

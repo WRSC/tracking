@@ -8,15 +8,21 @@ http://www.benramey.com/2012/03/15/change-the-color-of-an-icon-with-gimp/
 https://developers.google.com/maps/documentation/javascript/examples/marker-remove
 
 */
-Buoylat=""
-Buoylng=""
 BuoyMarkers=[]//this table keep all the information about pont buoys
 	function saveBuoyMarker(){
 		if ($("#marker_missions_dropdown option:selected").val()==0){
 			alert('Please choose a mission')
 		}else{
+      var Buoylat=""
+      var Buoylng=""
 			mission_id=$("#marker_missions_dropdown option:selected").val()
-			p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
+			for (var i=0;i<BuoyMarkers.length;i++){
+        if (BuoyMarkers[i]!=""){
+          Buoylat+=BuoyMarkers[i].position.lat()+"_"
+          Buoylng+=BuoyMarkers[i].position.lng()+"_"
+        }
+      }
+      p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
 			$.ajax({
 							type: "POST",
 							url: "/markers",
@@ -40,8 +46,6 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 		fixPoint=addFixMarker(lat,lng)
 		BuoyMarkers.push(fixPoint)
     //addDraggableMarker(lat, lng)
-		Buoylat+=lat+"_"
-		Buoylng+=lng+"_"
 		// Add a listener for the click event.
 		google.maps.event.addListener(fixPoint, 'click', showPoint);
 		infoWindow = new google.maps.InfoWindow();
@@ -56,8 +60,6 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 			lng=event.latLng.lng()
     	draggablePoint=addDraggableMarker(lat,lng);
 			BuoyMarkers.push(draggablePoint)
-			Buoylat+=lat+"_"
-			Buoylng+=lng+"_"
 
 			// Add a listener for the click event.
 			google.maps.event.addListener(draggablePoint, 'click', showPoint);
@@ -114,6 +116,7 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
     infoWindow.open(map_marker);
     $("#delete-point-buoy").click(function(){
       var ind=findIndex(event.latLng.lat(),event.latLng.lng())
+      alert(ind)
       infoWindow.close()
       BuoyMarkers[ind].setMap(null)
       BuoyMarkers[ind]=""
@@ -126,7 +129,7 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
     for (var i=0;i<BuoyMarkers.length;i++){
       
       if ( BuoyMarkers[i]!="" && lat==BuoyMarkers[i].position.lat() && lng==BuoyMarkers[i].position.lng() ){
-        alert(i)
+ //       alert(i)
         return i
       }
     }

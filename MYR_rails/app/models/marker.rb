@@ -8,9 +8,11 @@ class Marker < ActiveRecord::Base
 
 	#validates :description, allow_blank: true
 
-	#validates :latitude, presence: true
+	validates :latitude, presence: true
 
-	#validates :longitude, presence: true
+	validates :longitude, presence: true
+
+	validates :mission_id, presence: true
 
 	#validates :datetime, presence: true
 

@@ -32,12 +32,13 @@ Rails.application.routes.draw do
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
     
+    
     get 'password_resets/sent_password_reset_email'
     get 'account_activations/wait_for_activated'
 
+
   # Ajax
 
-    get  'what', to: 'what#what'
     
     get  'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
     get  'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
@@ -64,6 +65,7 @@ Rails.application.routes.draw do
     get  'getSingleAttemptInfos'   ,  to: 'replay#getSingleAttemptInfos'
     get  'getTrackersFromDatetimes',  to: 'replay#getTrackersFromDatetimes'
     get  'infowindow'              ,  to: 'replay#infowindow'
+		get  'officialMarkersInfo'     ,  to: 'replay#officialMarkersInfo'
     
 
 

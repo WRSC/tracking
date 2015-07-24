@@ -9,12 +9,12 @@
     <table>
       <thead>
         <tr>
-          <th>Name</th>
+          <th>Type</th>
+					<th>Mission</th>
           <th>Description</th>
           <th>Latitude</th>
           <th>Longitude</th>
           <th>Datetime</th>
-          <th>Mission</th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -22,12 +22,13 @@
       <tbody>
         <% @markers.each do |marker| %>
           <tr>
-            <td><%= marker.name %></td>
+            <td><%= marker.mtype %></td>
+						<td><%= marker.mission_id %></td>
             <td><%= marker.description %></td>
             <td><%= marker.latitude %></td>
             <td><%= marker.longitude %></td>
             <td><%= marker.datetime %></td>
-            <td><%= marker.mission_id %></td>
+            
             <td><%= link_to 'Show', marker %></td>
             <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
             <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>

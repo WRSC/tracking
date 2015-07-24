@@ -62,6 +62,7 @@ function requestRefreshUpdateButton(nb){
 			$('#updatebutton').click(function(){
 				initializeMap()
 				initialScroll()
+				displayMarkersOrnot()
 				if (nb==1)
 					requestRefreshMapFromAttempt();
 				else{

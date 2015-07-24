@@ -22,8 +22,11 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
           Buoylng+=BuoyMarkers[i].position.lng()+"_"
         }
       }
-      p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
-			$.ajax({
+      if (Buoylat=="" || Buoylng==""){
+        alert('You do not creat any marker, please create some markers at first !!!')
+      }else{
+        p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
+			  $.ajax({
 							type: "POST",
 							url: "/markers",
 							data: {	marker: p},
@@ -31,7 +34,8 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 							success: function(data){
 								alert('saved')
 							}
-			}) 	
+			  })
+      } 	
 		}
 	}
 
@@ -116,7 +120,6 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
     infoWindow.open(map_marker);
     $("#delete-point-buoy").click(function(){
       var ind=findIndex(event.latLng.lat(),event.latLng.lng())
-      alert(ind)
       infoWindow.close()
       BuoyMarkers[ind].setMap(null)
       BuoyMarkers[ind]=""

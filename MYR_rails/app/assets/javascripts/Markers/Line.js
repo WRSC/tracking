@@ -131,11 +131,4 @@ function addLatLng(event) {
     return -1
   }
 
-function adaptZoom(){
-		var bounds = new google.maps.LatLngBounds();
-		for(var i=0; i < markers[0].length ; i++){
-			bounds.extend(markers[0][i].getPosition());
-		}
-		map_marker.fitBounds(bounds);
-}
 

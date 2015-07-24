@@ -2,6 +2,7 @@
 more options to handle google map
 https://developers.google.com/maps/documentation/javascript/geometry
 */
+//need to fix how to save to database
 Polygonlat=""
 Polygonlng=""
 polygonMarkers=[]
@@ -113,7 +114,7 @@ function showArrays(event) {
   pg=this //here this is the polygon
   var vertices = this.getPath();
 
-  var contentString = '<font color="black"><b>The coordinates of fix polygon :</b><br>' +
+  var contentString = '<font color="black"><b>The coordinates of polygon :</b><br>' +
       '<b>Clicked location: </b><br>' + event.latLng.lat() + ',&nbsp' + event.latLng.lng();
 
   // Iterate over the vertices.

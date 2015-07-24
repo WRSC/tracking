@@ -1,42 +1,32 @@
 function drawOfficialMarkers(data){
 	alert('enterd draw markers')
-	out=-1
 	for (var i=0;i<data.length;i++){
-		alert(i)
-		alert(data[i].mtype)
 		switch (data[i].mtype){
 			case "Point":
 				drawPoint(data[i]);
-				out=i
 				break;
 			case "Line":
 				drawLine(data[i]);
-				break;
+        break;
 			case "Polygon":
 				drawPolygon(data[i]);
-			
 				break;
 			case "Circle":
 				drawCircle(data[i]);
 				break;
 		}
 	}
-	alert('out is '+out)
 }
 
 function drawPoint(data){
 	alert('enter draw point')
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
-	alert('tablat length is '+tablat.length)
 	for (var i=0;i<tablat.length;i++){	
-		alert(i)
 		if (tablat[i]!="" && tablng[i]!=""){
-			alert(tablat[i])
 			fixPoint=addFixMarker(tablat[i],tablng[i])
 		}
 	}
-	return
 }
 
 function addFixMarker(lat, lng){
@@ -55,6 +45,22 @@ function drawLine(data){
 	alert('enter draw line')
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
+  coord=[]
+  count=0
+  for (var i=0;i< tablat.length;i++){
+    if (tablat[i]!="" && tablng[i]!=""){
+		  count+=1
+      coord.push(new google.maps.LatLng(tablat[i], tablng[i]))
+    }
+  }
+  line = new google.maps.Polyline({
+    path: coord,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  line.setMap(replay_map)
 }
 
 function drawPolygon(data){
@@ -63,8 +69,10 @@ function drawPolygon(data){
 	tablng=data.longitude.split("_")
 	coord=[]
 	for (var i=0;i<tablat.length;i++){
-		coord.push(new google.maps.LatLng(tablat[i], tablng[i]))
-	}
+    if (tablat[i]!="" && tablng[i]!=""){
+      coord.push(new google.maps.LatLng(tablat[i], tablng[i]))
+	  }
+  }
 	polygon = new google.maps.Polygon({
     paths: coord,
     strokeColor: '#FF0000',
@@ -81,4 +89,18 @@ function drawCircle(data){
 	alert('enter draw circle')
 	tabcenter=data.latitude.split("_")
 	tabradius=data.longitude.split("_")
+	lat=tabcenter[0]
+  lng=tabcenter[1]
+  radius=tabradius[0]
+  var circleOptions = {
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35,
+      map: replay_map,
+      center:  new google.maps.LatLng(lat,lng),
+      radius: radius*1
+    };
+  circle = new google.maps.Circle(circleOptions);  
 }

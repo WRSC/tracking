@@ -14,7 +14,6 @@ function saveLineMarker(){
 				Linelat+=lat+"_"
 				Linelng+=lng+"_"
 		  }
-			alert(Linelat)
 			p={"latitude": Linelat, "longitude": Linelng, "mtype": "Line", "datetime": getCurrentTime(), "mission_id": mission_id}
 			$.ajax({
 							type: "POST",

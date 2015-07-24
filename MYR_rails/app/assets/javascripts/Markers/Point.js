@@ -23,7 +23,7 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
         }
       }
       if (Buoylat=="" || Buoylng==""){
-        alert('You do not creat any marker, please create some markers at first !!!')
+        alert('You do not creat any marker, please create some markers before you conintue !!!')
       }else{
         p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
 			  $.ajax({
@@ -58,8 +58,10 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 	function addDraggableBuoy(){
 		alert('You can click directly on the map in order to add draggable markers.')
 		
+    google.maps.event.clearListeners(map_marker, 'click');
 		google.maps.event.addListener(map_marker, 'click', function(event) {
     	//alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng());
+      alert('enter in buoy event')
 			lat=event.latLng.lat()
 			lng=event.latLng.lng()
     	draggablePoint=addDraggableMarker(lat,lng);

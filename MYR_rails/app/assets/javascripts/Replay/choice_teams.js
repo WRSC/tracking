@@ -58,7 +58,7 @@ function run_choice_teams(){
 }
 
 function requestRefreshRobots(){
-		$.ajax({
+	$.ajax({
 		type: "GET",
 		url: "/choice_robots",
 		

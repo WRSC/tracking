@@ -16,7 +16,38 @@ class MarkersController < ApplicationController
   def new
     @marker = Marker.new
     t=Time.now
-    
+    t.strftime("%Y%m%d%H%M%S")
+		year=t.strftime("%Y").to_i
+		month=t.strftime("%m").to_i
+		t_rest= t.strftime("%d%H%M%S")
+		#start time for the inteval of mission
+		if month <=6 
+			lmonth=month+12-6
+			lyear=year-1
+		else
+    	lmonth=month-6
+    	lyear=year
+    end
+    #@tstart=(lyear.to_s+lmonth.to_s+t_rest)
+    if lmonth < 10 
+    	lmonth='0'+lmonth.to_s 
+    else
+    	lmonth=lmonth.to_s 
+    end
+    @tstart=(lyear.to_s+lmonth.to_s+t_rest).to_datetime
+    #end time for the inteval of mission
+    if month >=6
+			rmonth=month-12+6
+			ryear=year+1
+		else
+    	rmonth=month+6
+    	ryear=year
+    end
+    if rmonth < 10  
+    	rmonth='0'+rmonth.to_s  
+    end
+    @tend=(ryear.to_s+rmonth.to_s+t_rest).to_datetime
+    @missions=Mission.where("? <=start AND end <= ?", @tstart, @tend)
   end
 
   # GET /markers/1/edit
@@ -71,6 +102,6 @@ class MarkersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def marker_params
-      params.require(:marker).permit(:name, :description, :latitude, :longitude, :datetime, :mission_id)
+      params.require(:marker).permit(:latitude, :longitude, :datetime, :mission_id, :mtype)
     end
 end

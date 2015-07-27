@@ -17,11 +17,13 @@
 		<div id="map-container" class="two_third" style='height: 100%'>
 			<div id="map-canvas"></div>
 		</div>
-		<div class="one_third">
+		<!----------------------Start Side Panel------------------>
+		<div class="one_third" style='height: 100%;overflow:scroll'>
 			<p><b>Buoys:</b></p>
-			<input type="checkbox" name="display-buoys" > &nbsp Display Official Buoys
-			<input type="checkbox" name="display-buoys" > &nbsp Define your Buoys
+			<input type="checkbox" name="display-buoys" > &nbsp Display Official Buoys</input>
+			
 		</div>
+		<!--------------------End of Side Panel--------------------->
 		<style>
 			.gm-style img { max-width: none; }
 			.gm-style label { width: auto; display: inline; }

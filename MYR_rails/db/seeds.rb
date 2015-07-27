@@ -28,22 +28,26 @@ Member.create!(name:  "testAdmin",
 end
 
 i=1
-9.times do |n|
+72.times do |n|
 	token=i
 	Tracker.create!(token:  "#{i}",
              		  description: "It was the #{i} tracker.")
   i=i+1
 end
 
-for m_id in 1..4
-  for rob_id in 1..9
+i=1
+for rob_id in 1..9
+	for m_id in 1..4
+		for att in 1..2
 			name = Faker::Name.name
 			Attempt.create!(name: name,
 											start: "20150601000000",
 											end:   "20150801000000",
 											robot_id: rob_id,
 											mission_id: m_id,
-											tracker_id: rob_id)
+											tracker_id: i)
+			i=i+1
+		end
 	end
 end
 
@@ -93,6 +97,11 @@ Marker.create!(latitude: 7,
 Marker.create!(latitude: 21.39,
                 longitude: 18.39,
                 mission_id: 1)
+#Tracker 1~8 => robot 1
+#Tracker 1 2 => robot 1 mission 1 => attempt1 attempt2
+#Tracker 3 4 => robot 1 mission 2 => attempt3 attempt4
+#Tracker 5 6 => robot 1 mission 3 => attempt5 attempt6
+#Tracker 7 8 => robot 1 mission 4 => attempt7 attempt8
 
 #markers
 
@@ -171,20 +180,6 @@ Mission.create!(name:  "Fleet Race",
 								end:   "20150801000000",
              		description: "It was the fourth mission")
 
-#Mission 5 Test Performance
-Mission.create!(name:  "Test performance",
-                start: "20150601000000",
-                end:   "20150901000000",
-                description: "This mission is made to test the performance of real time")
-
-#Attempt for mission 5
-Attempt.create!(name: "Attempt of performance test",
-                      start: "20150601000000",
-                      end:   "20150901000000",
-                      robot_id: 1,
-                      mission_id: 5,
-                      tracker_id: 1)
-
 #team 1
 Team.create!(name:  "Zombie",
              description: "root test for zombies",
@@ -243,5 +238,6 @@ Robot.create!(name:  "just for fun2",
 Robot.create!(name:  "just for fun3",
               category: "Small",
               team_id: 3) 	 
+
 
 

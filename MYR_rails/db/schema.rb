@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 20150722120328) do
 
   create_table "coordinates", force: :cascade do |t|
     t.integer  "tracker_id"
+    t.string   "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "datetime"
-    t.string   "token"
     t.string   "latitude"
     t.string   "longitude"
     t.string   "speed"

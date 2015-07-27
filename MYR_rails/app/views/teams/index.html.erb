@@ -25,7 +25,7 @@
         <td><%= team.description %></td>
         <td><%= Member.find(team.leader_id.to_i).name %></td>
         <% if sign_in? && (is_leader(team.name) || is_admin?) %>
-          <td><%= (link_to 'Show', team) + ' | ' + (link_to 'Edit', edit_team_path(team)) + ' | ' + (link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team.' }) %></td>
+          <td><%= (link_to 'Show', team) + ' | ' + (link_to 'Edit', edit_team_path(team)) + ' | ' + (link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team.' }) %></td>
         <% else %>
           <td><%= link_to 'Show', team %></td>
         <% end %>

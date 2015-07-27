@@ -1,4 +1,4 @@
-<% provide(:title, "Attempt | Index") %>
+<% provide(:title, "Attempts | Index") %>
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Attempts</h1>
@@ -30,7 +30,7 @@
             <td><%= link_to 'Show', attempt %></td>
             <% if is_leaderById(Robot.find(attempt.robot_id).team_id) || is_admin? %>
               <td><%= link_to 'Edit', edit_attempt_path(attempt) %></td>
-              <td><%= link_to 'Destroy', attempt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Delete', attempt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>
           </tr>
         <% end %>

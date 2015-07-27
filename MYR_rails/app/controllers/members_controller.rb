@@ -21,6 +21,7 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
+    @member = Member.find(params[:id])
   end
 
   # POST /members
@@ -55,7 +56,8 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1.json
   def update
     if sign_in?
-      if authenticateA_P2(@member)
+      if authenticateA_P2(current_user)
+        @member = Member.find(params[:id])
         if params[:member][:role] != "administrator" || (sign_in? && is_admin?)
           respond_to do |format|
             if @member.update(member_params)
@@ -68,23 +70,24 @@ class MembersController < ApplicationController
           end
         else
           flash.now[:error] = "Ask an administrator for becoming administrator"
-          render 'edit'
+          render 'show'
         end
       else
         flash.now[:error] = "You can not modify this Account: "+@member.name
-        render 'edit'
+        render 'show'
 
       end
     else
       flash.now[:error] = "You are not connected, you have to Signin or Signup"
-      render 'edit'
+      render 'show'
     end
   end
   # DELETE /members/1
   # DELETE /members/1.json
   def destroy
     if sign_in?
-      if authenticateA_P2(@member)
+      if authenticateA_P2(current_user)
+        @member = Member.find(params[:id])
         if (heIsLeader?(@member.name))
           for m in Member.where(team_id: @member.team_id)
             m.update(:team_id => nil)
@@ -105,7 +108,7 @@ class MembersController < ApplicationController
           format.json { head :no_content }
         end
       else
-        flash[:error] = "You can not destroy this Account: "+@member.name
+        flash[:error] = "You can not delete this Account: "+@member.name
         respond_to do |format|
           format.html { redirect_to members_url }
           format.json { head :no_content }
@@ -113,39 +116,39 @@ class MembersController < ApplicationController
       end
     else
       flash[:error] = "You are not connected, you have to Sign in or Sign up"
-      render 'edit'
+      render 'show'
     end
   end
   
 
 
   def invite
-    respond_to do |format|
-      format.html { redirect_to members_url }
-      format.json { head :no_content }
-    end
-    if cookies[:playerInvite] != nil && cookies[:playerInvite] != ""
-      if heIsInTeam?(cookies[:playerInvite]) == false
-        myVar=Member.find_by_name(cookies[:playerInvite])
-        if myVar.role != "administrator"
-          myVar.update(:team_id => current_user.team_id)
-          cookies.delete(:playerInvite)
-        end
+    if sign_in?
+      if is_leader?
+        @member = Member.find(params[:id])
+        @member.update_attribute(:team_id, current_user.team_id)
+        flash[:succes] = "Invitation sent !"
       end
     end
+    # respond_to do |format|
+    #   format.html { redirect_to members_url }
+    #   format.json { head :no_content }
+    # end
+    # if cookies[:playerInvite] != nil && cookies[:playerInvite] != ""
+    #   if heIsInTeam?(cookies[:playerInvite]) == false
+    #     myVar=Member.find_by_name(cookies[:playerInvite])
+    #     if myVar.role != "administrator"
+    #       myVar.update(:team_id => current_user.team_id)
+    #       cookies.delete(:playerInvite)
+    #     end
+    #   end
+    # end
   end
 
-  def leave
-    respond_to do |format|
-      format.html { redirect_to members_url }
-      format.json { head :no_content }
-    end
-    if is_leader?
-      flash[:error] = "You can not leave your team if you are the leader"
-    else
-      @member.update(:team_id => nil)
+  def kick
+      @member = Member.find(params[:id])
+      @member.update_attribute(:team_id, nil)
       flash[:succes] = "You have leaved your team "
-    end
   end  
 
   private

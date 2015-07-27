@@ -57,7 +57,7 @@
 			<td><%= link_to Team.find(robot.team_id).name, Team.find(robot.team_id) %></td>
 			<% if sign_in? %>
 				<% if is_admin? || is_leader(Team.find(robot.team_id).name) %>
-					<td><%= (link_to 'Show', robot) + ' | ' + (link_to 'Edit', edit_robot_path(robot)) + ' | ' + (link_to 'Destroy', robot, method: :delete, data: { confirm: 'Are you sure?' })  %></td>
+					<td><%= (link_to 'Show', robot) + ' | ' + (link_to 'Edit', edit_robot_path(robot)) + ' | ' + (link_to 'Delete', robot, method: :delete, data: { confirm: 'Are you sure?' })  %></td>
 				<% else %>
 					<td><%= link_to 'Show', robot %></td>
 				<% end %>

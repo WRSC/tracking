@@ -1,0 +1,2 @@
+$("<%= "#team"+@member.id.to_s %>").text("<%= Team.find(@member.team_id).name %>");
+$("<%= "#status"+@member.id.to_s %>").html("<%= escape_javascript(render 'link_kick') %>");

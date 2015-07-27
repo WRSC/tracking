@@ -1,4 +1,4 @@
-<% provide(:title, "Mission | Show") %>
+<% provide(:title, "Missions | Show") %>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -22,6 +22,6 @@
 </p>
 
 <% if is_admin? %>
-<%= link_to 'Edit', edit_mission_path(@mission) %> | <%= link_to 'Destroy', @mission, method: :delete, data: { confirm: 'Destroy this mission ?' } %> |
+<%= link_to 'Edit', edit_mission_path(@mission) %> | <%= link_to 'Delete', @mission, method: :delete, data: { confirm: 'Destroy this mission ?' } %> |
 <% end %>
-<%= link_to 'Back', missions_path %>
+<%= link_to 'Back to index', missions_path %>

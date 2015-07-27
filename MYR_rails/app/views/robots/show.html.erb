@@ -22,6 +22,6 @@
 </p>
 
 <% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>
-	<%= link_to 'Edit', edit_robot_path(@robot) %> | <%= link_to 'Destroy', @robot, method: :delete, data: { confirm: 'Destroy this robot ?' } %> |
+	<%= link_to 'Edit', edit_robot_path(@robot) %> | <%= link_to 'Delete', @robot, method: :delete, data: { confirm: 'Destroy this robot ?' } %> |
 <% end %>
-<%= link_to 'Back', robots_path %>
+<%= link_to 'Back to index', robots_path %>

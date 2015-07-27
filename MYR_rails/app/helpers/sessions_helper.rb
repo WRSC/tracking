@@ -94,7 +94,7 @@ module SessionsHelper
 		for i in Team.first.id..Team.last.id
 			myVar=Team.find_by_id(i)
 			if myVar != nil
-				if cookies.signed[:user_id] == myVar.leader_id
+				if current_user.id == myVar.leader_id
 					rep=true
 				end
 			end

@@ -98,7 +98,8 @@ class CoordinatesController < ApplicationController
 
 
         respond_to do |format|
-          if (lat.length>0 && long.length>0 && date.length >0)
+          if (@coordinate.save)
+            #&& lat.length>0 && long.length>0 && date.length >0
             format.html { redirect_to @coordinate, notice: 'Coordinate was successfully created.' }
             format.json { render :show, status: :created, location: @coordinate }
           else

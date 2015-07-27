@@ -1,4 +1,4 @@
-<% provide(:title, "Attempt | show") %>
+<% provide(:title, "Attempts | show") %>
 <p id="notice"><%= notice %></p>
 
 <% if !current_user.nil? %>
@@ -35,7 +35,7 @@
     </p>
 
     <% if is_leaderById(Robot.find(@attempt.robot_id).team_id) || is_admin? %>
-      <%= link_to 'Edit', edit_attempt_path(@attempt) %> | <%= link_to 'Destroy', @attempt, method: :delete, data: { confirm: 'Destroy this attempt ?' } %> |
+      <%= link_to 'Edit', edit_attempt_path(@attempt) %> | <%= link_to 'Delete', @attempt, method: :delete, data: { confirm: 'Destroy this attempt ?' } %> |
    <% end %>
 
    <% else %>
@@ -44,4 +44,4 @@
 
   <% end %>
 <% end %>
-<%= link_to 'Back', attempts_path %>
+<%= link_to 'Back to index', attempts_path %>

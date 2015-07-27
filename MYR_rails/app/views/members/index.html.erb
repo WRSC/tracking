@@ -1,4 +1,3 @@
-
 <% provide(:title, "Members | Index") %>
 <p id="notice"><%= notice %></p>
 
@@ -45,13 +44,9 @@
     
     
     <% if sign_in? %>
-    <% if is_admin? %>
-      <th class="column-member-sed" colspan="3"></th>
-    <% else %>
-      <% if is_leader? %>
-        <th>Invite</th>
+      <% if is_admin? %>
+        <th class="column-member-sed" colspan="3"></th>
       <% end %>
-    <% end %>
     <% end %>
     </tr>
   </thead>
@@ -59,16 +54,16 @@
   <tbody>
 
   <% idMems = []%>
-    <% @members.each do |member| %>
+  <% @members.each do |member| %>
     <% idMems << member.id %>
   <% end %>
   <% allMemberdIdSort=sortId(idMems) %>
   <% if allMemberdIdSort != [] %>
     <% for ii in 0..(allMemberdIdSort.size-1) %>
-    <% member=Member.find_by_id(allMemberdIdSort[ii]) %>
+      <% member=Member.find_by_id(allMemberdIdSort[ii]) %>
       <% nameteam="" %>
       <tr>
-      <td ><%= link_to member.name, member %></td>
+      <td><%= link_to member.name, member %></td>
       <td><%= member.email %></td>
       <td><%= member.role %></td>
       
@@ -84,22 +79,25 @@
         <% end %>
       <% end %>
       <% nameteam=tabToString(rep) %>
-      <td><%= nameteam %></td>
-      <td><%= link_to 'Show', member_path(member) %></td>
+    <td style="display: block;"><span id="<%="team"+member.id.to_s %>"><%= nameteam %></span>
+
       <% if sign_in? %>
+        <% if is_leader? %>
+              
+              <% if nameteam=="" && member.role != "administrator" %>
+                <span id="<%="status"+member.id.to_s %>"><%= button_to 'Invite', invite_member_path(member), method: :patch, remote: :true %></span>
+                <!-- <td><a href= member/invite ><button id="invitebutton" name=<%= member.name %> type="button" onclick="myFunction(this.name)">Invite</button></a></td> -->
+              <% elsif  member.role=="administrator"%>
+                <span id="<%="status"+member.id.to_s %>">No team for the admin</span>
+              <% elsif (member.team_id == current_user.team_id) && (member.id != current_user.id)%>
+                <span id="<%="status"+member.id.to_s %>"><%= button_to 'Kick', kick_member_path(member), method: :patch, remote: :true %></span>
+              <% end %></td>
+              
+        <% end %>
+        <td><%= link_to 'Show', member_path(member) %></td>
         <% if is_admin? %>
           <td><%= link_to 'Edit', edit_member_path(member) %></td>
-          <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% else %>
-          <% if is_leader? %>
-            <% if nameteam=="" && member.role != "administrator" %>
-              <td><a href= member/invite ><button id="invitebutton" name=<%= member.name %> type="button" onclick="myFunction(this.name)">Invite</button></a></td>
-            <% elsif  member.role=="administrator"%>
-              <td>No team for the admin</td>
-            <% else %>
-              <td>Currently in a Team</td>
-            <% end %>
-          <% end %>
+          <td><%= link_to 'Delete', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       <% end %>
       </tr>
@@ -111,7 +109,7 @@
 <br>
 
 
-
+<!-- 
 <script>
   function myFunction(clicked_id) {
     $.cookie("playerInvite",clicked_id,{path:'/' });
@@ -120,3 +118,4 @@
     $.cookie("Sort",clicked_id,{path:'/' });
   }
 </script>
+ -->

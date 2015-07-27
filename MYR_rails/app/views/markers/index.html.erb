@@ -30,7 +30,7 @@
             <td><%= marker.mission_id %></td>
             <td><%= link_to 'Show', marker %></td>
             <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
-            <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Delete', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>

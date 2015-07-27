@@ -7,7 +7,12 @@ Rails.application.routes.draw do
 
     resources :coordinates
     resources :trackers
-    resources :members
+    resources :members do
+      member do
+        patch :invite
+        patch :kick
+      end
+    end
     resources :teams
     resources :robots
     resources :attempts

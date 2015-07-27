@@ -1,3 +1,4 @@
+<% provide(:title, "Member | show") %>
 <p id="notice"><%= notice %></p>
 <p>
 <% if @member.logo!="" && @member.logo!=nil %>
@@ -33,6 +34,6 @@
   <%= link_to 'Edit', edit_member_path(@member) %> |
 <% end %>
 <% if is_admin? %>
-   <%= link_to 'Destroy', @member, method: :delete, data: { confirm: 'Destroy this member ?' } %> |
+   <%= link_to 'Delete', @member, method: :delete, data: { confirm: 'Delete this member ?' } %> |
 <% end %>
-<%= link_to 'Back', members_path %>
+<%= link_to 'Back to index', members_path %>

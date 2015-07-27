@@ -1,4 +1,4 @@
-<% provide(:title, "Coordinate | show") %>
+<% provide(:title, "Coordinates | show") %>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -12,12 +12,12 @@
 </p>
 
 <p>
-  <strong>Longitude:</strong>
+  <strong>Speed:</strong>
   <%= @coordinate.speed %>
 </p>
 
 <p>
-  <strong>Longitude:</strong>
+  <strong>Course:</strong>
   <%= @coordinate.course %>
 </p>
 
@@ -32,6 +32,6 @@
 </p>
 
 <% if is_admin? %>
-	<%= link_to 'Edit', edit_coordinate_path(@coordinate) %> | <%= link_to 'Destroy', @coordinate, method: :delete, data: { confirm: 'Destroy this coordinate ?' } %> |
+	<%= link_to 'Edit', edit_coordinate_path(@coordinate) %> | <%= link_to 'Delete', @coordinate, method: :delete, data: { confirm: 'Delete this coordinate ?' } %> |
 <% end %>
-<%= link_to 'Back', coordinates_path %>
+<%= link_to 'Back to index', coordinates_path %>

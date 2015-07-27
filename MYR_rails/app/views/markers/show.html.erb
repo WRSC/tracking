@@ -43,6 +43,7 @@
 
 <% if is_admin? %>
   <%= link_to 'Edit', edit_marker_path(@marker) %> |
+| <%= link_to 'Delete', @marker, method: :delete, data: { confirm: 'Delete this coordinate ?' } %> |
 <% end %>
 
-<%= link_to 'Back', markers_path %>
+<%= link_to 'Back to index', markers_path %>

@@ -45,8 +45,6 @@ gem      'bcrypt'        ,                   '~> 3.1.7'
 gem      'fastimage'
 gem      'thin'
 
-<<<<<<< HEAD
-=======
 #pretty_print for rails console
 #gem      'hirb'
 
@@ -66,8 +64,6 @@ end
 
 gem       'awesome_print'
 
-
->>>>>>> f6056c20e448890ef4ee43326ce5bc5e65861fe7
 # Use Unicorn as the app server
 # gem 'unicorn'
 

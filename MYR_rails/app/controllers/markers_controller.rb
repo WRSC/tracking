@@ -57,7 +57,11 @@ class MarkersController < ApplicationController
   # POST /markers
   # POST /markers.json
   def create
-    @marker = Marker.new(marker_params)
+    
+    tablat=marker_params.latitude.split(";")
+    tablng=marker_params
+    
+    #@marker = Marker.new(marker_params)
 
     respond_to do |format|
       if @marker.save

@@ -23,7 +23,7 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
         }
       }
       if (Buoylat=="" || Buoylng==""){
-        alert('You do not creat any marker, please create some markers before you conintue !!!')
+        alert('You do not creat any marker, please create some markers before you continue !!!')
       }else{
         p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
 			  $.ajax({

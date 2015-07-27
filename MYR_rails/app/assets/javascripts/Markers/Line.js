@@ -43,26 +43,26 @@ function addFixPolyline(){
 	tabinput=input.split(";")
 	var coord=[]
   var fixline=[]
-	for (i=0;i<tabinput.length;i++){
-		latlng=tabinput[i].split(",")
-		lat=latlng[0]
-		lng=latlng[1]
-		coord.push(new google.maps.LatLng(lat, lng))
-  	var node=addFixMarker(lat, lng)//in Point.js
-		google.maps.event.addListener(node, 'click', showPointInLine);
-		infoWindowLine = new google.maps.InfoWindow();
-  	fixline.push(node)
-	}
   var fixPath = new google.maps.Polyline({
-    path: coord,
     geodesic: true,
     strokeColor: '#FF0000',
     strokeOpacity: 1.0,
     strokeWeight: 2,
-    lineMarkers: fixline
+    markers: fixline
   });
   fixPath.setMap(map_marker)
   LineMarkers.push(fixPath)
+  var path=fixPath.getPath()
+  for (var i=0;i<tabinput.length;i++){
+		latlng=tabinput[i].split(",")
+		lat=latlng[0]
+		lng=latlng[1]
+		path.push(new google.maps.LatLng(lat, lng))
+  	var node=addFixMarker(lat, lng)//in Point.js
+		fixPath.markers.push(node)
+    google.maps.event.addListener(node, 'click', showPointInLine);
+		infoWindowLine = new google.maps.InfoWindow();
+	}
 }
 
 function addCustomPolyline(){
@@ -70,7 +70,8 @@ function addCustomPolyline(){
 	var polyOptions = {
     strokeColor: '#000000',
     strokeOpacity: 1.0,
-    strokeWeight: 3
+    strokeWeight: 3,
+    markers: []
   };
   poly = new google.maps.Polyline(polyOptions);
   poly.setMap(map_marker);
@@ -80,8 +81,8 @@ function addCustomPolyline(){
   LineMarkers.push(poly)
 }
 
-function addLatLng(event) {
-    alert('enter in line event')
+function addLatLng(event,a) {
+// alert('enter in line event')
    var path = poly.getPath();
   // Because path is an MVCArray, we can simply append a new coordinate
   // and it will automatically appear.
@@ -92,6 +93,7 @@ function addLatLng(event) {
     title: '#' + path.getLength(),
     map: map_marker
   });
+  poly.markers.push(marker)
   //LineMarkers.push(marker)
 	google.maps.event.addListener(marker, 'click', showPointInLine);
 	infoWindowLine = new google.maps.InfoWindow();
@@ -101,6 +103,7 @@ function addLatLng(event) {
 	function showPointInLine(event) {
 		// Since this polygon has only one path, we can call getPath()
 		// to return the MVCArray of LatLngs.
+    pg=this
 		var contentString = '<font color="black"><b>Coordinate of Buoy :</b><br>'+
                         '<b>latitude:</b>&nbsp'+event.latLng.lat() + ',&nbsp' + 
 												'<b>longitude:</b>&nbsp'+event.latLng.lng() + '<br>'+'</font>'
@@ -111,21 +114,39 @@ function addLatLng(event) {
     infoWindowLine.setPosition(event.latLng);
     infoWindowLine.open(map_marker);
     $("#delete-pointInLine-buoy").click(function(){
-      var ind=findIndexInLine(event.latLng.lat(),event.latLng.lng())
-      var indcoord=findIndexInCoordLine(event.latLng.lat(),event.latLng.lng() )
-      alert('ind is '+ind)
-      alert('indcoord is '+indcoord)
+      //var ind=findIndexInLine(pg)
+      //alert('ind is '+ind)
+      //alert('indcoord is '+indcoord)
       infoWindowLine.close()
-      poly.getPath().removeAt(indcoord)
-      LineMarkers[ind].setMap(null)
-      LineMarkers[ind]=""
-
+      //poly.getPath().removeAt(indcoord)
+      var nltab=findInwhichLine(pg)
+      var indcoord=findIndexInCoordLine(event.latLng.lat(),event.latLng.lng(),nltab )
+      LineMarkers[nltab[0]].getPath().removeAt(indcoord)
+      LineMarkers[nltab[0]].markers[nltab[1]].setMap(null)
+      LineMarkers[nltab[0]].markers[nltab[1]]=""
+       //pg.markers[ind].setMap(null)
+      //poly.markers[nltab[1]].setMap(null)
+      //LineMarkers[ind]=""
     })
 	  
   }
+  function findInwhichLine(mark){
+    idx=[]
+    for (var i=0;i<LineMarkers.length;i++){
+      for (var j=0;j<LineMarkers[i].markers.length;j++){
+        if (mark==LineMarkers[i].markers[j]){
+          idx.push(i)
+          idx.push(j)
+          return idx
+        }
+      }
+    }
+    return idx
+  }
 
-  function findIndexInCoordLine(lat, lng ){
-    var mvctab=poly.getPath()
+//find the index of point in the line(MVCarray)
+  function findIndexInCoordLine(lat, lng, nltab ){
+    var mvctab=LineMarkers[nltab[0]].getPath()
     for (var i=0;i<mvctab.length;i++){
       if (lat==mvctab.getAt(i).lat() && lng==mvctab.getAt(i).lng()){
         return i
@@ -134,12 +155,14 @@ function addLatLng(event) {
     return -1
   }
 
-  function findIndexInLine(lat,lng){
+//find the index of marker in the lineMarkers
+  function findIndexInLine(pg){
     for (var i=0;i<LineMarkers.length;i++){
-      
-      if ( LineMarkers[i]!="" && lat==LineMarkers[i].position.lat() && lng==LineMarkers[i].position.lng() ){
- //       alert(i)
-        return i
+      if (LineMarkers[i]!="" ){
+        for (var j=0;j<LineMarkers[i].markers.length;j++){
+          if (pg==LineMarkers[i].markers[j])
+            return j
+        }
       }
     }
     return -1

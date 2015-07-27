@@ -8,18 +8,19 @@ for circle markers :
 		latitude is the center
 		longitude is the radius
 */
-CircleCenter=""
-CircleRadius=""
 circleMarkers=[]
 function saveCircleMarker(){
 		if ($("#marker_missions_dropdown option:selected").val()==0){
 			alert('Please choose a mission')
 		}else{
 			mission_id=$("#marker_missions_dropdown option:selected").val()
-			latlng=circle.getCenter() 
-			CircleCenter+=latlng.lat()+"_"+latlng.lng()
-			CircleRadius+=circle.getRadius() 
-
+      var CircleCenter=""
+      var CircleRadius=""
+      for (var i=0;i<circleMarkers.length;i++){
+  		  latlng=circleMarkers[i].getCenter() 
+			  CircleCenter+=latlng.lat()+"_"+latlng.lng()+";"
+			  CircleRadius+=circleMarkers[i].getRadius()+";"
+      }
 			p={"latitude": CircleCenter, "longitude": CircleRadius, "mtype": "Circle", "datetime": getCurrentTime(), "mission_id": mission_id}
 			$.ajax({
 							type: "POST",

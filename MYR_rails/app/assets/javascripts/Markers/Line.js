@@ -8,18 +8,21 @@ function saveLineMarker(){
 			if (LineMarkers==[]){
         alert('You do not create any marker, please create some markers before you continue !!!')
       }else{
-        var Linelat=""
-        var Linelng=""
-        var len=poly.getPath().getLength();
-		    for (var i=0; i<len; i++) {
-				  xy=poly.getPath().getAt(i)
-				  lat=xy.lat()
-				  lng=xy.lng()          	
-				  Linelat+=lat+"_"
-				  Linelng+=lng+"_"
-		    }
-			  p={"latitude": Linelat, "longitude": Linelng, "mtype": "Line", "datetime": getCurrentTime(), "mission_id": mission_id}
-			  $.ajax({
+        for (var j=0;j<LineMarkers.length;j++){
+          var Linelat=""
+          var Linelng=""
+          var len=LineMarkers[j].getPath().getLength();
+		      for (var i=0; i<len; i++) {
+				    xy=LineMarkers[j].getPath().getAt(i)
+				    lat=xy.lat()
+				    lng=xy.lng()          	
+				    Linelat+=lat+"_"
+				    Linelng+=lng+"_"
+		      }
+          Linelat+=";"
+          Linelng+=";"
+			    p={"latitude": Linelat, "longitude": Linelng, "mtype": "Line", "datetime": getCurrentTime(), "mission_id": mission_id}
+			    $.ajax({
 							type: "POST",
 							url: "/markers",
 							data: {	marker: p},
@@ -27,7 +30,8 @@ function saveLineMarker(){
 							success: function(data){
 								alert('saved')
 							}
-			  }) 	
+			    }) 	
+        }
       }
 		}
 	}
@@ -49,7 +53,6 @@ function addFixPolyline(){
 		infoWindowLine = new google.maps.InfoWindow();
   	fixline.push(node)
 	}
-  lineMarkers.push(fixline)
   var fixPath = new google.maps.Polyline({
     path: coord,
     geodesic: true,
@@ -59,6 +62,7 @@ function addFixPolyline(){
     lineMarkers: fixline
   });
   fixPath.setMap(map_marker)
+  LineMarkers.push(fixPath)
 }
 
 function addCustomPolyline(){
@@ -73,6 +77,7 @@ function addCustomPolyline(){
   // Add a listener for the click event
   google.maps.event.clearListeners(map_marker, 'click');
   google.maps.event.addListener(map_marker, 'click', addLatLng);
+  LineMarkers.push(poly)
 }
 
 function addLatLng(event) {
@@ -87,7 +92,7 @@ function addLatLng(event) {
     title: '#' + path.getLength(),
     map: map_marker
   });
-  LineMarkers.push(marker)
+  //LineMarkers.push(marker)
 	google.maps.event.addListener(marker, 'click', showPointInLine);
 	infoWindowLine = new google.maps.InfoWindow();
 }

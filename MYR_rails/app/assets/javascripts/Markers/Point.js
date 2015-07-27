@@ -18,8 +18,8 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 			mission_id=$("#marker_missions_dropdown option:selected").val()
 			for (var i=0;i<BuoyMarkers.length;i++){
         if (BuoyMarkers[i]!=""){
-          Buoylat+=BuoyMarkers[i].position.lat()+"_"
-          Buoylng+=BuoyMarkers[i].position.lng()+"_"
+          Buoylat+=BuoyMarkers[i].position.lat()+";"
+          Buoylng+=BuoyMarkers[i].position.lng()+";"
         }
       }
       if (Buoylat=="" || Buoylng==""){
@@ -61,7 +61,7 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
     google.maps.event.clearListeners(map_marker, 'click');
 		google.maps.event.addListener(map_marker, 'click', function(event) {
     	//alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng());
-      alert('enter in buoy event')
+  //    alert('enter in buoy event')
 			lat=event.latLng.lat()
 			lng=event.latLng.lng()
     	draggablePoint=addDraggableMarker(lat,lng);

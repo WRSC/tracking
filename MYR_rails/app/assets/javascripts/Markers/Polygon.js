@@ -11,17 +11,22 @@ function savePolygonMarker(){
 			alert('Please choose a mission')
 		}else{
 			mission_id=$("#marker_missions_dropdown option:selected").val()
-			var len=customPolygon.getPath().getLength();
-		  for (var i=0; i<len; i++) {
-				xy=customPolygon.getPath().getAt(i)
-				lat=xy.lat()
-				lng=xy.lng()          	
-				Polygonlat+=lat+"_"
-				Polygonlng+=lng+"_"
-		  }
-			alert(Polygonlat)
-			p={"latitude": Polygonlat, "longitude": Polygonlng, "mtype": "Polygon", "datetime": getCurrentTime(), "mission_id": mission_id}
-			$.ajax({
+      var Polygonlng=""
+      var polygonlat=""
+      for (var j=0;j<polygonMarkers.length;j++){
+  	    dp=polygonMarkers[j] //desired polygon
+        for (var i=0; i<dp.getPath().length; i++) {
+				  xy=dp.getPath().getAt(i)
+				  lat=xy.lat()
+				  lng=xy.lng()          	
+				  Polygonlat+=lat+"_"
+				  Polygonlng+=lng+"_"
+		    }
+        Polygonlat+=";"
+        Polygonlng+=";"
+      }
+			 p={"latitude": Polygonlat, "longitude": Polygonlng, "mtype": "Polygon", "datetime": getCurrentTime(), "mission_id": mission_id}
+			 $.ajax({
 							type: "POST",
 							url: "/markers",
 							data: {	marker: p},
@@ -30,7 +35,7 @@ function savePolygonMarker(){
 								alert('saved')
 							}
 			}) 	
-		}
+    }
 	}
 
 function addFixPolygon(){
@@ -58,7 +63,7 @@ function addFixPolygon(){
   // Add a listener for the click event.
   google.maps.event.addListener(fixPolygon, 'click', showArrays);
   infoWindowPolgon = new google.maps.InfoWindow();
-  polygonMarkers.push(fixpolygon)
+  polygonMarkers.push(fixPolygon)
 }
 
 function addCustomPolygon(){
@@ -86,14 +91,14 @@ function addCustomPolygon(){
   });
 	customPolygon.setMap(map_marker)
 	//add drag event
-	google.maps.event.addListener(customPolygon, "dragend", updatePointsByDrag)
+//	google.maps.event.addListener(customPolygon, "dragend", updatePointsByDrag)
   // Add a listener for the click event.
   google.maps.event.addListener(customPolygon, 'click', showArrays);
   infoWindowPolygon = new google.maps.InfoWindow();
   polygonMarkers.push(customPolygon)
 }
 
-
+/*
 function updatePointsByDrag(){
     var len=customPolygon.getPath().getLength();
     for (var i=0; i<len; i++) {
@@ -105,7 +110,7 @@ function updatePointsByDrag(){
     }
 		alert(Polygonlat)
 };
-
+*/
 
 /** @this {google.maps.Polygon} */
 function showArrays(event) {

@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+  attr_accessor :logo
+  mount_uploader :logo, TeamlogoUploader
 # Associations
 	has_many :members		
 	has_many :robots		

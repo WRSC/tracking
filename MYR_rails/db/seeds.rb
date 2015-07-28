@@ -28,7 +28,7 @@ Member.create!(name:  "testAdmin",
 end
 
 i=1
-9.times do |n|
+5.times do |n|
 	token=i
 	Tracker.create!(token:  "#{i}",
              		  description: "It was the #{i} tracker.")
@@ -36,7 +36,7 @@ i=1
 end
 
 #i=1
-for rob_id in 1..9
+for rob_id in 1..3
 	for m_id in 1..4
 		#for att in 1..2
 			name = Faker::Name.name
@@ -82,21 +82,6 @@ end
 #   end
 #end
 
-Marker.create!(latitude: 1,
-                longitude: -1,
-                mission_id: 1)
-
-Marker.create!(latitude: 15.39,
-                longitude: 13.39,
-                mission_id: 1)
-
-Marker.create!(latitude: 7,
-                longitude: 4,
-                mission_id: 1)
-
-Marker.create!(latitude: 21.39,
-                longitude: 18.39,
-                mission_id: 1)
 #Tracker 1~8 => robot 1
 #Tracker 1 2 => robot 1 mission 1 => attempt1 attempt2
 #Tracker 3 4 => robot 1 mission 2 => attempt3 attempt4
@@ -107,21 +92,21 @@ Marker.create!(latitude: 21.39,
 
 #http://programming-tut.blogspot.com/2009/09/ruby-on-rails-time.html
 #Coordinate  => attempt1
-# lat=0
-# lng=0
-# i=0
-# t=Time.now
-# 100.times do |n|
-# 	Coordinate.create!(latitude:  lat,
-# 									longitude: lng,
-# 									datetime:   t.strftime("%Y%m%d%H%M%S"),
-# 		           		tracker_id: 1)
+ lat=0
+ lng=0
+ i=0
+ t=Time.now
+ 100.times do |n|
+ 	Coordinate.create!(latitude:  lat,
+ 									longitude: lng,
+ 									datetime:   t.strftime("%Y%m%d%H%M%S"),
+ 		           		tracker_id: 1)
 
-# 	lng=5*Math.cos(i)
-# 	t=t+5
-# 	lat=5*Math.sin(i)
-# 	i=i+0.1
-# end
+ 	lng=5*Math.cos(i)
+ 	t=t+5
+ 	lat=5*Math.sin(i)
+ 	i=i+0.1
+ end
              		
 
 

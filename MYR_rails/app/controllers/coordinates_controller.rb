@@ -175,10 +175,9 @@ class CoordinatesController < ApplicationController
 
   def gatherCoordsBetweenDates
     trackers=params[:trackers]
-		
 		if (params[:tstart] != nil && params[:tend] != nil)
-      tstart = params[:tstart].to_datetime
-      tend = params[:tend].to_datetime
+      tstart = params[:tstart]
+      tend   = params[:tend]
       newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
     end

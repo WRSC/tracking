@@ -62,12 +62,18 @@ function requestRefreshUpdateButton(nb){
 			$('#updatebutton').click(function(){
 				initializeMap()
 				initialScroll()
-				displayMarkersOrnot()
-				if (nb==1)
+    		buoyFlag=getMarkerDisplay()
+        //alert(buoyFlag)
+        if (nb==1){
+          if (buoyFlag==true){
+           // alert('buoyflag is true')
+            requestOfficialMarkersInfo()
+          }
 					requestRefreshMapFromAttempt();
+        }
 				else{
 					if (nb==2){
-						getDatetimesInfos()  //It was in the file choice_robots
+						getDatetimesInfos(markerDisplay)  //It was in the file choice_robots
 					}
 				}
 			})
@@ -77,15 +83,17 @@ function requestRefreshUpdateButton(nb){
 
 
 function requestRefreshMapFromAttempt(){
-	$.ajax({
+  $.ajax({
 		type: "GET",
 		url: "/getSingleAttemptInfos",
 		
 		success: function(data){
 			//alert(data)
 			//tstart: data[0]; tend: data[1]; trackers: data[2] 
-
-			requestGatherCoordsBetweenDates(data[0],data[1],data[2],true);
+      //alert(data[0]+' '+data[1]+''+data[2])
+      //alert('trackers are '+data[2])
+      //alert(data[0])
+      requestGatherCoordsBetweenDates(data[0],data[1],data[2],true);
 		}       
 	});
 }
@@ -93,16 +101,15 @@ function requestRefreshMapFromAttempt(){
 	
 function requestGatherCoordsBetweenDates(tstart,tend,trackers,singleAttempt){//desired_data contains start, end, tracker_id[]
 	//alert(desired_data[2])
-
-	
 	//alert (trackers)
-	$.ajax({
+  $.ajax({
 		type: "GET",
 		url: "/gatherCoordsBetweenDates",
 		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
-			refreshWithNewMarkers2(data,tstart,tend,singleAttempt);
+			//alert(data)
+      refreshWithNewMarkers2(data,tstart,tend,singleAttempt);
 			
 		}       
 	});

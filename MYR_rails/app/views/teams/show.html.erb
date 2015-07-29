@@ -1,32 +1,24 @@
 <% provide(:title, "Teams | Show") %>
 <p id="notice"><%= notice %></p>
-<style type='text/css'>
-	h1{
-		margin-left: auto;
-		margin-right: auto;
-		text-align: center;
-	}
-	p{
-		text-align: center;
-	}
-</style>
-<h1>
+
+<p>
+  <% if @team.logo!= "" and @team.logo !=nil%>
+    <strong>Logo:</strong><br>
+    <%= image_tag @team.logo_url(:medium) %>
+  <% end %>
+</p>
+
+<p>
   <strong>Name:</strong>
   <%= @team.name %>
-</h1>
+</p>
 
-<h1>
-  <strong>Logo:</strong>
-  <!--%= @team.logo %-->
-  <%= image_tag @team.logo_url.to_s%>
-</h1>
-
-<h1>
+<p>
   <strong>Description:</strong>
   <%= @team.description %>
-</h1>
+</p>
 
-<h1><strong>Members :</strong></h1>
+<p><strong>Members :</strong></p>
 <table>
 	    <tr>
 			<% teammates = Member.where("team_id = ?", @team.id)%>
@@ -38,7 +30,7 @@
 	   	</tr>
 </table>
 
-<h1>
+<p>
 	<strong>Robots :</strong><br>
 	<% if @team.robots.size==0 %>
 		 <%= @team.name%> has not created any robot yet.
@@ -46,7 +38,7 @@
 		<%= @team.name%> has <%= @team.robots.size %> robots 
 		<%= render 'showRobots'%>
 	<% end %>
-</h1>
+</p>
 <br>
 <% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>
 <%= link_to 'Edit', edit_team_path(@team) %> | <%= link_to 'Delete', @team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team and kick all the members of this team.' } %> | 

@@ -1,10 +1,11 @@
 # encoding: utf-8
-
+#need to install imagemagick
+#running convert -version to check if it was installed
 class TeamlogoUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -32,16 +33,27 @@ class TeamlogoUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
-  # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :resize_to_fit => [50, 50]
-  # end
+   #Create different versions of your uploaded files:
+   version :small do
+     process :resize_to_fit => [50, 50]
+   end
+  
+   version :medium do
+     process :resize_to_fit => [500, 500]
+   end
 
+   version :large do
+     process :resize_to_fit => [1000, 1000]
+   end
+    
+   version :index do
+     process :resize_to_fit => [400, 250]
+   end
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+   def extension_white_list
+     %w(jpg jpeg gif png)
+   end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

@@ -47,6 +47,7 @@ gem      'thin'
 
 #in order to uploads some files
 gem      'carrierwave'
+gem      'mini_magick'
 #pretty_print for rails console
 #gem      'hirb'
 

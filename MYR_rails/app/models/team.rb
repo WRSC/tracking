@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-  attr_accessor :logo
+  attr_accessor :logo, :remote_logo_url
   mount_uploader :logo, TeamlogoUploader
 # Associations
 	has_many :members		

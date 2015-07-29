@@ -125,7 +125,11 @@ function FullScreenControl(controlDiv) {
 	}
 	
 	function addInfoWindow(infowindow,marker){
-		google.maps.event.addListener(marker, 'click', function() {
+		google.maps.event.addListener(marker, 'click', function(event) {
+			var lat=event.latLng.lat()
+			var lng=event.latLng.lng()
+			var myString='<font color=\'black\'><div>'+'<b>Latitude:</b>'+lat+'&nbsp;'+'<b>Longitude</b>'+lng+'</div>'+'</font>'
+			infowindow.content+=myString
 			infowindow.open(replay_map,marker);
 		});
 	}

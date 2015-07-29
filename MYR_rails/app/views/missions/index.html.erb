@@ -6,21 +6,32 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th class=column-member>Name
+      <a href= missions ><button id="sortbuttonT" name="MissionN" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+      <a href= missions ><button id="sortbuttonD" name="MissionNbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
+    
       <th>Description</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
+    <% idMissions = []%>
     <% @missions.each do |mission| %>
-      <tr>
-        <td><%= link_to mission.name, mission %></td>
-        <td><%= mission.description %></td>
-        <td><%= link_to 'Show', mission %></td>
-        <% if is_admin? %>
-          <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
-          <td><%= link_to 'Delete', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% idMissions << mission.id %>
+    <% end %>
+    <% allMissiondIdSort=sortId(idMissions) %>
+    <% if allMissiondIdSort != [] %>
+      <% for ii in 0..(allMissiondIdSort.size-1) %>
+        <% mission=Mission.find_by_id(allMissiondIdSort[ii]) %>
+        <tr>
+          <td><%= link_to mission.name, mission %></td>
+          <td><%= mission.description %></td>
+          <td><%= link_to 'Show', mission %></td>
+          <% if is_admin? %>
+            <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
+            <td><%= link_to 'Delete', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>
@@ -35,3 +46,10 @@
   	<%= link_to 'New Mission', new_mission_path %>
    <% end %> 
 <% end %>
+
+<script>
+
+  function myFunctionSort(clicked_id) {
+    $.cookie("Sort",clicked_id,{path:'/' });
+  }
+</script>

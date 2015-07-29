@@ -11,11 +11,11 @@ class Team < ActiveRecord::Base
     def valid_size
         if self.logo != ""
             if FastImage.size(self.logo)!= nil
-                if FastImage.size(self.logo)[0] > 150
-                    errors.add(:logo, "width must be under 150 pixels")
+                if FastImage.size(self.logo)[0] > 100
+                    errors.add(:logo, "width must be under 100 pixels")
                 end
-                if FastImage.size(self.logo)[1] > 150
-                    errors.add(:logo, "height must be under 150 pixels")
+                if FastImage.size(self.logo)[1] > 100
+                    errors.add(:logo, "height must be under 100 pixels")
                 end
             end
         end

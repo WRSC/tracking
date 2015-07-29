@@ -11,9 +11,14 @@ Rails.application.routes.draw do
       member do
         patch :invite
         patch :kick
+        patch :leave
       end
     end
-    resources :teams
+    resources :teams do
+      member do
+        patch :join
+      end
+    end
     resources :robots
     resources :attempts
     resources :missions
@@ -28,6 +33,7 @@ Rails.application.routes.draw do
 
     get 'home'            , to: 'static_pages#home'
     get 'contact'         , to: 'static_pages#contact'
+    get 'instructions'    , to: 'static_pages#instructions'
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'

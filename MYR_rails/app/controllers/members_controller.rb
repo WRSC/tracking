@@ -70,16 +70,21 @@ class MembersController < ApplicationController
           end
         else
           flash.now[:error] = "Ask an administrator for becoming administrator"
-          render 'show'
+          format.html { redirect_to @member, notice: 'Ask an administrator for becoming administrator.' }
+          format.json { render :show, status: :ok, location: @member }
         end
       else
         flash.now[:error] = "You can not modify this Account: "+@member.name
-        render 'show'
+        format.html { redirect_to @member, notice: 'You can not modify this Account: '+@member.name }
+        format.json { render :show, status: :ok, location: @member }
 
       end
     else
-      flash.now[:error] = "You are not connected, you have to Signin or Signup"
-      render 'show'
+      flash[:error] = "You are not connected, you have to Sign in or Sign up"
+      respond_to do |format|
+        format.html { redirect_to @member, notice: 'You are not connected, you have to Sign in or Sign up'}
+        format.json { render :show }
+      end
     end
   end
   # DELETE /members/1
@@ -110,13 +115,16 @@ class MembersController < ApplicationController
       else
         flash[:error] = "You can not delete this Account: "+@member.name
         respond_to do |format|
-          format.html { redirect_to members_url }
+          format.html { redirect_to members_url, notice: 'You can not delete this Account: '+@member.name}
           format.json { head :no_content }
         end
       end
     else
       flash[:error] = "You are not connected, you have to Sign in or Sign up"
-      render 'show'
+      respond_to do |format|
+        format.html { redirect_to @member, notice: 'You are not connected, you have to Sign in or Sign up'}
+        format.json { render :show }
+      end
     end
   end
   
@@ -148,8 +156,16 @@ class MembersController < ApplicationController
   def kick
       @member = Member.find(params[:id])
       @member.update_attribute(:team_id, nil)
-      flash[:succes] = "You have leaved your team "
   end  
+
+  def leave
+      @member = Member.find(params[:id])
+      @member.update_attribute(:team_id, nil)
+      respond_to do |format|
+        format.html {redirect_to :back, notice: 'You left your team.' }
+        format.json {render inline: "location.reload();" }
+      end
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.

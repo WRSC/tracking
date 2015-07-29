@@ -44,8 +44,7 @@ class TeamsController < ApplicationController
   def update
     if sign_in?
       @member=current_user
-      if authenticateA_P2(@member)
-        if @member.role != "administrator" || (sign_in? && is_admin?)
+        if sign_in? && (is_leader(@team.name) || is_admin?)
           respond_to do |format|
             if @team.update(team_params)
               format.html { redirect_to @team, notice: 'Team was successfully updated.' }
@@ -60,13 +59,9 @@ class TeamsController < ApplicationController
           render 'edit'
         end
       else
-        flash.now[:error] = "You can not modify this Account: "+@member.name
+        flash.now[:error] = "You can not modify this team: "+@team.name
         render 'edit'
       end
-    else
-      flash.now[:error] = "You are not connected, you have to Signin or Signup"
-      render 'edit'
-    end
   end
 
   # DELETE /teams/1
@@ -75,10 +70,23 @@ class TeamsController < ApplicationController
     @team.robots.each do |robot|
       robot.destroy
     end
+    @team.members.each do |member|
+      member.update_attribute(:team_id, nil)
+    end
     @team.destroy
     respond_to do |format|
       format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def join
+    @member = current_user
+    @team = Team.find(params[:id])
+    @member.update_attribute(:team_id, @team.id)
+    respond_to do |format|
+        format.html {redirect_to :back, notice: 'You successfully joined '+@team.name+' !' }
+        format.json {render inline: "location.reload();" }
     end
   end
 

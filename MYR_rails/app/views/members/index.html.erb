@@ -20,26 +20,26 @@
   <thead>
     <tr >
         <th class=column-member>Name
-      <a href= members ><button id="sortbuttonT" name="Namebis" onclick="myFunctionSort(this.name)" ></button></a>
-      <a href= members ><button id="sortbuttonD" name="Name" onclick="myFunctionSort(this.name)" ></button></a></th>
+      <a href= members ><button id="sortbuttonT" name="Name" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+      <a href= members ><button id="sortbuttonD" name="Namebis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
     
     
     
         <th class=column-member>Email
-      <a href= members ><button id="sortbuttonT" name="Emailbis" onclick="myFunctionSort(this.name)" ></button></a>
-      <a href= members ><button id="sortbuttonD" name="Email" onclick="myFunctionSort(this.name)" ></button></a></th>
+      <a href= members ><button id="sortbuttonT" name="Email" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+      <a href= members ><button id="sortbuttonD" name="Emailbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
     
     
     
         <th class=column-member>Role
-      <a href= members ><button id="sortbuttonT" name="Rolebis" onclick="myFunctionSort(this.name)" ></button></a>
-      <a href= members ><button id="sortbuttonD" name="Role" onclick="myFunctionSort(this.name)" ></button></a></th>
+      <a href= members ><button id="sortbuttonT" name="Role" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+      <a href= members ><button id="sortbuttonD" name="Rolebis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
     
     
     
         <th class=column-member>Team
-      <a href= members ><button id="sortbuttonT" name="Teambis" onclick="myFunctionSort(this.name)" ></button></a>
-      <a href= members ><button id="sortbuttonD" name="Team" onclick="myFunctionSort(this.name)" ></button></a></th>
+      <a href= members ><button id="sortbuttonT" name="Team" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+      <a href= members ><button id="sortbuttonD" name="Teambis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
     
     
     
@@ -79,22 +79,23 @@
         <% end %>
       <% end %>
       <% nameteam=tabToString(rep) %>
-    <td style="display: block;"><span id="<%="team"+member.id.to_s %>"><%= nameteam %></span>
+      <td style="display: block;"><span id="<%="team"+member.id.to_s %>"><%= nameteam %></span>
 
       <% if sign_in? %>
         <% if is_leader? %>
-              
               <% if nameteam=="" && member.role != "administrator" %>
                 <span id="<%="status"+member.id.to_s %>"><%= button_to 'Invite', invite_member_path(member), method: :patch, remote: :true %></span>
                 <!-- <td><a href= member/invite ><button id="invitebutton" name=<%= member.name %> type="button" onclick="myFunction(this.name)">Invite</button></a></td> -->
-              <% elsif  member.role=="administrator"%>
+              <% elsif  member.role=="administrator" %>
                 <span id="<%="status"+member.id.to_s %>">No team for the admin</span>
               <% elsif (member.team_id == current_user.team_id) && (member.id != current_user.id)%>
                 <span id="<%="status"+member.id.to_s %>"><%= button_to 'Kick', kick_member_path(member), method: :patch, remote: :true %></span>
-              <% end %></td>
-              
+              <% end %>
         <% end %>
-        <td><%= link_to 'Show', member_path(member) %></td>
+      <% end %>
+      </td>
+      <td><%= link_to 'Show', member_path(member) %></td>
+      <% if sign_in? %>
         <% if is_admin? %>
           <td><%= link_to 'Edit', edit_member_path(member) %></td>
           <td><%= link_to 'Delete', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -109,13 +110,10 @@
 <br>
 
 
-<!-- 
+
 <script>
-  function myFunction(clicked_id) {
-    $.cookie("playerInvite",clicked_id,{path:'/' });
-  }
+
   function myFunctionSort(clicked_id) {
     $.cookie("Sort",clicked_id,{path:'/' });
   }
 </script>
- -->

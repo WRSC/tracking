@@ -316,8 +316,30 @@ module SessionsHelper
 		rep=sortTryByRobot(tabId)	
 		
 	elsif cookies[:Sort] == "MissionT"|| cookies[:Sort] == "MissionTbis"
-		rep=sortTryByMission(tabId)		
+		rep=sortTryByMission(tabId)	
+
+	elsif cookies[:Sort] == "TeamN" || cookies[:Sort] == "TeamNbis"
+		rep=sortTeamByName(tabId)
+
+	elsif cookies[:Sort] == "AttemptN" || cookies[:Sort] == "AttemptNbis"
+		rep=sortAttemptByName(tabId)
+
+	elsif cookies[:Sort] == "AttemptR" || cookies[:Sort] == "AttemptRbis"
+		rep=sortAttemptByRobot(tabId)
+
+	elsif cookies[:Sort] == "AttemptT" || cookies[:Sort] == "AttemptTbis"
+		rep=sortAttemptByTracker(tabId)
+
+	elsif cookies[:Sort] == "AttemptM" || cookies[:Sort] == "AttemptMbis"
+		rep=sortAttemptByMission(tabId)
+
+	elsif cookies[:Sort] == "TrackerID" || cookies[:Sort] == "TrackerIDbis"
+		rep=sortTrackerByName(tabId)
+
+	elsif cookies[:Sort] == "MissionN" || cookies[:Sort] == "MissionNbis"
+		rep=sortMissionByName(tabId)
 	end
+
 	
 	if cookies[:Sort] !=nil && cookies[:Sort] != ""
 		if cookies[:Sort].include? ("bis")
@@ -661,6 +683,61 @@ module SessionsHelper
 	end	
 	return rep
   end
+
+   def sortAttemptByTracker(tabAttemptId)
+	idsTrackers=Tracker.ids
+	idsTrackers=sortTrackerByName(idsTrackers)
+	repc=Array.new(idsTrackers.length,[])
+	for i in tabAttemptId
+		arf=Attempt.find_by_id(i)
+		if arf != nil
+			indexId=idsTrackers.index(arf.tracker_id)
+			if indexId != nil
+				repc[indexId]=repc[indexId]+[i]
+			end
+		end
+	end
+	rep=repc.flatten!
+	return rep
+  end
+
+  def sortTrackerByName(tabTrackerId)
+  	rep=[]
+	allTrack=[]
+	if tabTrackerId != nil
+		for i in 0 .. (tabTrackerId.size-1)
+			if  Tracker.find_by_id(tabTrackerId[i]) != nil
+				allTrack << Tracker.find_by_id(tabTrackerId[i]).id
+			end
+		end
+		namesSort=allTrack.sort
+		
+		for i in 0 .. (namesSort.size-1)
+			rep << tabTrackerId[allTrack.index(namesSort[i])]
+		end
+	end	
+	return rep
+  end
+
+ # function not working, coming back to it later
+ # def sortTeamByLeaderName(tabTeamId)
+	# rep=[]
+	# teamNames=[]
+	# teamLeaderNames=[]
+	# allTeamsId=tabTeamId 
+	# if allTeamsId != nil
+	# 	for i in 0 .. (allTeamsId.size-1)
+	# 		if  (Team.find_by_id(allTeamsId[i]) != nil && Member.find_by(Team.find_by_id(allTeamsId[i]).leader_id) != nil)
+	# 			teamLeaderNames << Member.find_by(Team.find_by_id(allTeamsId[i]).leader_id).name
+	# 		end
+	# 	end
+	# 	teamLeaderNamesSort=teamLeaderNames.sort
+	# 	for i in 0 .. (teamLeaderNamesSort.size-1)
+	# 		rep << Team.find_by_leader_id(Member.find_by_name(teamLeaderNamesSort[i]).id).id 
+	# 	end
+	# end
+	# return rep
+ #  end
  
 =begin 
     def sortTriesTeam(tabTryId)

@@ -11,7 +11,16 @@
 <p>
   <strong>Name:</strong>
   <%= @team.name %>
+<<<<<<< HEAD
 </p>
+=======
+</h1>
+
+<h1>
+  <strong>Logo:</strong>
+  <%= image_tag @team.logo %>
+</h1>
+>>>>>>> 0d859b9db4a228e943aaf37b5220119c3f927359
 
 <p>
   <strong>Description:</strong>
@@ -43,4 +52,4 @@
 <% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>
 <%= link_to 'Edit', edit_team_path(@team) %> | <%= link_to 'Delete', @team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team and kick all the members of this team.' } %> | 
 <% end %>
-<%= link_to 'Back to teams index', teams_path %>
+<%= link_to 'Back to index', teams_path %>

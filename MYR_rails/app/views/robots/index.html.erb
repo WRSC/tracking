@@ -10,23 +10,18 @@
     <tr>
 	
       <th>Name
-		<a href= robots ><button id="sortbuttonT" name="NameRbis" onclick="myFunctionSort(this.name)" ></button></a>
-		<a href= robots ><button id="sortbuttonD" name="NameR" onclick="myFunctionSort(this.name)" ></button></a></th>	
+		<a href= robots ><button id="sortbuttonT" name="NameR" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+		<a href= robots ><button id="sortbuttonD" name="NameRbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>	
 	  
 	  
       <th>Category
-		<a href= robots ><button id="sortbuttonT" name="CategoryRbis" onclick="myFunctionSort(this.name)" ></button></a>
-		<a href= robots ><button id="sortbuttonD" name="CategoryR" onclick="myFunctionSort(this.name)" ></button></a></th>		  
-	  
-	  
-      <th>Tracker
-		<a href= robots ><button id="sortbuttonT" name="TrackerRbis" onclick="myFunctionSort(this.name)" ></button></a>
-		<a href= robots ><button id="sortbuttonD" name="TrackerR" onclick="myFunctionSort(this.name)" ></button></a></th>	
+		<a href= robots ><button id="sortbuttonT" name="CategoryRbis" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+		<a href= robots ><button id="sortbuttonD" name="CategoryR" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>		  
 	  
 	  
       <th>Team
-		<a href= robots ><button id="sortbuttonT" name="TeamRbis" onclick="myFunctionSort(this.name)" ></button></a>
-		<a href= robots ><button id="sortbuttonD" name="TeamR" onclick="myFunctionSort(this.name)" ></button></a></th>	  
+		<a href= robots ><button id="sortbuttonT" name="TeamR" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
+		<a href= robots ><button id="sortbuttonD" name="TeamRbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>	  
 
       <th  colspan="3"></th>
 
@@ -53,7 +48,6 @@
 		  <tr>
 			<td><%= link_to robot.name, robot %></td>
 			<td><%= robot.category %></td>
-			<td><%= robot.tracker_id %></td>
 			<td><%= link_to Team.find(robot.team_id).name, Team.find(robot.team_id) %></td>
 			<% if sign_in? %>
 				<% if is_admin? || is_leader(Team.find(robot.team_id).name) %>

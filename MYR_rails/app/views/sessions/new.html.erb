@@ -1,7 +1,17 @@
 <% provide(:title, "Sessions | New") %>
-<div id="newIndicate">
-<h1>New Session</h1>
-</div>
-<%= render 'form' %>
+
+<% if !sign_in? %>
+
+	<div id="newIndicate">
+	<h1>New Session</h1>
+	</div>
+	<%= render 'form' %>
+
+<% else %>
+
+	<h1>You are already logged in.</h1>
+
+<% end %>
+
 
 

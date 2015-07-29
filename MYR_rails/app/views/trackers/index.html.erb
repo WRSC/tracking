@@ -10,22 +10,32 @@
       <tr>
         <th>Token</th>
         <th>Description</th>
-        <th>ID</th>
+        <th class=column-member>ID
+          <a href= trackers ><button id="sortbuttonT" name="TrackerID" onclick="myFunctionSort(this.name)" ><img src="/icons/1_9.png"></button></a>
+          <a href= trackers ><button id="sortbuttonD" name="TrackerIDbis" onclick="myFunctionSort(this.name)" ><img src="/icons/9_1.png"></button></a></th>
         <th colspan="3"></th>
       </tr>
     </thead>
 
     <tbody>
+      <% idTrackers = []%>
       <% @trackers.each do |tracker| %>
-        <tr>
-          <td><%= tracker.token %></td>
-          <td><%= tracker.description %></td>
-          <td><%= tracker.id %></td>
-          <td><%= link_to 'Show', tracker %></td>
-          <td><%= link_to 'Edit', edit_tracker_path(tracker) %></td>
-          <td><%= link_to 'Delete', tracker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
+          <% idTrackers << tracker.id %>
       <% end %>
+          <% allTrackerIdSort=sortId(idTrackers) %>
+          <% if allTrackerIdSort != [] %>
+            <% for ii in 0..(allTrackerIdSort.size-1) %>
+              <% tracker=Tracker.find_by_id(allTrackerIdSort[ii]) %>
+                <tr>
+                  <td><%= tracker.token %></td>
+                  <td><%= tracker.description %></td>
+                  <td><%= tracker.id %></td>
+                  <td><%= link_to 'Show', tracker %></td>
+                  <td><%= link_to 'Edit', edit_tracker_path(tracker) %></td>
+                  <td><%= link_to 'Delete', tracker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+            <% end %>
+          <% end %>
     </tbody>
   </table>
 
@@ -38,3 +48,10 @@
   <h2> You do not have the rights to see the content of this page. </h2>
 
 <% end %>
+
+<script>
+
+  function myFunctionSort(clicked_id) {
+    $.cookie("Sort",clicked_id,{path:'/' });
+  }
+</script>

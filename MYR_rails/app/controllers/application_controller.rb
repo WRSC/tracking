@@ -74,7 +74,28 @@ class ApplicationController < ActionController::Base
   end
   
 
-
+  # check if the user is admin thanks to cooky
+  def authenticateA
+    if is_admin?
+      true
+    else
+      authenticate_or_request_with_http_basic do |name, password|
+        if m=Member.find_by_name(name) 
+          if (m.authenticate(password) && (m.id == current_user.id))
+      			if(is_admin?)
+      				true
+      			else
+      				false
+  			     end
+  		    else
+  		      false
+  		    end
+        else
+          false
+        end
+      end
+    end
+  end
 
   # check if the user is in the team or admin thanks to cooky
   def authenticateA_M

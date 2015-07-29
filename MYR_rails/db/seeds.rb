@@ -36,6 +36,10 @@ Member.create!(name:  "joker",
                  activated_at: Time.zone.now)
 end
 
+Member.find(2).update_attribute(:team_id, 1)
+Member.find(3).update_attribute(:team_id, 2)
+Member.find(4).update_attribute(:team_id, 3)
+
 i=1
 5.times do |n|
 	token=i
@@ -177,60 +181,63 @@ Mission.create!(name:  "Fleet Race",
 #team 1
 Team.create!(name:  "Zombie",
              description: "root test for zombies",
-             leader_id: 1)
+             leader_id: 2,
+             logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')
 
 #robot1 
 Robot.create!(name:  "Zombie1",
-              category: "Small",
+              category: "MicroSailboat",
               team_id: 1)
               
 #robot2 
 Robot.create!(name:  "Zombie2",
-              category: "Small",
+              category: "MicroSailboat",
               team_id: 1)
               
 #robot3 
 Robot.create!(name:  "Zombie3",
-              category: "Small",
+              category: "Sailboat",
               team_id: 1)
 #team 2        
 Team.create!(name: "Pizza",
 						 description: "root test for pizzas",
-						 leader_id: 1)    
+						 leader_id: 3)    
 						 
 #robot4 
 Robot.create!(name:  "Pizza1",
-              category: "Small",
-              team_id: 2)
+              category: "MicroSailboat",
+              team_id: 2,
+              logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')
               
 #robot5 
 Robot.create!(name:  "Pizza2",
-              category: "Small",
+              category: "MicroSailboat",
               team_id: 2)
               
 #robot6 
 Robot.create!(name:  "Pizza3",
-              category: "Small",
+              category: "Sailboat",
               team_id: 2) 	 
 
 #team 3						 
-Team.create!(name: "just for fun",
+Team.create!(name: "Just for fun",
 						 description: "root test for just for fun",
-						 leader_id: 1)   
+						 leader_id: 4,
+             logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')   
 
 #robot7 
 Robot.create!(name:  "just for fun1",
-              category: "Small",
+              category: "MicroSailboat",
               team_id: 3)
               
 #robot8 
-Robot.create!(name:  "just for fun2",
-              category: "Small",
+Robot.create!(name:  "Just for fun2",
+              category: "MicroSailboat",
               team_id: 3)
               
 #robot9 
-Robot.create!(name:  "just for fun3",
-              category: "Small",
+Robot.create!(name:  "Just for fun3",
+              category: "Sailboat",
               team_id: 3) 	 
 
 

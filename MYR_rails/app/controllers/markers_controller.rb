@@ -57,10 +57,20 @@ class MarkersController < ApplicationController
   # POST /markers
   # POST /markers.json
   def create
-    @marker = Marker.new(marker_params)
-
+    @marker=Marker.new(marker_params)
+    tablat=@marker.latitude.split(";")
+    tablng=@marker.longitude.split(";")
+    flag=false
+    for i in (0..tablat.length-1)
+      if tablat[i]!="" && tablat[i]!=nil
+        flag=Marker.create(datetime: @marker.datetime, mission_id: @marker.mission_id, latitude: tablat[i], longitude: tablng[i], mtype: @marker.mtype)
+      end
+    end
+    
+    #@marker = Marker.new(marker_params)
+    #need to check
     respond_to do |format|
-      if @marker.save
+      if flag #if flag==true all coordinates were saved
         format.html { redirect_to @marker, notice: 'Marker was successfully created.' }
         format.json { render :show, status: :created, location: @marker }
       else

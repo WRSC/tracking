@@ -100,9 +100,9 @@ class CoordinatesController < ApplicationController
 
         respond_to do |format|
           if (lat.length>0 && long.length>0 && date.length >0)
-            if (lat.length==1)
-              @coordinate.save
-            end
+           # if (lat.length==1)
+           #   @coordinate.save
+           # end
             format.html { redirect_to @coordinate, notice: 'Coordinate was successfully created.' }
             format.json { render :show, status: :created, location: @coordinate }
           else
@@ -176,10 +176,9 @@ class CoordinatesController < ApplicationController
 
   def gatherCoordsBetweenDates
     trackers=params[:trackers]
-		
 		if (params[:tstart] != nil && params[:tend] != nil)
-      tstart = params[:tstart].to_datetime
-      tend = params[:tend].to_datetime
+      tstart = params[:tstart]
+      tend   = params[:tend]
       newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
     end

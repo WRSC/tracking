@@ -20,8 +20,8 @@ $(document).ready(function(){
 	google.maps.event.addDomListener(window, 'load', initializeMap());
 	//initializeMap();
 	initialScroll();
-	requestRefreshTeams();
-
+  displayMarkersOrnot();
+  requestRefreshTeams();
 });
 
 

@@ -2,25 +2,31 @@
 more options to handle google map
 https://developers.google.com/maps/documentation/javascript/geometry
 */
+//need to fix how to save to database
 Polygonlat=""
 Polygonlng=""
-
+polygonMarkers=[]
 function savePolygonMarker(){
 		if ($("#marker_missions_dropdown option:selected").val()==0){
 			alert('Please choose a mission')
 		}else{
 			mission_id=$("#marker_missions_dropdown option:selected").val()
-			var len=customPolygon.getPath().getLength();
-		  for (var i=0; i<len; i++) {
-				xy=customPolygon.getPath().getAt(i)
-				lat=xy.lat()
-				lng=xy.lng()          	
-				Polygonlat+=lat+"_"
-				Polygonlng+=lng+"_"
-		  }
-			alert(Polygonlat)
-			p={"latitude": Polygonlat, "longitude": Polygonlng, "mtype": "Polygon", "datetime": getCurrentTime(), "mission_id": mission_id}
-			$.ajax({
+      var Polygonlng=""
+      var polygonlat=""
+      for (var j=0;j<polygonMarkers.length;j++){
+  	    dp=polygonMarkers[j] //desired polygon
+        for (var i=0; i<dp.getPath().length; i++) {
+				  xy=dp.getPath().getAt(i)
+				  lat=xy.lat()
+				  lng=xy.lng()          	
+				  Polygonlat+=lat+"_"
+				  Polygonlng+=lng+"_"
+		    }
+        Polygonlat+=";"
+        Polygonlng+=";"
+      }
+			 p={"latitude": Polygonlat, "longitude": Polygonlng, "mtype": "Polygon", "datetime": getCurrentTime(), "mission_id": mission_id}
+			 $.ajax({
 							type: "POST",
 							url: "/markers",
 							data: {	marker: p},
@@ -29,7 +35,7 @@ function savePolygonMarker(){
 								alert('saved')
 							}
 			}) 	
-		}
+    }
 	}
 
 function addFixPolygon(){
@@ -42,13 +48,10 @@ function addFixPolygon(){
 		latlng=tabinput[i].split(",")
 		lat=latlng[0]
 		lng=latlng[1]
-		Polygonlat+=lat+"_"
-		Polygonlng+=lng+"_"
 		coord.push(new google.maps.LatLng(lat, lng))
-		markers.push(addFixMarker(lat, lng))//in Point.js
   }
 	  // Construct the polygon.
- 	fixPolygon = new google.maps.Polygon({
+ 	var fixPolygon = new google.maps.Polygon({
     paths: coord,
     strokeColor: '#FF0000',
     strokeOpacity: 0.8,
@@ -57,11 +60,10 @@ function addFixPolygon(){
     fillOpacity: 0.35
   });
 	fixPolygon.setMap(map_marker)
-	adaptZoom()
   // Add a listener for the click event.
   google.maps.event.addListener(fixPolygon, 'click', showArrays);
-
-  infoWindow = new google.maps.InfoWindow();
+  infoWindowPolgon = new google.maps.InfoWindow();
+  polygonMarkers.push(fixPolygon)
 }
 
 function addCustomPolygon(){
@@ -74,13 +76,10 @@ function addCustomPolygon(){
 		latlng=tabinput[i].split(",")
 		lat=latlng[0]
 		lng=latlng[1]
-		Polygonlat+=lat+"_"
-		Polygonlng+=lng+"_"
 		coord.push(new google.maps.LatLng(lat, lng))
-		//markers.push(addFixMarker(lat, lng))//in Point.js
   }
 	  // Construct the polygon.
- 	customPolygon = new google.maps.Polygon({
+ 	var customPolygon = new google.maps.Polygon({
     paths: coord,
     strokeColor: '#FF0000',
     strokeOpacity: 0.8,
@@ -91,19 +90,15 @@ function addCustomPolygon(){
 		draggable: true
   });
 	customPolygon.setMap(map_marker)
-	adaptZoom()
-
-
 	//add drag event
-	google.maps.event.addListener(customPolygon, "dragend", updatePointsByDrag)
-
+//	google.maps.event.addListener(customPolygon, "dragend", updatePointsByDrag)
   // Add a listener for the click event.
   google.maps.event.addListener(customPolygon, 'click', showArrays);
-
-  infoWindow = new google.maps.InfoWindow();
+  infoWindowPolygon = new google.maps.InfoWindow();
+  polygonMarkers.push(customPolygon)
 }
 
-
+/*
 function updatePointsByDrag(){
     var len=customPolygon.getPath().getLength();
     for (var i=0; i<len; i++) {
@@ -115,30 +110,45 @@ function updatePointsByDrag(){
     }
 		alert(Polygonlat)
 };
-
+*/
 
 /** @this {google.maps.Polygon} */
 function showArrays(event) {
   // Since this polygon has only one path, we can call getPath()
   // to return the MVCArray of LatLngs.
+  pg=this //here this is the polygon
   var vertices = this.getPath();
 
-  var contentString = '<font color="black"><b>The coordinates of fix polygon :</b><br>' +
-      'Clicked location: <br>' + event.latLng.lat() + ',&nbsp' + event.latLng.lng() +
-      '<br>';
+  var contentString = '<font color="black"><b>The coordinates of polygon :</b><br>' +
+      '<b>Clicked location: </b><br>' + event.latLng.lat() + ',&nbsp' + event.latLng.lng();
 
   // Iterate over the vertices.
   for (var i =0; i < vertices.getLength(); i++) {
     var xy = vertices.getAt(i);
-    contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
-        xy.lng();
+    contentString += '<br>' + '<b>Coordinate</b> ' + i + ':<br>' + xy.lat() + ',&nbsp' + xy.lng();
   }
-	contentString +='</font>'
+	contentString +='<br /><input type="image" id="delete-polygon-buoy" src="/icons/delete_point_buoy.png" alt="delete me" height="20" width="20" title="delete me" style="float: right;" /></input><br>'
+  +'</font>'
   // Replace the info window's content and position.
-  infoWindow.setContent(contentString);
-  infoWindow.setPosition(event.latLng);
-
-  infoWindow.open(map_marker);
+  infoWindowPolygon.setContent(contentString);
+  infoWindowPolygon.setPosition(event.latLng);
+  infoWindowPolygon.open(map_marker);
+  $("#delete-polygon-buoy").click(function(){
+    var ind=findIndexInPolygonMarkers(pg)
+    alert(ind)
+    infoWindowPolygon.close()
+    polygonMarkers[ind].setMap(null)
+    polygonMarkers[ind]=""
+  })
 }
+
+  function findIndexInPolygonMarkers(pg){
+    for (var i=0;i<polygonMarkers.length;i++){
+        if (polygonMarkers[i]!="" && pg==polygonMarkers[i]){
+          return i
+        }
+    }
+    return -1
+  }
 
 

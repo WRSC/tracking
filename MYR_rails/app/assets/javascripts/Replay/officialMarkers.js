@@ -1,5 +1,5 @@
 function drawOfficialMarkers(data){
-	alert('enterd draw markers')
+  //alert('enterd draw markers')
 	for (var i=0;i<data.length;i++){
 		switch (data[i].mtype){
 			case "Point":
@@ -19,7 +19,7 @@ function drawOfficialMarkers(data){
 }
 
 function drawPoint(data){
-	alert('enter draw point')
+	//alert('enter draw point')
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
 	for (var i=0;i<tablat.length;i++){	
@@ -42,7 +42,7 @@ function addFixMarker(lat, lng){
 	
 
 function drawLine(data){
-	alert('enter draw line')
+	//alert('enter draw line')
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
   coord=[]
@@ -64,7 +64,7 @@ function drawLine(data){
 }
 
 function drawPolygon(data){
-	alert('enter draw polygon')
+	//alert('enter draw polygon')
 	tablat=data.latitude.split("_")
 	tablng=data.longitude.split("_")
 	coord=[]
@@ -86,7 +86,7 @@ function drawPolygon(data){
 }
 
 function drawCircle(data){
-	alert('enter draw circle')
+    //alert('enter draw circle')
 	tabcenter=data.latitude.split("_")
 	tabradius=data.longitude.split("_")
 	lat=tabcenter[0]

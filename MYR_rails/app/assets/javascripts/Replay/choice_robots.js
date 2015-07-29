@@ -217,7 +217,7 @@ function choose_datetimes(){
 //------------------------------------------------------------
 //---------------------------END DATETIMES---------------------------------------------------
 
-function getDatetimesInfos(){
+function getDatetimesInfos(markerDisplay){
 	//alert('entered')
 	datetime=readcookie() //read datetimes
 	robs=readRoblistInCookie()

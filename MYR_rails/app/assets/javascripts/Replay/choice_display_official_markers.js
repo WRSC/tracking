@@ -1,38 +1,41 @@
-function displayMarkersOrnot(){
-	alert("enter display")
-	//--------------INITIALIZATION-------------------------------------------------
-	var count=0
-	$(document).ready(function(){
-		//initialize the checkboxs
-		// FOR NOW => si pas de cookie -> rien n est coché
-		$( "input[name='display-official-markers']" ).each(function () {
+var markerDisplay=false
 
-		  var id = $(this).attr('id');
-		  var str = $.cookie("displayOM");//display Official Markers
-		  if (str!=null){
-		    var needDisplay = str;
-		  }
-		  else{
-		     needDisplay='false';
-		  }
-			if (needDisplay=='true'){	 
-		    $(this).prop('checked',true);
-		  }
-		  else{
-		    $(this).prop('checked',false);
-		  }
-		})
-		//initial display of the page
-/*
-		//if at least one checkbox is checked
-		$( "input[name='display-official-markers']").(function () { 
-  	  if($(this).is(':checked')){
-  	    requestRefreshRobots();
-  	  }
-  	})
-*/
+function setMarkerDisplay(x){
+  markerDisplay=x
+}
+
+function getMarkerDisplay(){
+  return markerDisplay
+}
+
+function displayMarkersOrnot(){
+	//--------------INITIALIZATION-------------------------------------------------
+	var needDisplay=false
+	$( "input[name='display-official-markers']" ).each(function () {
+	  var id = $(this).attr('id');
+	  var str = $.cookie("displayOM");//display Official Markers
+	  if (str!=null){
+	     buoyDisplay = str;
+	  }
+	  else{
+	     buoyDisplay='false';
+	  }
+		if (buoyDisplay=='true'){	 
+	    $(this).prop('checked',true);
+	  }
+	  else{
+	    $(this).prop('checked',false);
+	  }
 	})
-	
+	//initial display of the page
+	//if at least one checkbox is checked
+	$( "input[name='display-official-markers']").each(function () { 
+ 	  if($(this).is(':checked')){
+       needDisplay=true
+     }
+    setMarkerDisplay(needDisplay)
+ 	})
+
 //-------------------  ACTIONS OF THE CHECKBOXE -------------------------------
 //pour toutes les checkboxes
   $( "input[name='display-official-markers']"  ).each(function () { 
@@ -44,15 +47,16 @@ function displayMarkersOrnot(){
       //si coché
       if($(this).is(':checked')){
 		    $.cookie("displayOM",'true');//display Official Markersa
-        requestOfficialMarkersInfo()
+        needDisplay=true
       }else{//si décoché
 		    $.cookie("displayOM",'false');//display Official Markers
+        needDisplay=false
       }
-     	//need to do, when we choose teams, need to Emphasize
+      setMarkerDisplay(needDisplay)
     })
   })
-  requestOfficialMarkersInfo()
 }
+
 
 function requestOfficialMarkersInfo(){
 	$.ajax({
@@ -64,6 +68,7 @@ function requestOfficialMarkersInfo(){
     }     
 	})  
 }
+
 
 
 

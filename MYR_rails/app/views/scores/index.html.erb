@@ -6,6 +6,7 @@
 <h1>WRSC 2015 FINAL STANDING</h1>
 <table id="racetimes">
   <tr id="firstrow">
+    <th>#</th>
     <th>Team</th>
     <th>Robot</th>
 		<th>Category</th>
@@ -13,21 +14,53 @@
     <th>Mission 2</th>
     <th>Mission 3</th>
     <th>Mission 4</th>
+    <% if is_admin? %>
+      <th>Option</th>
+    <% end %>
   </tr>
-	<% @teamlist.each do |team| %>
-			<% roblist=team.robots   %>
-			<% roblist.each do |rob| %>
-			<tr>
-				<td><%= team.name %></td>
-				<td><%= rob.name%></td>
-				<td><%= rob.category%></td>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-			</tr>				
-			<% end %>
-	<% end %>
+  <% i=1 %>
+  <% if is_admin? %>
+	  <% @teamlist.each do |team| %>
+			  <% roblist=team.robots   %>
+			  <% roblist.each do |rob| %>
+			  <tr>
+          <td><%= i %></td>
+				  <td contenteditable="true" ><%= team.name %></td>
+				  <td contenteditable="true" ><%= rob.name%></td>
+				  <td contenteditable="true" ><%= rob.category%></td>
+				  <td contenteditable="true" >1</td>
+				  <td contenteditable="true" >2</td>
+				  <td contenteditable="true" >3</td>
+			  	<td contenteditable="true" >4</td>
+          <td>
+            <span class="table-option">
+              <input type="image" src="/icons/scores-ok.png" width=25 height=25 ></input>
+              <input class="table-remove" type="image" src="/icons/scores-delete.png" width=25 height=25 > </input>
+            </span>
+          </td>
+          <% i+=1 %>
+       	</tr>		
+		  	<% end %>
+	  <% end %>
+  <% else %>
+    <% i=1 %>
+	  <% @teamlist.each do |team| %>
+			  <% roblist=team.robots   %>
+			  <% roblist.each do |rob| %>
+			  <tr>
+          <td><%= i %></td>
+				  <td ><%= team.name %></td>
+				  <td ><%= rob.name%></td>
+				  <td ><%= rob.category%></td>
+				  <td >1</td>
+				  <td >2</td>
+				  <td >3</td>
+			  	<td >4</td>
+		  	</tr>				
+        <% i+=1%>
+		  	<% end %>
+	  <% end %>
+  <% end %>
 </table>
 <button id="export-btn" class="btn btn-primary">Export Data</button>
 <p id="export"></p>

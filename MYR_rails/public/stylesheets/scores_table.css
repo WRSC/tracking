@@ -1,0 +1,20 @@
+* {font-family: Helvetica Neue, Arial, sans-serif; }
+#score-awesome-table #score-background-container{ background-image: linear-gradient(#aaa 25%, #000);}
+#score-awesome-table h1, table { text-align: center; }
+
+#score-awesome-table table {border-collapse: collapse;  width: 70%; margin: 0 auto 5rem;}
+
+#score-awesome-table th, td { padding: 1.5rem; font-size: 1.3rem; }
+
+#score-awesome-table tr {background: hsl(50, 50%, 80%); }
+
+#score-awesome-table tr, td { transition: .4s ease-in; } 
+
+#score-awesome-table tr:first-child {background: hsla(12, 100%, 40%, 0.5); }
+
+#score-awesome-table tr:nth-child(even) { background: hsla(50, 50%, 80%, 0.7); }
+
+#score-awsome-table td:empty {background: hsla(50, 25%, 60%, 0.7); }
+
+tr:hover:not(#firstrow), tr:hover td:empty {background: #ff0; pointer-events: visible;}tr:hover:not(#firstrow) { transform: scale(1.2); font-weight: 700; box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);}
+

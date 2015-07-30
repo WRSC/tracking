@@ -24,8 +24,8 @@ Rails.application.routes.draw do
     resources :missions
     resources :markers
     resources :sessions
-    resources :listes
-    
+    resources :scores 
+   
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update, :sent_password_reset_email]
 

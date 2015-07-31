@@ -192,13 +192,13 @@ Robot.create!(name:  "Zombie3",
 #team 2        
 Team.create!(name: "Pizza",
 						 description: "root test for pizzas",
-						 leader_id: 3)    
+						 leader_id: 3,
+             logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')    
 						 
 #robot4 
 Robot.create!(name:  "Pizza1",
               category: "MicroSailboat",
-              team_id: 2,
-              logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')
+              team_id: 2)
               
 #robot5 
 Robot.create!(name:  "Pizza2",

@@ -22,11 +22,11 @@
 
 <p>
   <strong>Team:</strong>
-  <% myVar= Team.find_by_id(@member.team_id) %>
+  <% myVar= @member.team %>
   <% if myVar != nil %>
     <%= myVar.name %>
     <% if sign_in? %>
-      <% if (current_user.team_id == @member.team_id) && !is_leader(Team.find(@member.team_id).name) && (@member.id == current_user.id)  %>
+      <% if (current_user.team.id == @member.team.id) && !is_leader(Team.find(@member.team.id).name) && (@member.id == current_user.id)  %>
         <td><%= link_to 'Leave', leave_member_path(current_user), method: :patch, data: { confirm: 'Are you sure you want to leave the team ?'} %> </td>
       <% end %>
     <% end %>

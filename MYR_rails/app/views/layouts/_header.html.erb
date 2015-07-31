@@ -42,8 +42,8 @@
 						<%=li_actif([teams_path,members_path]) %><a class="drop" href="#">My Account </a>
 						<ul>
 							<% teamprefix=teams_path%>
-							<% teampostfix=current_user.team_id.to_s %>
-							<% current_user_team_path=teams_path+'/'+current_user.team_id.to_s %>
+							<% teampostfix=current_user.team.id.to_s %>
+							<% current_user_team_path=teams_path+'/'+current_user.team.id.to_s %>
 							<%=li_actif(teams_path) %><a href="<%= current_user_team_path %>"> My Team </a></li>	
 							<% prefix=members_path%>	
 							<% postfix=current_user.id.to_s %>

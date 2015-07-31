@@ -72,7 +72,7 @@
         <% for i in Team.first.id..Team.last.id%>
           <% myVar = Team.find_by_id(i) %>
           <% if myVar!= nil %>
-            <% if member.team_id == myVar.id  %>
+            <% if member.team.id == myVar.id  %>
               <% rep<<myVar.name %>
             <% end %>
           <% end %>
@@ -88,7 +88,7 @@
                 <!-- <td><a href= member/invite ><button id="invitebutton" name=<%= member.name %> type="button" onclick="myFunction(this.name)">Invite</button></a></td> -->
               <% elsif  member.role=="administrator" %>
                 <span id="<%="status"+member.id.to_s %>">No team for the admin</span>
-              <% elsif (member.team_id == current_user.team_id) && (member.id != current_user.id)%>
+              <% elsif (member.team.id == current_user.team.id) && (member.id != current_user.id)%>
                 <span id="<%="status"+member.id.to_s %>"><%= button_to 'Kick', kick_member_path(member), method: :patch, remote: :true %></span>
               <% end %>
         <% end %>

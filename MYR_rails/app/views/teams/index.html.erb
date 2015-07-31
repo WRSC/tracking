@@ -36,9 +36,9 @@
           <% if sign_in? %>
             <% if (is_leader(team.name) || is_admin?) %>
               <td><%= (link_to 'Show', team) + ' | ' + (link_to 'Edit', edit_team_path(team)) + ' | ' + (link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team.' }) %></td>
-            <% elsif current_user.team_id == team.id && !is_leader(team.name) %>
+            <% elsif current_user.team.id == team.id && !is_leader(team.name) %>
               <td><%= (link_to 'Show', team)%> <%= button_to 'Leave', leave_member_path(current_user), method: :patch, data: { confirm: 'Are you sure you want to leave the team ?'} %> </td>
-            <% elsif (current_user.team_id == nil) && !is_admin? %>
+            <% elsif (current_user.team.id == nil) && !is_admin? %>
               <td><%= (link_to 'Show', team)%> <%= button_to 'Join', join_team_path(team), method: :patch, data: { confirm: 'Do you really want to belong to this team ?'} %> </td>
             <% else %>
               <td><%= link_to 'Show', team %></td>

@@ -36,7 +36,7 @@ class TeamsController < ApplicationController
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
-    @user.update_attribute(:team_id, @team.id)
+    @user.update_attribute(:team, @team)
   end
 
   # PATCH/PUT /teams/1
@@ -71,7 +71,7 @@ class TeamsController < ApplicationController
       robot.destroy
     end
     @team.members.each do |member|
-      member.update_attribute(:team_id, nil)
+      member.update_attribute(:team, nil)
     end
     @team.destroy
     respond_to do |format|
@@ -83,7 +83,7 @@ class TeamsController < ApplicationController
   def join
     @member = current_user
     @team = Team.find(params[:id])
-    @member.update_attribute(:team_id, @team.id)
+    @member.update_attribute(:team, @team)
     respond_to do |format|
         format.html {redirect_to :back, notice: 'You successfully joined '+@team.name+' !' }
         format.json {render inline: "location.reload();" }

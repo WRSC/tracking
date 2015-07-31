@@ -28,7 +28,7 @@
 <h1><strong>Members :</strong></h1>
 <table>
 	    <tr>
-			<% teammates = Member.where("team_id = ?", @team.id)%>
+			<% teammates = Member.where(team: @team)%>
 			<% teammates.each do |mate| %>
 			 	<tbody>
 					<center><td><p><%= link_to mate.name, mate.name %></p></td></center>

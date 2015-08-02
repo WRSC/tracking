@@ -36,7 +36,7 @@
 						<% if current_user.logo==nil || current_user.logo=="" %>
 							<img  src= "/stylesheets/images/demo/avatar.png" > 
 						<% else %>
-							<img  src= "<%= current_user.logo %>" > 
+		          <%= image_tag current_user.logo_url(:small) %>
 						<% end %>
 						<%=current_user.name%>
 						<%=li_actif([teams_path,members_path]) %><a class="drop" href="#">My Account </a>

@@ -14,6 +14,15 @@ Member.create!(name:  "testAdmin",
                activated: true,
                activated_at: Time.zone.now)
 
+
+Member.create!(name:  "joker",
+               email: "joker@gmail.com",
+               password:              "foobar",
+               password_confirmation: "foobar",
+               role:     'visitor',
+               activated: true,
+               activated_at: Time.zone.now)
+
 10.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+1}@gmail.com"

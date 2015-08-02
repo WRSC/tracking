@@ -233,9 +233,14 @@
  		@isEnd=params[:isEnd]
  		@datetime=params[:datetime].to_datetime
  		@attmepts=[]
-	  if singleAttempt==true 
-		  @attempts=Attempt.where("start == ? AND end == ? AND tracker_id == ?", tstart, tend, tracker_id)
+		@signle=false
+	  if singleAttempt=='true' 
+			@test=true
+		  a_id=cookies[:attemptslist].to_i
+			@single=true
+			@attempts=Attempt.find_by(id: a_id)
 	  else 
+			@test=false
 		  @attempts=Tracker.find_by(id: tracker_id).attempts.where("start < ? AND end > ?",@datetime,@datetime) 
 	 	end
  	end

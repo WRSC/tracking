@@ -13,6 +13,7 @@
         <th class=column-member>Logo</th>
         <th class=column-member>Description</th>
         <th class=column-member>Team Leader</th>
+				<th class=column-member>Option</th>
     </tr>
   </thead>
 
@@ -26,12 +27,10 @@
       <% for ii in 0..(allTeamIdSort.size-1) %>
         <% team=Team.find_by_id(allTeamIdSort[ii]) %>
         <tr>
-        	<td><%= link_to team.name, team %></td>
-          <!--<% tm_path="/teams/"+team.id.to_s%>
-          <td><%= link_to team.name , tm_path %></td>-->
-          <!--<td><%= team.logo %></td>-->
-          <td><img src="<%= team.logo %>"></td>
-          <td><%= team.description %></td>
+					<td><%= link_to team.name, team %></td>
+		      <% logoimage= image_tag team.logo_url(:index) %>
+		      <td><center><%= link_to logoimage , team  %></center></td>
+		      <td><%= team.description %></td>
           <td><%= link_to Member.find(team.leader_id.to_i).name, Member.find(team.leader_id.to_i) %></td>
           <% if sign_in? %>
             <% if (is_leader(team.name) || is_admin?) %>

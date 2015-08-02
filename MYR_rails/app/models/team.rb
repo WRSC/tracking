@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+  attr_accessor :logo, :remote_logo_url
+  mount_uploader :logo, TeamlogoUploader
 # Associations
 	has_many :members		
 	has_many :robots		
@@ -7,7 +9,8 @@ class Team < ActiveRecord::Base
 # Validations
     validates :name, presence: true, uniqueness: true, length: { in: 3..40, too_long: "%{count} characters is the maximum allowed", too_short:"%{count} characters is the minimum allowed"  }
     validates :logo, allow_blank: true, format: {with: %r{\.(gif|jpg|png)\Z}i, message: 'must be a URL for GIF, JPG or PNG image'}	
-    validate :valid_size
+  #  validate :valid_size
+=begin
     def valid_size
         if self.logo != ""
             if FastImage.size(self.logo)!= nil
@@ -20,4 +23,5 @@ class Team < ActiveRecord::Base
             end
         end
     end
+=end
 end

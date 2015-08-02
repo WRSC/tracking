@@ -1,28 +1,26 @@
+<font color="black">
 <% if @isEnd == "true" %>
 	<div id="infowindow-title"><p><b><center><u>It was the end.</u></center></b><p></div>
 <% else %>
 	<div id="infowindow-title"><p><b><center><u>Data Info:</u></center></b><p></div>
 <% end %>
-<% if @attempts.size == 1 %>
-	<% attempt=@attempts.first %>
+
+<% if @single==true %>
+	<% attempt=@attempts %>
 	<% rob = Robot.find_by(id: attempt.robot_id) %>
-	<% if rob.team.logo !=nil %>		
-		<img src="<%= rob.team.logo%>" alt="Team logo">
+	<% if rob.team.logo !=nil && rob.team.logo!="" %>		
+		 <center><%= image_tag rob.team.logo_url(:small) %></center>
 	<% end %>
 	<div id="infowindow">
 	<!--Team--><!--Robot-->
 	<p><b>Team:</b> <%= rob.team.name %> &nbsp <b>Robot:</b> <%= rob.name %></p>
 
 	<!--Mission--><!--Attempt-->
-	<p><b>Mission:</b> <%= Mission.find_by(id: attempt.mission_id).name %> &nbsp <b>Attempt <%= attempt.id%>: </b> <%= attempt.name %></p>
+	<p><b>Mission:</b> <%= Mission.find_by(id: attempt.mission_id).name %> &nbsp <b>Attempt</b> <%= attempt.name %></p>
 	
 	<!--Datetime-->
 	<p><b>Datetime:</b> <%= @datetime %> UTC</p>
 	</div>
-	<style>
-		#infowindow, #infowindow-title{
-			color: black;
-		}
-	</style>
 <% else %>
 <% end %>
+</font>

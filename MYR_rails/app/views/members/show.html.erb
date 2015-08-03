@@ -24,7 +24,7 @@
   <strong>Team:</strong>
   <% myVar= @member.team %>
   <% if myVar != nil %>
-    <%= myVar.name %>
+    <%= link_to myVar.name, team_path(myVar.id) %>
     <% if sign_in? %>
       <% if (current_user.team.id == @member.team.id) && !is_leader(Team.find(@member.team.id).name) && (@member.id == current_user.id)  %>
         <td><%= link_to 'Leave', leave_member_path(current_user), method: :patch, data: { confirm: 'Are you sure you want to leave the team ?'} %> </td>

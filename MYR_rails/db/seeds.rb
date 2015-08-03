@@ -32,27 +32,42 @@ Member.find(3).update_attribute(:team_id, 2)
 Member.find(4).update_attribute(:team_id, 3)
 
 i=1
-5.times do |n|
+9.times do |n|
 	token=i
 	Tracker.create!(token:  "#{i}",
              		  description: "It was the #{i} tracker.")
   i=i+1
 end
 
-#i=1
-for rob_id in 1..3
-	for m_id in 1..4
-		#for att in 1..2
+for rob_id in 1..9
 			name = Faker::Name.name
 			Attempt.create!(name: name,
 											start: "20150601000000",
 											end:   "20150801000000",
 											robot_id: rob_id,
-											mission_id: m_id,
+											mission_id: 1,
 											tracker_id: rob_id)
-			#i=i+1
-		#end
-	end
+      name = Faker::Name.name
+      Attempt.create!(name: name,
+                      start: "20150601000000",
+                      end:   "20150801000000",
+                      robot_id: rob_id,
+                      mission_id: 2,
+                      tracker_id: rob_id)
+      name = Faker::Name.name
+      Attempt.create!(name: name,
+                      start: "20150601000000",
+                      end:   "20150801000000",
+                      robot_id: rob_id,
+                      mission_id: 3,
+                      tracker_id: rob_id)
+      name = Faker::Name.name
+      Attempt.create!(name: name,
+                      start: "20150601000000",
+                      end:   "20150801000000",
+                      robot_id: rob_id,
+                      mission_id: 4,
+                      tracker_id: rob_id)
 end
 
 #One tracker per robot

@@ -250,7 +250,7 @@ a:hover .hexagon i{color:rgba(0,0,0,0.5);}
 /* Navigation */
 #mainav li a{color:inherit; border-color:transparent;}
 #mainav .active a, #mainav a:hover, #mainav li:hover > a{color:#20D8FF; border-color:#20D8FF;}
-#mainav li li a, #mainav .active li a{color:#FFFFFF; background-color:rgba(0,0,0,.6); border-color:rgba(0,0,0,.6);}
+#mainav li li a, #mainav .active li a{color:#FFFFFF; background-color:rgba(0,0,0,1); border-color:rgba(0,0,0,.6);}
 #mainav li li:hover > a, #mainav .active .active > a{color:#FFFFFF; background-color:#20D8FF;}
 
 #breadcrumb a{color:#888888; background-color:inherit;}

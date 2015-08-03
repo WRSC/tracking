@@ -1,0 +1,128 @@
+<!--https://www.freshdesignweb.com/free-css-tables/-->
+<!--http://codepen.io/iambeccagould/pen/tbwjh-->
+<!--http://codepen.io/ashblue/pen/mCtuA-->
+<% provide(:title, "Scores | Index") %>
+<%= stylesheet_link_tag 'scores_table.css', media: 'all', 'data-turbolinks-track' => true %>
+<div id="score-awesome-table">
+<div id="score-background-container">
+<br>
+<h1>WRSC 2015 FINAL STANDING</h1>
+<table id="racetimes">
+  <tr id="firstrow">
+    <th>#</th>
+    <th>Team</th>
+    <th>Robot</th>
+		<th>Category</th>
+    <th>Mission 1</th>
+    <th>Mission 2</th>
+    <th>Mission 3</th>
+    <th>Mission 4</th>
+    <% if is_admin? %>
+      <th>Option</th>
+    <% end %>
+  </tr>
+  <% i=1 %>
+  <% if is_admin? %>
+	  <% @teamlist.each do |team| %>
+			  <% roblist=team.robots   %>
+			  <% roblist.each do |rob| %>
+			  <tr>
+          <td><%= i %></td>
+				  <td contenteditable="true" ><%= team.name %></td>
+				  <td contenteditable="true" ><%= rob.name%></td>
+				  <td contenteditable="true" ><%= rob.category%></td>
+				  <td contenteditable="true" >1</td>
+				  <td contenteditable="true" >2</td>
+				  <td contenteditable="true" >3</td>
+			  	<td contenteditable="true" >4</td>
+          <td>
+            <span class="table-option">
+              <input type="image" src="/icons/scores-ok.png" width=25 height=25 ></input>
+              <input class="table-remove" type="image" src="/icons/scores-delete.png" width=25 height=25 > </input>
+            </span>
+          </td>
+          <% i+=1 %>
+       	</tr>		
+		  	<% end %>
+	  <% end %>
+  <% else %>
+    <% i=1 %>
+	  <% @teamlist.each do |team| %>
+			  <% roblist=team.robots   %>
+			  <% roblist.each do |rob| %>
+			  <tr>
+          <td><%= i %></td>
+				  <td ><%= team.name %></td>
+				  <td ><%= rob.name%></td>
+				  <td ><%= rob.category%></td>
+				  <td >1</td>
+				  <td >2</td>
+				  <td >3</td>
+			  	<td >4</td>
+		  	</tr>				
+        <% i+=1%>
+		  	<% end %>
+	  <% end %>
+  <% end %>
+</table>
+<button id="export-btn" class="btn btn-primary">Export Data</button>
+<p id="export"></p>
+<p>Updated in <%= Time.now %></p>
+</div>
+</div>
+<script>
+var $TABLE = $('#table');
+var $BTN = $('#export-btn');
+var $EXPORT = $('#export');
+
+$('.table-add').click(function () {
+  var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
+  $TABLE.find('table').append($clone);
+});
+
+$('.table-remove').click(function () {
+  $(this).parents('tr').detach();
+});
+
+$('.table-up').click(function () {
+  var $row = $(this).parents('tr');
+  if ($row.index() === 1) return; // Don't go above the header
+  $row.prev().before($row.get(0));
+});
+
+$('.table-down').click(function () {
+  var $row = $(this).parents('tr');
+  $row.next().after($row.get(0));
+});
+
+// A few jQuery helpers for exporting only
+jQuery.fn.pop = [].pop;
+jQuery.fn.shift = [].shift;
+
+$BTN.click(function () {
+  var $rows = $TABLE.find('tr:not(:hidden)');
+  var headers = [];
+  var data = [];
+  
+  // Get the headers (add special header logic here)
+  $($rows.shift()).find('th:not(:empty)').each(function () {
+    headers.push($(this).text().toLowerCase());
+  });
+  alert(headers[0])
+  // Turn all existing rows into a loopable array
+  $rows.each(function () {
+    var $td = $(this).find('td');
+    var h = {};
+    
+    // Use the headers from earlier to name our hash keys
+    headers.forEach(function (header, i) {
+      h[header] = $td.eq(i).text();   
+    });
+    
+    data.push(h);
+  });
+  
+  // Output the result
+  $EXPORT.text(JSON.stringify(data));
+});
+</script>

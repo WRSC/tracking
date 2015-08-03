@@ -66,7 +66,8 @@ function addFixPolyline(){
 }
 
 function addCustomPolyline(){
-	alert('You can add markers by clicking in the map directly')
+  window.open('test')
+  alert('You can add markers by clicking in the map directly')
 	var polyOptions = {
     strokeColor: '#000000',
     strokeOpacity: 1.0,

@@ -24,6 +24,7 @@
       <a href= members ><button id="sortbuttonD" name="Namebis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
     
     
+        <th class=column-member>Logo</th>
     
         <th class=column-member>Email
       <a href= members ><button id="sortbuttonT" name="Email" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
@@ -64,6 +65,8 @@
       <% nameteam="" %>
       <tr>
       <td><%= link_to member.name, member %></td>
+		  <% logoimage= image_tag member.logo_url(:index) %>
+		  <td><center><%= link_to logoimage , member %></center></td>
       <td><%= member.email %></td>
       <td><%= member.role %></td>
       

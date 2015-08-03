@@ -44,6 +44,7 @@
 		);
 		//always needed ?
 		marker.setMap(replay_map);
+			
 		$.ajax({
 						type: "GET",
 						url: "/infowindow",

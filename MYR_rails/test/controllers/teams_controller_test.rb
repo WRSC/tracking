@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TeamsControllerTest < ActionController::TestCase
-=begin
+
   setup do
     @team = teams(:one)
   end
@@ -20,11 +20,11 @@ class TeamsControllerTest < ActionController::TestCase
   test "should create team" do
     assert_difference('Team.count') do
       post :create, team: { description: @team.description, logo: @team.logo, name: @team.name }
+      assert_response :success
     end
-
     assert_redirected_to team_path(assigns(:team))
   end
-
+=begin
   test "should show team" do
     get :show, id: @team
     assert_response :success

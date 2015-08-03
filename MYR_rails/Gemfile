@@ -45,10 +45,16 @@ gem      'bcrypt'        ,                   '~> 3.1.7'
 gem      'fastimage'
 gem      'thin'
 
+<<<<<<< HEAD
 #to force ssl connection 
 
 gem 'rack-ssl', '~> 1.4.1'
 
+=======
+#in order to uploads some files
+gem      'carrierwave'
+gem      'mini_magick'
+>>>>>>> eee79454f7952a86b65dadb649ca53486e2659e8
 #pretty_print for rails console
 #gem      'hirb'
 

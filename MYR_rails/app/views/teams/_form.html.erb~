@@ -14,16 +14,17 @@
   <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
-  </div>
+  </div><br>
   <div class="field">
     <%= f.label :logo %>
-    <%= f.text_field :logo %>
+    <%= f.file_field :logo %>
   </div>
   <div class="field">
     <%= f.label :description %>
     <%= f.text_area :description %>
   </div>
   <div class="actions">
+  	<br>
     <%= f.submit %>
   </div>
 <% end %>

@@ -1,4 +1,4 @@
-class ReplayController < ApplicationController
+  class ReplayController < ApplicationController
 	def show 
 	end
 	
@@ -184,9 +184,9 @@ class ReplayController < ApplicationController
  		data=[]#Need start time, end time, tracker_id [] (each attempt has only one tracker)
  		attempt_id = cookies[:attemptslist]
  		attempt=Attempt.find_by(id: attempt_id)
- 		tstart=attempt.start
+ 		tstart=attempt.start.strftime("%Y%m%d%H%M%S")
  		data.push(tstart)
- 		tend=attempt.end
+ 		tend=attempt.end.strftime("%Y%m%d%H%M%S")
  		data.push(tend)
  		tracker_id=attempt.tracker_id
  		data.push(tracker_id)
@@ -212,7 +212,7 @@ class ReplayController < ApplicationController
 
 	def officialMarkersInfo
 		strmissions = cookies[:missionslist]
-		if (strmission != nil) #cannot split nil
+		if (strmissions != nil) #cannot split nil
 			tabm = strmissions.split(","); 
 		else
 			tabm = []
@@ -233,9 +233,12 @@ class ReplayController < ApplicationController
  		@isEnd=params[:isEnd]
  		@datetime=params[:datetime].to_datetime
  		@attmepts=[]
-	  if singleAttempt==true 
-		  @attempts=Attempt.where("start == ? AND end == ? AND tracker_id == ?", tstart, tend, tracker_id)
+	  if singleAttempt=='true' 
+			@test=true
+		  a_id=cookies[:attemptslist].to_i
+			@attempts=Attempt.find_by(id: a_id)
 	  else 
+			@test=false
 		  @attempts=Tracker.find_by(id: tracker_id).attempts.where("start < ? AND end > ?",@datetime,@datetime) 
 	 	end
  	end

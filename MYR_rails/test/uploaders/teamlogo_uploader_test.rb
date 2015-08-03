@@ -1,3 +1,4 @@
+#http://jeffkreeftmeijer.com/2014/using-test-fixtures-with-carrierwave/
 =begin
 require 'carrierwave/test/matchers'
 

@@ -33,10 +33,14 @@
 				</ul>
 				</li>
 				<% if sign_in(current_user) %>
-						<% if current_user.logo==nil || current_user.logo=="" %>
-							<img  src= "/stylesheets/images/demo/avatar.png" > 
-						<% else %>
-						  <% image_tag current_user.logo_url(:small) %>
+	          <% if is_admin? %>
+							  <img  src= "/stylesheets/images/demo/admin.png" width="20" height="20"> 
+            <% else %>
+  					  <% if current_user.logo==nil || current_user.logo=="" %>
+							  <img  src= "/stylesheets/images/demo/avatar.png" > 
+						  <% else %>
+						    <%= image_tag current_user.logo_url(:header) %>
+              <% end %>
             <% end %>
 						<%=current_user.name%>
 						<%=li_actif([teams_path,members_path]) %><a class="drop" href="#">My Account </a>

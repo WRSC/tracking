@@ -36,6 +36,11 @@ class MemberlogoUploader < CarrierWave::Uploader::Base
   # version :thumb do
   #   process :resize_to_fit => [50, 50]
   # end
+  
+  version :header do
+    process :resize_to_fit => [20,20]
+  end
+  
   version :small do
     process :resize_to_fit => [50,50]
   end

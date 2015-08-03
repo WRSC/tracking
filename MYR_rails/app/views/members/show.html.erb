@@ -2,7 +2,7 @@
 <p id="notice"><%= notice %></p>
 <p>
 <% if @member.logo!="" && @member.logo!=nil %>
-  <img src=<%= @member.logo %>>
+  <%= image_tag @member.logo_url(:medium) %>
 <% end %>
 </p>
 <p>

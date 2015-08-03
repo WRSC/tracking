@@ -11,6 +11,7 @@ function saveLineMarker(){
         for (var j=0;j<LineMarkers.length;j++){
           var Linelat=""
           var Linelng=""
+					var name=""
           var len=LineMarkers[j].getPath().getLength();
 		      for (var i=0; i<len; i++) {
 				    xy=LineMarkers[j].getPath().getAt(i)
@@ -18,10 +19,11 @@ function saveLineMarker(){
 				    lng=xy.lng()          	
 				    Linelat+=lat+"_"
 				    Linelng+=lng+"_"
+						name=LineMarkers[j].linetype
 		      }
           Linelat+=";"
           Linelng+=";"
-			    p={"latitude": Linelat, "longitude": Linelng, "mtype": "Line", "datetime": getCurrentTime(), "mission_id": mission_id}
+			    p={"name":name, "latitude": Linelat, "longitude": Linelng, "mtype": "Line", "datetime": getCurrentTime(), "mission_id": mission_id}
 			    $.ajax({
 							type: "POST",
 							url: "/markers",
@@ -38,6 +40,7 @@ function saveLineMarker(){
 
 
 function addFixPolyline(){
+	var linetype=prompt('Please enter the type of line for the line marker')
 	input=prompt("Please respect the format of input data, otherwise it could not recognize the data: lat,lng;lat,lng;...","lat,lng; lat,lng...")
 	/*====== need to check if th input data format is correct =====*/
 	tabinput=input.split(";")
@@ -48,7 +51,8 @@ function addFixPolyline(){
     strokeColor: '#FF0000',
     strokeOpacity: 1.0,
     strokeWeight: 2,
-    markers: fixline
+    markers: fixline,
+		linetype: linetype
   });
   fixPath.setMap(map_marker)
   LineMarkers.push(fixPath)
@@ -66,13 +70,14 @@ function addFixPolyline(){
 }
 
 function addCustomPolyline(){
-  window.open('test')
+	var linetype=prompt('Please enter the type of line for the line marker')
   alert('You can add markers by clicking in the map directly')
 	var polyOptions = {
     strokeColor: '#000000',
     strokeOpacity: 1.0,
     strokeWeight: 3,
-    markers: []
+    markers: [],
+		linetype: linetype
   };
   poly = new google.maps.Polyline(polyOptions);
   poly.setMap(map_marker);

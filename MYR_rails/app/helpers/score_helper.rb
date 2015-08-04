@@ -1,5 +1,7 @@
 module ScoreHelper
-  def triangularRawScore(a_id)
-    markers=getTriangularMarkers()
+  def triangularTimecost(a_id)
+  end
+  
+  def stationKeepingTimecost()
   end
 end

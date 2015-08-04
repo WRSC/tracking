@@ -145,8 +145,8 @@ module SessionsHelper
   def isInTeam?
 	rep=false
 	if current_user != nil
-		if current_user.team_id != nil
-			if Team.find_by_id(current_user.team_id) != nil
+		if current_user.team.id != nil
+			if Team.find_by_id(current_user.team.id) != nil
 				rep = true
 			end
 		end
@@ -158,8 +158,8 @@ module SessionsHelper
 	rep=false
 	myVar=Member.find_by_name(nameMember)
 	if myVar != nil
-		if myVar.team_id != nil
-			if Team.find_by_id(myVar.team_id) != nil
+		if myVar.team.id != nil
+			if Team.find_by_id(myVar.team.id) != nil
 				rep = true
 			end
 		end
@@ -171,7 +171,7 @@ module SessionsHelper
 	rep=false
 	myVar = Member.find_by_name(nameMember)
 	if myVar != nil
-		if myVar.team_id != nil
+		if myVar.team.id != nil
 			if Team.first != nil
 				for i in Team.first.id..Team.last.id
 					if Team.find_by_id(i) != nil
@@ -189,8 +189,8 @@ module SessionsHelper
   def myTeam
 	rep=nil
 	if current_user != nil
-		if current_user.team_id != nil
-			rep = Team.find_by_id(current_user.team_id)
+		if current_user.team.id != nil
+			rep = Team.find_by_id(current_user.team.id)
 		end
 	end
 	return rep
@@ -211,7 +211,7 @@ module SessionsHelper
 	rep=nil
 	myVar=Member.find_by_name(nameMember)
 	if myVar != nil
-		myVar = myVar.team_id
+		myVar = myVar.team.id
 		if myVar != nil
 			rep = Team.find_by_id(myVar)
 		end
@@ -228,13 +228,13 @@ module SessionsHelper
   
   def addOnMyTeam(newUser)
   	if newUser != nil
-  		if newUser.team_id == nil # if newUser has no team
+  		if newUser.team.id == nil # if newUser has no team
 		  	if current_user != nil
-		  		if current_user.team_id != nil
-		  			myVar=Team.find_by_id(current_user.team_id)
+		  		if current_user.team.id != nil
+		  			myVar=Team.find_by_id(current_user.team.id)
 					if myVar != nil
 						if myVar.leader_id == current_user.id
-							newUser.update(:team_id => myVar.id)
+							newUser.update(:team => myVar)
 						end
 					end
 				end
@@ -266,10 +266,10 @@ module SessionsHelper
   	return allTrakersAvailable
   end
 
-  def allMembersInATeam(myTeamId)
+  def allMembersInATeam(myTeam)
 	rep=[]
 	if Member.first != nil
-		rep= Member.where(team_id: myTeamId).ids
+		rep= Member.where(team: myTeam).ids
 	end
 	return rep
   end
@@ -431,7 +431,7 @@ module SessionsHelper
 
 		for i in 0 .. (teamNamesSort.size-1)
 			myVar = Team.find_by_name(teamNamesSort[i])
-			cal1=cal1+Member.where(team_id: myVar.id).ids# tout les membre qui on une team, trié
+			cal1=cal1+Member.where(team: myVar).ids# tout les membre qui on une team, trié
 			if cal1 != []
 				for ii in 0..cal1.size-1
 					cal1[ii]=cal1[ii].to_i

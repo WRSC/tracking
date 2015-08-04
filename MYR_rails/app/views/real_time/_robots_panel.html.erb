@@ -11,14 +11,14 @@
 		<br>
 	<% currentAttempts.each_cons(2) do |attempt, nextAttempt| %>
 		<% if (attempt.robot_id != nextAttempt.robot_id) %>
-		<input type="checkbox" name="robot<%= attempt.robot_id %>" id="<%= attempt.robot_id %>"><%= Robot.find(attempt.robot_id).name %><img src="/icons/medium<%=attempt.robot_id %>.png"/>
+		<input type="checkbox" name="robot<%= attempt.robot_id %>" id="<%= attempt.robot_id %>"><%= Robot.find(attempt.robot_id).name %><img src="/icons/medium<%=attempt.tracker_id %>.png"/>
 		<br>
 		<% end %>
 	<% end %>
-	<input type="checkbox" name="robot<%= currentAttempts.last.robot_id %>" id="<%= currentAttempts.last.robot_id %>"><%= Robot.find(currentAttempts.last.robot_id).name %><img src="/icons/medium<%=currentAttempts.last.robot_id %>.png"/>
+	<input type="checkbox" name="robot<%= currentAttempts.last.robot_id %>" id="<%= currentAttempts.last.robot_id %>"><%= Robot.find(currentAttempts.last.robot_id).name %><img src="/icons/medium<%=currentAttempts.last.tracker_id %>.png"/>
 	<br>
 <% elsif currentAttempts.length == 1  %>
-	<input type="checkbox" name="robot<%= currentAttempts.first.robot_id %>" id="<%= currentAttempts.first.robot_id %>"><%= Robot.find(currentAttempts.first.robot_id).name %><img src="/icons/medium<%=currentAttempts.first.robot_id %>.png"/>
+	<input type="checkbox" name="robot<%= currentAttempts.first.robot_id %>" id="<%= currentAttempts.first.robot_id %>"><%= Robot.find(currentAttempts.first.robot_id).name %><img src="/icons/medium<%=currentAttempts.first.tracker_id %>.png"/>
 	<br>
 <% else %>
 	<p> No robots for this mission has sent coordinates for the moment !</p>

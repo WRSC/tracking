@@ -22,8 +22,8 @@
 </p>
 
 <p>
-  <strong>Datetime:</strong>
-  <%= Time.parse(@coordinate.datetime).utc %>
+  <strong>Datetime (in UTC):</strong>
+  <%= Time.strptime(coordinate.datetime+"UTC", "%Y%m%d%H%M%S%z") %>
 </p>
 
 <p>

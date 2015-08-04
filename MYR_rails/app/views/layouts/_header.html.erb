@@ -1,6 +1,5 @@
 
 <div class="wrapper row1">
-	<%= stylesheet_link_tag 'layout' %>
 	<header id="header" class="clear">
 		<!-- ################################################################################################ -->
 		<div id="logo" class="fl_left">
@@ -33,17 +32,21 @@
 				</ul>
 				</li>
 				<% if sign_in(current_user) %>
-						<% if current_user.logo==nil || current_user.logo=="" %>
-							<img  src= "/stylesheets/images/demo/avatar.png" > 
-						<% else %>
-							<img  src= "<%= current_user.logo %>" > 
-						<% end %>
+	          <% if is_admin? %>
+							  <img  src= "/stylesheets/images/demo/admin.png" width="20" height="20"> 
+            <% else %>
+  					  <% if current_user.logo==nil || current_user.logo=="" %>
+							  <img  src= "/stylesheets/images/demo/avatar.png" > 
+						  <% else %>
+						    <%= image_tag current_user.logo_url(:header) %>
+              <% end %>
+            <% end %>
 						<%=current_user.name%>
 						<%=li_actif([teams_path,members_path]) %><a class="drop" href="#">My Account </a>
 						<ul>
 							<% teamprefix=teams_path%>
-							<% teampostfix=current_user.team_id.to_s %>
-							<% current_user_team_path=teams_path+'/'+current_user.team_id.to_s %>
+							<% teampostfix=current_user.team.id.to_s %>
+							<% current_user_team_path=teams_path+'/'+current_user.team.id.to_s %>
 							<%=li_actif(teams_path) %><a href="<%= current_user_team_path %>"> My Team </a></li>	
 							<% prefix=members_path%>	
 							<% postfix=current_user.id.to_s %>

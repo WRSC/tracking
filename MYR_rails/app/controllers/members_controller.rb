@@ -70,21 +70,12 @@ class MembersController < ApplicationController
           end
         else
           flash.now[:error] = "Ask an administrator for becoming administrator"
-          format.html { redirect_to @member, notice: 'Ask an administrator for becoming administrator.' }
-          format.json { render :show, status: :ok, location: @member }
         end
       else
         flash.now[:error] = "You can not modify this Account: "+@member.name
-        format.html { redirect_to @member, notice: 'You can not modify this Account: '+@member.name }
-        format.json { render :show, status: :ok, location: @member }
-
       end
     else
       flash[:error] = "You are not connected, you have to Sign in or Sign up"
-      respond_to do |format|
-        format.html { redirect_to @member, notice: 'You are not connected, you have to Sign in or Sign up'}
-        format.json { render :show }
-      end
     end
   end
   # DELETE /members/1
@@ -94,8 +85,8 @@ class MembersController < ApplicationController
       if authenticateA_P2(current_user)
         @member = Member.find(params[:id])
         if (heIsLeader?(@member.name))
-          for m in Member.where(team_id: @member.team_id)
-            m.update(:team_id => nil)
+          for m in Member.where(team: @member.team)
+            m.update(:team => nil)
           end
           @team=Team.find_by_leader_id(@member.id)
           @robots = Robot.where(team_id: @team.id)
@@ -134,7 +125,7 @@ class MembersController < ApplicationController
     if sign_in?
       if is_leader?
         @member = Member.find(params[:id])
-        @member.update_attribute(:team_id, current_user.team_id)
+        @member.update_attribute(:team, current_user.team)
         flash[:succes] = "Invitation sent !"
       end
     end
@@ -155,12 +146,12 @@ class MembersController < ApplicationController
 
   def kick
       @member = Member.find(params[:id])
-      @member.update_attribute(:team_id, nil)
+      @member.update_attribute(:team, nil)
   end  
 
   def leave
       @member = Member.find(params[:id])
-      @member.update_attribute(:team_id, nil)
+      @member.update_attribute(:team, nil)
       respond_to do |format|
         format.html {redirect_to :back, notice: 'You left your team.' }
         format.json {render inline: "location.reload();" }
@@ -177,6 +168,6 @@ class MembersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def member_params
-    params.require(:member).permit(:name, :password, :email, :role, :logo, :team_id)
+    params.require(:member).permit(:name, :password, :password_confirmation, :email, :role, :logo)
   end
 end

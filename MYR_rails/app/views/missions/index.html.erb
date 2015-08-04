@@ -9,8 +9,9 @@
       <th class=column-member>Name
       <a href= missions ><button id="sortbuttonT" name="MissionN" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
       <a href= missions ><button id="sortbuttonD" name="MissionNbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
-    
       <th>Description</th>
+      <th>Start</th>
+      <th>End</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -27,6 +28,8 @@
         <tr>
           <td><%= link_to mission.name, mission %></td>
           <td><%= mission.description %></td>
+          <td><%= mission.start %></td>
+          <td><%= mission.end %></td>
           <td><%= link_to 'Show', mission %></td>
           <% if is_admin? %>
             <td><%= link_to 'Edit', edit_mission_path(mission) %></td>

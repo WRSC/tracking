@@ -42,7 +42,9 @@
     <%= f.select :role, ['visitor','competitor'] %>
 
     <%= f.label :logo %>
-    <%= f.text_field :logo, :placeholder => "http://www.example.com"%>
+    <%= f.file_field :logo %>
+    <!--%= f.label :logo %-->
+    <!--%= f.text_field :logo, :placeholder => "http://www.example.com"%-->
   
   <p>
   <div class="actions">

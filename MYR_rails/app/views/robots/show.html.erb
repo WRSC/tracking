@@ -17,8 +17,21 @@
 </p>
 
 <p>
-  <strong>Tracker:</strong>
-  <%= @robot.tracker_id %>
+  	<strong>Trackers:</strong>
+    <% myTrackers = [] %>
+    <% here = false %>
+  	<% @robot.trackers.each do |track| %>
+      <% for i in 0..myTrackers.length-1 do %>
+        <% if myTrackers[i] == track.id %>
+          <% here = true %>
+        <% end %>
+      <% end %>
+  		<% if !here %>
+        <% myTrackers << track.id %>
+	    <% end %> 
+      <% here = false %> 
+    <% end %>
+    <%= tabToString(myTrackers) %>
 </p>
 
 <% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>

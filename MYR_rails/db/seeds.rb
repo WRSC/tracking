@@ -206,8 +206,7 @@ Team.create!(name: "Pizza",
 #robot4 
 Robot.create!(name:  "Pizza1",
               category: "MicroSailboat",
-              team_id: 2,
-              logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')
+              team_id: 2)
               
 #robot5 
 Robot.create!(name:  "Pizza2",

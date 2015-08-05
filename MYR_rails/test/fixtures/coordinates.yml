@@ -24,3 +24,14 @@ testInP:
   datetime: '20150225153927'
   tracker_id: 1
 
+testOnVP:
+  latitude: 5
+  longitude: 5
+  datetime: '20150225153927'
+  tracker_id: 1
+
+testOnEP:
+  latitude: 5
+  longitude: 2
+  datetime: '20150225153927'
+  tracker_id: 1

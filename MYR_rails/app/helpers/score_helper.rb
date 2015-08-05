@@ -55,32 +55,35 @@ module ScoreHelper
   #0=> on the polygon  1 => in the polygon  -1 => out of the polygon
   #dp=desired point    p = polygon
   def pInPolygon(dp,p)
+    #return p[3].latitude
+    #return p[3].longitude
     j=p.length-1
-    jy=p[j].latitude
-    jx=p[j].longitude
     count=0 # count is the number of oddNodes
     # add the first coordinate to the polygon 
-    for i in 0..(p.length-1)  
-      y=p[i].latitude
-      x=p[i].longitude
+    p_y=dp.latitude.to_f
+    p_x=dp.longitude.to_f
+    for i in 0..(p.length-1)
+      jy=p[j].latitude.to_f
+      jx=p[j].longitude.to_f
+      y=p[i].latitude.to_f
+      x=p[i].longitude.to_f
       # if is one of the vertex in polygon
-      if (y==dp.latitude and x==dp.longitude || jy==dp.latitude and jx=dp.longitude)
+      if (y==p_y and x==p_x or jy==p_y and jx=p_x)
         return 0
       end
-      if ((y < dp.latitude and jy >= dp.latitude || jy < dp.latitude and y >= dp.latitude) and  (x <= dp.longitude || jx <= dp.longitude) )
+      if ( (y < p_y and jy >= p_y) or (jy < p_y and y >= p_y)) and  (x <= p_x or jx <= p_x)
           # the order of points of the  polygon is important, in this case is in clockwise or anti-clockwise
-          lx=x + (dp.latitude-y)/(jy-y)*(jx-x)
-          if (lx==dp.longitude)
-            return 0
-          end
+        lx=x + (p_y-y)/(jy-y)*(jx-x)
+        if (lx==p_x)
+          return 0
+        end
 
-          if (lx < dp.longitude)
-            count+=1
-          end
+        if (lx < p_x)
+          count+=1
+        end
       end
       j=i
     end
-
     if count % 2 == 0
       return -1
     else

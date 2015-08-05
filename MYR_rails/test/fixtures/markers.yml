@@ -15,3 +15,36 @@
 #  longitude: 9.99
 #  datetime: 2015-02-25 15:33:39
 #  mission_id: 1
+
+#markers for station keeping
+m1:
+  name: testPInPolygon
+  description: It was the test to check if a point is in a polygon
+  latitude: '0'
+  longitude: '0'
+  datetime: '20150805121239'
+  mission_id: 2
+
+m2:
+  name: testPInPolygon
+  description: It was the test to check if a point is in a polygon
+  latitude: '0'
+  longitude: '5'
+  datetime: '20150805121239'
+  mission_id: 2
+
+m3:
+  name: testPInPolygon
+  description: It was the test to check if a point is in a polygon
+  latitude: '5'
+  longitude: '5'
+  datetime: '20150805121239'
+  mission_id: 2
+
+m4:
+  name: testPInPolygon
+  description: It was the test to check if a point is in a polygon
+  latitude: '5'
+  longitude: '0'
+  datetime: '20150805121239'
+  mission_id: 2

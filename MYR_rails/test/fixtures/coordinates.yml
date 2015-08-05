@@ -11,3 +11,16 @@
 #  longitude: 9.99
 #  datetime: 2015-02-25 15:39:26
 #  tracker_id: 1
+
+testOutP:
+  latitude: 9.99
+  longitude: 9.99
+  datetime: '20150225153926'
+  tracker_id: 1
+
+testInP:
+  latitude: 3.3
+  longitude: 3.3
+  datetime: '20150225153927'
+  tracker_id: 1
+

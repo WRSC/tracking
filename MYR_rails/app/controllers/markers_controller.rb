@@ -63,7 +63,7 @@ class MarkersController < ApplicationController
     flag=false
     for i in (0..tablat.length-1)
       if tablat[i]!="" && tablat[i]!=nil
-        flag=Marker.create(datetime: @marker.datetime.to_datetime, mission_id: @marker.mission_id, latitude: tablat[i], longitude: tablng[i], mtype: @marker.mtype,name: @marker.name)
+        flag=Marker.create(datetime: @marker.datetime, mission_id: @marker.mission_id, latitude: tablat[i], longitude: tablng[i], mtype: @marker.mtype,name: @marker.name)
       end
     end
     

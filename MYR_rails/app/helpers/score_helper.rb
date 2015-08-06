@@ -3,13 +3,19 @@ module ScoreHelper
   def triangularTimecost(a_id)
   end
 #===================================== Station Keeping ==================================================
+  def stationKeepingRawScore(timecost)
+    ans=10-(300-timecost).abs/10*1.0 
+    return 0 > ans ? 0 : ans
+  end
+
   def stationKeepingTimecost(a_id)
     a=Attempt.find_by(a_id)
     # find all markers for this mission
     markers=Marker.where(mission_id: a.mission.id).order('id')
     # sort all coordiantes based on time
     testCoords=a.coordinates.order('datetime')
-    stationKeepingTimecostWithData(markers,testCoords)
+    timecost=stationKeepingTimecostWithData(markers,testCoords)
+    return timecost
   end
   
   def stationKeepingTimecostWithData(markers,testCoords)

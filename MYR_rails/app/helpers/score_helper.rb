@@ -3,7 +3,12 @@ module ScoreHelper
   def triangularTimecost(a_id)
   end
 #===================================== Station Keeping ==================================================
-  def stationKeepingRawScore(timecost)
+  def stationKeepingRawScore(a_id)
+    timecost=stationKeepingTimecost(a_id)
+    return stationKeepingRawScoreWithTimecost(timecost)
+  end
+
+  def stationKeepingRawScoreWithTimecost(timecost)
     ans=10-(300-timecost).abs/10*1.0 
     return 0 > ans ? 0 : ans
   end

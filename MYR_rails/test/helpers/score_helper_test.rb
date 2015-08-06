@@ -64,7 +64,6 @@ class ScoreHelperTest < ActionView::TestCase
   end 
 
 #======================= test stationkeeping timecost and rawscore =====================
-=begin
   test "Calculating stationkeeping timecost should near to 300" do
     t="2015-08-06 08:47:07 +0200".to_time
     lat=-3
@@ -97,12 +96,11 @@ class ScoreHelperTest < ActionView::TestCase
     
     res=stationKeepingTimecostWithData(@p,coords)
 #    assert false, "error with timecost and return coord is : timecost is #{res} "
-    rawscore=stationKeepingRawScore(res)
+    rawscore=stationKeepingRawScoreWithTimecost(res)
     #assert ( res >=298 and res <= 302), "error with timecost and return #{res}"
     assert ( rawscore >= 9.9 and rawscore <= 10), "error with rawscore  and return #{rawscore}"
     #assert false, "error with rawscore  and return #{rawscore}"
   end
-=end
 
 
 
@@ -144,7 +142,7 @@ class ScoreHelperTest < ActionView::TestCase
     res=stationKeepingTimecostWithData(@p,coords)
     #assert false, "coords[res].dateime is #{coords[res].datetime} !!! and lat is #{coords[res].latitude} !!! and lng is #{coords[res].longitude}"
     #assert false, "error with timecost and return coord is : dateime is #{res}"
-    rawscore=stationKeepingRawScore(res)
+    rawscore=stationKeepingRawScoreWithTimecost(res)
     #assert ( res >=298 and res <= 302), "error with timecost and return #{res}"
     #assert ( rawscore >= 0  and rawscore <= 0.1), "error with rawscore  and return #{rawscore}"
     assert rawscore==7.0, "error with rawscore  and return #{rawscore}"

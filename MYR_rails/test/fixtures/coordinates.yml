@@ -12,6 +12,7 @@
 #  datetime: 2015-02-25 15:39:26
 #  tracker_id: 1
 
+#=================  Station keeping      =========================
 testOutP:
   latitude: 9.99
   longitude: 9.99
@@ -35,3 +36,4 @@ testOnEP:
   longitude: 2
   datetime: '20150225153927'
   tracker_id: 1
+

@@ -9,6 +9,10 @@ module ScoreHelper
     markers=Marker.where(mission_id: a.mission.id).order('id')
     # sort all coordiantes based on time
     testCoords=a.coordinates.order('datetime')
+    stationKeepingTimecostWithData(markers,testCoords)
+  end
+  
+  def stationKeepingTimecostWithData(markers,testCoords)
     # begin to calculate the score
     i=0
     # At the begining , it should be out of polygon zone
@@ -27,6 +31,7 @@ module ScoreHelper
     i+=1
     warnflag=false
     twarn=0
+    v=-1
     while (outflag==false)
       inp=pInPolygon(testCoords[i],markers)
       if (inp < 0)
@@ -42,13 +47,15 @@ module ScoreHelper
       if (warnflag==true)
         if (twarn >= 10)
           tend=testCoords[i].datetime
+          v=i
           outflag=true
         end
       end
       lastDatetime=testCoords[i].datetime
       i+=1
     end
-    return datetimeAMinusB(tstart,tend)
+    # there is always an error with 10s, when the boat wants to go out, the 10s was ignored
+    return datetimeAMinusB(tend,tstart)-10
   end
 
   #http://alienryderflex.com/polygon/

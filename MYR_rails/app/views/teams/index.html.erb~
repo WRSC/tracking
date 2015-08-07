@@ -54,7 +54,8 @@
 <script>
 $(document).ready( function () {
     $('#datatable-team').DataTable({
-			paging: true
+			paging: true,
+			scrollY: 500
 		});
 } );
 </script>

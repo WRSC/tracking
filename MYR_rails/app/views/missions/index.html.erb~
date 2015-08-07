@@ -25,7 +25,7 @@
           <td><%= mission.start %></td>
           <td><%= mission.end %></td>
           <% if is_admin? %>
-            <td><%= link_to 'Edit', edit_mission_path(mission) %>+<%= ' | '%>
+            <td><%= link_to 'Edit', edit_mission_path(mission) %> <%= ' | '%>
             <%= link_to 'Delete', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
 			</tr>
@@ -42,7 +42,8 @@
 <script>
  $(document).ready( function () {
     $('#datatable-mission').DataTable({
-			paging: true
+			paging: true,
+			scrollY: 500
 		});
 } );
 </script>

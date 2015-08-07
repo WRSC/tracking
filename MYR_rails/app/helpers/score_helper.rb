@@ -2,7 +2,7 @@ module ScoreHelper
 #argument is attempt_id
   def triangularTimecost(a_id)
   end
-#===================================== Station Keeping ==================================================
+#================================= Station Keeping ==============================================
   def stationKeepingRawScore(a_id)
     timecost=stationKeepingTimecost(a_id)
     return stationKeepingRawScoreWithTimecost(timecost)
@@ -114,4 +114,8 @@ module ScoreHelper
   def datetimeAMinusB(a,b)
     return ((a.to_datetime-b.to_datetime)*24*60*60).to_i
   end
+#========================= Area scanning ===========================
+
+#========================= Fleet Race  =============================
+
 end

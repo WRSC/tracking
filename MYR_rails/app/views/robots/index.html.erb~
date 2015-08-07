@@ -5,7 +5,6 @@
 <% if sign_in? %>
 	<% if is_leader? || is_admin? %>
 		<%= link_to 'New Robot', new_robot_path %>
-		<br>
 	<% end %>
 <% end %>
 
@@ -48,7 +47,8 @@
 <script>
 $(document).ready( function () {
     $('#table_id').DataTable({
-			paging: true
+			paging: true,
+			scrollY: 500
 		});
 } );
 </script>

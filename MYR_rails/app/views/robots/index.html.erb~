@@ -5,39 +5,26 @@
 <% if sign_in? %>
 	<% if is_leader? || is_admin? %>
 		<%= link_to 'New Robot', new_robot_path %>
+		<br>
 	<% end %>
 <% end %>
-<table  id="table_id" class="display">
+
+<table  id="table_id" class="dataTable display">
   <thead>
     <tr>
       <th>Name</th>
       <th>Category</th>
       <th>Team</th>
 			<% if sign_in? %>
-      <th  colspan="3"></th>
+      <th >Option</th>
 			<% end %>
-
-	  <% if sign_in? %>
-		<% if is_admin? %>
-			<th class="column-sed" colspan="2"></th>
-		<% end %>
-	<% end %>
     </tr>
   </thead>
 
   <tbody>
     
-	<% idRobs = []%>
-    <% @robots.each do |robot| %>
-		<% idRobs << robot.id %>
-	<% end %>
-
-
-	<% allRobotIdSort=sortId(idRobs) %>
-	<% if allRobotIdSort != [] %>
-		<% for ii in 0..(allRobotIdSort.size-1) %>
-			<% robot=Robot.find_by_id(allRobotIdSort[ii]) %>
-		  <tr>
+	<tr>
+		<% @robots.each do |robot| %>
 			<td><%= link_to robot.name, robot %></td>
 			<td><%= robot.category %></td>
 			<td><%= link_to Team.find(robot.team_id).name, Team.find(robot.team_id) %></td>
@@ -48,9 +35,9 @@
 					<td><%= link_to 'Show', robot %></td>
 				<% end %>
 			<% end %>
-		  </tr>
-		<% end %>
-    <% end %>
+	</tr>
+<% end %>
+
   </tbody>
 </table>
 
@@ -61,7 +48,7 @@
 <script>
 $(document).ready( function () {
     $('#table_id').DataTable({
-			paging: false
+			paging: true
 		});
 } );
 </script>

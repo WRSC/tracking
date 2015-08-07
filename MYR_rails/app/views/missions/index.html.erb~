@@ -1,36 +1,48 @@
+<% provide(:title, "Missions | Index") %>
 <p id="notice"><%= notice %></p>
-
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <h1>Listing Missions</h1>
 
-<table>
+<table id="datatable-mission" class="dataTable display">
   <thead>
     <tr>
-      <th>Name</th>
+      <th >Name</th>
       <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
+      <th>Start</th>
+      <th>End</th>
+			<% if is_admin? %>
+      <th >Option</th>
+			<% end %>
+	    </tr>
   </thead>
 
   <tbody>
-    <% @missions.each do |mission| %>
-      <tr>
-        <td><%= link_to mission.name, mission %></td>
-        <td><%= mission.description %></td>
-        <td><%= link_to 'Show', mission %></td>
-        <% if is_admin? %>
-          <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
-          <td><%= link_to 'Destroy', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+		<% @missions.each do |mission| %>
+       <tr>
+          <td><%= link_to mission.name, mission %></td>
+          <td><%= mission.description %></td>
+          <td><%= mission.start %></td>
+          <td><%= mission.end %></td>
+          <% if is_admin? %>
+            <td><%= link_to 'Edit', edit_mission_path(mission) %>+<%= ' | '%>
+            <%= link_to 'Delete', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+			</tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
-
-
 <% if sign_in(current_user) %>
   <% if is_admin? %>
   	<%= link_to 'New Mission', new_mission_path %>
    <% end %> 
 <% end %>
+
+<script>
+ $(document).ready( function () {
+    $('#datatable-mission').DataTable({
+			paging: true
+		});
+} );
+</script>

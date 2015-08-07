@@ -1,50 +1,44 @@
 <% provide(:title, "Teams | Index") %>
 <p id="notice"><%= notice %></p>
-
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <h1>Listing Teams</h1>
 
-<table>
-  <table>
+<table id="datatable-team" class="dataTable display" >
   <thead>
     <tr >
-        <th class=column-member>Team
-      <a href= teams ><button id="sortbuttonT" name="TeamN" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
-      <a href= teams ><button id="sortbuttonD" name="TeamNbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
-        <th class=column-member>Logo</th>
-        <th class=column-member>Description</th>
-        <th class=column-member>Team Leader</th>
+        <th >Team</th>
+        <th >Logo</th>
+        <th >Description</th>
+        <th >Team Leader</th>
+			<% if sign_in? %>
+				<th > Option</th>			
+			<% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% idTeams = []%>
-    <% @teams.each do |team| %>
-      <% idTeams << team.id %>
-    <% end %>
-    <% allTeamIdSort=sortId(idTeams) %>
-    <% if allTeamIdSort != [] %>
-      <% for ii in 0..(allTeamIdSort.size-1) %>
-        <% team=Team.find_by_id(allTeamIdSort[ii]) %>
-        <tr>
-					<td><%= link_to team.name, team %></td>
-		      <% logoimage= image_tag team.logo_url(:index) %>
-		      <td><center><%= link_to logoimage , team  %></center></td>
-		      <td><%= team.description %></td>
-          <td><%= link_to Member.find(team.leader_id.to_i).name, Member.find(team.leader_id.to_i) %></td>
-          <% if sign_in? %>
+		<% @teams.each do |team| %>
+		<tr>
+   		<td><%= link_to team.name, team %></td>
+      <% logoimage= image_tag team.logo_url(:index) %>
+      <td><center><%= link_to logoimage , team  %></center></td>
+      <td><%= team.description %></td>
+      <td><%= link_to Member.find(team.leader_id.to_i).name, Member.find(team.leader_id.to_i) %></td>  	
+			<% if sign_in? %>
             <% if (is_leader(team.name) || is_admin?) %>
               <td><%= (link_to 'Show', team) + ' | ' + (link_to 'Edit', edit_team_path(team)) + ' | ' + (link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team.' }) %></td>
-            <% elsif current_user.team_id == team.id && !is_leader(team.name) %>
+            <% elsif current_user.team.id == team.id && !is_leader(team.name) %>
               <td><%= (link_to 'Show', team)%> <%= button_to 'Leave', leave_member_path(current_user), method: :patch, data: { confirm: 'Are you sure you want to leave the team ?'} %> </td>
-            <% elsif (current_user.team_id == nil) && !is_admin? %>
+            <% elsif (current_user.team.id == nil) && !is_admin? %>
               <td><%= (link_to 'Show', team)%> <%= button_to 'Join', join_team_path(team), method: :patch, data: { confirm: 'Do you really want to belong to this team ?'} %> </td>
             <% else %>
               <td><%= link_to 'Show', team %></td>
             <% end %>
           <% end %>
-        </tr>
-      <% end %>
-    <% end %>
+		</tr>    
+		<% end %>
+
   </tbody>
 </table>
 
@@ -58,8 +52,9 @@
 <% end %>
 
 <script>
-
-  function myFunctionSort(clicked_id) {
-    $.cookie("Sort",clicked_id,{path:'/' });
-  }
+$(document).ready( function () {
+    $('#datatable-team').DataTable({
+			paging: true
+		});
+} );
 </script>

@@ -1,4 +1,6 @@
-
+table textare{
+	color:#000000;
+}
 table a:link {
 	color:#000000;
 	text-decoration:underline;
@@ -15,7 +17,7 @@ table a:hover {
 }
 
 table a:active {
-	color:#FFFFFF;
+	color:#000000;
 	text-decoration:none;
 } 
 

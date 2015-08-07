@@ -1,28 +1,21 @@
 <% provide(:title, "Attempts | Index") %>
 <p id="notice"><%= notice %></p>
-
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <h1>Listing Attempts</h1>
 
 <% if !current_user.nil? %>
   <% if heIsInTeam?(current_user.name) || is_admin? %>
-    <table>
+    <table id="datatable-attempt" class="dataTable display">
       <thead>
         <tr>
-            <th class=column-member>Name
-          <a href= attempts ><button id="sortbuttonT" name="AttemptN" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
-          <a href= attempts ><button id="sortbuttonD" name="AttemptNbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
+          <th>Name</th>
           <th>Start</th>
           <th>End</th>
-            <th class=column-member>Robot
-          <a href= attempts ><button id="sortbuttonT" name="AttemptR" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
-          <a href= attempts ><button id="sortbuttonD" name="AttemptRbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
-            <th class=column-member>Mission
-          <a href= attempts ><button id="sortbuttonT" name="AttemptM" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
-          <a href= attempts ><button id="sortbuttonD" name="AttemptMbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
-            <th class=column-member>Tracker ID
-          <a href= attempts ><button id="sortbuttonT" name="AttemptT" onclick="myFunctionSort(this.name)" ><img src="/icons/1_9.png"></button></a>
-          <a href= attempts ><button id="sortbuttonD" name="AttemptTbis" onclick="myFunctionSort(this.name)" ><img src="/icons/9_1.png"></button></a></th>
-          <th colspan="3"></th>
+          <th>Robot</th>
+          <th>Mission</th>
+          <th>Tracker ID</th>
+          <th>Option</th>
         </tr>
       </thead>
 
@@ -42,10 +35,10 @@
                   <td><%= link_to Robot.find_by_id(attempt.robot_id).name, Robot.find_by_id(attempt.robot_id) %></td>
                   <td><%= link_to Mission.find_by_id(attempt.mission_id).name, Mission.find_by_id(attempt.mission_id) %></td>
                   <td><%= attempt.tracker_id %></td>
-                  <td><%= link_to 'Show', attempt %></td>
+                 
                   <% if is_leaderById(Robot.find(attempt.robot_id).team_id) || is_admin? %>
-                    <td><%= link_to 'Edit', edit_attempt_path(attempt) %></td>
-                    <td><%= link_to 'Delete', attempt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                    <td><%= link_to 'Edit', edit_attempt_path(attempt) %> <%= ' | '%>
+                    <%= link_to 'Delete', attempt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                   <% end %>
                 </tr>
             <% end %>
@@ -67,8 +60,9 @@
 <% end %>
 
 <script>
-
-  function myFunctionSort(clicked_id) {
-    $.cookie("Sort",clicked_id,{path:'/' });
-  }
+ $(document).ready( function () {
+    $('#datatable-attempt').DataTable({
+			paging: true
+		});
+} );
 </script>

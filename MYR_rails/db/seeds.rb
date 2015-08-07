@@ -256,4 +256,9 @@ Robot.create!(name:  "Just for fun3",
               team_id: 3) 	 
 
 
-
+50.times do |n|
+   name = Faker::Name.name
+   Robot.create!(name:  name,
+              category: "Sailboat",
+              team_id: 3) 	 
+end

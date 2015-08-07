@@ -1,19 +1,18 @@
 <% provide(:title, "Trackers | Index") %>
 <p id="notice"><%= notice %></p>
-
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <h1>Listing Trackers</h1>
 
 <% if is_admin? %>
 
-  <table>
+  <table id="datatable-tracker" class="dataTable display">
     <thead>
       <tr>
         <th>Token</th>
         <th>Description</th>
-        <th class=column-member>ID
-          <a href= trackers ><button id="sortbuttonT" name="TrackerID" onclick="myFunctionSort(this.name)" ><img src="/icons/1_9.png"></button></a>
-          <a href= trackers ><button id="sortbuttonD" name="TrackerIDbis" onclick="myFunctionSort(this.name)" ><img src="/icons/9_1.png"></button></a></th>
-        <th colspan="3"></th>
+        <th>ID</th>
+        <th>Option</th>
       </tr>
     </thead>
 
@@ -30,9 +29,9 @@
                   <td><%= tracker.token %></td>
                   <td><%= tracker.description %></td>
                   <td><%= tracker.id %></td>
-                  <td><%= link_to 'Show', tracker %></td>
-                  <td><%= link_to 'Edit', edit_tracker_path(tracker) %></td>
-                  <td><%= link_to 'Delete', tracker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                  <td><%= link_to 'Show', tracker %> <%= ' | '%>
+                  <%= link_to 'Edit', edit_tracker_path(tracker) %> <%= ' | '%>
+                  <%= link_to 'Delete', tracker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                 </tr>
             <% end %>
           <% end %>
@@ -50,8 +49,9 @@
 <% end %>
 
 <script>
-
-  function myFunctionSort(clicked_id) {
-    $.cookie("Sort",clicked_id,{path:'/' });
-  }
+ $(document).ready( function () {
+    $('#datatable-tracker').DataTable({
+			paging: true
+		});
+} );
 </script>

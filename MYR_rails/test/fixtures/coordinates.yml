@@ -1,5 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+#yml file could not identify tab, use space instead of tab
+#yml compile order erb > # comment
 #one:
 #  latitude: 9.99
 #  longitude: 9.99
@@ -36,4 +37,20 @@ testOnEP:
   longitude: 2
   datetime: '20150225153927'
   tracker_id: 1
+
+testErbyml:
+  latitude: 5
+  longitude: 2
+  datetime: '20150225153927'
+  tracker_id: <%= 9%2 %>
+
+<% filename = File.join(Rails.root, 'test','fixtures', 'json', 'onedata.json') %>
+<% f=File.read(filename) %>
+<% f_hash = JSON.parse(f) %>
+testjson:
+  latitude: <%= f_hash['latitude'] %> 
+  longitude: <%= f_hash['longitude'] %> 
+  datetime: <%= f_hash['datetime'] %>
+  tracker_id: <%= f_hash['tracker_id'] %>
+
 

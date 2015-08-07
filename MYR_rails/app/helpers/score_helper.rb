@@ -115,7 +115,9 @@ module ScoreHelper
     return ((a.to_datetime-b.to_datetime)*24*60*60).to_i
   end
 #========================= Area scanning ===========================
+  def loadJsonDataAreaScanning(filename)
+  #need to check filename if it was json file
+  end
 
 #========================= Fleet Race  =============================
-
 end

@@ -147,4 +147,15 @@ class ScoreHelperTest < ActionView::TestCase
     #assert ( rawscore >= 0  and rawscore <= 0.1), "error with rawscore  and return #{rawscore}"
     assert rawscore==7.0, "error with rawscore  and return #{rawscore}"
   end
+
+#================== test Area Scanning==================
+  test "should be ok with erb" do
+    c=coordinates(:testErbyml)
+		assert c.tracker_id==1 
+  end
+		
+	test "should load json data" do
+		data_hash=coordinates(:testjson)
+		assert data_hash.tracker_id==1,"===== !!! Error with load json data and return #{data_hash.tracker_id}======"	
+	end
 end

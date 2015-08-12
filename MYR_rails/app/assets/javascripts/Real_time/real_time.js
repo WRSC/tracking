@@ -32,7 +32,7 @@ $(document).ready(function(){
 function choosetMission(){
 		missions=getAllCurrentMissions();
 		nbmissions=missions.length
-		if (nbmissions >1){
+		if (nbmissions > 0){
 			var e = $('#dropdown_select_mission :selected').val();
 			if (e=="select_mission"){
 				alert("Please choose a correct mission!!!")

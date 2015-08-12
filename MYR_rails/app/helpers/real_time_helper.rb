@@ -65,7 +65,7 @@ module RealTimeHelper
 
   #input: datetime, array of tracker_id
   #output: array of tracker-id
-  def IsThereNewTrackers?(last_refresh, known_trackers, m_id, numMaxCoords)
+  def IsThereNewTrackers?(last_refresh, known_trackers, m_id, numMaxCoords, offset)
     trackers=[]
     attempts=Attempt.where("mission_id = ?",m_id)
     #.order(tracker_id: :asc)
@@ -95,7 +95,11 @@ module RealTimeHelper
       return trackers
     else #the map does not have any coordinates
       if getMissionInfos.size > 0 #if there is currently a mission
-        start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #missionsInfos = [start, end]
+        if offset.to_i == 0
+          start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #missionsInfos = [start, end]
+        else
+          start = (Time.now.utc-offset.to_f).strftime('%Y%m%d%H%M%S')
+        end
         newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).limit(numMaxCoords).where("datetime > ?", start).where.not(tracker_id: known_trackers))).where("datetime > ?", start).where.not(tracker_id: known_trackers).order(tracker_id: :asc)
 
         if (newCoords != [])

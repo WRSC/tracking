@@ -38,7 +38,8 @@ class RealTimeController < ApplicationController
 		known_trackers = params[:trackers]
 		current_mission_id = params[:mission_id]
 		numMaxCoords = params[:numCoords]
-		@test= IsThereNewTrackers?(last_refresh, known_trackers, current_mission_id, numMaxCoords)
+		offset = params[:offset]
+		@test= IsThereNewTrackers?(last_refresh, known_trackers, current_mission_id, numMaxCoords, offset)
 		render json: 	@test
 	end
 	

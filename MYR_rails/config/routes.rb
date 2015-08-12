@@ -72,7 +72,6 @@ Rails.application.routes.draw do
     get  'getTrackersFromDatetimes',  to: 'replay#getTrackersFromDatetimes'
     get  'infowindow'              ,  to: 'replay#infowindow'
 		get  'officialMarkersInfo'     ,  to: 'replay#officialMarkersInfo'
-    
 
 
   # Authentication

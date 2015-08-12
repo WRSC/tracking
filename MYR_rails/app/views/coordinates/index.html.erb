@@ -38,7 +38,7 @@
             <td><%= coordinate.longitude %></td>
             <td><%= coordinate.speed %></td>
             <td><%= coordinate.course %></td>
-            <td><%= Time.strptime(coordinate.datetime+"UTC", "%Y%m%d%H%M%S%z") %></td>
+            <td><%= Time.strptime(((coordinate.datetime.to_f).round).to_s+"UTC", "%Y%m%d%H%M%S%z") %></td>
             <td><%= coordinate.tracker_id %></td>
             <td><%= link_to 'Show', coordinate %></td>
             <% if is_admin? %>

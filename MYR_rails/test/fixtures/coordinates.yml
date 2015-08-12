@@ -11,3 +11,346 @@
 #  longitude: 9.99
 #  datetime: 2015-02-25 15:39:26
 #  tracker_id: 1
+
+# coordinates for testing the triangular course scoring function
+
+# <% t = 20150605010101 %> 
+# c1:
+#     latitude: -0.5
+#     longitude: 0.5
+#     datetime: <%= t %>
+#     speed: 1
+#     course: 1
+#     tracker_id: 1
+
+# <% t = t + 5 %>
+
+# c2:
+#     latitude: 0.5
+#     longitude: 0.5
+#     datetime: <%= t %>
+#     speed: 1
+#     course: 1
+#     tracker_id: 1
+
+# <% t = t + 5 %>
+
+# <% lat=0 %>
+# <% lng=0 %>
+# <% i=1 %>
+# <% 50.times do |n| %>
+
+# <% 	lat = 1 + Math.sin(i)/3 %>
+# <%	lng = Math.cos(i)/3 %>
+
+# c<%=n+3%>:
+#     latitude: <%= lat %>
+#     longitude: <%= lng %>
+#     datetime: <%= t %>
+#     speed: 1
+#     course: 1
+#     tracker_id: 1
+
+
+# <% 	t=t+5 %>
+# <% 	i=i+0.1 %>
+
+# <% end %>
+
+# <% lat=0 %>
+# <% lng=0 %>
+# <% i=1 %>
+# <% 55.times do |n| %>
+
+# <% 	lat= Math.sin(i)/3 %>
+# <%	lng= 1+ Math.cos(i)/3 %>
+
+# c<%=n+53%>:
+#     latitude: <%= lat %>
+#     longitude: <%= lng %>
+#     datetime: <%= t %>
+#     speed: 1
+#     course: 1
+#     tracker_id: 1
+
+
+# <% 	t=t+5 %>
+# <% 	i=i-0.1 %>
+
+# <% end %>
+
+# c108:
+#     latitude: 0.5
+#     longitude: -0.5
+#     datetime: <%= t %>
+#     speed: 1
+#     course: 1
+#     tracker_id: 1
+
+# coordinates for testing the race course scoring function
+
+<% t = 20150605010101 %>
+<% t_ref = 19700101000000 %>
+c1:
+    latitude: -0.5
+    longitude: 0.5
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+c2:
+    latitude: 0.5
+    longitude: 0.5
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% lat=0 %>
+<% lng=0 %>
+<% i=-0.8 %>
+<% 20.times do |n| %>
+
+<%  lat = 1 + Math.sin(i)/3 %>
+<%  lng = Math.cos(i)/3 %>
+
+c<%=n+3%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c23:
+    latitude: 1.2
+    longitude: -0.5
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% i=0.75 %>
+<% 20.times do |n| %>
+
+<%  lat= 1+ Math.sin(i)/3 %>
+<%  lng=  Math.cos(i)/3 - 1 %>
+
+c<%=n+24%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c44:
+    latitude: 0.5
+    longitude: -1.2
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% i=2.4 %>
+<% 20.times do |n| %>
+
+<%  lat= Math.sin(i)/3 %>
+<%  lng=  Math.cos(i)/3 - 1 %>
+
+c<%=n+45%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c65:
+    latitude: -0.2
+    longitude: -0.5
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% i=-2.4 %>
+<% 20.times do |n| %>
+
+<%  lat= Math.sin(i)/3 %>
+<%  lng=  Math.cos(i)/3 %>
+
+c<%=n+66%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c86:
+    latitude: 0.2
+    longitude: 0.2
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% i=-0.8 %>
+<% 20.times do |n| %>
+
+<%  lat = 1 + Math.sin(i)/3 %>
+<%  lng = Math.cos(i)/3 %>
+
+c<%=n+87%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c107:
+    latitude: 1.2
+    longitude: -0.5
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% i=0.75 %>
+<% 20.times do |n| %>
+
+<%  lat= 1+ Math.sin(i)/3 %>
+<%  lng=  Math.cos(i)/3 - 1 %>
+
+c<%=n+108%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c128:
+    latitude: 0.5
+    longitude: -1.2
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% i=2.4 %>
+<% 20.times do |n| %>
+
+<%  lat= Math.sin(i)/3 %>
+<%  lng=  Math.cos(i)/3 - 1 %>
+
+c<%=n+129%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c149:
+    latitude: -0.2
+    longitude: -0.5
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+<% i=-2.4 %>
+<% 20.times do |n| %>
+
+<%  lat= Math.sin(i)/3 %>
+<%  lng=  Math.cos(i)/3 %>
+
+c<%=n+150%>:
+    latitude: <%= lat %>
+    longitude: <%= lng %>
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<%  i=i+0.1 %>
+
+<% end %>
+
+c170:
+    latitude: 0.2
+    longitude: 0.2
+    datetime: <%= t %>
+    speed: 1
+    course: 1
+    tracker_id: 1
+
+<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+
+# end coordinates for testing race course scoring

@@ -3,6 +3,7 @@
 var lastDatetime = "10000101";
 var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
 var latest_buoys = [[],[]]; //[0] for buoys and [1] for mission id
+var latest_buoys_line = [[],[]]; 
 var lines = [[],[]]; // keep the lines in memories, [0] for lines and [1] for mission id
 var known_trackers = [];
 var desired_trackers = [];
@@ -14,6 +15,7 @@ var MAX_NUM_COORDS = 1000;
 var index_first_marker = 0;
 var index_next_new_marker = 0;
 var first_launch = true;
+var offset = 0;
 /*
 var tab = [2,12,1,5];
 tab.sort(function(a, b){return a-b});
@@ -128,6 +130,14 @@ jQuery.expr.filters.offscreen = function(el) {
 		MAX_NUM_COORDS=newMaxCoords;
 	}
 
+	function getOffset(){
+		return offset;
+	}
+
+	function setOffset(newOffset){
+		offset=newOffset;
+	}
+
 //--------MAP----------------
 function FullScreenControl(controlDiv, map) {
 	//see https://developers.google.com/maps/documentation/javascript/examples/control-custom
@@ -160,6 +170,7 @@ function FullScreenControl(controlDiv, map) {
 		//reset the global variables
 		latest_markers = [[],[]];
 		latest_buoys = [[],[]];
+		latest_buoys_line = [[],[]];
 		desired_trackers = [];
 		known_trackers = [];
 		lines = [[],[]];;
@@ -213,12 +224,16 @@ function eraseMap() {
 		for(var i=0; i < latest_buoys[0].length ; i++){
 			latest_buoys[0][i].setMap(null);
 		}
+		for(var i=0; i < latest_buoys_line[0].length ; i++){
+			latest_buoys_line[0][i].setMap(null);
+		}
 		for(var i=0; i < lines[0].length ; i++){
 			lines[0][i].setMap(null);
 		}
 		//reset the global variables
 		latest_markers = [[],[]];
 		latest_buoys = [[],[]];
+		latest_buoys_line = [[],[]];
 		desired_trackers = [];
 		known_trackers = [];
 		lines = [[],[]];

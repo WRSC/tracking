@@ -3,10 +3,17 @@ require 'awesome_print'
 
   include ScoreHelper
 
-<<<<<<< HEAD
-  class ScoreHelperTest < ActionView::TestCase
+ class ScoreHelperTest < ActionView::TestCase
+	def setup()
+	  p=[]
+	  p.push(markers(:m1))
+	  p.push(markers(:m2)) 
+	  p.push(markers(:m3)) 
+	  p.push(markers(:m4))
+	  @p=p
+	end
 
-    #test for triangular course scoring
+#===================================test for triangular course scoring ==============================================
 
   test "should cross start line" do
     coordSample = Coordinate.where("datetime > ?", 20150605010101).order(datetime: :asc)
@@ -15,7 +22,7 @@ require 'awesome_print'
    #  coordSample.push(coordinates(:c3))
   	assert coordSample.length != 0, "#{coordSample.length}\n"
 
-  	lineSample = markers(:startLine)
+  	lineSample = markers(:TristartLine)
 
     startLine = []
     startLine << lineSample.longitude.split("_")
@@ -37,7 +44,7 @@ require 'awesome_print'
     coordSample.push(coordinates(:c108))
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
-    lineSample = markers(:endLine)
+    lineSample = markers(:TriendLine)
 
     myLine = []
     myLine << lineSample.longitude.split("_")
@@ -54,7 +61,7 @@ require 'awesome_print'
   	coordSample = Coordinate.where("datetime > ?", 20150605010101).order(datetime: :asc)
   	assert coordSample.length != 0, "#{coordSample.length}\n"
 
-  	lineSample = markers(:endLine)
+  	lineSample = markers(:TriendLine)
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
@@ -65,7 +72,7 @@ require 'awesome_print'
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
-  	myBuoy = markers(:firstBuoy)
+  	myBuoy = markers(:TrifirstBuoy)
     buoySample = []
     buoySample.push(myBuoy.longitude)
     buoySample.push(myBuoy.latitude)
@@ -79,7 +86,7 @@ require 'awesome_print'
     coordSample = Coordinate.where("id > ?", 52)
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
-    lineSample = markers(:startLine)
+    lineSample = markers(:TristartLine)
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
@@ -87,7 +94,7 @@ require 'awesome_print'
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
-    myBuoy = markers(:secondBuoy)
+    myBuoy = markers(:TrisecondBuoy)
     buoySample = []
     buoySample.push(myBuoy.longitude)
     buoySample.push(myBuoy.latitude)
@@ -105,27 +112,22 @@ require 'awesome_print'
 
   end
 
-  # end tests for triangular course scoring
-
-  # begin test for race course scoring
+#================================= begin test for race course scoring =================================================
 
   test "should turn buoy race" do
-
     coordSample = Coordinate.where("datetime >= ?", 20150605010101).order(datetime: :asc)
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
-    lineSample = markers(:startLine)
+    lineSample = markers(:RaceStartLine)
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
-
     #assert false, "#{myLine[0][0]} #{myLine[1][0]} #{myLine[0][1]} #{myLine[1][1]}"
-
     assert myLine.length == 2, "#{myLine.length}\n"
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
-    myBuoy = markers(:secondBuoy)
+    myBuoy = markers(:RaceSecondBuoy)
     buoySample = []
     buoySample.push(myBuoy.longitude)
     buoySample.push(myBuoy.latitude)
@@ -147,22 +149,11 @@ require 'awesome_print'
 
   test "should differ times" do
     res = timeAddition("19930924010303","19700101000001")
-    assert false, "#{res}\n" 
+    assert false, "return #{res}\n" 
   end
-
-end
-=======
-class ScoreHelperTest < ActionView::TestCase
   
-  def setup()
-    p=[]
-    p.push(markers(:m1))
-    p.push(markers(:m2)) 
-    p.push(markers(:m3)) 
-    p.push(markers(:m4))
-    @p=p
-  end
-#============================ station keeping =================================
+
+#===================================================== station keeping ==============================================
  
   #==========================  Test Point in a Polygon =======================
   test " testP should be out the polygon" do
@@ -298,7 +289,7 @@ class ScoreHelperTest < ActionView::TestCase
     assert rawscore==7.0, "error with rawscore  and return #{rawscore}"
   end
 
-#================== test Area Scanning==================
+#===================================================== test Area Scanning===============================================
   test "should be ok with erb" do
     c=coordinates(:testErbyml)
 		assert c.tracker_id==1 
@@ -324,8 +315,8 @@ class ScoreHelperTest < ActionView::TestCase
   end
   
   test "should generate a json file in Rails.root/public/uploads/scores/areascanning/generated" do
-    assert loadJsonDataAreaScanning('moredatas.json'),"please check it in Rails.root/public/uploads/scores/area    scanning/generated"
+    assert loadJsonDataAreaScanning('moredatas.json'),"please check it in Rails.root/public/uploads/scores/areascanning/generated"
   end
 
 end
->>>>>>> b99b242afa812f40d61dddf4b4b4be27c8454369
+

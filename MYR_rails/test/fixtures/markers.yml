@@ -2,96 +2,7 @@
 
 # markers for triangular course scoring tests
 
-# startLine:
-#     longitude: "0_1"
-#     latitude: "0_0"
-#     mtype: Line
-#     mission_id: 1
-#     id: 1
-
-# endLine:
-#     longitude: "0_0"
-#     latitude: "0_1"
-#     mtype: Line
-#     mission_id: 1
-#     id: 2
-
-
-# firstBuoy:
-#     longitude: "0"
-#     latitude: "1"
-#     mtype: Point
-#     mission_id: 1
-#     id: 3
-
-
-# secondBuoy:
-#     longitude: "1"
-#     latitude: "0"
-#     mtype: Point
-#     mission_id: 1
-#     id: 4
-
-# end markers for triangular course scoring tests
-
-# markers for race course scoring tests
-
-startLine:
-    longitude: "0_1"
-    latitude: "0_0"
-    mtype: Line
-    mission_id: 1
-    id: 1
-
-
-firstBuoy:
-    longitude: "0"
-    latitude: "0"
-    mtype: Point
-    mission_id: 1
-    id: 2
-
-
-secondBuoy:
-    longitude: "0"
-    latitude: "1"
-    mtype: Point
-    mission_id: 1
-    id: 3
-
-thirdBuoy:
-    longitude: "-1"
-    latitude: "1"
-    mtype: Point
-    mission_id: 1
-    id: 4
-
-fourthBuoy:
-    longitude: "-1"
-    latitude: "0"
-    mtype: Point
-    mission_id: 1
-    id: 5
-
-# end markers for race course scoring tests
-
-#one:
-#  name: MyString
-#  description: MyText
-#  latitude: 9.99
-#  longitude: 9.99
-#  datetime: 2015-02-25 15:33:39
-#  mission_id: 1
-
-#two:
-#  name: MyString
-#  description: MyText
-#  latitude: 9.99
-#  longitude: 9.99
-#  datetime: 2015-02-25 15:33:39
-#  mission_id: 1
-
-#markers for station keeping
+#=========================== station keeping===============================================
 m1:
   name: testPInPolygon
   description: It was the test to check if a point is in a polygon
@@ -123,3 +34,71 @@ m4:
   longitude: '0'
   datetime: '20150805121239'
   mission_id: 2
+
+#================================= Triangular markers ==================================
+TristartLine:
+  longitude: "0_1"
+  latitude: "0_0"
+  mtype: Line
+  mission_id: 1
+  id: 1
+
+TriendLine:
+  longitude: "0_0"
+  latitude: "0_1"
+  mtype: Line
+  mission_id: 1
+  id: 2
+
+TrifirstBuoy:
+  longitude: "0"
+  latitude: "1"
+  mtype: Point
+  mission_id: 1
+  id: 3
+
+TrisecondBuoy:
+  longitude: "1"
+  latitude: "0"
+  mtype: Point
+  mission_id: 1
+  id: 4
+
+#=================================== markers for race course scoring tests =================================
+
+RaceStartLine:
+  longitude: "0_1"
+  latitude: "0_0"
+  mtype: Line
+  mission_id: 1
+  id: 5
+
+
+RaceFirstBuoy:
+  longitude: "0"
+  latitude: "0"
+  mtype: Point
+  mission_id: 1
+  id: 6
+
+RaceSecondBuoy:
+  longitude: "0"
+  latitude: "1"
+  mtype: Point
+  mission_id: 1
+  id: 7
+
+RaceThirdBuoy:
+  longitude: "-1"
+  latitude: "1"
+  mtype: Point
+  mission_id: 1
+  id: 8
+
+RaceFourthBuoy:
+  longitude: "-1"
+  latitude: "0"
+  mtype: Point
+  mission_id: 1
+  id: 9
+

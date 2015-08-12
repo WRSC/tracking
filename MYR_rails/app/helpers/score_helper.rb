@@ -357,6 +357,10 @@ module ScoreHelper
     return ((a.to_datetime-b.to_datetime)*24*60*60).to_i
   end
 #========================= Area scanning ===========================
+  def AminusB(a,b)
+		return a.to_i-b.to_i	
+	end
+
 # enable download some files for users
 #http://stackoverflow.com/questions/13164063/file-download-link-in-rails 
  #here the json data files are in rails.root/public/uploads/scores/areascanning/nameoffile.json
@@ -365,10 +369,53 @@ module ScoreHelper
     filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning','origin', inputname) 
     f=File.read(filename) 
     f_hash = JSON.parse(f) 
-    done=generateJsonFile(f_hash)
+		d_hash=calculateMaxDistance(f_hash)
+    done=generateJsonFile(d_hash)
     return done
   end
   
+	def calculateMaxDistance(f_hash)
+		d_hash=Hash.new #the desired hash which contains the result of comparison
+		d_hash['name']=f_hash['name']
+		datas=[]
+		data_length=f_hash['data'].length
+		for i in 0..(data_length-1)
+			section_hash=Hash.new
+			section_hash['sectioni']=f_hash['data'][i]['sectioni']
+			section_hash['sectionj']=f_hash['data'][i]['sectionj']
+			position = f_hash['data'][i]['position']
+			position_length=position.length
+			positions=[]
+			max_err_lat=0
+			max_err_lng=0
+			for k in 0..(position_length-1)
+				coord = Coordinate.where(datetime: position[k]['datetime'])
+				p_hash=Hash.new
+				p_hash['datetime']=position[k]['datetime']
+				if coord.size != 1
+				# if there is any data in the tracker		
+					p_hash['latitude_difference']= 'tracker error'
+					p_hash['longitude_difference']='tracker error'
+				else
+					# lat_diff= robot.lat - tracker.lat
+					diff_lat=AminusB(position[k]['latitude'],coord[0].latitude)
+					p_hash['latitude_difference']=diff_lat
+					max_err_lat = max_err_lat > diff_lat.abs ? max_err_lat : diff_lat 
+					diff_lng=AminusB(position[k]['longitude'],coord[0].longitude)
+					p_hash['longitude_difference']=diff_lng
+					max_err_lng = max_err_lng > diff_lng.abs ? max_err_lng : diff_lng 
+				end
+				positions.push(p_hash)
+			end
+			section_hash['position']=positions
+			section_hash['Max_lat_err']=max_err_lat
+			section_hash['Max_lng_err']=max_err_lng
+			datas.push(section_hash)
+		end
+		d_hash['data']=datas
+		return d_hash	
+	end
+
 #some options for output files
 #json file object.to_json
 #yaml file object.to_yaml
@@ -383,6 +430,6 @@ module ScoreHelper
     return File.exist?(filename)
   end
 
+	
 
-#========================= Fleet Race  =============================
 end

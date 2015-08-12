@@ -53,4 +53,18 @@ testjson:
   datetime: <%= f_hash['datetime'] %>
   tracker_id: <%= f_hash['tracker_id'] %>
 
+<% filename = File.join(Rails.root, 'test','fixtures', 'json', 'moredatas.json') %>
+<% f=File.read(filename) %>
+<% f_hash = JSON.parse(f) %>
+<% plength=f_hash['data'][0]['position'].length %>
+<% datalength=f_hash['data'].length %>
+<% for i in 0..(datalength-1) %>
+<% for k in 0..(plength-1) %>
+<%= f_hash['name']%><%= f_hash['data'][i]['sectioni'] %><%= f_hash['data'][i]['sectionj'] %><%= k%>:
+  latitude: 5
+  longitude: 2
+  datetime:  <%= f_hash['data'][i]['position'][k]['datetime'] %>
+  tracker_id: 1 
+<% end %>
+<% end %>
 

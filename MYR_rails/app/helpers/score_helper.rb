@@ -117,6 +117,10 @@ module ScoreHelper
 #========================= Area scanning ===========================
   def loadJsonDataAreaScanning(filename)
   #need to check filename if it was json file
+    filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'onedata.json') 
+    f=File.read(filename) 
+    f_hash = JSON.parse(f) 
+    
   end
 
 #========================= Fleet Race  =============================

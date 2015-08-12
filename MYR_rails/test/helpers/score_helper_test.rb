@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'awesome_print'
 
   include ScoreHelper
 
@@ -158,4 +159,18 @@ class ScoreHelperTest < ActionView::TestCase
 		data_hash=coordinates(:testjson)
 		assert data_hash.tracker_id==1,"===== !!! Error with load json data and return #{data_hash.tracker_id}======"	
 	end
+  
+  test "should load more json datas manully" do
+    filename = File.join(Rails.root, 'test','fixtures', 'json', 'moredatas.json') 
+    f=File.read(filename) 
+    f_hash = JSON.parse(f) 
+    assert 1==f_hash['data'][0]['sectionj'],"error with loading json data and return #{f_hash['data'][0]['sectionj']}"
+    assert 2==f_hash['data'][1]['sectionj'],"error with loading json data and return #{f_hash['data'][1]['sectionj']}"
+    assert "20150807144740"==f_hash['data'][1]['position'][0]['datetime'],"return #{ f_hash['data'][1]['position'].length}"
+   end
+
+  test "should load more json datas with fixtures" do
+		data_hash=coordinates(:testforjson123)
+    assert data_hash.datetime=="20150807144743",data_hash.inspect
+  end
 end

@@ -117,7 +117,9 @@ module ScoreHelper
     return ((a.to_datetime-b.to_datetime)*24*60*60).to_i
   end
 #========================= Area scanning ===========================
-  #here the json data files are in rails.root/public/uploads/scores/areascanning/nameoffile.json
+# enable download some files for users
+#http://stackoverflow.com/questions/13164063/file-download-link-in-rails 
+ #here the json data files are in rails.root/public/uploads/scores/areascanning/nameoffile.json
   def loadJsonDataAreaScanning(inputname)
   #need to check filename if it was json file
     filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning','origin', inputname) 

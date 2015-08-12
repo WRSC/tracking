@@ -1,0 +1,14 @@
+<% provide(:title, "Scores | New") %>
+<%= javascript_include_tag 'Scores/triangularCourseScore', 'data-turbolinks-track' => true %>
+
+<h1>Calculate Score</h1>
+<% attemptsArray = Attempt.all %>
+<select name="Select attempt" id="dropdown_select_attempt">
+	<option value="select_attempt">Select an attempt</option>
+	<% for a in attemptsArray %>
+		<option value="<%= a.id %>">Attempt <%= a.id%> : <%= a.name%> </option>
+	<% end %>
+</select>
+
+<button id="getScore" type="button">Calculate score</button> 
+<%= link_to 'Back to index', scores_path %>

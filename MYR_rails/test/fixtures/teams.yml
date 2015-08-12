@@ -1,5 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+SylvainTeam:
+    name: SylvainTeam
+
 #one:
 #  name: MyString
 #  logo: http://i.telegraph.co.uk/multimedia/archive/02690/Anne-Guichard_2690182k.jpg

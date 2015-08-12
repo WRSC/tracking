@@ -143,7 +143,7 @@ class CoordinatesController < ApplicationController
   	m_id=params[:mission_id]
   	datetime=params[:datetime]
     numMaxCoords = params[:numCoords]
-  	
+  	offset = params[:offset]
 
 
   	trackers=[] # change js array into tracker_ids
@@ -163,9 +163,13 @@ class CoordinatesController < ApplicationController
       render json: newCoords.to_json #(:only =>[:datetime,:tracker_id,:latitude,:longitude])  -> remove ID but is not a direct SQL request
     else #the map does not have any coordinates
       if getMissionInfos.size > 0 #if there is currently a mission
-        start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #.to_s(:number).to_datetime #missionsInfos = [start, end]
+        if offset.to_i == 0
+          start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #missionsInfos = [start, end]
+        else
+          start = (Time.now.utc-offset.to_f).strftime('%Y%m%d%H%M%S')
+        end
         if (trackers != nil)# trackers identifiers are specified
-          newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).where("datetime > ?", start).where(tracker_id: trackers).limit(numMaxCoords))).where("datetime > ?", start).where(tracker_id: trackers).where("datetime > ?", datetime).where(tracker_id: trackers).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
+          newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).where("datetime > ?", start).where(tracker_id: trackers).limit(numMaxCoords))).where("datetime > ?", start).where(tracker_id: trackers).where("datetime > ?", datetime).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)
         else
           newCoords = []
         end

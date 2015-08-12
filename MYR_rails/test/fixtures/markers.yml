@@ -1,5 +1,80 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# markers for triangular course scoring tests
+
+# startLine:
+#     longitude: "0_1"
+#     latitude: "0_0"
+#     mtype: Line
+#     mission_id: 1
+#     id: 1
+
+# endLine:
+#     longitude: "0_0"
+#     latitude: "0_1"
+#     mtype: Line
+#     mission_id: 1
+#     id: 2
+
+
+# firstBuoy:
+#     longitude: "0"
+#     latitude: "1"
+#     mtype: Point
+#     mission_id: 1
+#     id: 3
+
+
+# secondBuoy:
+#     longitude: "1"
+#     latitude: "0"
+#     mtype: Point
+#     mission_id: 1
+#     id: 4
+
+# end markers for triangular course scoring tests
+
+# markers for race course scoring tests
+
+startLine:
+    longitude: "0_1"
+    latitude: "0_0"
+    mtype: Line
+    mission_id: 1
+    id: 1
+
+
+firstBuoy:
+    longitude: "0"
+    latitude: "0"
+    mtype: Point
+    mission_id: 1
+    id: 2
+
+
+secondBuoy:
+    longitude: "0"
+    latitude: "1"
+    mtype: Point
+    mission_id: 1
+    id: 3
+
+thirdBuoy:
+    longitude: "-1"
+    latitude: "1"
+    mtype: Point
+    mission_id: 1
+    id: 4
+
+fourthBuoy:
+    longitude: "-1"
+    latitude: "0"
+    mtype: Point
+    mission_id: 1
+    id: 5
+
+# end markers for race course scoring tests
+
 #one:
 #  name: MyString
 #  description: MyText

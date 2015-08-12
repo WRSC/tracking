@@ -50,10 +50,19 @@ function manual_or_auto_refresh(){
       }
 	});
 
+	// detect the value of the drop down menu for the maximum number of coordinates loaded 
+
 	$("#dropdown_select_maxCoords").each(function(){
 		var state = $('#dropdown_select_maxCoords :selected').val();
 		setMaxCoords(state);
 	})
+
+	$("#dropdown_select_maxCoords").change(function(){
+		var state = $('#dropdown_select_maxCoords :selected').val();
+		setMaxCoords(state);
+	})
+
+	// detect the value of the drop down menu for refrest rate
 
 	$("#dropdown_select_refreshRate").each(function(){
 		var state = $('#dropdown_select_refreshRate :selected').val();
@@ -61,11 +70,6 @@ function manual_or_auto_refresh(){
 			alert("/!\\WARNING/!\\\r\nUsing a high refresh rate (below 5s)\r\nmay reduce the performance of the server\r\nand cause bugs.")
 		}
 		setRefrestRate(state);
-	})
-
-	$("#dropdown_select_maxCoords").change(function(){
-		var state = $('#dropdown_select_maxCoords :selected').val();
-		setMaxCoords(state);
 	})
 
 	$("#dropdown_select_refreshRate").change(function(){
@@ -82,6 +86,23 @@ function manual_or_auto_refresh(){
 				}, getRefreshRate());
 	})
 
+	// detect the value of the drop down menue for the latest coordinates loaded
+
+	$("#dropdown_select_offset").each(function(){
+		var state = $('#dropdown_select_offset :selected').val();
+		setOffset(state);
+	})
+
+	$("#dropdown_select_offset").change(function(){
+		var state = $('#dropdown_select_offset :selected').val();
+		setOffset(state);
+		saveLastDatetime("10000101");
+	})
+
+
+
+
+
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -91,7 +112,7 @@ function getNewCoordinates(){
 		$.ajax({
 			type: "GET",
 			url: "/gatherCoordsSince",
-			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords()},
+			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords(), offset: getOffset()},
 			dataType: "json",
 			success: function(data){
 				if(data.length > 0){
@@ -108,7 +129,7 @@ function getNewTrackers(){
 		$.ajax({
 			type: "GET",
 			url: "/getNewTrackers",
-			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords()}, //!!!!! Be careful, datetime can not begin with 0
+			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords(), offset: getOffset()}, //!!!!! Be careful, datetime can not begin with 0
 			dataType: "json",
 			success: function(data){// retrieve an array containing the not yet known trackers
 				if(data.length > 0){
@@ -126,7 +147,7 @@ function getNewCoordinatesAuto(){
 		$.ajax({
 			type: "GET",
 			url: "/gatherCoordsSince",
-			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords()},
+			data: {datetime : getLastDatetime(), trackers: getDesiredTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords(), offset: getOffset()},
 			dataType: "json",
 			success: function(data){
 				if(data.length > 0){
@@ -148,7 +169,7 @@ function getNewTrackersAuto(){
 		$.ajax({
 			type: "GET",
 			url: "/getNewTrackers",
-			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords()}, //!!!!! Be careful, datetime can not begin with 0
+			data: {datetime : getLastDatetime(), trackers: getKnownTrackers(), mission_id: getCurrentMission(), numCoords: getMaxCoords(), offset: getOffset()}, //!!!!! Be careful, datetime can not begin with 0
 			dataType: "json",
 			success: function(data){// retrieve an array containing the not yet known trackers
 				if(data.length > 0){

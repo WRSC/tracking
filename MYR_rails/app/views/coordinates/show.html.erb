@@ -23,7 +23,7 @@
 
 <p>
   <strong>Datetime (in UTC):</strong>
-  <%= Time.strptime(coordinate.datetime+"UTC", "%Y%m%d%H%M%S%z") %>
+  <%= Time.strptime(((@coordinate.datetime.to_f).round).to_s+"UTC", "%Y%m%d%H%M%S%z") %>
 </p>
 
 <p>

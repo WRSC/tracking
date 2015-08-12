@@ -8,9 +8,18 @@
 <br>
 Maximum number of coordinates loaded <select name="Select max number of coordinates" id="dropdown_select_maxCoords">
 	<option value="1000">1000 coordinates</option>
-	<% for m in 1..100 %>
+	<% for m in 2..100 %>
 		<option value="<%= m*1000 %>"><%= m*1000 %> coordinates </option>
 	<% end %>
+</select>
+<br>
+Load the coordinates from <select name="Select latest coordinates loaded" id="dropdown_select_offset">
+	<option value="300">5 minutes ago</option>
+	<option value="1800">30 minutes ago</option>
+	<option value="3600">1 hour ago</option>
+	<option value="7200">2 hours ago</option>
+	<option value="0">the beginning</option>
+	
 </select>
 <br>
 <input type="checkbox" name="displayBuoys" id="dispBuoys">Display the mission's markers

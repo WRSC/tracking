@@ -173,4 +173,9 @@ class ScoreHelperTest < ActionView::TestCase
 		data_hash=coordinates(:testforjson123)
     assert data_hash.datetime=="20150807144743",data_hash.inspect
   end
+  
+  test "should generate a json file in Rails.root/public/uploads/scores/areascanning/generated" do
+    assert loadJsonDataAreaScanning('moredatas.json'),"please check it in Rails.root/public/uploads/scores/area    scanning/generated"
+  end
+
 end

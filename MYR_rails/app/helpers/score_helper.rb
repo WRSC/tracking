@@ -1,3 +1,5 @@
+require 'yaml'
+
 module ScoreHelper
 #argument is attempt_id
   def triangularTimecost(a_id)
@@ -115,12 +117,28 @@ module ScoreHelper
     return ((a.to_datetime-b.to_datetime)*24*60*60).to_i
   end
 #========================= Area scanning ===========================
-  def loadJsonDataAreaScanning(filename)
+  #here the json data files are in rails.root/public/uploads/scores/areascanning/nameoffile.json
+  def loadJsonDataAreaScanning(inputname)
   #need to check filename if it was json file
-    filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'onedata.json') 
+    filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning','origin', inputname) 
     f=File.read(filename) 
     f_hash = JSON.parse(f) 
-    
+    done=generateJsonFile(f_hash)
+    return done
+  end
+  
+#some options for output files
+#json file object.to_json
+#yaml file object.to_yaml
+#xml  file object.to_xml 
+
+  def generateJsonFile(f_hash)
+    outputname=f_hash['name']+'_generated_'+Time.now.to_s+'.json'
+    filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'generated', outputname) 
+    File.open(filename,"w") do |f|
+      f.write(f_hash.to_json)
+    end
+    return File.exist?(filename)
   end
 
 #========================= Fleet Race  =============================

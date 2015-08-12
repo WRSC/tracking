@@ -160,12 +160,13 @@ label{margin-bottom:5px;}
 
 /* Tables
 ---------------------------------------------------------------------------------------------------------------*/
+/*
 table, th, td{border:1px solid; border-collapse:collapse; vertical-align:top; box-sizing:border-box;}
 table, th{table-layout:auto;}
 table{width:100%; margin-bottom:15px;}
 th, td{padding:5px 8px;}
 td{border-width:0 1px; color:black;}
-
+*/
 
 /* Gallery
 ---------------------------------------------------------------------------------------------------------------*/

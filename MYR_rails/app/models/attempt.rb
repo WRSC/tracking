@@ -4,6 +4,7 @@ class Attempt < ActiveRecord::Base
 	belongs_to :mission
 	belongs_to :tracker
   has_one    :score
+  has_many :coordinates, through: :tracker
 
 # Validations
     validates :name, presence: true, uniqueness: true, length: { in: 3..40, too_long: "%{count} characters is the maximum allowed", too_short:"%{count} characters is the minimum allowed"  }

@@ -145,12 +145,17 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 		currentTime=new Date()
 		year=currentTime.getFullYear()
 		month=currentTime.getMonth()+1
-		if (month<10)
-			month="0"+month
-		else
-			month=""+month
+		month < 10 ? month= '0' + month : month=month+''
+		day=currentTime.getDate()
+		day < 10 ? day='0' + day : day=day+''
+		hours=currentTime.getHours()
+		hours < 10 ? hours='0' + hours: hours=hours+''
+		mins=currentTime.getMinutes()
+		mins < 10 ? mins='0' + mins: mins=mins+''
+		secs=currentTime.getSeconds()
+		secs < 10 ? secs='0'+ secs: secs=secs+''
 
-		return year+month+currentTime.getDate()+currentTime.getHours()+currentTime.getMinutes()+currentTime.getSeconds()
+		return year+month+day+hours+mins+secs
 	}
 
 

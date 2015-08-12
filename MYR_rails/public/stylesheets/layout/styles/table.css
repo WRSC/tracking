@@ -1,4 +1,6 @@
-
+table {
+	color:#000000;
+}
 table a:link {
 	color:#000000;
 	text-decoration:underline;

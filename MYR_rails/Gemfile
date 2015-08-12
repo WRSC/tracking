@@ -28,8 +28,6 @@ gem      'jquery-cookie-rails'
 # jQuery plugin for drop-in fix binded events problem caused by Turbolinks
 #gem 'jquery-turbolinks'
 
-gem      'faker'          ,                 '1.4.2'
-
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem      'turbolinks'
 
@@ -42,7 +40,7 @@ gem      'jbuilder'       ,                  '~> 2.0'
 # Use ActiveModel has_secure_password
 gem      'bcrypt'        ,                   '~> 3.1.7'
 
-gem      'fastimage'
+#gem      'fastimage'
 gem      'thin'
 
 #to force ssl connection 
@@ -70,8 +68,6 @@ group :development do
 	gem       'guard-annotate', require: false #auto annotate db/schema 
 end
 
-gem       'awesome_print'
-
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -81,7 +77,9 @@ gem       'awesome_print'
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   #gem 'debugger'
-
+ 
+  gem       'faker'          ,                 '1.4.2'
+  gem       'awesome_print'
   # Access an IRB console on exception pages or by using <%= console %> in views
   #gem 'web-console', '~> 2.0'
 end

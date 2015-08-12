@@ -1,4 +1,6 @@
 <% provide(:title, "Coordinates | Index") %>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Coordinates</h1>
@@ -11,7 +13,7 @@
       <strong><FONT color="black"> &nbsp; End: </strong></FONT><%= select_datetime(Time.now.utc, prefix: 'end') %></center><br>
       <center><a href= coordinates ><button id="loginbutton"  type="button" >OK</button></a></center>
       <center><FONT size=1>Display max 600 coordinates </FONT></center>
-      <table>
+      <table id="datatable-coordinate" class="dataTable display">
       <thead>
         <tr>
           <th>Latitude</th>
@@ -20,7 +22,7 @@
           <th>Course</th>
           <th>Datetime (in UTC)</th>
           <th>Tracker</th>
-          <th colspan="3"></th>
+          <th>Options</th>
         </tr>
       </thead>
       <div id="content">
@@ -40,10 +42,9 @@
             <td><%= coordinate.course %></td>
             <td><%= Time.strptime(((coordinate.datetime.to_f).round).to_s+"UTC", "%Y%m%d%H%M%S%z") %></td>
             <td><%= coordinate.tracker_id %></td>
-            <td><%= link_to 'Show', coordinate %></td>
             <% if is_admin? %>
-              <td><%= link_to 'Edit', edit_coordinate_path(coordinate) %></td>
-              <td><%= link_to 'Destroy', coordinate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Edit', edit_coordinate_path(coordinate) %> <%= ' | '%>
+              <%= link_to 'Destroy', coordinate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>
           </tr>
         <% end %>
@@ -191,6 +192,12 @@ $('select').on("change", function () {
 
 //-------------- INITIALIZE ----------------------------------
 $(document).ready(function () {
+	 $(document).ready( function () {
+    $('#datatable-coordinate').DataTable({
+			paging: true
+
+		});
+} );
   //si pas de cookie on cret un cookie par defaut
   if (readcookie() == null || readcookie() == ""){
     fillcookie(getstartselectedvalue(),getendselectedvalue());

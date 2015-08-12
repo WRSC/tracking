@@ -1,49 +1,38 @@
 <% provide(:title, "Missions | Index") %>
 <p id="notice"><%= notice %></p>
-
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <h1>Listing Missions</h1>
 
-<table>
+<table id="datatable-mission" class="dataTable display">
   <thead>
     <tr>
-      <th class=column-member>Name
-      <a href= missions ><button id="sortbuttonT" name="MissionN" onclick="myFunctionSort(this.name)" ><img src="/icons/a_z.png"></button></a>
-      <a href= missions ><button id="sortbuttonD" name="MissionNbis" onclick="myFunctionSort(this.name)" ><img src="/icons/z_a.png"></button></a></th>
+      <th >Name</th>
       <th>Description</th>
       <th>Start</th>
       <th>End</th>
-      <th colspan="3"></th>
-    </tr>
+			<% if is_admin? %>
+        <th>Options</th>
+			<% end %>
+	    </tr>
   </thead>
 
   <tbody>
-    <% idMissions = []%>
-    <% @missions.each do |mission| %>
-      <% idMissions << mission.id %>
-    <% end %>
-    <% allMissiondIdSort=sortId(idMissions) %>
-    <% if allMissiondIdSort != [] %>
-      <% for ii in 0..(allMissiondIdSort.size-1) %>
-        <% mission=Mission.find_by_id(allMissiondIdSort[ii]) %>
-        <tr>
+		<% @missions.each do |mission| %>
+       <tr>
           <td><%= link_to mission.name, mission %></td>
           <td><%= mission.description %></td>
           <td><%= mission.start %></td>
           <td><%= mission.end %></td>
-          <td><%= link_to 'Show', mission %></td>
           <% if is_admin? %>
-            <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
-            <td><%= link_to 'Delete', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Edit', edit_mission_path(mission) %> <%= ' | '%>
+            <%= link_to 'Delete', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
-        <% end %>
-      </tr>
+			</tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
-
-
 <% if sign_in(current_user) %>
   <% if is_admin? %>
   	<%= link_to 'New Mission', new_mission_path %>
@@ -51,8 +40,10 @@
 <% end %>
 
 <script>
-
-  function myFunctionSort(clicked_id) {
-    $.cookie("Sort",clicked_id,{path:'/' });
-  }
+ $(document).ready( function () {
+    $('#datatable-mission').DataTable({
+			paging: true
+			
+		});
+} );
 </script>

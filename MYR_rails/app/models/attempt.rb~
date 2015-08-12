@@ -3,7 +3,8 @@ class Attempt < ActiveRecord::Base
 	belongs_to :robot
 	belongs_to :mission
 	belongs_to :tracker
-
+  has_one    :score
+  has_many :coordinates, through: :trackers
 
 # Validations
     validates :name, presence: true, uniqueness: true, length: { in: 3..40, too_long: "%{count} characters is the maximum allowed", too_short:"%{count} characters is the minimum allowed"  }
@@ -11,5 +12,5 @@ class Attempt < ActiveRecord::Base
     validates :end, presence: true
     validates :mission_id, presence: true
     validates :robot_id, presence: true
-		validates :robot_id, presence: true
+		validates :tracker_id, presence: true
 end

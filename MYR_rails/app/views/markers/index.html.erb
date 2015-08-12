@@ -1,4 +1,6 @@
 <% provide(:title, "Markers | Index") %>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Markers</h1>
@@ -6,16 +8,17 @@
 <% if sign_in? %>
   <% if isInTeam? || is_admin? %>
 
-    <table>
+    <table id="datatable-marker" class="dataTable display">
       <thead>
         <tr>
           <th>Type</th>
+					<th>Name</th>
 					<th>Mission</th>
           <th>Description</th>
           <th>Latitude</th>
           <th>Longitude</th>
           <th>Datetime</th>
-          <th colspan="3"></th>
+          <th>Options</th>
         </tr>
       </thead>
 
@@ -23,15 +26,15 @@
         <% @markers.each do |marker| %>
           <tr>
             <td><%= marker.mtype %></td>
+						<td><%= marker.name %></td>
 						<td><%= marker.mission_id %></td>
             <td><%= marker.description %></td>
             <td><%= marker.latitude %></td>
             <td><%= marker.longitude %></td>
             <td><%= marker.datetime %></td>
             
-            <td><%= link_to 'Show', marker %></td>
-            <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
-            <td><%= link_to 'Delete', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+             <td><%= link_to 'Edit', edit_marker_path(marker) %> <%= ' | '%>
+            <%= link_to 'Delete', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
@@ -49,3 +52,11 @@
 <% if is_admin? %>
   <%= link_to 'New Marker', new_marker_path %>
 <% end %>
+<script>
+ $(document).ready( function () {
+    $('#datatable-marker').DataTable({
+			paging: true
+			
+		});
+} );
+</script>

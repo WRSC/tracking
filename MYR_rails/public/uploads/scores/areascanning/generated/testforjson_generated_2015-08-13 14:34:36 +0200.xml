@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hash>
+  <name>testforjson</name>
+  <data type="array">
+    <datum>
+      <sectioni>1</sectioni>
+      <sectionj>1</sectionj>
+      <position type="array">
+        <position>
+          <datetime>20150724102039</datetime>
+          <tracker-coords-length type="integer">0</tracker-coords-length>
+          <latitude-difference>tracker error</latitude-difference>
+          <longitude-difference>tracker error</longitude-difference>
+        </position>
+      </position>
+      <Max-lat-err>tracker error</Max-lat-err>
+      <Max-lng-err>tracker error</Max-lng-err>
+    </datum>
+    <datum>
+      <sectioni>1</sectioni>
+      <sectionj>2</sectionj>
+      <position type="array">
+        <position>
+          <datetime>20150724102253</datetime>
+          <tracker-coords-length type="integer">0</tracker-coords-length>
+          <latitude-difference>tracker error</latitude-difference>
+          <longitude-difference>tracker error</longitude-difference>
+        </position>
+      </position>
+      <Max-lat-err>tracker error</Max-lat-err>
+      <Max-lng-err>tracker error</Max-lng-err>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>2</sectionj>
+      <position type="array">
+        <position>
+          <datetime>20150724102402</datetime>
+          <tracker-coords-length type="integer">0</tracker-coords-length>
+          <latitude-difference>tracker error</latitude-difference>
+          <longitude-difference>tracker error</longitude-difference>
+        </position>
+      </position>
+      <Max-lat-err>tracker error</Max-lat-err>
+      <Max-lng-err>tracker error</Max-lng-err>
+    </datum>
+    <datum>
+      <sectioni>1</sectioni>
+      <sectionj>2</sectionj>
+      <position type="array">
+        <position>
+          <datetime>20150724102253</datetime>
+          <tracker-coords-length type="integer">0</tracker-coords-length>
+          <latitude-difference>tracker error</latitude-difference>
+          <longitude-difference>tracker error</longitude-difference>
+        </position>
+      </position>
+      <Max-lat-err>tracker error</Max-lat-err>
+      <Max-lng-err>tracker error</Max-lng-err>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>1</sectionj>
+      <position type="array">
+        <position>
+          <datetime>20150724102402</datetime>
+          <tracker-coords-length type="integer">0</tracker-coords-length>
+          <latitude-difference>tracker error</latitude-difference>
+          <longitude-difference>tracker error</longitude-difference>
+        </position>
+      </position>
+      <Max-lat-err>tracker error</Max-lat-err>
+      <Max-lng-err>tracker error</Max-lng-err>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>1</sectionj>
+      <position type="array">
+        <position>
+          <datetime>20150724100427</datetime>
+          <tracker-coords-length type="integer">0</tracker-coords-length>
+          <latitude-difference>tracker error</latitude-difference>
+          <longitude-difference>tracker error</longitude-difference>
+        </position>
+      </position>
+      <Max-lat-err>tracker error</Max-lat-err>
+      <Max-lng-err>tracker error</Max-lng-err>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>1</sectionj>
+      <position type="array">
+        <position>
+          <datetime>20150724142427</datetime>
+          <tracker-coords-length type="integer">0</tracker-coords-length>
+          <latitude-difference>tracker error</latitude-difference>
+          <longitude-difference>tracker error</longitude-difference>
+        </position>
+      </position>
+      <Max-lat-err>tracker error</Max-lat-err>
+      <Max-lng-err>tracker error</Max-lng-err>
+    </datum>
+  </data>
+</hash>

@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@member, url: password_reset_path(params[:id])) do |f| %>
+		  <% if @member.errors.any? %>
+		  	<div id="error_explanation">
+		  	  <h2><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h2>
+		  	  <ul>
+		  	  	<% @member.errors.full_messages.each do |message| %>
+		  	    	<li><%= message %></li>
+		  	  	<% end %>
+		  	  </ul>
+		  	</div>
+			<% end %>
+
+
+      <%= hidden_field_tag :email, @member.email %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+			<br />
+			<br />
+      <%= f.submit "Update password", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -79,7 +79,12 @@ Rails.application.routes.draw do
     match '/signup' => 'members#new', :via => [:get]
     match '/signin' => 'sessions#new', :via => [:get]
     match '/signout' => 'sessions#delete', :via => [:get]
-    
+ 
+  #errors
+  #get "/404", :to => "errors#not_found"
+  #get "/422", :to => "errors#unacceptable"
+  #get "/500", :to => "errors#internal_error"
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

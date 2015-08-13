@@ -441,7 +441,7 @@ module ScoreHelper
     outputname=f_hash['name']+'_generated_'+Time.now.to_s+'.json'
     filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'generated', outputname) 
     File.open(filename,"w") do |f|
-      f.write(f_hash.to_json)
+      f.write(f_hash.to_xml)
     end
     return File.exist?(filename)
   end

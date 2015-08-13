@@ -20,12 +20,6 @@
   <%= yield %>
   </div>
 
-  <p>
-  <% if @member.logo!="" && @member.logo!=nil %>
-    <img src=<%= @member.logo %>>
-  <% end %>
-  </p>
-
     <%= f.label :name %>
     <%= f.text_field :name %>
 

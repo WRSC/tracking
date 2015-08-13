@@ -82,6 +82,10 @@ class Member < ActiveRecord::Base
 		  UserMailer.password_reset(self).deliver_now
 		end
 		
+		def password_reset_expired?
+  		reset_sent_at < 2.hours.ago
+		end
+
 		private
 
 		  # Converts email to all lower-case.
@@ -94,5 +98,8 @@ class Member < ActiveRecord::Base
 		    self.activation_token  = Member.new_token
 		    self.activation_digest = Member.digest(activation_token)
 		  end
+			
+		
+	
 		
 end

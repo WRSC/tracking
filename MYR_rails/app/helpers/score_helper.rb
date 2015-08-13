@@ -1,4 +1,3 @@
-require 'yaml'
 
 module ScoreHelper
 
@@ -388,17 +387,27 @@ module ScoreHelper
 			positions=[]
 			max_err_lat=0
 			max_err_lng=0
+      tracker_err_count=0
 			for k in 0..(position_length-1)
 				coord = Coordinate.where(datetime: position[k]['datetime'])
 				p_hash=Hash.new
 				p_hash['datetime']=position[k]['datetime']
+        p_hash['tracker_coords_length']=coord.size
 				if coord.size != 1
 				# if there is any data in the tracker		
+          tracker_err_count+=1
+          #p_hash['latitude_tracker']='tracker error'
+          #p_hash['longitude_tracker']='tracker error'
 					p_hash['latitude_difference']= 'tracker error'
 					p_hash['longitude_difference']='tracker error'
 				else
 					# lat_diff= robot.lat - tracker.lat
-					diff_lat=AminusB(position[k]['latitude'],coord[0].latitude)
+          #p_hash['latitude_tracker']=coord[0].latitude
+          #p_hash['longitude_tracker']=coord[0].longitude
+					
+          #p_hash['latitude_uploads']=position[k]['latitude']
+          #p_hash['longitude_uploads']=position[k]['longitude']
+          diff_lat=AminusB(position[k]['latitude'],coord[0].latitude)
 					p_hash['latitude_difference']=diff_lat
 					max_err_lat = max_err_lat > diff_lat.abs ? max_err_lat : diff_lat 
 					diff_lng=AminusB(position[k]['longitude'],coord[0].longitude)
@@ -408,8 +417,15 @@ module ScoreHelper
 				positions.push(p_hash)
 			end
 			section_hash['position']=positions
-			section_hash['Max_lat_err']=max_err_lat
-			section_hash['Max_lng_err']=max_err_lng
+      if tracker_err_count != positions.length
+			  section_hash['Max_lat_err']=max_err_lat
+			  section_hash['Max_lng_err']=max_err_lng
+      else
+			  section_hash['Max_lat_err']='tracker error'
+			  section_hash['Max_lng_err']='tracker error'
+      end
+      #section_hash['position_count']=position_length-1
+      #section_hash['tracker_err_count']=tracker_err_count
 			datas.push(section_hash)
 		end
 		d_hash['data']=datas

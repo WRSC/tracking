@@ -16,6 +16,15 @@
 
 #score-awsome-table td:empty {background: hsla(50, 25%, 60%, 0.7); }
 
-tr:hover:not(#firstrow), tr:hover td:empty {background: #ff0; pointer-events: visible;}tr:hover:not(#firstrow) { transform: scale(1.2);  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);}
-/*tr:hover:not(#firstrow), tr:hover td:empty {background: #ff0; pointer-events: visible;}tr:hover:not(#firstrow) { transform: scale(1.2); font-weight: 700; box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);}*/
 
+tr:hover:not(#firstrow), tr:hover td:empty {background: #ff0; pointer-events: visible;}
+tr:hover:not(#firstrow) { transform: scale(1.1);  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);}
+
+
+/*tr:hover:not(#firstrow), tr:hover td:empty {background: #ff0; pointer-events: visible;}
+tr:hover:not(#firstrow) { transform: scale(1.2); font-weight: 700; box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);}*/
+
+/*
+#scores-1:hover {background: #fff; pointer-events: visible;}
+#scores-1:hover{ transform: scale(1.2);  box-shadow: 0px 3px 7px rgba(1, 255, 255, 0.5);}
+*/

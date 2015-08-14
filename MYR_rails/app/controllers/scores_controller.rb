@@ -5,8 +5,8 @@ class ScoresController < ApplicationController
 		@teamlist=Team.all
   	end
 	
-	def test
-	end
+	  def test
+	  end
   
   	def show
   		@score=Score.find(params[:id])
@@ -17,12 +17,9 @@ class ScoresController < ApplicationController
   	end
 
   	def create
-
 	    attempt = Attempt.find(params[:score][:attempt_id])
 	    mission = Mission.find(attempt.mission_id)
 
-	    
-	    
 	    @score = Score.new(score_params)
 	    respond_to do |format|
 	      if @score.save
@@ -47,15 +44,35 @@ class ScoresController < ApplicationController
 	    end
   end
 
-  	def destroy
+  def destroy
 	    @score.destroy
 	    respond_to do |format|
 	      format.html { redirect_to missions_url, notice: 'score was successfully destroyed.' }
 	      format.json { head :no_content }
 	    end
-  	end
+  end
+  
+	def triangular
+		# make sure the mission 1 is triangular
+		@attempts=Attempt.where(mission_id: 1)
+	end
+
+	def stationkeeping
+		# make sure the mission 2 is stationkeeping
+		@attempts=Attempt.where(mission_id: 2)
+	end
+
+  def areascanning
+		# make sure the mission 3 is areascanning
+		@attempts=Attempt.where(mission_id: 3)
+  end
+
+	def fleetrace
+		# make sure the mission 4 is fleetrace
+		@attempts=Attempt.where(mission_id: 4)
+	end
   	
-  	 private
+ 	private
     # Use callbacks to share common setup or constraints between actions.
     def set_score
       @score = Score.find(params[:id])

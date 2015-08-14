@@ -1,0 +1,45 @@
+<% provide(:title, "Scores | Area Scanning") %>
+<%= stylesheet_link_tag 'scores_table.css', media: 'all', 'data-turbolinks-track' => true %>
+
+
+<div id="score-awesome-table">
+<div id="score-background-container">
+<h1>Area Scanning Standing</h1>
+<table id="datatable-areascanning" class="dataTable display">
+  <thead>
+    <tr id="firstrow">
+			<th>#</th>
+			<th>Robot</th>
+      <th>Team</th>
+			<th>Logo</th>
+ 			<th>Raw Score</th>
+			<th>Final Score</th>
+			<% if is_admin? %>
+        <th>Options</th>
+			<% end %>
+	    </tr>
+  </thead>
+
+  <tbody>
+		<% rank=1 %>
+		<% @attempts.each do |att|%>
+			<tr>
+			
+				<td><%= rank%></td><!--need to fill woth rank-->
+				<td><%= att.robot.name %></td>
+				<td><%= att.robot.team.name %></td>
+				<% logoimage= image_tag att.robot.team.logo_url(:index) %>
+				<td><center><%= link_to logoimage , att.robot.team  %></center></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<% rank+=1%>
+			</tr>		
+		<% end %>
+  </tbody>
+</table>
+<br />
+</div>
+</div>
+
+

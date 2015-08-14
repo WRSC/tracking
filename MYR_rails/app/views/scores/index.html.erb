@@ -8,15 +8,15 @@
 <br>
 <h1>WRSC 2015 FINAL STANDING</h1>
 <table id="racetimes">
-  <tr id="firstrow">
+  <tr id="firstrow" >
     <th>#</th>
     <th>Team</th>
     <th>Robot</th>
 		<th>Category</th>
-    <th>Mission 1</th>
-    <th>Mission 2</th>
-    <th>Mission 3</th>
-    <th>Mission 4</th>
+    <th><%= link_to "Mission 1", triangular_path %></th>
+    <th><%= link_to "Mission 2", stationkeeping_path %></th>
+    <th><%= link_to "Mission 3", areascanning_path %></th>
+    <th><%= link_to "Mission 4", fleetrace_path %></th>
     <% if is_admin? %>
       <th>Option</th>
     <% end %>
@@ -26,7 +26,7 @@
 	  <% @teamlist.each do |team| %>
 			  <% roblist=team.robots   %>
 			  <% roblist.each do |rob| %>
-			  <tr>
+			  <tr id= <%= 'scores-'+i.to_s %> >
           <td><%= i %></td>
 				  <td contenteditable="true" ><%= team.name %></td>
 				  <td contenteditable="true" ><%= rob.name%></td>
@@ -50,7 +50,7 @@
 	  <% @teamlist.each do |team| %>
 			  <% roblist=team.robots   %>
 			  <% roblist.each do |rob| %>
-			  <tr>
+			  <tr id=<%= 'scores-'+i.to_s %> >
           <td><%= i %></td>
 				  <td ><%= team.name %></td>
 				  <td ><%= rob.name%></td>

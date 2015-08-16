@@ -1,4 +1,5 @@
 class RobotsController < ApplicationController
+#https://richonrails.com/articles/allowing-file-uploads-with-carrierwave
   before_action :set_robot, only: [:show, :edit, :update, :destroy]
 
   # GET /robots

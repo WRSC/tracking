@@ -2,7 +2,7 @@
 #score-awesome-table #score-background-container{ background-image: linear-gradient(#aaa 25%, #000);}
 #score-awesome-table h1, table { text-align: center; }
 
-#score-awesome-table table {border-collapse: collapse;  width: 70%; margin: 0 auto 5rem;}
+#score-awesome-table table {border-collapse: collapse;  width: 0%; margin: 0 auto 5rem;}
 
 #score-awesome-table th, td { padding: 1.5rem; font-size: 1.3rem; }
 

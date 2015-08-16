@@ -1,8 +1,10 @@
 class ScoresController < ApplicationController
 	include ScoreHelper
 
+	before_action :get_rob_by_category, only:[:index, :triangular, :stationkeeping, :areascanning, :fleetrace]
+
   	def index
-		@teamlist=Team.all
+			
   	end
 	
 	  def test
@@ -54,25 +56,69 @@ class ScoresController < ApplicationController
   
 	def triangular
 		# make sure the mission 1 is triangular
-		@attempts=Attempt.where(mission_id: 1)
+		sail_ids=[]
+		@sailboatlist.each do |rob|
+			sail_ids.push(rob.id)		
+		end
+		@sail_atts=Attempt.where(mission_id: 1).where(robot_id: sail_ids)		
+		microsail_ids=[]
+		@microSailboatlist.each do |rob|
+			microsail_ids.push(rob.id)		
+		end
+		@microsail_atts=Attempt.where(mission_id: 1).where(robot_id: microsail_ids)	
+		
 	end
 
 	def stationkeeping
 		# make sure the mission 2 is stationkeeping
-		@attempts=Attempt.where(mission_id: 2)
+		sail_ids=[]
+		@sailboatlist.each do |rob|
+			sail_ids.push(rob.id)		
+		end
+		@sail_atts=Attempt.where(mission_id: 2).where(robot_id: sail_ids)		
+		microsail_ids=[]
+		@microSailboatlist.each do |rob|
+			microsail_ids.push(rob.id)		
+		end
+		@microsail_atts=Attempt.where(mission_id: 2).where(robot_id: microsail_ids)	
+		
 	end
 
   def areascanning
 		# make sure the mission 3 is areascanning
-		@attempts=Attempt.where(mission_id: 3)
+		sail_ids=[]
+		@sailboatlist.each do |rob|
+			sail_ids.push(rob.id)		
+		end
+		@sail_atts=Attempt.where(mission_id: 3).where(robot_id: sail_ids)		
+		microsail_ids=[]
+		@microSailboatlist.each do |rob|
+			microsail_ids.push(rob.id)		
+		end
+		@microsail_atts=Attempt.where(mission_id: 3).where(robot_id: microsail_ids)	
+		
   end
 
 	def fleetrace
 		# make sure the mission 4 is fleetrace
-		@attempts=Attempt.where(mission_id: 4)
+		sail_ids=[]
+		@sailboatlist.each do |rob|
+			sail_ids.push(rob.id)		
+		end
+		@sail_atts=Attempt.where(mission_id: 4).where(robot_id: sail_ids)		
+		microsail_ids=[]
+		@microSailboatlist.each do |rob|
+			microsail_ids.push(rob.id)		
+		end
+		@microsail_atts=Attempt.where(mission_id: 4).where(robot_id: microsail_ids)
 	end
   	
  	private
+		def get_rob_by_category
+			@sailboatlist=Robot.where(category: "Sailboat")
+			@microSailboatlist=Robot.where(category: "MicroSailboat")
+		end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_score
       @score = Score.find(params[:id])

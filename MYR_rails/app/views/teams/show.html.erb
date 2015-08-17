@@ -21,15 +21,15 @@
 <a id="show-members" href<%= link_to "", :action => :teamMembers, remote: true %> </a>
 <div id="team-members-container"></div>
 
-<p>
-	<strong>Robots :</strong><br>
-	<% if @team.robots.size==0 %>
-		 <%= @team.name%> has not created any robot yet.
-	<% else %>
-		<%= @team.name%> has <%= @team.robots.size %> robots 
-		<%= render 'showRobots'%>
-	<% end %>
-</p>
+<p><strong>Robots :</strong><br></p>
+<% if @team.robots.size==0 %>
+	 <%= @team.name%> has not created any robot yet.
+<% end %>
+	<%= @team.name%> has <%= @team.robots.size %> robots 
+	<a id="show-robots" href<%= link_to "", :action => :teamRobots, remote: true %> </a>
+	<div id="team-robots-container"></div>
+
+
 <br>
 <% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>
 <%= link_to 'Edit', edit_team_path(@team) %> | <%= link_to 'Delete', @team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team and kick all the members of this team.' } %> | 
@@ -39,6 +39,7 @@
 $(document).ready(function(){
 
 	$("#show-members").click();
+	$("#show-robots").click();
 	
 })
 </script>

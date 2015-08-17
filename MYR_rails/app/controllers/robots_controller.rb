@@ -11,6 +11,7 @@ class RobotsController < ApplicationController
   # GET /robots/1
   # GET /robots/1.json
   def show
+		
   end
 
   # GET /robots/new
@@ -21,6 +22,11 @@ class RobotsController < ApplicationController
   # GET /robots/1/edit
   def edit
   end
+	
+	def robotChart
+		test=1
+		render json: test
+	end
 
   # POST /robots
   # POST /robots.json

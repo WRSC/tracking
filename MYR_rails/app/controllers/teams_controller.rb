@@ -97,6 +97,10 @@ class TeamsController < ApplicationController
 		@team=current_user.team
 	end
 
+	def teamRobots
+		@team=current_user.team
+	end
+
 	def kick
     @member = Member.find_by_id(params[:id])
     rep=@member.update_attribute(:team, nil)

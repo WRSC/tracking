@@ -54,8 +54,11 @@ Rails.application.routes.draw do
     get  'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
    	
 		get  'teamMembers'             ,  to: 'teams#teamMembers'
-		get  'kick'             ,  to: 'teams#kick'
-   
+		get  'teamRobots'              ,  to: 'teams#teamRobots'
+		get  'kick'                    ,  to: 'teams#kick'
+
+		get  'robotChart'              ,  to: 'robots#kick'
+       
 
    	get  'map_panel'               ,  to: 'real_time#map_panel' 
    	get  'getMissions'             ,  to: 'real_time#getMissions'

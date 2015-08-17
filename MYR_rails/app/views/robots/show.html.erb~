@@ -1,4 +1,6 @@
-<% provide(:title, "Robots | show") %>
+<% provide(:title, "Robots | Show") %>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<%= javascript_include_tag 'team', 'data-turbolinks-track' => true %>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -10,18 +12,36 @@
   <strong>Category:</strong>
   <%= @robot.category %>
 </p>
-
 <p>
   <strong>Team:</strong>
-  <%= @robot.team_id %>
+  <%= @robot.team.name %>
 </p>
+
+
 
 <p>
-  <strong>Tracker:</strong>
-  <%= @robot.tracker_id %>
+  	<strong>Trackers:</strong>
+    <% myTrackers = [] %>
+    <% here = false %>
+  	<% @robot.trackers.each do |track| %>
+      <% for i in 0..myTrackers.length-1 do %>
+        <% if myTrackers[i] == track.id %>
+          <% here = true %>
+        <% end %>
+      <% end %>
+  		<% if !here %>
+        <% myTrackers << track.id %>
+	    <% end %> 
+      <% here = false %> 
+    <% end %>
+    <%= tabToString(myTrackers) %>
 </p>
+	<div id="chart_div"></div>
 
 <% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>
-	<%= link_to 'Edit', edit_robot_path(@robot) %> | <%= link_to 'Destroy', @robot, method: :delete, data: { confirm: 'Destroy this robot ?' } %> |
+	<%= link_to 'Edit', edit_robot_path(@robot) %> | <%= link_to 'Delete', @robot, method: :delete, data: { confirm: 'Destroy this robot ?' } %> |
 <% end %>
-<%= link_to 'Back', robots_path %>
+<%= link_to 'Back to index', robots_path %>
+
+   
+   

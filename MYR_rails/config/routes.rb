@@ -53,6 +53,10 @@ Rails.application.routes.draw do
     get  'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
     get  'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
    	
+		get  'teamMembers'             ,  to: 'teams#teamMembers'
+		get  'kick'                    ,  to: 'teams#kick'
+       
+
    	get  'map_panel'               ,  to: 'real_time#map_panel' 
    	get  'getMissions'             ,  to: 'real_time#getMissions'
     get  'getNewTrackers'          ,  to: 'real_time#getNewTrackers'

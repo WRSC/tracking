@@ -57,6 +57,10 @@ class MemberlogoUploader < CarrierWave::Uploader::Base
     process :resize_to_fit => [400,250]
   end
 
+	version :team_show do
+    process :resize_to_fit => [150,120]
+  end
+
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list

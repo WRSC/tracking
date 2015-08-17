@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
+	
 
   # GET /teams
   # GET /teams.json
@@ -38,6 +39,8 @@ class TeamsController < ApplicationController
     end
     @user.update_attribute(:team, @team)
   end
+	
+
 
   # PATCH/PUT /teams/1
   # PATCH/PUT /teams/1.json
@@ -89,6 +92,17 @@ class TeamsController < ApplicationController
         format.json {render inline: "location.reload();" }
     end
   end
+	
+	def teamMembers
+		@team=current_user.team
+	end
+
+	def kick
+    @member = Member.find_by_id(params[:id])
+    rep=@member.update_attribute(:team, nil)
+		render json :rep
+  end  
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

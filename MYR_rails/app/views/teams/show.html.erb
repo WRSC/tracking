@@ -3,7 +3,6 @@
 
 <p>
   <% if @team.logo!= "" and @team.logo !=nil%>
-    <strong>Logo:</strong><br>
     <%= image_tag @team.logo_url(:medium) %>
   <% end %>
 </p>
@@ -19,16 +18,8 @@
 </p>
 
 <p><strong>Members:</strong></p>
-<table>
-	    <tr>
-			<% teammates = Member.where(team: @team)%>
-			<% teammates.each do |mate| %>
-			 	<tbody>
-					<center><td><p><%= link_to mate.name, member_path(mate.id) %></p></td></center>
-				</tbody>
-			<% end %>
-	   	</tr>
-</table>
+<a id="show-members" href<%= link_to "", :action => :teamMembers, remote: true %> </a>
+<div id="team-members-container"></div>
 
 <p>
 	<strong>Robots :</strong><br>
@@ -44,3 +35,10 @@
 <%= link_to 'Edit', edit_team_path(@team) %> | <%= link_to 'Delete', @team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team and kick all the members of this team.' } %> | 
 <% end %>
 <%= link_to 'Back to index', teams_path %>
+<script>
+$(document).ready(function(){
+
+	$("#show-members").click();
+	
+})
+</script>

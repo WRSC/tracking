@@ -1,17 +1,16 @@
 
-
+	
 google.load("visualization", "1", {packages:["orgchart"]});
 google.setOnLoadCallback(drawChart);
 
 function drawChart() {
-     
-			$.ajax({
-				type: "GET",
-				url: "/robotChart",
-	
-				success: function(Data){
-					alert(Data)
-					var data = new google.visualization.DataTable();
+			
+					$("#draw-chart").click()
+					$("#draw-chart").bind('ajax:success', function(evt, teaminfo, status, xhr){
+						alert(teaminfo[0].name)
+						alert(teaminfo[1].length)
+						alert(teaminfo[2].length)
+   					var data = new google.visualization.DataTable();
 					data.addColumn('string', 'Name');
       		data.addColumn('string', 'Manager');
       		data.addColumn('string', 'ToolTip');
@@ -28,8 +27,11 @@ function drawChart() {
 
 					var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
 					chart.draw(data, {allowHtml:true});
-						}       
-					});
+  })
+			
+					
+						       
+					
     
     }
 

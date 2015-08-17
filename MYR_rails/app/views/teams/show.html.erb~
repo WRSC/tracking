@@ -18,17 +18,17 @@
 </p>
 
 <p><strong>Members:</strong></p>
-<a id="show-members" href<%= link_to "", :action => :teamMembers, remote: true %> </a>
+<a id="show-members" href<%= link_to "", :action => :teamMembers, :id => @team.id, remote: true %> </a>
 <div id="team-members-container"></div>
 
 <p><strong>Robots :</strong><br></p>
 <% if @team.robots.size==0 %>
 	 <%= @team.name%> has not created any robot yet.
-<% else %>
+<% end %>
 	<%= @team.name%> has <%= @team.robots.size %> robots 
 	<a id="show-robots" href<%= link_to "", :action => :teamRobots, remote: true %> </a>
 	<div id="team-robots-container"></div>
-<% end %>
+
 
 <br>
 <% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>
@@ -40,6 +40,16 @@ $(document).ready(function(){
 
 	$("#show-members").click();
 	$("#show-robots").click();
-	
+/*
+		$.ajax({
+				type: "GET",
+				url: "/teamMembers",
+				data: {id: 2},
+				dataType: "json",
+				success: function(){
+					alert('ok')
+				}
+		})
+*/	
 })
 </script>

@@ -18,7 +18,7 @@
 </p>
 
 <p><strong>Members:</strong></p>
-<a id="show-members" href<%= link_to "", :action => :teamMembers, remote: true %> </a>
+<a id="show-members" href<%= link_to "", :action => :teamMembers, :id => @team.id, remote: true %> </a>
 <div id="team-members-container"></div>
 
 <p><strong>Robots :</strong><br></p>
@@ -26,7 +26,7 @@
 	 <%= @team.name%> has not created any robot yet.
 <% end %>
 	<%= @team.name%> has <%= @team.robots.size %> robots 
-	<a id="show-robots" href<%= link_to "", :action => :teamRobots, remote: true %> </a>
+	<a id="show-robots" href<%= link_to "", :action => :teamRobots, :id=> @team.id, remote: true %> </a>
 	<div id="team-robots-container"></div>
 
 
@@ -40,6 +40,16 @@ $(document).ready(function(){
 
 	$("#show-members").click();
 	$("#show-robots").click();
-	
+/*
+		$.ajax({
+				type: "GET",
+				url: "/teamMembers",
+				data: {id: 2},
+				dataType: "json",
+				success: function(){
+					alert('ok')
+				}
+		})
+*/	
 })
 </script>

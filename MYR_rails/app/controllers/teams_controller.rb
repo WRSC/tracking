@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+	
+	before_action :set_team, only: [:show, :edit, :update, :destroy]
 	
 
   # GET /teams
@@ -11,6 +12,7 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
+		current_team=(params[:id])
   end
 
   # GET /teams/new
@@ -94,11 +96,11 @@ class TeamsController < ApplicationController
   end
 	
 	def teamMembers
-		@team=current_user.team
+		@team=Team.find_by(id: params[:id])
 	end
 
 	def teamRobots
-		@team=current_user.team
+		@team=Team.find_by(id: params[:id])
 	end
 
 	def kick

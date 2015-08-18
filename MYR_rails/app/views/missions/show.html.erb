@@ -21,6 +21,34 @@
   <%= @mission.end %>
 </p>
 
+<p>
+  <strong>Markers:</strong>
+	<% if @mission.markers.length==0 %>
+		<br />
+		<font color="red">The markers will be displayed 12 hours before the start of this mission, in case of urgency please contact the admin.</font>
+	<% else %>
+  	<% marks= @mission.markers %>
+		<!--Need to do it-->
+		<% marks.each do |m|%>
+			<% case m.mtype %>
+			<% when "Point" %>
+				<p>Point</p>
+				<p>Coordinates: <%= m.latitude%> <%= m.longitude%></p>
+			<% when "Line" %>
+				<p>Line</p>
+				<p>Coordinates: <%= m.latitude%> <%= m.longitude%></p>
+			<% when "Polygon" %>
+				<p>Polygon</p>
+				<p>Coordinates: <%= m.latitude%> <%= m.longitude%></p>
+			<% when "Circle" %>
+				<p>Circle</p>
+				<p>Coordinates: <%= m.latitude%> <%= m.longitude%></p>
+			<% end %>
+		
+		<% end %>
+	<% end %>
+</p>
+
 <% if is_admin? %>
 <%= link_to 'Edit', edit_mission_path(@mission) %> | <%= link_to 'Delete', @mission, method: :delete, data: { confirm: 'Destroy this mission ?' } %> |
 <% end %>

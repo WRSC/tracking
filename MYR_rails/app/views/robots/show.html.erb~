@@ -34,7 +34,7 @@
     <% end %>
     <%= tabToString(myTrackers) %>
 </p>
-	<a id="draw-chart" href<%= link_to "", :action => :robotChart, :id => @team.id, remote: true %> </a>
+	<a id="draw-chart" href<%= link_to "", :action => :robotChart, :id => @robot.id, remote: true %> </a>
 	<div id="chart_div"></div>
 
 <% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>

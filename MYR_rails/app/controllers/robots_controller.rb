@@ -27,13 +27,15 @@ class RobotsController < ApplicationController
 		data=[]
 		rob=Robot.find_by_id(params[:id])
 		data.push(rob)		
-		missions=rob.missions
-		data.push(missions)
-		attempts=[]
-		missions.each do |m|			
-			attempts=m.attempts		
+	
+		missions=[]
+		rob.missions.each do |m|		
+			tmp=[]
+			tmp.push(m)	
+			tmp.push(rob.attempts.where(mission_id: m.id))	
+			missions.push(tmp)	
 		end
-		data.push(attempts)
+		data.push(missions)
 		render json: data
 	end
 

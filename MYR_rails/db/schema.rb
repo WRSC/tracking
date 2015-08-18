@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805102906) do
+ActiveRecord::Schema.define(version: 20150818115638) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150805102906) do
     t.integer  "tracker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "uploadxml"
   end
 
   create_table "coordinates", force: :cascade do |t|

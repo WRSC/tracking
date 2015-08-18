@@ -1,0 +1,17 @@
+
+<%= form_for(:attempt) do |f| %>
+  
+	<div class="field">
+    <strong><%= f.label :id %></strong>
+    <%= f.text_field :id %>
+  </div><br>
+  
+  <div class="field">
+    <font color="blue">Upload area scanning xml file</font>
+    <%= f.file_field :uploadxml %>
+  </div>
+ 
+  <div class="actions">
+    <%= f.submit "Save"%>
+  </div>
+<% end %>

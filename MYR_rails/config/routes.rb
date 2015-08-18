@@ -58,6 +58,9 @@ Rails.application.routes.draw do
 		get  'kick'                    ,  to: 'teams#kick'
 
 		get  'robotChart'              ,  to: 'robots#robotChart'
+
+		get  'uploadXMLAS'             ,  to: 'attempts#uploadXMLAS'
+		post 'uploadXMLAS'             ,  to: 'attempts#updateXMLAS'
        
 
    	get  'map_panel'               ,  to: 'real_time#map_panel' 

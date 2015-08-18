@@ -3,6 +3,17 @@
 google.load("visualization", "1", {packages:["orgchart"]});
 google.setOnLoadCallback(drawChart);
 
+function renderuploadxml(){
+	$.ajax({
+		type: "GET",
+		url: "/uploadXMLAS",
+		
+		success: function(){
+			
+		}       
+		
+	});
+}
 function drawChart() {
 				$("#draw-chart").click()
 				$("#draw-chart").bind('ajax:success', function(evt, teaminfo, status, xhr){
@@ -33,13 +44,23 @@ teaminfo[1] => info about missions => [mission,[attempts]]
 					]);
 					atts=teaminfo[1][i][1]
 					for (var j=0; j< atts.length;j++){
-					
-						data.addRows([
-							//[atts[j].name, m.name, 'Attempt'],
-							[{v:atts[j].name, f:atts[j].name+'<div style="color:red; font-style:italic; width: 250px"><font size="2">'+'Start: '+atts[j].start+'<br />End: '+atts[j].end+'</font></div>'}, m.name, 'Attempt'],
-							['Tracker '+atts[j].tracker_id+' => '+atts[j].name, atts[j].name, 'Tracker'],
+						
+						if (m.id==3){
+							a_id=atts[j].id
+							data.addRows([
+								//[atts[j].name, m.name, 'Attempt'],
+								[{v:atts[j].name, f:atts[j].name+'<div style="color:red; font-style:italic; width: 250px"><font size="2">'+'Start: '+atts[j].start+'<br />End: '+atts[j].end+'</font></div>'+'<div id="upload-as-xml"></div>'}, m.name, 'Attempt'],
+								['Tracker '+atts[j].tracker_id+' => '+atts[j].name, atts[j].name, 'Tracker'],
 							
-						]);	
+							]);	
+						}else{	
+							data.addRows([
+								//[atts[j].name, m.name, 'Attempt'],
+								[{v:atts[j].name, f:atts[j].name+'<div style="color:red; font-style:italic; width: 250px"><font size="2">'+'Start: '+atts[j].start+'<br />End: '+atts[j].end+'</font></div>'}, m.name, 'Attempt'],
+								['Tracker '+atts[j].tracker_id+' => '+atts[j].name, atts[j].name, 'Tracker'],
+							
+							]);
+						}
 					}
 				}
 				var option={
@@ -48,6 +69,7 @@ teaminfo[1] => info about missions => [mission,[attempts]]
 				}
 				var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
 				chart.draw(data, option);
+				renderuploadxml()
 			})
 	    
 }

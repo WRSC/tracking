@@ -61,6 +61,20 @@ class AttemptsController < ApplicationController
     end
   end
 
+	def uploadXMLAS
+	end
+	
+	def updateXMLAS
+		a=Attempt.find_by_id(attempt_params[:id])
+		a.update(uploadxml: attempt_params[:uploadxml])
+		if a.save
+			redirect_to root_path
+		else
+			redirect_to root_path
+		end
+		
+	end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attempt
@@ -69,6 +83,6 @@ class AttemptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attempt_params
-      params.require(:attempt).permit(:name, :start, :end, :robot_id, :mission_id, :tracker_id)
+      params.require(:attempt).permit(:id, :name, :start, :end, :robot_id, :mission_id, :tracker_id,:uploadxml)
     end
 end

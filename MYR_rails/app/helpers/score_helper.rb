@@ -160,7 +160,7 @@ module ScoreHelper
       myTrackerID= attempt.tracker_id
       startTime = attempt.start.strftime('%Y%m%d%H%M%S')
       endTime = attempt.end.strftime('%Y%m%d%H%M%S')
-      #globalStartTime = Mission.find(mission_id).startTime.strftime('%Y%m%d%H%M%S')
+      globalStartTime = Mission.find(mission_id).startOfRace
       coordinates = (Coordinate.where(id: Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc))).where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).select(:datetime,:latitude,:longitude).order(datetime: :asc)
 
       # The markers should be created in this order : first => start line (first point of the start line = first Buoy), second => first Buoy, third => second Buoy, fourth => third Buoy, fifth => fourth Buoy
@@ -217,7 +217,7 @@ module ScoreHelper
                 coordinates = coordinates.where("datetime >= ?", tFoB).order(datetime: :asc)
                 turn = turn+1
                 if turn == 2
-                  time = timeDifference(tFiB.to_s, startTime.to_s)
+                  time = timeDifference(tFiB.to_s, globalStartTime.to_s)
                 end
               end
             end

@@ -29,10 +29,18 @@
   <br>
   
   <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+    <%= f.label :mtype %>
+    <%= f.select :category, ['Race', 'TriangularCourse', 'StationKeeping', 'AreaScanning'] %>
   </div>
   <br>
+
+  Fill this only if the mission is the Race.
+  <div class="field">
+    <%= f.label :startOfRace %>
+    <%= f.string :startOfRace %>
+  </div>
+  <br>
+
 
   <div class="actions">
     <%= f.submit %>

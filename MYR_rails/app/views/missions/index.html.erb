@@ -7,8 +7,8 @@
 <table id="datatable-mission" class="dataTable display">
   <thead>
     <tr>
-      <th >Name</th>
-      <th>Description</th>
+      <th>Name</th>
+      <th>Type</th>
       <th>Start</th>
       <th>End</th>
 			<% if is_admin? %>
@@ -21,7 +21,7 @@
 		<% @missions.each do |mission| %>
        <tr>
           <td><%= link_to mission.name, mission %></td>
-          <td><%= mission.description %></td>
+          <td><%= mission.mtype %></td>
           <td><%= mission.start %></td>
           <td><%= mission.end %></td>
           <% if is_admin? %>

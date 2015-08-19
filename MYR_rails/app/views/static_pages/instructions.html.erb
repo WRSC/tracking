@@ -1,15 +1,58 @@
-<% provide(:title, "Instructions") %>
+<% provide(:title, "Informations") %>
+<style>
 
-<h1> Instructions to use the website </h1>
+h6 {
+	margin-left: 20px;
+}
+h4 {
+	margin-left: 40px;
+}
+p {
+	margin-left: 60px;
+}
+.  {
+	margin: auto;
+	width: 50%;
+}
+</style>
+	<div class="wrapper bgded" >
+		<h6 class="title">Instructions to use the website</h6>
 
-<h2> Purpose of the website </h2>
+		<h4 class="title"> Purpose of the website </h4>
 
-<p> This website is meant to allow everyone to watch the competition in <a href="<%= real_time_path %>"> real time </a> or to see the performance of each boat via the <a href="<%= replay_path %>"> replay </a> page. You do not need to register to the website if you are not a competitor or part of the organisation.</p>
+		<p> This website is meant to allow everyone to watch the competition in <a href="<%= real_time_path %>"> real time </a> or to see the performance of each boat via the <a href="<%= replay_path %>"> replay </a> page. You do not need to register to the website if you are not a competitor or part of the organisation.</p>
 
-<h2> I am a competitor and want to register </h2>
+		<h4 class="title"> I am a competitor and want to register </h4>
 
-<p> This is very easy !  <a href="<%= new_member_path %>"> Sign up </a> to the website then join or create your <a href="<%= teams_path %>"> team </a> and invite your comrades.</p>
+		<p> This is very easy !  <a href="<%= new_member_path %>"> Sign up </a> to the website then join or create your <a href="<%= teams_path %>"> team </a> and invite your comrades.</p>
 
-<p> If you have created your team, you are now the team leader. You have to create a <a href="<%= robots_path %>"> robot </a> for each robot you will present at the competition.</p>
+		<p> If you have created your team, you are now the team leader. You have to create a <a href="<%= robots_path %>"> robot </a> for each robot you will present at the competition.</p>
 
-<p> Then an administrator will give you a tracker id for each of your robot. Then the last step is to register your robot to the missions by creating an <a href="<%= attempts_path %>"> attempt </a>.</p>
+		<p> Then an administrator will give you a tracker id for each of your robot. Then the last step is to register your robot to the missions by creating an <a href="<%= attempts_path %>"> attempt </a>.</p>
+
+		<h6 class="title"> Informations about the tracking system </h6>
+
+		<h4 class="title"> History of the project </h4>
+
+		<p> The tracking system and website made to follow the boats have been first developped through the project SWARMON from 2013 to 2014. This project was realised by the ENSTA Bretagne's students Quentin DESCOURS, Benoit BOURDON, Jean-Jacques BOYE, Simon STEPHAN and the responsible teacher Olivier REYNET. (see <%= link_to 'contacts', contact_path %>)</p>
+		<p> The project was improved during summer 2014 by Bastien DROUOT and Benoit BOURDON in the Åland University of Applied Sciences, under the direction of Ronny ERIKSSON, vice rector of the University. It was used successfully for the WRSC 2014 in Galway (Ireland). </p>
+		<p> Then he tracker and the website were again enhanced by Quentin DESCOURS, Benoit BOURDON and Bastien DROUOT during their third year at ENSTA Bretage from 2014 to 2015. </p>
+		<p> Finally, the actual version is meant for the WRSC of 2015 that will happen in Mariehamn in Åland (Finland). It was built up by Tao ZHENG and Sylvain Hunault, students from the ENSTA Bretagne, thanks to the help of the predecessors and under the guidance of Anna FRIEBE, Project Manager at Åland University of Applied Sciences, during summer 2015 in Mariehamn. </p>
+
+		<h4 class="title"> Presentation of the tracking system </h4>
+
+		<p>Here are two pictures presenting the tracking system that will be put on the sailing robots during the competition.</p>
+		<div class= "imgTracker" >
+		<div class="wrapper row4">
+		  <footer id="footer" class="clear">  
+			<div class="one_half">
+				<img class="Tracker" src= /stylesheets/images/default/TrackingSystem.jpg >
+			</div>
+			<div class"one_half">
+				<img class="TrackerInBox" src= /stylesheets/images/default/TrackingSystemInBox.jpg >
+			</div>
+		</div>
+		</div>
+
+		<p> The box containing the system is 88 millimeters long and 71 millimeters wide. It weighs about 200 grams. It receives the GPS coordinates and transmits them to the website in order to display them on the real-time or replay pages. It lasts from 8 to 10 hours and has a precision of 1 meter but has a natural offset of 3 to 5 meters.</p>
+	</div>

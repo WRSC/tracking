@@ -1,8 +1,9 @@
+<!-- this view was made only for testing -->
+
 <% provide(:title, "Scores | show") %>
 <p id="notice"><%= notice %></p>
 
-<% if !current_user.nil? %>
-  <% attempt=Attempt.find_by_id(@score.attempt_id) %> 
+  <% attempt = Attempt.find_by_id(@score.attempt_id) %> 
   <% mission = Mission.find_by_id(attempt.mission_id) %>
   <h1> <%= "Score of attempt "+ attempt.name + " for the mission "+ mission.name %></h1>
 
@@ -18,7 +19,12 @@
 
     <p>
       <strong>Robot:</strong>
-      <%= "Robot n°"+attempt.robot_id.to_s+", "+Robot.find(attempt.robot_id).name %>
+      <%= "Robot n°"+attempt.robot_id.to_s+", "+Robot.find(attempt.robot_id).name+", "+Robot.find(attempt.robot_id).category %>
+    </p>
+
+    <p>
+      <strong>Time scored:</strong>
+      <%= @score.timescore %>
     </p>
 
     <p>
@@ -28,5 +34,4 @@
       <% end %>
     </p>
 
-<% end %>
 <%= link_to 'Back to index', scores_path %>

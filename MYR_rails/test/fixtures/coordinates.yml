@@ -12,7 +12,6 @@
 #  datetime: 2015-02-25 15:39:26
 #  tracker_id: 1
 
-<<<<<<< HEAD
 # coordinates for testing the triangular course scoring function
 
 # <% t = 20150605010101 %> 
@@ -355,7 +354,7 @@ c170:
 <% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
 
 # end coordinates for testing race course scoring
-=======
+
 #=================  Station keeping      =========================
 testOutP:
   latitude: 9.99
@@ -380,5 +379,3 @@ testOnEP:
   longitude: 2
   datetime: '20150225153927'
   tracker_id: 1
-
->>>>>>> b99b242afa812f40d61dddf4b4b4be27c8454369

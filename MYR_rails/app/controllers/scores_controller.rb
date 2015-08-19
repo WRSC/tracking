@@ -3,6 +3,10 @@ class ScoresController < ApplicationController
 
   	def index
 		@teamlist=Team.all
+		@TMission = Mission.where(:mtype "TriangularCourse")
+		@RMission = Mission.where(:mtype "Race")
+		@SKMission = Mission.where(:mtype "StationKeeping")
+		@ASMission = Mission.where(:mtype "AreaScanning")
   	end
 	
 	def test
@@ -20,10 +24,17 @@ class ScoresController < ApplicationController
 
 	    attempt = Attempt.find(params[:score][:attempt_id])
 	    mission = Mission.find(attempt.mission_id)
+	   	@score = Score.new
+	    case mission.mtype
+	    when "Race"
+	    	temp = getTimeRaceCourse(attempt)
+	    	@score.update_attribute(:timecost, temp)
+	    when "TriangularCourse"
+	    when "StationKeeping"
+	    when "AreaScanning"
+	   	else
+	   	end 
 
-	    
-	    
-	    @score = Score.new(score_params)
 	    respond_to do |format|
 	      if @score.save
 	        format.html { redirect_to @score, notice: 'Score was successfully created.' }

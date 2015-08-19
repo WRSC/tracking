@@ -312,6 +312,82 @@ Marker.create!(longitude: -1,
 
   t = t + 5  
 
+  20.times do |n|
+    lat = 1 + Math.sin(i)/3
+    lng = Math.cos(i)/3
+    Coordinate.create!(latitude:  lat,
+                    longitude: lng,
+                    datetime:   t.strftime("%Y%m%d%H%M%S"),
+                    tracker_id: 4)
+    t=t+5
+    i=i+0.1
+  end
+
+  Coordinate.create!(longitude: -0.5,
+              latitude: 1.2,
+              datetime:   t.strftime("%Y%m%d%H%M%S"),
+              tracker_id: 4)
+
+  t = t + 5
+
+  i = 0.75 
+
+  20.times do |n|
+    lat = 1 + Math.sin(i)/3
+    lng = Math.cos(i)/3 -1
+    Coordinate.create!(latitude:  lat,
+                    longitude: lng,
+                    datetime:   t.strftime("%Y%m%d%H%M%S"),
+                    tracker_id: 4)
+    t=t+5
+    i=i+0.1
+  end
+
+  Coordinate.create!(longitude: -1.2,
+              latitude: 0.5,
+              datetime:   t.strftime("%Y%m%d%H%M%S"),
+              tracker_id: 4)
+
+  t = t + 5
+
+  i = 2.4
+  20.times do |n|
+    lat = Math.sin(i)/3
+    lng = Math.cos(i)/3 -1
+    Coordinate.create!(latitude:  lat,
+                    longitude: lng,
+                    datetime:   t.strftime("%Y%m%d%H%M%S"),
+                    tracker_id: 4)
+    t=t+5
+    i=i+0.1
+  end
+
+  Coordinate.create!(longitude: -0.5,
+              latitude: -0.2,
+              datetime:   t.strftime("%Y%m%d%H%M%S"),
+              tracker_id: 4)
+
+  t = t + 5  
+
+  i = -2.4
+  20.times do |n|
+    lat = Math.sin(i)/3
+    lng = Math.cos(i)/3
+    Coordinate.create!(latitude:  lat,
+                    longitude: lng,
+                    datetime:   t.strftime("%Y%m%d%H%M%S"),
+                    tracker_id: 4)
+    t=t+5
+    i=i+0.1
+  end
+
+  Coordinate.create!(longitude: 0.3,
+              latitude: 0.3,
+              datetime:   t.strftime("%Y%m%d%H%M%S"),
+              tracker_id: 4)
+
+  t = t + 5  
+
 #Coordinate  => attempt1
  # lat=0
  # lng=0
@@ -367,24 +443,25 @@ Marker.create!(longitude: -1,
 Mission.create!(name:  "Triangular Course Contest",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		description: "It was the first mission")
+             		mtype: "TriangularCourse")
 
 #Mission 2
 Mission.create!(name:  "Station-Keeping Contest",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		description: "It was the second mission")
+             		mtype: "TriangularCourse")
              		
 #Mission 3
 Mission.create!(name:  "Area Scanning Contest",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		description: "It was the third mission")
+             		mtype: "TriangularCourse")
 #Mission 4
 Mission.create!(name:  "Fleet Race",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		description: "It was the fourth mission")
+             		mtype: "Race",
+                startOfRace: Time.now-100)
 
 #team 1
 Team.create!(name:  "Zombie",

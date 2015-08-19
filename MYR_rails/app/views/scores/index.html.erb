@@ -15,6 +15,7 @@
     <th>Team</th>
     <th>Robot</th>
 		<th>Category</th>
+
     <th><%= link_to "Mission 1", triangular_path %></th>
     <th><%= link_to "Mission 2", stationkeeping_path %></th>
     <th><%= link_to "Mission 3", areascanning_path %></th>
@@ -48,6 +49,18 @@
     <% i=1 %>
 	  <% @sailboatlist.each do |rob| %>
 			  <tr id=<%= 'scores-'+i.to_s %> >
+
+    <th>Race</th>
+    <th>Triangular Course</th>
+    <th>Station Keeping</th>
+    <th>Area Scanning</th>
+  </tr>
+    <% i=1 %>
+  	<% @teamlist.each do |team| %>
+      <% roblist=team.robots   %>
+  	  <% roblist.each do |rob| %>
+  		  <tr>
+
           <td><%= i %></td>
 				  <td ><%= rob.team.name %></td>
 				  <td ><%= rob.name%></td>
@@ -59,8 +72,8 @@
 		  	</tr>				
         <% i+=1%>
 	  <% end %>
-  <% end %>
 </table>
+
 
 <!--table for MicroSailboat-->
 <h2><center>Category: MicroSailboat</center></h2>
@@ -120,6 +133,9 @@
 <button id="export-btn" class="btn btn-primary">Export Data</button>
 <p id="export"></p>
 <p>Updated in <%= Time.now %></p>
+
+<p><%= link_to "New score", new_score_path %></p>
+
 </div>
 </div>
 

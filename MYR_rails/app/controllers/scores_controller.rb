@@ -4,7 +4,15 @@ class ScoresController < ApplicationController
 	before_action :get_rob_by_category, only:[:index, :triangular, :stationkeeping, :areascanning, :fleetrace]
 
   	def index
+<<<<<<< HEAD
 			
+=======
+		@teamlist=Team.all
+		@TMission = Mission.where(mtype: "TriangularCourse")
+		@RMission = Mission.where(mtype: "Race")
+		@SKMission = Mission.where(mtype: "StationKeeping")
+		@ASMission = Mission.where(mtype: "AreaScanning")
+>>>>>>> 8cc2079ba312cc989c9833d3508c599e743a06a5
   	end
 	
 	  def test
@@ -21,8 +29,20 @@ class ScoresController < ApplicationController
   	def create
 	    attempt = Attempt.find(params[:score][:attempt_id])
 	    mission = Mission.find(attempt.mission_id)
+	   	@score = Score.new
+	    case mission.mtype
+	    when "Race"
+	    	temp = getTimeRaceCourse(attempt)
+	    	@score.update_attribute(:timecost, temp)
+	    when "TriangularCourse"
+	    when "StationKeeping"
+	    when "AreaScanning"
+	   	else
+	   	end 
+
 
 	    @score = Score.new(score_params)
+
 	    respond_to do |format|
 	      if @score.save
 	        format.html { redirect_to @score, notice: 'Score was successfully created.' }

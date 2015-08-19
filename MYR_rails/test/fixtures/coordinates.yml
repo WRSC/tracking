@@ -13,7 +13,10 @@
 #  datetime: 2015-02-25 15:39:26
 #  tracker_id: 1
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b
 # coordinates for testing the triangular course scoring function
 
 # <% t = 20150605010101 %> 
@@ -380,6 +383,9 @@ testOnEP:
   latitude: 5
   longitude: 2
   datetime: '20150225153927'
+<<<<<<< HEAD
+  tracker_id: 1
+=======
   tracker_id: 1
 
 
@@ -414,3 +420,4 @@ testjson:
 <% end %>
 
 
+>>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b

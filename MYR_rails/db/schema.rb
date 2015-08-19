@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150818115638) do
+=======
+ActiveRecord::Schema.define(version: 20150812114729) do
+>>>>>>> 8cc2079ba312cc989c9833d3508c599e743a06a5
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -68,11 +72,12 @@ ActiveRecord::Schema.define(version: 20150818115638) do
 
   create_table "missions", force: :cascade do |t|
     t.string   "name"
-    t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "start"
     t.datetime "end"
+    t.string   "startOfRace"
+    t.string   "mtype"
   end
 
   create_table "robots", force: :cascade do |t|

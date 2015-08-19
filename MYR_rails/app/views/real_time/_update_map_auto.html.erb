@@ -1,7 +1,4 @@
 <% m= Mission.find(@current_mission_id) %>
-<p>Mission selected started at <%=m.start%> and ends at <%=m.end%>
-	<% if m.description != ""%>
-		<br>
-		<p>Description: <%= m.description %></p>
-	<% end %>
-</p>
+<p>Mission selected started at <%=m.start%> and ends at <%=m.end%></p>
+<p>Description: <%= m.mtype %></p>
+

@@ -3,7 +3,8 @@ require 'awesome_print'
 
   include ScoreHelper
 
- class ScoreHelperTest < ActionView::TestCase
+
+  class ScoreHelperTest < ActionView::TestCase
 	def setup()
 	  p=[]
 	  p.push(markers(:m1))
@@ -12,6 +13,7 @@ require 'awesome_print'
 	  p.push(markers(:m4))
 	  @p=p
 	end
+
 
 #===================================test for triangular course scoring ==============================================
 
@@ -35,7 +37,7 @@ require 'awesome_print'
     assert startLine[1].length == 2, "#{startLine[1].length}\n"
 
   	res = checkLineCrossed(startLine,coordSample)
-  	assert false, "#{res}\n"
+  	assert res != 0, "#{res}\n"
   end
 
   test "should cross end line" do
@@ -54,7 +56,7 @@ require 'awesome_print'
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
     res = checkLineCrossed(myLine,coordSample)
-    assert false, "#{res}\n"
+    assert res != 0, "#{res}\n"
   end
 
   test "should turn first buoy" do
@@ -78,8 +80,8 @@ require 'awesome_print'
     buoySample.push(myBuoy.latitude)
 
   	res = checkRoundBuoy(myLine,buoySample,coordSample,"NWSE")
-  	assert false, "#{res}"
-    #{}"#{res[0][0]} #{res[1][0]} #{res[0][1]} #{res[1][1]}\n"
+  	assert res != 0, "#{res}"
+    
   end
 
   test "should turn second buoy" do
@@ -100,7 +102,7 @@ require 'awesome_print'
     buoySample.push(myBuoy.latitude)
 
     res = checkRoundBuoy(myLine,buoySample,coordSample,"NWSE")
-    assert false, "#{res}\n"
+    assert res != 0, "#{res}\n"
   end
 
   test "should do triangle" do
@@ -108,7 +110,7 @@ require 'awesome_print'
     assert attemptSample.mission_id == 1, "#{attemptSample.mission_id}"
 
     res = getTimeTriangularCourse(attemptSample)
-    assert false, "#{res}\n"
+    assert res != 0, "#{res}\n"
 
   end
 
@@ -122,7 +124,11 @@ require 'awesome_print'
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
+
+
+
     #assert false, "#{myLine[0][0]} #{myLine[1][0]} #{myLine[0][1]} #{myLine[1][1]}"
+
     assert myLine.length == 2, "#{myLine.length}\n"
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
@@ -133,8 +139,7 @@ require 'awesome_print'
     buoySample.push(myBuoy.latitude)
 
     res = checkRoundBuoy(myLine,buoySample,coordSample,"NW")
-    assert false, "#{res}"
-    #"#{res[0][0]} #{res[1][0]} #{res[0][1]} #{res[1][1]}\n"
+    assert res != 0, "#{res}"
 
   end
 
@@ -143,15 +148,16 @@ require 'awesome_print'
     assert attemptSample.mission_id == 1, "#{attemptSample.mission_id}"
 
     res = getTimeRaceCourse(attemptSample)
-    assert false, "#{res}\n"
+    assert res != 0, "#{res}\n"
 
   end
 
   test "should differ times" do
     res = timeAddition("19930924010303","19700101000001")
-    assert false, "return #{res}\n" 
+
+    assert res != 0, "#{res}\n" 
   end
-  
+
 
 #===================================================== station keeping ==============================================
  

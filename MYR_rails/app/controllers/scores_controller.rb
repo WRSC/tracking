@@ -3,10 +3,10 @@ class ScoresController < ApplicationController
 
   	def index
 		@teamlist=Team.all
-		@TMission = Mission.where(:mtype "TriangularCourse")
-		@RMission = Mission.where(:mtype "Race")
-		@SKMission = Mission.where(:mtype "StationKeeping")
-		@ASMission = Mission.where(:mtype "AreaScanning")
+		@TMission = Mission.where(mtype: "TriangularCourse")
+		@RMission = Mission.where(mtype: "Race")
+		@SKMission = Mission.where(mtype: "StationKeeping")
+		@ASMission = Mission.where(mtype: "AreaScanning")
   	end
 	
 	def test

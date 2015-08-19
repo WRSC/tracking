@@ -3,10 +3,8 @@ require 'awesome_print'
 
   include ScoreHelper
 
-<<<<<<< HEAD
+
   class ScoreHelperTest < ActionView::TestCase
-=======
- class ScoreHelperTest < ActionView::TestCase
 	def setup()
 	  p=[]
 	  p.push(markers(:m1))
@@ -15,7 +13,7 @@ require 'awesome_print'
 	  p.push(markers(:m4))
 	  @p=p
 	end
->>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b
+
 
 #===================================test for triangular course scoring ==============================================
 
@@ -126,11 +124,11 @@ require 'awesome_print'
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
-<<<<<<< HEAD
 
-=======
+
+
     #assert false, "#{myLine[0][0]} #{myLine[1][0]} #{myLine[0][1]} #{myLine[1][1]}"
->>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b
+
     assert myLine.length == 2, "#{myLine.length}\n"
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
@@ -156,18 +154,10 @@ require 'awesome_print'
 
   test "should differ times" do
     res = timeAddition("19930924010303","19700101000001")
-<<<<<<< HEAD
+
     assert res != 0, "#{res}\n" 
   end
 
-end
-
-class ScoreHelperTest < ActionView::TestCase
-=======
-    assert false, "return #{res}\n" 
-  end
->>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b
-  
 
 #===================================================== station keeping ==============================================
  
@@ -304,9 +294,6 @@ class ScoreHelperTest < ActionView::TestCase
     #assert ( rawscore >= 0  and rawscore <= 0.1), "error with rawscore  and return #{rawscore}"
     assert rawscore==7.0, "error with rawscore  and return #{rawscore}"
   end
-<<<<<<< HEAD
-end
-=======
 
 #===================================================== test Area Scanning===============================================
   test "should be ok with erb" do
@@ -339,4 +326,3 @@ end
 
 end
 
->>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b

@@ -7,7 +7,8 @@ function renderuploadxml(){
 	$.ajax({
 		type: "GET",
 		url: "/uploadXMLAS",
-		
+		data: {attempt: {id: a_id}},
+
 		success: function(){
 			
 		}       

@@ -1,13 +1,9 @@
 
 <%= form_for(:attempt) do |f| %>
   
-	<div class="field">
-    <strong><%= f.label :id %></strong>
-    <%= f.text_field :id %>
-  </div><br>
-  
+   <%= f.hidden_field :id, value:@a.id %>
   <div class="field">
-    <font color="blue">Upload area scanning xml file</font>
+    <font color="blue">Upload area scanning xml/json file</font>
     <%= f.file_field :uploadxml %>
   </div>
  

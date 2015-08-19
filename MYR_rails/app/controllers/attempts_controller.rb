@@ -1,6 +1,6 @@
 class AttemptsController < ApplicationController
   before_action :set_attempt, only: [:show, :edit, :update, :destroy]
-
+	before_filter :uploadXMLAS
   # GET /attempts
   # GET /attempts.json
   def index
@@ -61,18 +61,21 @@ class AttemptsController < ApplicationController
     end
   end
 
+	# get uploadXMLAS
 	def uploadXMLAS
+		@a=Attempt.find_by_id(attempt_params[:id])
 	end
 	
+	# post uploadXMLAS
 	def updateXMLAS
 		a=Attempt.find_by_id(attempt_params[:id])
 		a.update(uploadxml: attempt_params[:uploadxml])
 		if a.save
-			redirect_to root_path
+			redirect_to a.robot
 		else
-			redirect_to root_path
+			redirect_to "/404"
 		end
-		
+	
 	end
 
   private

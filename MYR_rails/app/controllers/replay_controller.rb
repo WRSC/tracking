@@ -1,4 +1,4 @@
-  class ReplayController < ApplicationController
+ class ReplayController < ApplicationController
 	def show 
 	end
 	

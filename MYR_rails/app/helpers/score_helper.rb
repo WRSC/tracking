@@ -1,3 +1,4 @@
+
 module ScoreHelper
 
 #========================= Fleet Race  =============================
@@ -242,9 +243,6 @@ module ScoreHelper
       return res.strftime('%Y%m%d%H%M%S')
     end
 
-#argument is attempt_id
-  def triangularTimecost(a_id)
-  end
 #================================= Station Keeping ==============================================
   def stationKeepingRawScore(a_id)
     timecost=stationKeepingTimecost(a_id)
@@ -358,7 +356,96 @@ module ScoreHelper
     return ((a.to_datetime-b.to_datetime)*24*60*60).to_i
   end
 #========================= Area scanning ===========================
+  def AminusB(a,b)
+		return a.to_i-b.to_i	
+	end
 
+# enable download some files for users
+#http://stackoverflow.com/questions/13164063/file-download-link-in-rails 
+ #here the json data files are in rails.root/public/uploads/scores/areascanning/nameoffile.json
+  def loadJsonDataAreaScanning(inputname)
+  #need to check filename if it was json file
+    filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning','origin', inputname) 
+    f=File.read(filename) 
+    f_hash = JSON.parse(f) 
+		d_hash=calculateMaxDistance(f_hash)
+    done=generateJsonFile(d_hash)
+    return done
+  end
+  
+	def calculateMaxDistance(f_hash)
+		d_hash=Hash.new #the desired hash which contains the result of comparison
+		d_hash['name']=f_hash['name']
+		datas=[]
+		data_length=f_hash['data'].length
+		for i in 0..(data_length-1)
+			section_hash=Hash.new
+			section_hash['sectioni']=f_hash['data'][i]['sectioni']
+			section_hash['sectionj']=f_hash['data'][i]['sectionj']
+			position = f_hash['data'][i]['position']
+			position_length=position.length
+			positions=[]
+			max_err_lat=0
+			max_err_lng=0
+      tracker_err_count=0
+			for k in 0..(position_length-1)
+				coord = Coordinate.where(datetime: position[k]['datetime'])
+				p_hash=Hash.new
+				p_hash['datetime']=position[k]['datetime']
+        p_hash['tracker_coords_length']=coord.size
+				if coord.size != 1
+				# if there is any data in the tracker		
+          tracker_err_count+=1
+          #p_hash['latitude_tracker']='tracker error'
+          #p_hash['longitude_tracker']='tracker error'
+					p_hash['latitude_difference']= 'tracker error'
+					p_hash['longitude_difference']='tracker error'
+				else
+					# lat_diff= robot.lat - tracker.lat
+          #p_hash['latitude_tracker']=coord[0].latitude
+          #p_hash['longitude_tracker']=coord[0].longitude
+					
+          #p_hash['latitude_uploads']=position[k]['latitude']
+          #p_hash['longitude_uploads']=position[k]['longitude']
+          diff_lat=AminusB(position[k]['latitude'],coord[0].latitude)
+					p_hash['latitude_difference']=diff_lat
+					max_err_lat = max_err_lat > diff_lat.abs ? max_err_lat : diff_lat 
+					diff_lng=AminusB(position[k]['longitude'],coord[0].longitude)
+					p_hash['longitude_difference']=diff_lng
+					max_err_lng = max_err_lng > diff_lng.abs ? max_err_lng : diff_lng 
+				end
+				positions.push(p_hash)
+			end
+			section_hash['position']=positions
+      if tracker_err_count != positions.length
+			  section_hash['Max_lat_err']=max_err_lat
+			  section_hash['Max_lng_err']=max_err_lng
+      else
+			  section_hash['Max_lat_err']='tracker error'
+			  section_hash['Max_lng_err']='tracker error'
+      end
+      #section_hash['position_count']=position_length-1
+      #section_hash['tracker_err_count']=tracker_err_count
+			datas.push(section_hash)
+		end
+		d_hash['data']=datas
+		return d_hash	
+	end
 
+#some options for output files
+#json file object.to_json
+#yaml file object.to_yaml
+#xml  file object.to_xml 
+
+  def generateJsonFile(f_hash)
+    outputname=f_hash['name']+'_generated_'+Time.now.to_s+'.json'
+    filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'generated', outputname) 
+    File.open(filename,"w") do |f|
+      f.write(f_hash.to_xml)
+    end
+    return File.exist?(filename)
+  end
+
+	
 
 end

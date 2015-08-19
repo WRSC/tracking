@@ -1,10 +1,23 @@
 require 'test_helper'
+require 'awesome_print'
 
   include ScoreHelper
 
+<<<<<<< HEAD
   class ScoreHelperTest < ActionView::TestCase
+=======
+ class ScoreHelperTest < ActionView::TestCase
+	def setup()
+	  p=[]
+	  p.push(markers(:m1))
+	  p.push(markers(:m2)) 
+	  p.push(markers(:m3)) 
+	  p.push(markers(:m4))
+	  @p=p
+	end
+>>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b
 
-    #test for triangular course scoring
+#===================================test for triangular course scoring ==============================================
 
   test "should cross start line" do
     coordSample = Coordinate.where("datetime > ?", 20150605010101).order(datetime: :asc)
@@ -13,7 +26,7 @@ require 'test_helper'
    #  coordSample.push(coordinates(:c3))
   	assert coordSample.length != 0, "#{coordSample.length}\n"
 
-  	lineSample = markers(:startLine)
+  	lineSample = markers(:TristartLine)
 
     startLine = []
     startLine << lineSample.longitude.split("_")
@@ -35,7 +48,7 @@ require 'test_helper'
     coordSample.push(coordinates(:c108))
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
-    lineSample = markers(:endLine)
+    lineSample = markers(:TriendLine)
 
     myLine = []
     myLine << lineSample.longitude.split("_")
@@ -52,7 +65,7 @@ require 'test_helper'
   	coordSample = Coordinate.where("datetime > ?", 20150605010101).order(datetime: :asc)
   	assert coordSample.length != 0, "#{coordSample.length}\n"
 
-  	lineSample = markers(:endLine)
+  	lineSample = markers(:TriendLine)
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
@@ -63,7 +76,7 @@ require 'test_helper'
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
-  	myBuoy = markers(:firstBuoy)
+  	myBuoy = markers(:TrifirstBuoy)
     buoySample = []
     buoySample.push(myBuoy.longitude)
     buoySample.push(myBuoy.latitude)
@@ -77,7 +90,7 @@ require 'test_helper'
     coordSample = Coordinate.where("id > ?", 52)
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
-    lineSample = markers(:startLine)
+    lineSample = markers(:TristartLine)
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
@@ -85,7 +98,7 @@ require 'test_helper'
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
-    myBuoy = markers(:secondBuoy)
+    myBuoy = markers(:TrisecondBuoy)
     buoySample = []
     buoySample.push(myBuoy.longitude)
     buoySample.push(myBuoy.latitude)
@@ -103,25 +116,26 @@ require 'test_helper'
 
   end
 
-  # end tests for triangular course scoring
-
-  # begin test for race course scoring
+#================================= begin test for race course scoring =================================================
 
   test "should turn buoy race" do
-
     coordSample = Coordinate.where("datetime >= ?", 20150605010101).order(datetime: :asc)
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
-    lineSample = markers(:startLine)
+    lineSample = markers(:RaceStartLine)
     myLine = []
     myLine << lineSample.longitude.split("_")
     myLine << lineSample.latitude.split("_")
+<<<<<<< HEAD
 
+=======
+    #assert false, "#{myLine[0][0]} #{myLine[1][0]} #{myLine[0][1]} #{myLine[1][1]}"
+>>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b
     assert myLine.length == 2, "#{myLine.length}\n"
     assert myLine[0].length == 2, "#{myLine[0].length}\n"
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
-    myBuoy = markers(:secondBuoy)
+    myBuoy = markers(:RaceSecondBuoy)
     buoySample = []
     buoySample.push(myBuoy.longitude)
     buoySample.push(myBuoy.latitude)
@@ -142,22 +156,20 @@ require 'test_helper'
 
   test "should differ times" do
     res = timeAddition("19930924010303","19700101000001")
+<<<<<<< HEAD
     assert res != 0, "#{res}\n" 
   end
 
 end
 
 class ScoreHelperTest < ActionView::TestCase
-  
-  def setup()
-    p=[]
-    p.push(markers(:m1))
-    p.push(markers(:m2)) 
-    p.push(markers(:m3)) 
-    p.push(markers(:m4))
-    @p=p
+=======
+    assert false, "return #{res}\n" 
   end
-#============================ station keeping =================================
+>>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b
+  
+
+#===================================================== station keeping ==============================================
  
   #==========================  Test Point in a Polygon =======================
   test " testP should be out the polygon" do
@@ -292,4 +304,39 @@ class ScoreHelperTest < ActionView::TestCase
     #assert ( rawscore >= 0  and rawscore <= 0.1), "error with rawscore  and return #{rawscore}"
     assert rawscore==7.0, "error with rawscore  and return #{rawscore}"
   end
+<<<<<<< HEAD
 end
+=======
+
+#===================================================== test Area Scanning===============================================
+  test "should be ok with erb" do
+    c=coordinates(:testErbyml)
+		assert c.tracker_id==1 
+  end
+		
+	test "should load json data" do
+		data_hash=coordinates(:testjson)
+		assert data_hash.tracker_id==1,"===== !!! Error with load json data and return #{data_hash.tracker_id}======"	
+	end
+  
+  test "should load more json datas manully" do
+    filename = File.join(Rails.root, 'test','fixtures', 'json', 'moredatas.json') 
+    f=File.read(filename) 
+    f_hash = JSON.parse(f) 
+    assert 1==f_hash['data'][0]['sectionj'],"error with loading json data and return #{f_hash['data'][0]['sectionj']}"
+    assert 2==f_hash['data'][1]['sectionj'],"error with loading json data and return #{f_hash['data'][1]['sectionj']}"
+    assert "20150807144740"==f_hash['data'][1]['position'][0]['datetime'],"return #{ f_hash['data'][1]['position'].length}"
+   end
+
+  test "should load more json datas with fixtures" do
+		data_hash=coordinates(:testforjson123)
+    assert data_hash.datetime=="20150807144743",data_hash.inspect
+  end
+  
+  test "should generate a json file in Rails.root/public/uploads/scores/areascanning/generated" do
+    assert loadJsonDataAreaScanning('moredatas.json'),"please check it in Rails.root/public/uploads/scores/areascanning/generated"
+  end
+
+end
+
+>>>>>>> 5766c340d45afbf27429101b15c0c139fa1d131b

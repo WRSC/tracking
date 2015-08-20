@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150818115638) do
+=======
+ActiveRecord::Schema.define(version: 20150820073455) do
+>>>>>>> 1bcbee4961adda16e6f80d34534b46040a10b826
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -92,8 +96,9 @@ ActiveRecord::Schema.define(version: 20150818115638) do
     t.float    "penalty"
     t.datetime "datetimes"
     t.integer  "rank"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.text     "penalty_description"
   end
 
   create_table "sessions", force: :cascade do |t|

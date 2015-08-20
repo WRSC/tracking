@@ -4,11 +4,12 @@ google.load("visualization", "1", {packages:["orgchart"]});
 google.setOnLoadCallback(drawChart);
 
 function renderuploadxml(){
+	
 	$.ajax({
 		type: "GET",
 		url: "/uploadXMLAS",
-		data: {attempt: {id: a_id}},
-
+		data: {attempt: {uploadxml_a_id: a_id}},
+		
 		success: function(){
 			
 		}       

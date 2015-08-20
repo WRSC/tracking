@@ -60,7 +60,11 @@ class MarkersController < ApplicationController
     @marker=Marker.new(marker_params)
     tablat=@marker.latitude.split(";")
     tablng=@marker.longitude.split(";")
+<<<<<<< HEAD
     tabname=@marker.name.split(";")
+=======
+		tabname=@marker.name.split(";")
+>>>>>>> 1bcbee4961adda16e6f80d34534b46040a10b826
     flag=false
     for i in (0..tablat.length-1)
       if tablat[i]!="" && tablat[i]!=nil
@@ -104,6 +108,9 @@ class MarkersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+	def pointinfo
+	end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -12,20 +12,16 @@ function addPLP(){
 		$("#saveBuoy").click(function(){
 			saveBuoyMarker()
 		})	
-		
 		/*============== Lines ================*/
 		$("#polyline-fix").click(function(){
 			addFixPolyline()
 		})
-		
 		$("#polyline-custom").click(function(){
 			addCustomPolyline()
 		})
 		$("#saveLine").click(function(){
 			saveLineMarker()
 		})	
-		
-		
 		/*============== Polygons ================*/
 		$("#polygon-fix").click(function(){
 			addFixPolygon()
@@ -46,8 +42,9 @@ function addPLP(){
 		$("#saveCircle").click(function(){
 			saveCircleMarker()
 		})	
-	
 }
+
+
 
 
 

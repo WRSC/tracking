@@ -11,7 +11,7 @@ function saveLineMarker(){
         for (var j=0;j<LineMarkers.length;j++){
           var Linelat=""
           var Linelng=""
-					var name=""
+					var Linename=""
           var len=LineMarkers[j].getPath().getLength();
 		      for (var i=0; i<len; i++) {
 				    xy=LineMarkers[j].getPath().getAt(i)
@@ -19,11 +19,13 @@ function saveLineMarker(){
 				    lng=xy.lng()          	
 				    Linelat+=lat+"_"
 				    Linelng+=lng+"_"
-						name=LineMarkers[j].linetype
+						Linename=LineMarkers[j].mname
 		      }
+					
           Linelat+=";"
           Linelng+=";"
-			    p={"name":name, "latitude": Linelat, "longitude": Linelng, "mtype": "Line", "datetime": getCurrentTime(), "mission_id": mission_id}
+					Linename+=";"
+			    p={"name":Linename, "latitude": Linelat, "longitude": Linelng, "mtype": "Line", "datetime": getCurrentTime(), "mission_id": mission_id}
 			    $.ajax({
 							type: "POST",
 							url: "/markers",
@@ -40,7 +42,11 @@ function saveLineMarker(){
 
 
 function addFixPolyline(){
+<<<<<<< HEAD
 	var linetype=prompt('Please enter the type of line for the line marker (e.g. startLine, endLine)')
+=======
+	var name = prompt("Please enter the name of marker","starting line")
+>>>>>>> 1bcbee4961adda16e6f80d34534b46040a10b826
 	input=prompt("Please respect the format of input data, otherwise it could not recognize the data: lat,lng;lat,lng;...","lat,lng; lat,lng...")
 	/*====== need to check if th input data format is correct =====*/
 	tabinput=input.split(";")
@@ -52,7 +58,8 @@ function addFixPolyline(){
     strokeOpacity: 1.0,
     strokeWeight: 2,
     markers: fixline,
-		linetype: linetype
+		linetype: linetype,
+		mname: name
   });
   fixPath.setMap(map_marker)
   LineMarkers.push(fixPath)
@@ -70,14 +77,18 @@ function addFixPolyline(){
 }
 
 function addCustomPolyline(){
+<<<<<<< HEAD
 	var linetype=prompt('Please enter the type of line for the line marker (e.g. startLine, endLine)')
+=======
+	var name=prompt('Please enter the type of line for the line marker','starting line')
+>>>>>>> 1bcbee4961adda16e6f80d34534b46040a10b826
   alert('You can add markers by clicking in the map directly')
 	var polyOptions = {
     strokeColor: '#000000',
     strokeOpacity: 1.0,
     strokeWeight: 3,
     markers: [],
-		linetype: linetype
+		mname: name
   };
   poly = new google.maps.Polyline(polyOptions);
   poly.setMap(map_marker);

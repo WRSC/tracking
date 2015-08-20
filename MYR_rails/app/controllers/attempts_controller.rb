@@ -1,6 +1,6 @@
 class AttemptsController < ApplicationController
-  before_action :set_attempt, only: [:show, :edit, :update, :destroy]
-	before_filter :uploadXMLAS
+  before_action :set_attempt, only: [ :show, :edit, :update, :destroy]
+	
   # GET /attempts
   # GET /attempts.json
   def index
@@ -63,12 +63,12 @@ class AttemptsController < ApplicationController
 
 	# get uploadXMLAS
 	def uploadXMLAS
-		@a=Attempt.find_by_id(attempt_params[:id])
+		@a=Attempt.find_by_id(attempt_params[:uploadxml_a_id])
 	end
 	
 	# post uploadXMLAS
 	def updateXMLAS
-		a=Attempt.find_by_id(attempt_params[:id])
+		a=Attempt.find_by_id(attempt_params[:uploadxml_a_id])
 		a.update(uploadxml: attempt_params[:uploadxml])
 		if a.save
 			redirect_to a.robot
@@ -86,6 +86,6 @@ class AttemptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attempt_params
-      params.require(:attempt).permit(:id, :name, :start, :end, :robot_id, :mission_id, :tracker_id,:uploadxml)
+      params.require(:attempt).permit(:name, :start, :end, :robot_id, :mission_id, :tracker_id, :uploadxml, :uploadxml_a_id)
     end
 end

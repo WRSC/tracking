@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
   # score
+		get 'finalstanding'   , to: 'scores#finalstanding'
 		get 'triangular'      , to: 'scores#triangular'
     get 'areascanning'    , to: 'scores#areascanning' 
 		get 'stationkeeping'  , to: 'scores#stationkeeping'
@@ -57,6 +58,8 @@ Rails.application.routes.draw do
 		get  'teamMembers'             ,  to: 'teams#teamMembers'
 		get  'teamRobots'              ,  to: 'teams#teamRobots'
 		get  'kick'                    ,  to: 'teams#kick'
+	
+		get  'pointinfo'               ,  to: 'markers#pointinfo'
 
 		get  'robotChart'              ,  to: 'robots#robotChart'
 

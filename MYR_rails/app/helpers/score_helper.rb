@@ -1,5 +1,23 @@
-
 module ScoreHelper
+	def getScorebyAttemptId(a_id)
+		a=Attempt.find_by_id(a_id)
+		t=-1
+		if a==nil
+			return "attempt does not exist"
+		else
+			case a.mission.id
+			when 1
+				t=getTimeTriangularCourse(a)
+			when 2
+				t=stationKeepingTimecost(a_id)
+			when 3
+			when 4
+				t=getTimeRaceCourse(a)
+			end
+		end
+		return t
+	end
+
 
 #========================= Fleet Race  =============================
     def checkLineCrossed(myLine,coordinates)

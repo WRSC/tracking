@@ -92,7 +92,8 @@ Rails.application.routes.draw do
 		get  'officialMarkersInfo'     ,  to: 'replay#officialMarkersInfo'
 
 		get  'newAttemptinfo'          ,  to: 'scores#newAttemptinfo'
-		get  'newScoreinfo'           ,  to: 'scores#newScoreinfo'
+		get  'newScoreinfo'            ,  to: 'scores#newScoreinfo'
+		get  'calculateScore'          ,  to: 'scores#calculateScore'
 
 
 

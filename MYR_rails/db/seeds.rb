@@ -6,6 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #http://stackoverflow.com/questions/10301794/difference-between-rake-dbmigrate-dbreset-and-dbschemaload
+
+#final markers
+#60,10500, 19,95000
+
+#60,10800, 19,95000
+
+#60,10800, 19,95600
+
+#60,10500, 19,95600
+
+
 Member.create!(name:  "testAdmin",
                email: "example@gmail.com",
                password:              "foobar",

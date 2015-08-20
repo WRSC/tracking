@@ -38,9 +38,21 @@ function requestRenderScoreinfo(a_id)	{
 
 		success: function(){
 				$("#cal-timecost").click(function(){
-					alert("click")
 					$("#score_timecost").prop('disabled', true);
+					requestCalculateScore(a_id)
 				})
+		}       
+	});
+}
+
+function requestCalculateScore(a_id)	{
+	$.ajax({
+		type: "GET",
+		url: "/calculateScore",
+		data: {attempt_id: a_id},
+
+		success: function(data){
+			alert(data)
 		}       
 	});
 }

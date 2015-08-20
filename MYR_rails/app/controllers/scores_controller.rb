@@ -1,23 +1,21 @@
 class ScoresController < ApplicationController
 	include ScoreHelper
 
-	before_action :get_rob_by_category, only:[:index, :triangular, :stationkeeping, :areascanning, :fleetrace]
+	before_action :set_score, only: [:edit, :show, :update, :destroy]
+	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
 
   	def index
-<<<<<<< HEAD
-			
-=======
-		@teamlist=Team.all
-		@TMission = Mission.where(mtype: "TriangularCourse")
-		@RMission = Mission.where(mtype: "Race")
-		@SKMission = Mission.where(mtype: "StationKeeping")
-		@ASMission = Mission.where(mtype: "AreaScanning")
->>>>>>> 8cc2079ba312cc989c9833d3508c599e743a06a5
+
+			@teamlist=Team.all
+			@TMission = Mission.where(mtype: "TriangularCourse")
+			@RMission = Mission.where(mtype: "Race")
+			@SKMission = Mission.where(mtype: "StationKeeping")
+			@ASMission = Mission.where(mtype: "AreaScanning")
+
+			@scores=Score.all
+
   	end
-	
-	  def test
-	  end
-  
+
   	def show
   		@score=Score.find(params[:id])
   	end
@@ -25,6 +23,10 @@ class ScoresController < ApplicationController
   	def new
   		@score = Score.new
   	end
+	
+		def edit
+			@score=Score.find(params[:id])
+		end
 
   	def create
 	    attempt = Attempt.find(params[:score][:attempt_id])
@@ -73,6 +75,9 @@ class ScoresController < ApplicationController
 	      format.json { head :no_content }
 	    end
   end
+
+	def finalstanding
+	end
   
 	def triangular
 		# make sure the mission 1 is triangular
@@ -146,6 +151,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :penalty, :penalty_description, :datetimes)
     end
 end

@@ -15,17 +15,19 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 		}else{
       var Buoylat=""
       var Buoylng=""
+			var Buoyname=""
 			mission_id=$("#marker_missions_dropdown option:selected").val()
 			for (var i=0;i<BuoyMarkers.length;i++){
         if (BuoyMarkers[i]!=""){
           Buoylat+=BuoyMarkers[i].position.lat()+";"
           Buoylng+=BuoyMarkers[i].position.lng()+";"
+					Buoyname+=BuoyMarkers[i].mname+";"
         }
       }
       if (Buoylat=="" || Buoylng==""){
         alert('You do not creat any marker, please create some markers before you continue !!!')
       }else{
-        p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id}
+        p={"latitude": Buoylat, "longitude": Buoylng, "mtype": "Point", "datetime": getCurrentTime(), "mission_id": mission_id, "name": Buoyname}
 			  $.ajax({
 							type: "POST",
 							url: "/markers",
@@ -45,42 +47,49 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 	function addFixBuoy(){
 		//alert('addFixBuoy')
 		//need to check if the input data is right To do
-		var lat = prompt("Please enter latitude", "0");
-		var lng = prompt("Please enter longitude", "0");
-		fixPoint=addFixMarker(lat,lng)
-		BuoyMarkers.push(fixPoint)
-    //addDraggableMarker(lat, lng)
-		// Add a listener for the click event.
-		google.maps.event.addListener(fixPoint, 'click', showPoint);
-		infoWindow = new google.maps.InfoWindow();
-	}
-	
-	function addDraggableBuoy(){
-		alert('You can click directly on the map in order to add draggable markers.')
-		
-    google.maps.event.clearListeners(map_marker, 'click');
-		google.maps.event.addListener(map_marker, 'click', function(event) {
-    	//alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng());
-  //    alert('enter in buoy event')
-			lat=event.latLng.lat()
-			lng=event.latLng.lng()
-    	draggablePoint=addDraggableMarker(lat,lng);
-			BuoyMarkers.push(draggablePoint)
-
-			// Add a listener for the click event.
-			google.maps.event.addListener(draggablePoint, 'click', showPoint);
-			infoWindow = new google.maps.InfoWindow();
-  	});
+				var name = prompt("Please enter the name of marker","first buoy")
+				var input = prompt("Please enter latitude and longitude", "0,0");
+				var tabinput=input.split(",")
+				var lat=tabinput[0]
+				var lng=tabinput[1]
+				//var lng = prompt("Please enter longitude", "0");
+				fixPoint=addFixMarker(lat,lng,name)
+				BuoyMarkers.push(fixPoint)
+  		  //addDraggableMarker(lat, lng)
+				// Add a listener for the click event.
+				google.maps.event.addListener(fixPoint, 'click', showPoint);
+				infoWindow = new google.maps.InfoWindow();
 			
 	
 	}
 	
+	function addDraggableBuoy(){
+				var name = prompt("Please enter the name of marker","first buoy")
+				alert('You can click directly on the map in order to add draggable markers.')
+		
+				google.maps.event.addListener(map_marker, 'click', function(event) {
+					//alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng());
+			//    alert('enter in buoy event')
+					lat=event.latLng.lat()
+					lng=event.latLng.lng()
+					draggablePoint=addDraggableMarker(lat,lng, name);
+					BuoyMarkers.push(draggablePoint)
+
+					// Add a listener for the click event.
+					google.maps.event.addListener(draggablePoint, 'click', showPoint);
+					infoWindow = new google.maps.InfoWindow();
+					google.maps.event.clearListeners(map_marker, 'click');
+				});
+			
+	}
+	
 	//Add a draggable marker to the map
-	function addDraggableMarker(lat,lng){
+	function addDraggableMarker(lat,lng, name){
 		//alert(lng)
 		var marker = new google.maps.Marker(
 		{
 			position: new google.maps.LatLng(lat,lng),
+			mname: name,
 			//icon: image,
 			draggable: true
 		});
@@ -90,11 +99,12 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 	}
 	
 	
-	function addFixMarker(lat, lng){
+	function addFixMarker(lat, lng ,name){
 
 		var marker = new google.maps.Marker(
 		{
 			position: new google.maps.LatLng(lat,lng),
+			mname: name
 			//icon: image
 		});
 		marker.setMap(map_marker);
@@ -156,6 +166,17 @@ BuoyMarkers=[]//this table keep all the information about pont buoys
 		secs < 10 ? secs='0'+ secs: secs=secs+''
 
 		return year+month+day+hours+mins+secs
+	}
+
+	function renderpointinfo(){
+		$.ajax({
+			type: "get",
+			url: "/pointinfo",
+		
+			success: function(data){
+			
+			}
+		})
 	}
 
 

@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20150820073455) do
     t.string   "email"
     t.string   "role"
     t.string   "logo"
-    t.integer  "team_id"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "password_digest"
@@ -64,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150820073455) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.integer  "team_id"
   end
 
   create_table "missions", force: :cascade do |t|

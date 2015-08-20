@@ -3,7 +3,6 @@
 
 <p>
   <% if @team.logo!= "" and @team.logo !=nil%>
-    <strong>Logo:</strong><br>
     <%= image_tag @team.logo_url(:medium) %>
   <% end %>
 </p>
@@ -19,28 +18,38 @@
 </p>
 
 <p><strong>Members:</strong></p>
-<table>
-	    <tr>
-			<% teammates = Member.where(team: @team)%>
-			<% teammates.each do |mate| %>
-			 	<tbody>
-					<center><td><p><%= link_to mate.name, member_path(mate.id) %></p></td></center>
-				</tbody>
-			<% end %>
-	   	</tr>
-</table>
+<a id="show-members" href<%= link_to "", :action => :teamMembers, :id => @team.id, remote: true %> </a>
+<div id="team-members-container"></div>
 
-<p>
-	<strong>Robots :</strong><br>
-	<% if @team.robots.size==0 %>
-		 <%= @team.name%> has not created any robot yet.
-	<% else %>
-		<%= @team.name%> has <%= @team.robots.size %> robots 
-		<%= render 'showRobots'%>
-	<% end %>
-</p>
+<p><strong>Robots :</strong><br></p>
+<% if @team.robots.size==0 %>
+	 <%= @team.name%> has not created any robot yet.
+<% end %>
+	<%= @team.name%> has <%= @team.robots.size %> robots 
+	<a id="show-robots" href<%= link_to "", :action => :teamRobots, :id=> @team.id, remote: true %> </a>
+	<div id="team-robots-container"></div>
+
+
 <br>
 <% if sign_in? && (is_admin? || is_leader(@team.name) || @member.id == cookies.signed[:user_id]) %>
 <%= link_to 'Edit', edit_team_path(@team) %> | <%= link_to 'Delete', @team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team and kick all the members of this team.' } %> | 
 <% end %>
 <%= link_to 'Back to index', teams_path %>
+<script>
+$(document).ready(function(){
+
+	$("#show-members").click();
+	$("#show-robots").click();
+/*
+		$.ajax({
+				type: "GET",
+				url: "/teamMembers",
+				data: {id: 2},
+				dataType: "json",
+				success: function(){
+					alert('ok')
+				}
+		})
+*/	
+})
+</script>

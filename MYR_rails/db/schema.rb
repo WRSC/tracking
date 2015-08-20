@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20150818115638) do
+=======
 ActiveRecord::Schema.define(version: 20150812114729) do
+>>>>>>> 8cc2079ba312cc989c9833d3508c599e743a06a5
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -22,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150812114729) do
     t.integer  "tracker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "uploadxml"
   end
 
   create_table "coordinates", force: :cascade do |t|

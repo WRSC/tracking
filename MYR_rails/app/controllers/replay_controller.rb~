@@ -233,9 +233,11 @@
  		@isEnd=params[:isEnd]
  		@datetime=params[:datetime].to_datetime
  		@attmepts=[]
+		@signle=false
 	  if singleAttempt=='true' 
 			@test=true
 		  a_id=cookies[:attemptslist].to_i
+			@single=true
 			@attempts=Attempt.find_by(id: a_id)
 	  else 
 			@test=false

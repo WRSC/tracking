@@ -1,4 +1,6 @@
 <% provide(:title, "Robots | Show") %>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<%= javascript_include_tag 'team', 'data-turbolinks-track' => true %>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -10,13 +12,12 @@
   <strong>Category:</strong>
   <%= @robot.category %>
 </p>
-
 <p>
   <strong>Team:</strong>
-  <%= @robot.team_id %>
+  <%= @robot.team.name %>
 </p>
 
-<p>
+<!--p>
   	<strong>Trackers:</strong>
     <% myTrackers = [] %>
     <% here = false %>
@@ -32,9 +33,20 @@
       <% here = false %> 
     <% end %>
     <%= tabToString(myTrackers) %>
-</p>
+</p-->
+	<a id="draw-chart" href<%= link_to "", :action => :robotChart, :id => @robot.id, remote: true %> </a>
+	<div id="chart_div"></div>
+	<br />
+	<div id="uploading-xml-for-AS">
+		
+		
+	
+	</div>
 
 <% if sign_in? && (is_admin? || is_leader(Team.find_by_id(@robot.team_id).name)) %>
 	<%= link_to 'Edit', edit_robot_path(@robot) %> | <%= link_to 'Delete', @robot, method: :delete, data: { confirm: 'Destroy this robot ?' } %> |
 <% end %>
 <%= link_to 'Back to index', robots_path %>
+
+   
+   

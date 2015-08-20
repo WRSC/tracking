@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-
-  get 'password_resets/new'
-
-  get 'password_resets/edit'
-
   # Default root
 
     root 'static_pages#home'  
@@ -12,15 +7,25 @@ Rails.application.routes.draw do
 
     resources :coordinates
     resources :trackers
-    resources :members
-    resources :teams
+    resources :members do
+      member do
+        patch :invite
+        patch :kick
+        patch :leave
+      end
+    end
+    resources :teams do
+      member do
+        patch :join
+      end
+    end
     resources :robots
     resources :attempts
     resources :missions
     resources :markers
     resources :sessions
-    resources :listes
-    
+    resources :scores 
+   
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update, :sent_password_reset_email]
 
@@ -28,10 +33,15 @@ Rails.application.routes.draw do
 
     get 'home'            , to: 'static_pages#home'
     get 'contact'         , to: 'static_pages#contact'
+    get 'instructions'    , to: 'static_pages#instructions'
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
-
+  # score
+		get 'triangular'      , to: 'scores#triangular'
+    get 'areascanning'    , to: 'scores#areascanning' 
+		get 'stationkeeping'  , to: 'scores#stationkeeping'
+		get 'fleetrace'       , to: 'scores#fleetrace'
     
     get 'password_resets/sent_password_reset_email'
     get 'account_activations/wait_for_activated'
@@ -39,11 +49,20 @@ Rails.application.routes.draw do
 
   # Ajax
 
-    get  'what', to: 'what#what'
     
     get  'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
     get  'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
    	
+		get  'teamMembers'             ,  to: 'teams#teamMembers'
+		get  'teamRobots'              ,  to: 'teams#teamRobots'
+		get  'kick'                    ,  to: 'teams#kick'
+
+		get  'robotChart'              ,  to: 'robots#robotChart'
+
+		get  'uploadXMLAS'             ,  to: 'attempts#uploadXMLAS'
+		post 'uploadXMLAS'             ,  to: 'attempts#uploadXMLAS'
+       
+
    	get  'map_panel'               ,  to: 'real_time#map_panel' 
    	get  'getMissions'             ,  to: 'real_time#getMissions'
     get  'getNewTrackers'          ,  to: 'real_time#getNewTrackers'
@@ -66,7 +85,7 @@ Rails.application.routes.draw do
     get  'getSingleAttemptInfos'   ,  to: 'replay#getSingleAttemptInfos'
     get  'getTrackersFromDatetimes',  to: 'replay#getTrackersFromDatetimes'
     get  'infowindow'              ,  to: 'replay#infowindow'
-    
+		get  'officialMarkersInfo'     ,  to: 'replay#officialMarkersInfo'
 
 
   # Authentication
@@ -74,7 +93,12 @@ Rails.application.routes.draw do
     match '/signup' => 'members#new', :via => [:get]
     match '/signin' => 'sessions#new', :via => [:get]
     match '/signout' => 'sessions#delete', :via => [:get]
-    
+ 
+  #errors
+  #get "/404", :to => "errors#not_found"
+  #get "/422", :to => "errors#unacceptable"
+  #get "/500", :to => "errors#internal_error"
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

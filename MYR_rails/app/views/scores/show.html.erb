@@ -30,7 +30,7 @@
     <p>
       <strong>Score:</strong>
       <% if @score.rawscore != nil %>
-        <%= @score.rawscore +" points" %>
+        <%= @score.rawscore.to_s+' points' %>
       <% end %>
     </p>
 

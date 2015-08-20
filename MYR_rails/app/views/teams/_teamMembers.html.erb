@@ -1,0 +1,167 @@
+<p id="notice"><%= notice %></p>
+
+<div id="member-container" style='width: 100%; height: 70%'>
+	<!--put team leader in the middle-->
+
+	<% len=@team.members.length%>
+	<% members=[] %>
+	<% i=0 %>
+	<% v=-1 %>
+	<% @team.members.each do |mate|%>
+		<% members.push(mate) %>
+		<% if mate.id==@team.leader_id%>
+			<% v=i %>
+		<% end %>
+		<% i+=1%>
+	<% end %>	
+	<% mid = len/2 %>
+	<% t=members[mid]%>
+	<% members[mid]=members[v] %>
+	<% members[v]=t %>
+	
+	<% members.each do |mate|%>
+		<% if mate.id==@team.leader_id%>
+			
+			<div class="member-show-team featured" >
+			  <div class="top team-leader">
+			    <h2>Team Leader</h2>
+			  </div>
+			  <ul>
+			    <li><strong>Name:</strong> <%= mate.name%></li>
+			    <li><strong>Email:</strong> <%= mate.email%></li>
+			  </ul>
+			 
+			  <hr>
+			   
+			  <% logoimage= image_tag mate.logo_url(:team_show) %>
+      	<%= link_to logoimage , mate  %>
+				
+			</div>
+		<% else %>
+			<% width= (1.0/len*100).to_s+"%" %>
+			
+			<div class="member-show-team" >
+			  <div class="top team-member">
+			    <h2>Member</h2>
+			  </div>
+			  <ul>
+			    <li><strong>Name:</strong> <%= mate.name%></li>
+			    <li><strong>Email:</strong> <%= mate.email%></li>
+			  </ul>
+			 
+			  <hr>
+			   
+			  <% logoimage= image_tag mate.logo_url(:team_show) %>
+      	<center><%= link_to logoimage , mate  %></center>
+				<% 1.times do |n|%>
+					<br />
+				<% end %>
+		
+			  <center><%= button_to 'Kick', kick_member_path(mate), method: :patch, remote: :true, :form => { :class => "team-kick-button" } %></center>
+			</div>
+		<% end %>	
+	<% end %>
+    <!--div class="member-show-team featured"-->
+</div>
+
+<% 15.times do |n|%>
+	<br />
+<% end %>
+
+<style>
+ 
+.member-show-team {
+  width: 240px; height: 310px;
+  background: #fff;
+  margin: 50px;
+	color: black;   
+
+}
+.top {
+  width: 240px; height: 50px;
+}
+
+.team-member {
+  background: #2F2E35;
+}
+
+.team-leader {
+	background: #FF0000;
+}
+
+.top h2 {
+  color: #fff;
+  text-align: center;
+  font: 300 30px/50px Helvetica, Verdana, sans-serif;
+}
+.member-show-team ul {
+  list-style-type: none;
+  font: 100 14px/2 Helvetica, Verdana, sans-serif;
+  
+}
+ 
+.member-show-team ul strong {
+  font-weight: bold;
+}
+
+.member-show-team hr {
+  border: 0;
+  background-color: #BCBEC0;
+  color: #BCBEC0;
+  height: 1px;
+  width: 190px;
+  margin: 20px 0 0 30px;
+}
+
+.member-show-team h1 {
+  text-align: center;
+  font: bold 88px/1 Helvetica, Verdana, sans-serif;
+  margin: 20px 0 0 0;
+}
+ 
+.member-show-team h1 sup {
+  font-size: 45px;
+}
+ 
+.member-show-team p {
+  text-align: center;
+  font: 500 14px/1 Helvetica, Verdana, sans-serif;
+  color: #BCBEC0;
+}
+
+.member-show-team a {
+  display: block;
+  height: 40px;
+  width: 150px;
+  color: #fff;
+  margin: 25px 0 0 50px;
+   
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font: 500 16px/40px Helvetica, Verdana, sans-serif;
+}
+ 
+
+#member-container {
+    margin: 10px auto;
+}
+ 
+.member-show-team {
+ 
+  margin: 5px;
+  float: left;
+}
+.featured {
+    -webkit-transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    transform: scale(1.1, 1.1);
+}
+</style>
+<script>
+	$(".team-kick-button").click(function(data){
+		location.reload();
+	})
+</script>

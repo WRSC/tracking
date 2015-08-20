@@ -1,0 +1,23 @@
+
+<%= form_for(:attempt) do |f| %>
+  
+  <%= f.hidden_field :id, value:@a.id %>
+	
+  <div class="field">
+    <font color="blue">Upload area scanning xml/json file</font><br />
+		<% if @a.uploadxml.file != nil %>
+			<i class="icon-file-text-alt"></i>
+			<% filename = @a.uploadxml.file.original_filename %>
+			<!--Rails.root+"/public"+desiredfilename -->
+			<% fullname = @a.uploadxml.file.file %>
+			<% ind_s=Rails.root.to_s.length+7 %>
+			<%= link_to filename, fullname[ind_s,fullname.length] %>
+		<% else %>
+		<% end %>
+    <%= f.file_field :uploadxml %>
+  </div>
+ 
+  <div class="actions">
+    <%= f.submit "Save"%>
+  </div>
+<% end %>

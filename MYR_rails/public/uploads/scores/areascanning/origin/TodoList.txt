@@ -1,0 +1,24 @@
+1-change the format of show page
+
+2-add uploading page for xml files
+
+3-calculate scores and display in the page scores
+
+4-test calculate fonctions
+
+5-replay markers adaptzoom
+
+6-add labels for markers in order to indicate the starting line, ending line
+  and the buoys
+
+7-reload page in ajax request in team#show
+
+8-replay animation
+
+9-need to fix attempt/index when a team_leader but not admin 
+
+10-need to add checking trackers when two robots use the same tracker at the same time
+
+11-domain of ip address
+
+<del>12-how to run server automatically</del>

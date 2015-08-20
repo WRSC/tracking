@@ -7,12 +7,49 @@
 <div id="score-background-container">
 <br>
 <h1>WRSC 2015 FINAL STANDING</h1>
+<!--table for Sailboat-->
+<h2><center>Category: Sailboat</center></h2>
 <table id="racetimes">
-  <tr id="firstrow">
+  <tr id="firstrow" >
     <th>#</th>
     <th>Team</th>
     <th>Robot</th>
 		<th>Category</th>
+
+    <th><%= link_to "Mission 1", triangular_path %></th>
+    <th><%= link_to "Mission 2", stationkeeping_path %></th>
+    <th><%= link_to "Mission 3", areascanning_path %></th>
+    <th><%= link_to "Mission 4", fleetrace_path %></th>
+    <% if is_admin? %>
+      <th>Option</th>
+    <% end %>
+  </tr>
+  <% i=1 %>
+  <% if is_admin? %>
+	  <% @sailboatlist.each do |rob| %>
+			  <tr id= <%= 'scores-'+i.to_s %> >
+          <td><%= i %></td>
+				  <td contenteditable="true" ><%= rob.team.name %></td>
+				  <td contenteditable="true" ><%= rob.name%></td>
+				  <td contenteditable="true" ><%= rob.category%></td>
+				  <td contenteditable="true" >1</td>
+				  <td contenteditable="true" >2</td>
+				  <td contenteditable="true" >3</td>
+			  	<td contenteditable="true" >4</td>
+          <td>
+            <span class="table-option">
+              <input type="image" src="/icons/scores-ok.png" width=25 height=25 ></input>
+              <input class="table-remove" type="image" src="/icons/scores-delete.png" width=25 height=25 > </input>
+            </span>
+          </td>
+          <% i+=1 %>
+       	</tr>		
+	  <% end %>
+  <% else %>
+    <% i=1 %>
+	  <% @sailboatlist.each do |rob| %>
+			  <tr id=<%= 'scores-'+i.to_s %> >
+
     <th>Race</th>
     <th>Triangular Course</th>
     <th>Station Keeping</th>
@@ -23,8 +60,9 @@
       <% roblist=team.robots   %>
   	  <% roblist.each do |rob| %>
   		  <tr>
+
           <td><%= i %></td>
-				  <td ><%= team.name %></td>
+				  <td ><%= rob.team.name %></td>
 				  <td ><%= rob.name%></td>
 				  <td ><%= rob.category%></td>
 				  <td >1</td>
@@ -33,10 +71,71 @@
 			  	<td >4</td>
 		  	</tr>				
         <% i+=1%>
-		  	<% end %>
 	  <% end %>
 </table>
+
+
+<!--table for MicroSailboat-->
+<h2><center>Category: MicroSailboat</center></h2>
+<table id="racetimes">
+  <tr id="firstrow" >
+    <th>#</th>
+    <th>Team</th>
+    <th>Robot</th>
+		<th>Category</th>
+    <th><%= link_to "Mission 1", triangular_path %></th>
+    <th><%= link_to "Mission 2", stationkeeping_path %></th>
+    <th><%= link_to "Mission 3", areascanning_path %></th>
+    <th><%= link_to "Mission 4", fleetrace_path %></th>
+    <% if is_admin? %>
+      <th>Option</th>
+    <% end %>
+  </tr>
+  <% i=1 %>
+  <% if is_admin? %>
+	  <% @microSailboatlist.each do |rob| %>
+			  <tr id= <%= 'scores-'+i.to_s %> >
+          <td><%= i %></td>
+				  <td contenteditable="true" ><%= rob.team.name %></td>
+				  <td contenteditable="true" ><%= rob.name%></td>
+				  <td contenteditable="true" ><%= rob.category%></td>
+				  <td contenteditable="true" >1</td>
+				  <td contenteditable="true" >2</td>
+				  <td contenteditable="true" >3</td>
+			  	<td contenteditable="true" >4</td>
+          <td>
+            <span class="table-option">
+              <input type="image" src="/icons/scores-ok.png" width=25 height=25 ></input>
+              <input class="table-remove" type="image" src="/icons/scores-delete.png" width=25 height=25 > </input>
+            </span>
+          </td>
+          <% i+=1 %>
+       	</tr>		
+	  <% end %>
+  <% else %>
+    <% i=1 %>
+	  <% @microSailboatlist.each do |rob| %>
+			  <tr id=<%= 'scores-'+i.to_s %> >
+          <td><%= i %></td>
+				  <td ><%= rob.team.name %></td>
+				  <td ><%= rob.name%></td>
+				  <td ><%= rob.category%></td>
+				  <td >1</td>
+				  <td >2</td>
+				  <td >3</td>
+			  	<td >4</td>
+		  	</tr>				
+        <% i+=1%>
+	  <% end %>
+  <% end %>
+</table>
+
+<button id="export-btn" class="btn btn-primary">Export Data</button>
+<p id="export"></p>
+<p>Updated in <%= Time.now %></p>
+
 <p><%= link_to "New score", new_score_path %></p>
+
 </div>
 </div>
 

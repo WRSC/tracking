@@ -38,7 +38,11 @@ Rails.application.routes.draw do
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
-    
+  # score
+		get 'triangular'      , to: 'scores#triangular'
+    get 'areascanning'    , to: 'scores#areascanning' 
+		get 'stationkeeping'  , to: 'scores#stationkeeping'
+		get 'fleetrace'       , to: 'scores#fleetrace'
     
     get 'password_resets/sent_password_reset_email'
     get 'account_activations/wait_for_activated'
@@ -50,6 +54,16 @@ Rails.application.routes.draw do
     get  'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
     get  'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
    	
+		get  'teamMembers'             ,  to: 'teams#teamMembers'
+		get  'teamRobots'              ,  to: 'teams#teamRobots'
+		get  'kick'                    ,  to: 'teams#kick'
+
+		get  'robotChart'              ,  to: 'robots#robotChart'
+
+		get  'uploadXMLAS'             ,  to: 'attempts#uploadXMLAS'
+		post 'uploadXMLAS'             ,  to: 'attempts#updateXMLAS'
+       
+
    	get  'map_panel'               ,  to: 'real_time#map_panel' 
    	get  'getMissions'             ,  to: 'real_time#getMissions'
     get  'getNewTrackers'          ,  to: 'real_time#getNewTrackers'

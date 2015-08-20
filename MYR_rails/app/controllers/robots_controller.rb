@@ -1,6 +1,7 @@
 class RobotsController < ApplicationController
-  before_action :set_robot, only: [:show, :edit, :update, :destroy]
-
+#https://richonrails.com/articles/allowing-file-uploads-with-carrierwave
+  before_action :set_robot, only: [:show, :edit, :update, :destroy] 
+	before_action :robotChart, only: [:set_robot]
   # GET /robots
   # GET /robots.json
   def index
@@ -10,6 +11,7 @@ class RobotsController < ApplicationController
   # GET /robots/1
   # GET /robots/1.json
   def show
+		
   end
 
   # GET /robots/new
@@ -20,6 +22,22 @@ class RobotsController < ApplicationController
   # GET /robots/1/edit
   def edit
   end
+	
+	def robotChart
+		data=[]
+		rob=Robot.find_by_id(params[:id])
+		data.push(rob)		
+	
+		missions=[]
+		rob.missions.each do |m|		
+			tmp=[]
+			tmp.push(m)	
+			tmp.push(rob.attempts.where(mission_id: m.id))	
+			missions.push(tmp)	
+		end
+		data.push(missions)
+		render json: data
+	end
 
   # POST /robots
   # POST /robots.json

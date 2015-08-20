@@ -1,4 +1,5 @@
 class Attempt < ActiveRecord::Base
+	mount_uploader :uploadxml, XmlasUploader
 # Associations
 	belongs_to :robot
 	belongs_to :mission

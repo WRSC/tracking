@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # Default root
 
     root 'static_pages#home'  
@@ -80,6 +81,10 @@ Rails.application.routes.draw do
     match '/signin' => 'sessions#new', :via => [:get]
     match '/signout' => 'sessions#delete', :via => [:get]
  
+    match '/404', to: 'errors#file_not_found', via: :all
+    match '/422', to: 'errors#unprocessable', via: :all
+    match '/500', to: 'errors#internal_server_error', via: :all
+
   #errors
   #get "/404", :to => "errors#not_found"
   #get "/422", :to => "errors#unacceptable"

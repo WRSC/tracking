@@ -91,6 +91,10 @@ Rails.application.routes.draw do
     get  'infowindow'              ,  to: 'replay#infowindow'
 		get  'officialMarkersInfo'     ,  to: 'replay#officialMarkersInfo'
 
+		get  'newAttemptinfo'          ,  to: 'scores#newAttemptinfo'
+		get  'newScoreinfo'           ,  to: 'scores#newScoreinfo'
+
+
 
   # Authentication
 

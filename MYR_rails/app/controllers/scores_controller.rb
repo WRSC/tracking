@@ -28,7 +28,9 @@ class ScoresController < ApplicationController
 			@score=Score.find(params[:id])
 		end
 
+		# POSt /scores
   	def create
+=begin
 	    attempt = Attempt.find(params[:score][:attempt_id])
 	    mission = Mission.find(attempt.mission_id)
 	   	@score = Score.new
@@ -41,7 +43,7 @@ class ScoresController < ApplicationController
 	    when "AreaScanning"
 	   	else
 	   	end 
-
+=end
 
 	    @score = Score.new(score_params)
 
@@ -75,7 +77,18 @@ class ScoresController < ApplicationController
 	      format.json { head :no_content }
 	    end
   end
+	
+	def newAttemptinfo
+		m_id=params[:mission_id]
+		@attempts=Mission.find_by_id(m_id).attempts
+	end
 
+	def newScoreinfo
+		@a_id=params[:attempt_id]
+	
+		
+	end
+	
 	def finalstanding
 	end
   

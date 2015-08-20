@@ -11,10 +11,11 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( Markers/markersCreation.js )
 Rails.application.config.assets.precompile += %w( Real_time/real_time.js )
 Rails.application.config.assets.precompile += %w( Replay/replay.js )
-Rails.application.config.assets.precompile += %w( Scores/triangularCourseScore.js )
+
 Rails.application.config.assets.precompile += %w( jquery.dataTables.js )
 
 Rails.application.config.assets.precompile += %w( layout.css )
 
 Rails.application.config.assets.precompile += %w( team.js )
+Rails.application.config.assets.precompile += %w( score.js )
 

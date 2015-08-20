@@ -1,0 +1,14 @@
+<p>Choose An Attempt</p>
+<select id="score_attempt_dropdown">
+		<option value="0"></option>
+		<% @attempts.each do |a|%>
+			<option value="<%= a.id %>"><%= a.id.to_s+' '+a.name%></option>
+		<% end %>
+</select>  
+
+
+<!-- time cost -->
+<!-- raws core -->
+<!-- penalty -->
+<!-- penalty description -->
+<!-- datetimes -->

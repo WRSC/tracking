@@ -5,4 +5,5 @@ class Score < ActiveRecord::Base
 
 # Validations
 	validates :attempt_id, presence: true
+	
 end

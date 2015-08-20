@@ -25,13 +25,16 @@
     <%= f.number_field :timecost %> seconds
 
     <%= f.label :RawScore %>
-    <%= f.number_field :rawscore %> seconds
+    <%= f.number_field :rawscore %> 
 
 		<%= f.label :Penalty %>
     <%= f.number_field :penalty %> 
- 
-   
 
+		<%= f.label :penalty_description, "Penalty Description" %>
+    <%= f.text_area :penalty_description %> 
+
+		<%= f.hidden_field :datetimes, :value => Time.now %>
+ 
   
   <p>
   <div class="actions">

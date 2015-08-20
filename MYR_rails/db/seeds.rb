@@ -455,3 +455,16 @@ Robot.create!(name:  "Just for fun3",
               category: "Sailboat",
               team_id: 3) 	 
 end
+
+#================ Create some scores to test ================
+t=Time.now
+20.times do |n|
+	Score.create!(
+    :attempt_id => n+1,
+      :timecost => n*10,
+      :rawscore => n%10+0.1*n,
+       :penalty => 1,
+     :datetimes => Time.now+n
+)
+end
+

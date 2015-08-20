@@ -1,6 +1,7 @@
 class ScoresController < ApplicationController
 	include ScoreHelper
 
+	before_action :set_score, only: [:edit, :show, :update, :destroy]
 	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
 
   	def index
@@ -130,6 +131,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :penalty, :penalty_description, :datetimes)
     end
 end

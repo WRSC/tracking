@@ -11,7 +11,8 @@
         <th >Attempt</th>
         <th >Timecost</th>
         <th >Rawscore</th>
-				<th >penalty</th>
+				<th >Penalty</th>
+				<th >PenaltyDescription</th>
 				<th>Calculated time</th>
 			<% if sign_in? %>
 				<th> Options</th>			
@@ -27,6 +28,7 @@
 			<td><%= score.timecost %></td>
 			<td><%= score.rawscore %></td>
 			<td><%= score.penalty %></td>
+			<td><%= score.penalty_description %></td>
 			<td><%= score.datetimes %></td>  
 			<% if sign_in? %>
         <% if is_admin? %>

@@ -394,8 +394,8 @@ testErbyml:
 <% f=File.read(filename) %>
 <% f_hash = JSON.parse(f) %>
 testjson:
-  latitude: <%= f_hash['latitude'] %> 
-  longitude: <%= f_hash['longitude'] %> 
+  latitude: <%= f_hash['latitude'] %>
+  longitude: <%= f_hash['longitude'] %>
   datetime: <%= f_hash['datetime'] %>
   tracker_id: <%= f_hash['tracker_id'] %>
 

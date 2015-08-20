@@ -13,13 +13,5 @@ Rails.application.config.assets.precompile += %w( Real_time/real_time.js )
 Rails.application.config.assets.precompile += %w( Replay/replay.js )
 Rails.application.config.assets.precompile += %w( Scores/triangularCourseScore.js )
 Rails.application.config.assets.precompile += %w( jquery.dataTables.js )
-<<<<<<< HEAD
 Rails.application.config.assets.precompile += %w( layout.css )
 Rails.application.config.assets.precompile += %w( team.js )
-=======
-
-Rails.application.config.assets.precompile += %w( layout.css )
-
-Rails.application.config.assets.precompile += %w( team.js )
-
->>>>>>> 1bcbee4961adda16e6f80d34534b46040a10b826

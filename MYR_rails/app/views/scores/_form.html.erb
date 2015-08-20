@@ -1,0 +1,42 @@
+<div class="row">
+<%= form_for(@score) do |f| %>
+  <% if @score.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@score.errors.count, "error") %> prohibited this score from being saved:</h2>
+      <ul>
+      <% @score.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div id="content">
+  <section class="round">
+    <% flash.each do |key, value| %>
+      <div id="monflash" class="flash <%= key %>"><%= value %></div>
+    <% end %>
+  </section>
+  <%= yield %>
+  </div>
+
+    
+    <%= f.label :TimeCost %>
+    <%= f.number_field :timecost %> seconds
+
+    <%= f.label :RawScore %>
+    <%= f.number_field :rawscore %> seconds
+
+		<%= f.label :Penalty %>
+    <%= f.number_field :penalty %> 
+ 
+   
+
+  
+  <p>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  </p>
+<% end %>
+</div>

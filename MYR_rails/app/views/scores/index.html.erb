@@ -1,125 +1,51 @@
-<!--https://www.freshdesignweb.com/free-css-tables/-->
-<!--http://codepen.io/iambeccagould/pen/tbwjh-->
-<!--http://codepen.io/ashblue/pen/mCtuA-->
 <% provide(:title, "Scores | Index") %>
-<%= stylesheet_link_tag 'scores_table.css', media: 'all', 'data-turbolinks-track' => true %>
-<div id="score-awesome-table">
-<div id="score-background-container">
-<br>
-<h1>WRSC 2015 FINAL STANDING</h1>
-<!--table for Sailboat-->
-<h2><center>Category: Sailboat</center></h2>
-<table id="racetimes">
-  <tr id="firstrow" >
-    <th>#</th>
-    <th>Team</th>
-    <th>Robot</th>
-		<th>Category</th>
-    <th><%= link_to "Mission 1", triangular_path %></th>
-    <th><%= link_to "Mission 2", stationkeeping_path %></th>
-    <th><%= link_to "Mission 3", areascanning_path %></th>
-    <th><%= link_to "Mission 4", fleetrace_path %></th>
-    <% if is_admin? %>
-      <th>Option</th>
-    <% end %>
-  </tr>
-  <% i=1 %>
-  <% if is_admin? %>
-	  <% @sailboatlist.each do |rob| %>
-			  <tr id= <%= 'scores-'+i.to_s %> >
-          <td><%= i %></td>
-				  <td contenteditable="true" ><%= rob.team.name %></td>
-				  <td contenteditable="true" ><%= rob.name%></td>
-				  <td contenteditable="true" ><%= rob.category%></td>
-				  <td contenteditable="true" >1</td>
-				  <td contenteditable="true" >2</td>
-				  <td contenteditable="true" >3</td>
-			  	<td contenteditable="true" >4</td>
-          <td>
-            <span class="table-option">
-              <input type="image" src="/icons/scores-ok.png" width=25 height=25 ></input>
-              <input class="table-remove" type="image" src="/icons/scores-delete.png" width=25 height=25 > </input>
-            </span>
-          </td>
-          <% i+=1 %>
-       	</tr>		
-	  <% end %>
-  <% else %>
-    <% i=1 %>
-	  <% @sailboatlist.each do |rob| %>
-			  <tr id=<%= 'scores-'+i.to_s %> >
-          <td><%= i %></td>
-				  <td ><%= rob.team.name %></td>
-				  <td ><%= rob.name%></td>
-				  <td ><%= rob.category%></td>
-				  <td >1</td>
-				  <td >2</td>
-				  <td >3</td>
-			  	<td >4</td>
-		  	</tr>				
-        <% i+=1%>
-	  <% end %>
-  <% end %>
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
+<h1>Listing Scores</h1>
+
+<table id="datatable-score" class="dataTable display" >
+  <thead>
+    <tr >
+        <th >id</th>
+        <th >Attempt</th>
+        <th >Timecost</th>
+        <th >Rawscore</th>
+				<th >penalty</th>
+				<th>Calculated time</th>
+			<% if sign_in? %>
+				<th> Options</th>			
+			<% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+		<% @scores.each do |score| %>
+		<tr>
+   		<td><%= link_to score.id, score %></td>
+     	<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
+			<td><%= score.timecost %></td>
+			<td><%= score.rawscore %></td>
+			<td><%= score.penalty %></td>
+			<td><%= score.datetimes %></td>  
+			<% if sign_in? %>
+        <% if is_admin? %>
+          <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>
+          <%= link_to 'Delete', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      <% end %>
+		<% end %>
+		</tr>  
+
+  </tbody>
 </table>
 
-<!--table for MicroSailboat-->
-<h2><center>Category: MicroSailboat</center></h2>
-<table id="racetimes">
-  <tr id="firstrow" >
-    <th>#</th>
-    <th>Team</th>
-    <th>Robot</th>
-		<th>Category</th>
-    <th><%= link_to "Mission 1", triangular_path %></th>
-    <th><%= link_to "Mission 2", stationkeeping_path %></th>
-    <th><%= link_to "Mission 3", areascanning_path %></th>
-    <th><%= link_to "Mission 4", fleetrace_path %></th>
-    <% if is_admin? %>
-      <th>Option</th>
-    <% end %>
-  </tr>
-  <% i=1 %>
-  <% if is_admin? %>
-	  <% @microSailboatlist.each do |rob| %>
-			  <tr id= <%= 'scores-'+i.to_s %> >
-          <td><%= i %></td>
-				  <td contenteditable="true" ><%= rob.team.name %></td>
-				  <td contenteditable="true" ><%= rob.name%></td>
-				  <td contenteditable="true" ><%= rob.category%></td>
-				  <td contenteditable="true" >1</td>
-				  <td contenteditable="true" >2</td>
-				  <td contenteditable="true" >3</td>
-			  	<td contenteditable="true" >4</td>
-          <td>
-            <span class="table-option">
-              <input type="image" src="/icons/scores-ok.png" width=25 height=25 ></input>
-              <input class="table-remove" type="image" src="/icons/scores-delete.png" width=25 height=25 > </input>
-            </span>
-          </td>
-          <% i+=1 %>
-       	</tr>		
-	  <% end %>
-  <% else %>
-    <% i=1 %>
-	  <% @microSailboatlist.each do |rob| %>
-			  <tr id=<%= 'scores-'+i.to_s %> >
-          <td><%= i %></td>
-				  <td ><%= rob.team.name %></td>
-				  <td ><%= rob.name%></td>
-				  <td ><%= rob.category%></td>
-				  <td >1</td>
-				  <td >2</td>
-				  <td >3</td>
-			  	<td >4</td>
-		  	</tr>				
-        <% i+=1%>
-	  <% end %>
-  <% end %>
-</table>
 
-<button id="export-btn" class="btn btn-primary">Export Data</button>
-<p id="export"></p>
-<p>Updated in <%= Time.now %></p>
-</div>
-</div>
-
+<script>
+$(document).ready( function () {
+    $('#datatable-score').DataTable({
+			paging: true
+			
+		});
+} );
+</script>

@@ -1,15 +1,12 @@
 class ScoresController < ApplicationController
 	include ScoreHelper
 
-	before_action :get_rob_by_category, only:[:index, :triangular, :stationkeeping, :areascanning, :fleetrace]
+	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
 
   	def index
-			
+			@scores=Score.all
   	end
-	
-	  def test
-	  end
-  
+
   	def show
   		@score=Score.find(params[:id])
   	end
@@ -17,6 +14,10 @@ class ScoresController < ApplicationController
   	def new
   		@score = Score.new
   	end
+	
+		def edit
+			@score=Score.find(params[:id])
+		end
 
   	def create
 	    attempt = Attempt.find(params[:score][:attempt_id])
@@ -53,6 +54,9 @@ class ScoresController < ApplicationController
 	      format.json { head :no_content }
 	    end
   end
+
+	def finalstanding
+	end
   
 	def triangular
 		# make sure the mission 1 is triangular

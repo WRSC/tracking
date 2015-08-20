@@ -60,7 +60,7 @@ class MarkersController < ApplicationController
     @marker=Marker.new(marker_params)
     tablat=@marker.latitude.split(";")
     tablng=@marker.longitude.split(";")
-		tabname=@marker.name.split(";")
+    tabname=@marker.name.split(";")
     flag=false
     for i in (0..tablat.length-1)
       if tablat[i]!="" && tablat[i]!=nil

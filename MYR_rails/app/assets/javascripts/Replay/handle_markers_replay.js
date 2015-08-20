@@ -45,23 +45,24 @@
 		//always needed ?
 		marker.setMap(replay_map);
 			
-		$.ajax({
-						type: "GET",
-						url: "/infowindow",
-						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt,isEnd: false, lat: lat, lng:lng},
-						dataType: "html",
-						success: function(data){
-							//alert('change tracker')
-							//alert(data)
-							changeInfowindow = new google.maps.InfoWindow({
-									content: data
-							});
-							addInfoWindow(changeInfowindow,marker)
-						}
-		})/* 
+		// $.ajax({
+		// 				type: "GET",
+		// 				url: "/infowindow",
+		// 				data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt,isEnd: false, lat: lat, lng:lng},
+		// 				dataType: "html",
+		// 				success: function(data){
+		// 					//alert('change tracker')
+		// 					//alert(data)
+		// 					changeInfowindow = new google.maps.InfoWindow({
+		// 							content: data
+		// 					});
+		// 					addInfoWindow(changeInfowindow,marker)
+		// 				}
+		// })
+		
 		latest_markers[0].push(marker);
 		latest_markers[1].push(tracker_id);
-		*///ADDED
+
 		return marker;
 	}
 /*===============End Add a Small Marker=========================*/
@@ -87,20 +88,20 @@
 		//always needed ?
 		marker.setMap(replay_map);
 		// to ease later addition of coordinqtes
-		$.ajax({
-						type: "GET",
-						url: "/infowindow",
-						data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt, isEnd: true, lat: lat, lng:lng},
-						dataType: "html",
-						success: function(data){
-							//alert('change tracker')
-							//alert(data)
-							changeInfowindow = new google.maps.InfoWindow({
-									content: data
-							});
-							addInfoWindow(changeInfowindow,marker)
-						}
-		})       
+		// $.ajax({
+		// 				type: "GET",
+		// 				url: "/infowindow",
+		// 				data: {tracker_id: tracker_id, timestart: tstart, timeend: tend, datetime: datetime, singleAttempt: singleAttempt, isEnd: true, lat: lat, lng:lng},
+		// 				dataType: "html",
+		// 				success: function(data){
+		// 					//alert('change tracker')
+		// 					//alert(data)
+		// 					changeInfowindow = new google.maps.InfoWindow({
+		// 							content: data
+		// 					});
+		// 					addInfoWindow(changeInfowindow,marker)
+		// 				}
+		// })       
 		latest_markers[0].push(marker);
 		latest_markers[1].push(tracker_id);
 		// to create the side panel

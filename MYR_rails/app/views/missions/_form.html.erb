@@ -30,14 +30,20 @@
   
   <div class="field">
     <%= f.label :mtype %>
-    <%= f.select :category, ['Race', 'TriangularCourse', 'StationKeeping', 'AreaScanning'] %>
+    <%= f.select :mtype, ['Race', 'TriangularCourse', 'StationKeeping', 'AreaScanning'] %>
+  </div>
+  <br>
+
+  <div class="field">
+    <%= f.label :category %>
+    <%= f.select :category, ['Sailboat', 'MicroSailboat'] %>
   </div>
   <br>
 
   Fill this only if the mission is the Race.
   <div class="field">
     <%= f.label :startOfRace %>
-    <%= f.string :startOfRace %>
+    <%= f.text_field :startOfRace %>
   </div>
   <br>
 

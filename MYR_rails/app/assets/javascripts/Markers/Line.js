@@ -42,7 +42,8 @@ function saveLineMarker(){
 
 
 function addFixPolyline(){
-	var name = prompt("Please enter the name of marker","starting line")
+
+	var name = prompt("Please enter the name of marker","Write startLine or endLine")
 	input=prompt("Please respect the format of input data, otherwise it could not recognize the data: lat,lng;lat,lng;...","lat,lng; lat,lng...")
 	/*====== need to check if th input data format is correct =====*/
 	tabinput=input.split(";")
@@ -54,7 +55,6 @@ function addFixPolyline(){
     strokeOpacity: 1.0,
     strokeWeight: 2,
     markers: fixline,
-		linetype: linetype,
 		mname: name
   });
   fixPath.setMap(map_marker)
@@ -73,7 +73,7 @@ function addFixPolyline(){
 }
 
 function addCustomPolyline(){
-	var name=prompt('Please enter the type of line for the line marker','starting line')
+	var name=prompt('Please enter the type of line for the line marker','Write startLine or endLine')
   alert('You can add markers by clicking in the map directly')
 	var polyOptions = {
     strokeColor: '#000000',

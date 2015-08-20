@@ -107,13 +107,12 @@ module ScoreHelper
       myTrackerID= attempt.tracker_id
       startTime = attempt.start.strftime('%Y%m%d%H%M%S')
       endTime = attempt.end.strftime('%Y%m%d%H%M%S')
-      coordinates = (Coordinate.where(id: Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc))).where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).select(:datetime,:latitude,:longitude).order(datetime: :asc)
-      
+      coordinates = Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc)
       # The markers should be created in this order : first => start line, second =>  end line, third => first buoy, fourth => second buoy
-      sLine = Marker.find(1)
-      eLine = Marker.find(2)
-      myFirstBuoy = Marker.find(3)
-      mySecondBuoy = Marker.find(4)
+      sLine = Marker.where(mission_id: mission_id).find_by_name("startLine")
+      eLine = Marker.where(mission_id: mission_id).find_by_name("endLine")
+      myFirstBuoy = Marker.where(mission_id: mission_id).find_by_name("firstBuoy")
+      mySecondBuoy = Marker.where(mission_id: mission_id).find_by_name("secondBuoy")
 
      # mise en forme des lignes
 
@@ -147,19 +146,17 @@ module ScoreHelper
       tSL = checkLineCrossed(startLine,coordinates) # time for start line
 
       if tSL != 0
-        coordinates = coordinates.where("datetime >= ?", tSL).order(datetime: :asc)
-
-        k = coordinates.length
+        coordinates = coordinates.where("datetime >= ?", tSL-1).order(datetime: :asc)
 
         tFB = checkRoundBuoy(endLine,firstBuoy,coordinates,"NSEW")
 
         if tFB != 0
-          coordinates = coordinates.where("datetime >= ?", tFB).order(datetime: :asc)
+          coordinates = coordinates.where("datetime >= ?", tFB-1).order(datetime: :asc)
 
           tSB = checkRoundBuoy(startLine,secondBuoy,coordinates,"NSEW")
 
           if tSB != 0
-            coordinates = coordinates.where("datetime >= ?", tSB).order(datetime: :asc)
+            coordinates = coordinates.where("datetime >= ?", tSB-1).order(datetime: :asc)
 
             tEL = checkLineCrossed(endLine, coordinates)
           end
@@ -167,7 +164,7 @@ module ScoreHelper
       end
 
       if tEL != 0
-        time = tEL.to_f - tSL.to_f
+        time = timeDifference(tEL.to_s, tSL.to_s)
       end
 
       return time
@@ -184,11 +181,11 @@ module ScoreHelper
 
       # The markers should be created in this order : first => start line (first point of the start line = first Buoy), second => first Buoy, third => second Buoy, fourth => third Buoy, fifth => fourth Buoy
 
-      sLine = Marker.find(1)
-      firstCorner = Marker.find(2) # order
-      secondCorner = Marker.find(3) # order
-      thirdCorner = Marker.find(4) # order
-      fourthCorner = Marker.find(5) # order
+      sLine = Marker.where(mission_id: mission_id).find_by_name("startLine")
+      firstCorner = Marker.where(mission_id: mission_id).find_by_name("firstBuoy") # order
+      secondCorner = Marker.where(mission_id: mission_id).find_by_name("secondBuoy") # order
+      thirdCorner = Marker.where(mission_id: mission_id).find_by_name("thirdBuoy") # order
+      fourthCorner = Marker.where(mission_id: mission_id).find_by_name("fourthBuoy") # order
 
       startLine = []
       startLine << sLine.longitude.split("_")
@@ -219,21 +216,21 @@ module ScoreHelper
         
 
         if (tSeB != 0)
-          coordinates = coordinates.where("datetime >= ?", tSeB).order(datetime: :asc)
+          coordinates = coordinates.where("datetime >= ?", tSeB-1).order(datetime: :asc)
           tThB = checkRoundBuoy(startLine, thirdBuoy, coordinates, "WS")
           
 
           if (tThB != 0)
-            coordinates = coordinates.where("datetime >= ?", tThB).order(datetime: :asc)
+            coordinates = coordinates.where("datetime >= ?", tThB-1).order(datetime: :asc)
             tFoB = checkRoundBuoy(startLine, fourthBuoy, coordinates, "SE")
             
 
             if (tFoB != 0)
-              coordinates = coordinates.where("datetime >= ?", tFoB).order(datetime: :asc)
+              coordinates = coordinates.where("datetime >= ?", tFoB-1).order(datetime: :asc)
               tFiB = checkRoundBuoy(startLine, firstBuoy, coordinates, "EN")
 
               if tFiB != 0
-                coordinates = coordinates.where("datetime >= ?", tFoB).order(datetime: :asc)
+                coordinates = coordinates.where("datetime >= ?", tFiB-1).order(datetime: :asc)
                 turn = turn+1
                 if turn == 2
                   time = timeDifference(tFiB.to_s, globalStartTime.to_s)
@@ -255,8 +252,8 @@ module ScoreHelper
 
     def timeAddition(t1,t2)
       # +1 is to stay in the same zone, may be this cannot work correctly if the server is set to an other zone than UTC + 3
-      temp1 = DateTime.strptime(t1+"+1",'%Y%m%d%H%M%S%z').to_time
-      temp2 = DateTime.strptime(t2+"+1",'%Y%m%d%H%M%S%z').to_i
+      temp1 = DateTime.strptime(t1+"UTC",'%Y%m%d%H%M%S%z').to_time.utc
+      temp2 = DateTime.strptime(t2+"UTC",'%Y%m%d%H%M%S%z').to_i
       res = temp1 + temp2
       return res.strftime('%Y%m%d%H%M%S')
     end

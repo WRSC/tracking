@@ -4,6 +4,7 @@ class ScoresController < ApplicationController
 	before_action :set_score, only: [:edit, :show, :update, :destroy]
 	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
 
+
   	def index
 			@teamlist=Team.all
 			@TMission = Mission.where(mtype: "TriangularCourse")
@@ -11,6 +12,7 @@ class ScoresController < ApplicationController
 			@SKMission = Mission.where(mtype: "StationKeeping")
 			@ASMission = Mission.where(mtype: "AreaScanning")
 			@scores=Score.all
+
   	end
 
   	def show

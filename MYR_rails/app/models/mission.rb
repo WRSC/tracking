@@ -9,4 +9,5 @@ class Mission < ActiveRecord::Base
 	validates :start, presence: true
   	validates :end, presence: true
   	validates :mtype, presence: true
+  	validates :category, presence: true
 end

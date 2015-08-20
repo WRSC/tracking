@@ -9,6 +9,7 @@
     <tr>
       <th>Name</th>
       <th>Type</th>
+      <th>Category</th>
       <th>Start</th>
       <th>End</th>
 			<% if is_admin? %>
@@ -22,6 +23,7 @@
        <tr>
           <td><%= link_to mission.name, mission %></td>
           <td><%= mission.mtype %></td>
+          <td><%= mission.category %></td>
           <td><%= mission.start %></td>
           <td><%= mission.end %></td>
           <% if is_admin? %>

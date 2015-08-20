@@ -93,6 +93,7 @@ function requestRefreshMapFromAttempt(){
       //alert(data[0]+' '+data[1]+''+data[2])
       //alert('trackers are '+data[2])
       //alert(data[0])
+      // data 0 => tstart, data 1 => tend, data 2 => tracker id)
       requestGatherCoordsBetweenDates(data[0],data[1],data[2],true);
 		}       
 	});

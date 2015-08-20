@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820073455) do
+ActiveRecord::Schema.define(version: 20150820142346) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150820073455) do
     t.datetime "end"
     t.string   "startOfRace"
     t.string   "mtype"
+    t.string   "category"
   end
 
   create_table "robots", force: :cascade do |t|

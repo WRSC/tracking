@@ -40,7 +40,7 @@ function saveLineMarker(){
 
 
 function addFixPolyline(){
-	var linetype=prompt('Please enter the type of line for the line marker')
+	var linetype=prompt('Please enter the type of line for the line marker (e.g. startLine, endLine)')
 	input=prompt("Please respect the format of input data, otherwise it could not recognize the data: lat,lng;lat,lng;...","lat,lng; lat,lng...")
 	/*====== need to check if th input data format is correct =====*/
 	tabinput=input.split(";")
@@ -70,7 +70,7 @@ function addFixPolyline(){
 }
 
 function addCustomPolyline(){
-	var linetype=prompt('Please enter the type of line for the line marker')
+	var linetype=prompt('Please enter the type of line for the line marker (e.g. startLine, endLine)')
   alert('You can add markers by clicking in the map directly')
 	var polyOptions = {
     strokeColor: '#000000',

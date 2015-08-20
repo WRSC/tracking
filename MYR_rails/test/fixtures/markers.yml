@@ -41,28 +41,28 @@ TristartLine:
   latitude: "0_0"
   mtype: Line
   mission_id: 1
-  id: 1
+  name: "startLine"
 
 TriendLine:
   longitude: "0_0"
   latitude: "0_1"
   mtype: Line
   mission_id: 1
-  id: 2
+  name: "endLine"
 
 TrifirstBuoy:
   longitude: "0"
   latitude: "1"
   mtype: Point
   mission_id: 1
-  id: 3
+  name: "firstBuoy"
 
 TrisecondBuoy:
   longitude: "1"
   latitude: "0"
   mtype: Point
   mission_id: 1
-  id: 4
+  name: "secondBuoy"
 
 #=================================== markers for race course scoring tests =================================
 
@@ -70,35 +70,35 @@ RaceStartLine:
   longitude: "0_1"
   latitude: "0_0"
   mtype: Line
-  mission_id: 1
-  id: 5
+  mission_id: 3
+  name: "startLine"
 
 
 RaceFirstBuoy:
   longitude: "0"
   latitude: "0"
   mtype: Point
-  mission_id: 1
-  id: 6
+  mission_id: 3
+  name: "firstBuoy"
 
 RaceSecondBuoy:
   longitude: "0"
   latitude: "1"
   mtype: Point
-  mission_id: 1
-  id: 7
+  mission_id: 3
+  name: "secondBuoy"
 
 RaceThirdBuoy:
   longitude: "-1"
   latitude: "1"
   mtype: Point
-  mission_id: 1
-  id: 8
+  mission_id: 3
+  name: "thirdBuoy"
 
 RaceFourthBuoy:
   longitude: "-1"
   latitude: "0"
   mtype: Point
-  mission_id: 1
-  id: 9
+  mission_id: 3
+  name: "fourthBuoy"
 

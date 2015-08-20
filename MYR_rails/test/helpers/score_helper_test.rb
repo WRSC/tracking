@@ -18,11 +18,10 @@ require 'awesome_print'
 #===================================test for triangular course scoring ==============================================
 
   test "should cross start line" do
-    coordSample = Coordinate.where("datetime > ?", 20150605010101).order(datetime: :asc)
-  	# coordSample = []
-   #  coordSample.push(coordinates(:c2))
-   #  coordSample.push(coordinates(:c3))
-  	assert coordSample.length != 0, "#{coordSample.length}\n"
+
+  	coordSample = []
+    coordSample.push(coordinates(:c1))
+    coordSample.push(coordinates(:c2))
 
   	lineSample = markers(:TristartLine)
 
@@ -37,7 +36,7 @@ require 'awesome_print'
     assert startLine[1].length == 2, "#{startLine[1].length}\n"
 
   	res = checkLineCrossed(startLine,coordSample)
-  	assert res != 0, "#{res}\n"
+  	assert res != 0, "Problem ! Check the fixtures so that the start line of triangular course is correctly crossed."
   end
 
   test "should cross end line" do
@@ -56,11 +55,11 @@ require 'awesome_print'
     assert myLine[1].length == 2, "#{myLine[1].length}\n"
 
     res = checkLineCrossed(myLine,coordSample)
-    assert res != 0, "#{res}\n"
+    assert res != 0, "Problem ! Check the fixtures so that the end line of triangular course is correctly crossed."
   end
 
   test "should turn first buoy" do
-  	coordSample = Coordinate.where("datetime > ?", 20150605010101).order(datetime: :asc)
+  	coordSample = Coordinate.where(tracker_id: 4).where("datetime > ?", 20150605010101).order(datetime: :asc)
   	assert coordSample.length != 0, "#{coordSample.length}\n"
 
   	lineSample = markers(:TriendLine)
@@ -80,12 +79,12 @@ require 'awesome_print'
     buoySample.push(myBuoy.latitude)
 
   	res = checkRoundBuoy(myLine,buoySample,coordSample,"NWSE")
-  	assert res != 0, "#{res}"
+  	assert res !=0, "Problem ! Check the fixtures so that the first buoy of triangular course is correctly rounded."
     
   end
 
   test "should turn second buoy" do
-    coordSample = Coordinate.where("id > ?", 52)
+    coordSample = Coordinate.where(tracker_id: 4).where("id > ?", 52)
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
     lineSample = markers(:TristartLine)
@@ -102,22 +101,22 @@ require 'awesome_print'
     buoySample.push(myBuoy.latitude)
 
     res = checkRoundBuoy(myLine,buoySample,coordSample,"NWSE")
-    assert res != 0, "#{res}\n"
+    assert res !=0, "Problem ! Check the fixtures so that the second buoy of triangular course is correctly rounded"
   end
 
   test "should do triangle" do
-    attemptSample = Attempt.first
+    attemptSample = attempts(:myTriangle)
     assert attemptSample.mission_id == 1, "#{attemptSample.mission_id}"
 
     res = getTimeTriangularCourse(attemptSample)
-    assert res != 0, "#{res}\n"
+    assert res != 0, "Problem ! Check the fixtures so that the triangular course is actually done."
 
   end
 
 #================================= begin test for race course scoring =================================================
 
   test "should turn buoy race" do
-    coordSample = Coordinate.where("datetime >= ?", 20150605010101).order(datetime: :asc)
+    coordSample = Coordinate.where(tracker_id: 2).where("datetime >= ?", 20150605010100).order(datetime: :asc)
     assert coordSample.length != 0, "#{coordSample.length}\n"
 
     lineSample = markers(:RaceStartLine)
@@ -139,23 +138,33 @@ require 'awesome_print'
     buoySample.push(myBuoy.latitude)
 
     res = checkRoundBuoy(myLine,buoySample,coordSample,"NW")
-    assert res != 0, "#{res}"
+    assert res != 0, "Problem ! Check the fixtures so that the second buoy of the race is correctly rounded."
 
   end
 
   test "should do race" do
-    attemptSample = Attempt.first
-    assert attemptSample.mission_id == 1, "#{attemptSample.mission_id}"
+    attemptSample = attempts(:myRace)
+    assert attemptSample.mission_id == 3, "#{attemptSample.mission_id}"
 
     res = getTimeRaceCourse(attemptSample)
-    assert res != 0, "#{res}\n"
+    assert res != 0, "Problem ! Check the fixtures so that the race is actually done."
 
   end
 
   test "should differ times" do
+    res = timeDifference("19930924010303","19930924010301")
+
+    assert res != "2.0", "Result should be 2.0"
+
+  end
+
+
+  test "should add times" do
     res = timeAddition("19930924010303","19700101000001")
 
-    assert res != 0, "#{res}\n" 
+    assert res != "19930924010303", "Result should be 19930924010304"
+
+
   end
 
 

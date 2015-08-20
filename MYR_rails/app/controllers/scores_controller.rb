@@ -3,16 +3,12 @@ class ScoresController < ApplicationController
 
 	before_action :get_rob_by_category, only:[:index, :triangular, :stationkeeping, :areascanning, :fleetrace]
 
-  	def index
-<<<<<<< HEAD
-			
-=======
+  	def index			
 		@teamlist=Team.all
 		@TMission = Mission.where(mtype: "TriangularCourse")
 		@RMission = Mission.where(mtype: "Race")
 		@SKMission = Mission.where(mtype: "StationKeeping")
 		@ASMission = Mission.where(mtype: "AreaScanning")
->>>>>>> 8cc2079ba312cc989c9833d3508c599e743a06a5
   	end
 	
 	  def test

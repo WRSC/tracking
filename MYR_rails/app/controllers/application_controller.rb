@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
   include TeamsHelper
+	include SimpleCaptcha::ControllerHelpers
+
   protected
 
   # check if psw correct and the role is administrator with no arguments

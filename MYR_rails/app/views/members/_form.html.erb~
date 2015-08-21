@@ -19,13 +19,7 @@
   </section>
   <%= yield %>
   </div>
-
-  <p>
-  <% if @member.logo!="" && @member.logo!=nil %>
-    <img src=<%= @member.logo %>>
-  <% end %>
-  </p>
-
+	<br />
     <%= f.label :name %>
     <%= f.text_field :name %>
 
@@ -39,10 +33,16 @@
     <%= f.text_field :email %>
 
   	<%= f.label :role %>
-    <%= f.select :role, ['visitor','player'] %>
+    <%= f.select :role, ['visitor','competitor'] %>
 
     <%= f.label :logo %>
-    <%= f.text_field :logo, :placeholder => "http://www.example.com"%>
+    <%= f.file_field :logo %>
+
+		<br /><br />
+		<%= show_simple_captcha %>
+
+    <!--%= f.label :logo %-->
+    <!--%= f.text_field :logo, :placeholder => "http://www.example.com"%-->
   
   <p>
   <div class="actions">

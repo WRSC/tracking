@@ -16,8 +16,8 @@ module ScoreHelper
 			when 2
 				t=stationKeepingTimecost(a_id)
 			when 3
-			when 4
 				t=getTimeRaceCourse(a)
+			when 4
 			end
 		end
 		return t
@@ -191,7 +191,9 @@ module ScoreHelper
       endTime = attempt.end.strftime('%Y%m%d%H%M%S')
       globalStartTime = Mission.find(mission_id).startOfRace
       coordinates = (Coordinate.where(id: Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc))).where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).select(:datetime,:latitude,:longitude).order(datetime: :asc)
-
+			if coordinates.length <=0 
+				return -1
+			end
       # The markers should be created in this order : first => start line (first point of the start line = first Buoy), second => first Buoy, third => second Buoy, fourth => third Buoy, fifth => fourth Buoy
 
       sLine = Marker.where(mission_id: mission_id).find_by_name("startLine")
@@ -200,6 +202,9 @@ module ScoreHelper
       thirdCorner = Marker.where(mission_id: mission_id).find_by_name("thirdBuoy") # order
       fourthCorner = Marker.where(mission_id: mission_id).find_by_name("fourthBuoy") # order
 
+			if sLine==nil || firstCorner==nil || secondCorner==nil || thirdCorner==nil || fourthCorner==nil
+				return -2
+			end
       startLine = []
       startLine << sLine.longitude.split("_")
       startLine << sLine.latitude.split("_")     

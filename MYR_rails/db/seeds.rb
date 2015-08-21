@@ -40,8 +40,8 @@ Mission.create!(name:  "Triangular Course Contest",
              		mtype: "TriangularCourse",
 								category: "Sailboat")
 
- Marker.create!(latitude: '0_0',
-             longitude: '5_0',
+ Marker.create!(latitude: '0_5',
+             longitude: '0_0',
              mission_id: 1,
              mtype: "Line",
 						 name: 'startLine')
@@ -56,13 +56,13 @@ Mission.create!(name:  "Triangular Course Contest",
              longitude: 0,
              mission_id: 1,
              mtype: "Point",
-						 name: 'firstBuoy')
+						 name: 'secondBuoy')
 
  Marker.create!(latitude: 0,
              longitude: 5,
              mission_id: 1,
              mtype: "Point",
-						 name: 'secondBuoy')
+						 name: 'firstBuoy')
 
 #id=2
  Member.create!(name:  "testTriangular",
@@ -105,8 +105,14 @@ Mission.create!(name:  "Triangular Course Contest",
 =end
   lat=2
   lng=-1
-  i=1
   t=Time.now
+		Coordinate.create!(latitude: lat,
+		                 longitude: lng,
+		                 datetime:   t.strftime("%Y%m%d%H%M%S"),
+		                 tracker_id: 1)
+		 t=t+5
+  i=1
+
 	7.times do |n|
 		lng+=1.01
 		Coordinate.create!(latitude: lat,
@@ -233,4 +239,80 @@ Member.create!(name:  "testStationkeeping",
       Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 2 )
     end
 
+#================= test for fleet race ==================
+#Mission 4
+=begin
+t=Time.now
+Mission.create!(name: "fleet-race Contest",
+							start: "20150601000000",
+							end: "20150901000000",
+							mtype: "Race",
+							category: "Sailboat",
+							startOfRace: t.strftime("%Y%m%d%H%M%S"))
 
+Marker.create!(latitude: '0_0',
+             longitude: '0_-1',
+             mission_id: 3,
+             mtype: "Line",
+						 name: 'startLine')
+
+ Marker.create!(latitude: 0,
+             longitude: 0,
+             mission_id: 3,
+             mtype: "Point",
+						 name: 'firstBuoy')
+
+ Marker.create!(latitude: 5,
+             longitude: 0,
+             mission_id: 3,
+             mtype: "Point",
+						 name: 'secondBuoy')
+
+ Marker.create!(latitude: '5',
+             longitude: '5',
+             mission_id: 3,
+             mtype: "Point",
+						 name: 'thirdBuoy')
+Marker.create!(latitude: '0',
+             longitude: '5',
+             mission_id: 3,
+             mtype: "Point",
+						 name: 'fourthBuoy')
+#id=3
+Member.create!(name:  "testFleetrace",
+               email: "testFleetrace@gmail.com",
+               password:              "123456",
+               password_confirmation: "123456",
+               role:     'competitor',
+               activated: true,
+               activated_at: Time.zone.now)
+
+#id=3
+ Team.create!(name:  "testFleetrace's team",
+             description: "root test for testFleetrace",
+             leader_id: 4)
+#id=3
+ Robot.create!(name:  "testFleetrace",
+              category: "Sailboat",
+              team_id: 3)
+#id=3
+ Attempt.create!(name: "testFleetrace's first attempt",
+							start: "20150601000000",
+							end: "20150901000000",
+							robot_id: 3,
+							mission_id: 3,
+							tracker_id: 3)
+	
+ 	lat=-0.5
+	lng=-0.5
+	r=Math::sqrt(3*3+2.5*2.5)
+	theta=-Math::PI/2
+	for i in 1..70
+      t+=1
+      Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 3)
+			theta-=2*Math::PI/10
+      lat=2.5+r*Math::cos(theta)
+      lng=2.5+r*Math::sin(theta)
+
+	end
+=end

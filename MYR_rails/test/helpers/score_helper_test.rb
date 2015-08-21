@@ -109,7 +109,8 @@ require 'awesome_print'
     assert attemptSample.mission_id == 1, "#{attemptSample.mission_id}"
 
     res = getTimeTriangularCourse(attemptSample)
-    assert res != 0, "Problem ! Check the fixtures so that the triangular course is actually done."
+    assert false, "#{res}"
+    #res != 0, "Problem ! Check the fixtures so that the triangular course is actually done."
 
   end
 

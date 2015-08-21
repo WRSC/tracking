@@ -223,25 +223,23 @@
  	
  	def infowindow
  		tracker_id=params[:tracker_id]
- 		tstart=params[:timestart].to_datetime
- 		tend=params[:timeend].to_datetime
-  #if singleAttempt = true, it is from choosing attempt
-  #if singleAttempt = false, it is from choosing datetims 
+		#if singleAttempt = true, it is from choosing attempt
+		#if singleAttempt = false, it is from choosing datetims 
  		singleAttempt=params[:singleAttempt]
  		@lat=params[:lat]
  		@lng=params[:lng]
  		@isEnd=params[:isEnd]
  		@datetime=params[:datetime].to_datetime
  		@attmepts=[]
-		@signle=false
-	  if singleAttempt=='true' 
+		@single=false
+	  	if singleAttempt=='true'
 			@test=true
-		  a_id=cookies[:attemptslist].to_i
+		 	a_id=cookies[:attemptslist].to_i
 			@single=true
 			@attempts=Attempt.find_by(id: a_id)
-	  else 
+	  	else 
 			@test=false
-		  @attempts=Tracker.find_by(id: tracker_id).attempts.where("start < ? AND end > ?",@datetime,@datetime) 
+		  	@attempts=Tracker.find_by(id: tracker_id).attempts.where("start < ? AND end > ?",@datetime,@datetime) 
 	 	end
  	end
 

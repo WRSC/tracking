@@ -2,9 +2,11 @@
 //----------------------GLOBAL VARIABLES-------------------
 var replay_map=null
 var lastDatetime = "10000101";
-var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
+var latest_markers = [[],[],[]]; //[0] for markers and [1] for tracker id
 var known_trackers = [];
 var desired_trackers = [];
+var showInfo = false;
+var doReplay = false;
 
 /*
 var tab = [2,12,1,5];
@@ -41,6 +43,21 @@ jQuery.expr.filters.offscreen = function(el) {
 		replay_map=desired_map
 	}
 
+	function getShowInfo(){
+		return showInfo
+	}
+
+	function setShowInfo(val){
+		showInfo=val
+	}
+
+	function getDoReplay(){
+		return doReplay
+	}
+
+	function setDoReplay(val){
+		doReplay=val
+	}
 //--------MAP----------------
 function FullScreenControl(controlDiv) {
 	//see https://developers.google.com/maps/documentation/javascript/examples/control-custom
@@ -70,6 +87,10 @@ function FullScreenControl(controlDiv) {
 
 	//Map initialization
 	function initializeMap() {
+		lastDatetime = "10000101";
+		latest_markers = [[],[],[]]; //[0] for markers and [1] for tracker id
+		known_trackers = [];
+		desired_trackers = [];
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.ROAD,
@@ -109,7 +130,7 @@ function FullScreenControl(controlDiv) {
 		});
 */		
 		initialmarker=addDraggableMarker(60.103462, 19.928225,  replay_map)
-		addInfoWindow(infowindow,initialmarker)
+		// addInfoWindow(infowindow,initialmarker)
 		
 		
 		//add add button in the top right corner of the map to hide the right panel
@@ -119,19 +140,100 @@ function FullScreenControl(controlDiv) {
 		replay_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 		replay_map.setTilt(45);
 		
-		//when we reload map, clear all the data in golabl variable	
-		latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
+		//when we reload map, clear all the data in global variable	
+		latest_markers = [[],[],[]]; //[0] for markers and [1] for tracker id
 		
 	}
 	
+	function displayInfoWindow(tstart,tend,singleAttempt){
+		var markerTemp = [];
+		var tracker_idTemp = 0;
+		var datetimeTemp = 0.0;
+		var latTemp = 0.0;
+		var lngTemp = 0.0;
+		var changeInfowindow=[];
+		var count = 0;
+		for(var i=0; i < latest_markers[0].length-1 ; i++){
+			if ((i%10)==0){
+				markerTemp.push(latest_markers[0][i]);
+				tracker_idTemp = latest_markers[1][i];
+				datetimeTemp = latest_markers[2][i];
+				latTemp = markerTemp[count].getPosition().lat();
+				lngTemp = markerTemp[count].getPosition().lng();
+				count = count + 1;
+				$.ajax({
+								type: "GET",
+								url: "/infowindow",
+								data: {tracker_id: tracker_idTemp, timestart: tstart, timeend: tend, datetime: datetimeTemp, singleAttempt: singleAttempt, isEnd: false, lat: latTemp, lng:lngTemp},
+								dataType: "html",
+								success: function(data){
+									//alert('change tracker')
+									//alert(data)
+									var temp = new google.maps.InfoWindow(
+										{
+											content: data
+										}
+									);
+									changeInfowindow.push(temp);
+									var j = 0;
+									while (j < 100){
+										j=j+1
+									}
+								}
+				})  
+			} 
+		}
+
+				markerTemp.push(latest_markers[0][latest_markers[0].length-1]);
+				tracker_idTemp = latest_markers[1][latest_markers[0].length-1];
+				datetimeTemp = latest_markers[2][latest_markers[0].length-1];
+				latTemp = markerTemp[markerTemp.length-1].getPosition().lat();
+				lngTemp = markerTemp[markerTemp.length-1].getPosition().lng();
+				$.ajax({
+								type: "GET",
+								url: "/infowindow",
+								data: {tracker_id: tracker_idTemp, timestart: tstart, timeend: tend, datetime: datetimeTemp, singleAttempt: singleAttempt, isEnd: true, lat: latTemp, lng:lngTemp},
+								dataType: "html",
+								success: function(data){
+									//alert('change tracker')
+									//alert(data)
+									var temp = new google.maps.InfoWindow(
+										{
+											content: data
+										}
+									);
+									changeInfowindow.push(temp);
+									alert(changeInfowindow.length)
+									alert(markerTemp.length)
+									var j = 0;
+									while (j < 100){
+										j=j+1
+									}
+									alert(changeInfowindow.length)
+									alert(markerTemp.length)
+									for(var i=0; i < markerTemp.length ; i++){
+										addInfoWindow(changeInfowindow[i],markerTemp[i])
+									}
+								}
+				})
+ 
+	} 
+	
+
+	function hideInfoWindow(){
+
+	}
+
 	function addInfoWindow(infowindow,marker){
-		google.maps.event.addListener(marker, 'click', function(event) {
-			var lat=event.latLng.lat()
-			var lng=event.latLng.lng()
-			var myString='<font color=\'black\'><div>'+'<b>Latitude:</b>'+lat+'&nbsp;'+'<b>Longitude</b>'+lng+'</div>'+'</font>'
-			infowindow.content+=myString
-			infowindow.open(replay_map,marker);
-		});
+		// alert(infowindow.length)
+		// alert(marker.length)
+				google.maps.event.addListener(marker, 'click', function(event) {
+					var lat=event.latLng.lat()
+					var lng=event.latLng.lng()
+					myString='<font color=\'black\'><div>'+'<b>Latitude:</b>'+lat+'&nbsp;'+'<b>Longitude</b>'+lng+'</div>'+'</font>'
+					infowindow.content+=myString
+					infowindow.open(replay_map,marker);
+				});
 	}
 
 	//Set the center of the map

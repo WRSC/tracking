@@ -1,6 +1,6 @@
 <font color="black">
 <% if @isEnd == "true" %>
-	<div id="infowindow-title"><p><b><center><u>It was the end.</u></center></b><p></div>
+	<div id="infowindow-title"><p><b><center><u>End of the attempt.</u></center></b><p></div>
 <% else %>
 	<div id="infowindow-title"><p><b><center><u>Data Info:</u></center></b><p></div>
 <% end %>
@@ -8,9 +8,9 @@
 <% if @single==true %>
 	<% attempt=@attempts %>
 	<% rob = Robot.find_by(id: attempt.robot_id) %>
-	<% if rob.team.logo !=nil && rob.team.logo!="" %>		
+<!-- 	<% if rob.team.logo !=nil && rob.team.logo!="" %>		
 		 <center><%= image_tag rob.team.logo_url(:small) %></center>
-	<% end %>
+	<% end %> -->
 	<div id="infowindow">
 	<!--Team--><!--Robot-->
 	<p><b>Team:</b> <%= rob.team.name %> &nbsp <b>Robot:</b> <%= rob.name %></p>

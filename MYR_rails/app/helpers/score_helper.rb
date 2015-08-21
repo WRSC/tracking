@@ -149,7 +149,7 @@ module ScoreHelper
         time = timeDifference(tEL.to_s, tSL.to_s)
       end
 
-      return time
+      return tEL
 
     end
 

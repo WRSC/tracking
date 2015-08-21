@@ -3,6 +3,7 @@
 //=require Replay/choice_robots
 //=require Replay/choice_onerobot
 //=require Replay/handle_markers_replay
+//=require Replay/choice_options
 
 /*====================official markers=====================*/
 //=require Replay/choice_display_official_markers
@@ -20,8 +21,10 @@ $(document).ready(function(){
 	google.maps.event.addDomListener(window, 'load', initializeMap());
 	//initializeMap();
 	initialScroll();
-  displayMarkersOrnot();
-  requestRefreshTeams();
+	wantInfo();
+	wantDoReplay();
+  	displayMarkersOrnot();
+  	requestRefreshTeams();
 });
 
 

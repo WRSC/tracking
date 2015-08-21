@@ -1,7 +1,11 @@
 module ScoreHelper
-	def getScorebyAttemptId(a_id)
+
+#if timecost==-1 => no coordinates
+#if timecost==-2 => no markers || one of marker necessary did not exisit 
+#if timecost==-3 => there are some markers but marker format incorrect
+	def getTimecostbyAttemptId(a_id)
 		a=Attempt.find_by_id(a_id)
-		t=-1
+		t=-100
 		if a==nil
 			return "attempt does not exist"
 		else
@@ -108,11 +112,19 @@ module ScoreHelper
       startTime = attempt.start.strftime('%Y%m%d%H%M%S')
       endTime = attempt.end.strftime('%Y%m%d%H%M%S')
       coordinates = Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc)
+#if there is not any coordinate return -1
+			if coordinates.length <= 0
+				return -1
+			end
+
       # The markers should be created in this order : first => start line, second =>  end line, third => first buoy, fourth => second buoy
       sLine = Marker.where(mission_id: mission_id).find_by_name("startLine")
       eLine = Marker.where(mission_id: mission_id).find_by_name("endLine")
       myFirstBuoy = Marker.where(mission_id: mission_id).find_by_name("firstBuoy")
       mySecondBuoy = Marker.where(mission_id: mission_id).find_by_name("secondBuoy")
+			if sLine==nil || eLine==nil || myFirstBuoy==nil || mySecondBuoy==nil
+				return -2
+			end
 
      # mise en forme des lignes
 
@@ -144,12 +156,12 @@ module ScoreHelper
       time = 0
 
       tSL = checkLineCrossed(startLine,coordinates) # time for start line
-
+			
       if tSL != 0
         coordinates = coordinates.where("datetime >= ?", tSL-1).order(datetime: :asc)
 
         tFB = checkRoundBuoy(endLine,firstBuoy,coordinates,"NSEW")
-
+				
         if tFB != 0
           coordinates = coordinates.where("datetime >= ?", tFB-1).order(datetime: :asc)
 

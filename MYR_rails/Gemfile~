@@ -55,7 +55,8 @@ gem      'carrierwave'
 gem      'mini_magick'
 
 # Captcha
-gem 'simple_captcha', :git => 'git://github.com/Azdaroth/simple-captcha.git', :branch => 'rails-4'
+gem 'simple_captcha2', require: 'simple_captcha'
+
 
 
 #pretty_print for rails console

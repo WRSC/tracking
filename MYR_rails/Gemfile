@@ -69,12 +69,12 @@ gem 'simple_captcha2', require: 'simple_captcha'
 #Hirb.enable
 #ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-group :development do
+#group :development do
 	#autorub bundle when gemfile changed
-  gem 		  'guard-bundler', require: false
-	gem       'guard-migrate', require: false  #autorun rake db:migrate when migration created
-	gem       'guard-annotate', require: false #auto annotate db/schema 
-end
+#  gem 		  'guard-bundler', require: false
+#	gem       'guard-migrate', require: false  #autorun rake db:migrate when migration created
+#	gem       'guard-annotate', require: false #auto annotate db/schema 
+#end
 
 # Use Unicorn as the app server
 # gem 'unicorn'

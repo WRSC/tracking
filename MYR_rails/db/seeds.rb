@@ -25,15 +25,6 @@ Member.create!(name:  "testAdmin",
                activated: true,
                activated_at: Time.zone.now)
 
-
-Member.create!(name:  "joker",
-               email: "joker@gmail.com",
-               password:              "foobar",
-               password_confirmation: "foobar",
-               role:     'visitor',
-               activated: true,
-               activated_at: Time.zone.now)
-
 10.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+1}@gmail.com"
@@ -131,83 +122,151 @@ end
 
 #markers for triangular course
 
-# Marker.create!(latitude: 0,
-#             longitude: 0,
-#             mission_id: 4,
-#             mtype: "Point")
+ Marker.create!(latitude: '0_0',
+             longitude: '5_0',
+             mission_id: 1,
+             mtype: "Line",
+						 name: 'startLine')
 
-# Marker.create!(latitude: 1,
-#             longitude: 0,
-#             mission_id: 4,
-#             mtype: "Point")
+ Marker.create!(latitude: '0_0',
+             longitude: '0_5',
+             mission_id: 1,
+             mtype: "Line",
+						 name: 'endLine')
 
-# Marker.create!(latitude: 0,
-#             longitude: 1,
-#             mission_id: 4,
-#             mtype: "Point")
+ Marker.create!(latitude: 5,
+             longitude: 0,
+             mission_id: 1,
+             mtype: "Point",
+						 name: 'firstBuoy')
+
+ Marker.create!(latitude: 0,
+             longitude: 5,
+             mission_id: 1,
+             mtype: "Point",
+						 name: 'secondBuoy')
 
 #markers for race course
 
-Marker.create!(longitude: "0_1",
-            latitude: "0_0",
-            mission_id: 4,
-            mtype: "Line")
+#Marker.create!(longitude: "0_1",
+#            latitude: "0_0",
+#            mission_id: 4,
+#            mtype: "Line")
 
-Marker.create!(longitude: 0,
-            latitude: 0,
-            mission_id: 4,
-            mtype: "Point")
+#Marker.create!(longitude: 0,
+#            latitude: 0,
+#            mission_id: 4,
+#            mtype: "Point")
 
-Marker.create!(longitude: 0,
-            latitude: 1, 
-            mission_id: 4,
-            mtype: "Point")
+#Marker.create!(longitude: 0,
+#            latitude: 1, 
+#            mission_id: 4,
+#            mtype: "Point")
 
-Marker.create!(longitude: -1,
-            latitude: 1, 
-            mission_id: 4,
-            mtype: "Point")
+#Marker.create!(longitude: -1,
+#            latitude: 1, 
+#            mission_id: 4,
+#            mtype: "Point")
 
-Marker.create!(longitude: -1,
-            latitude: 0, 
-            mission_id: 4,
-            mtype: "Point")
+#Marker.create!(longitude: -1,
+#            latitude: 0, 
+#            mission_id: 4,
+#            mtype: "Point")
 
 #http://programming-tut.blogspot.com/2009/09/ruby-on-rails-time.html
 
 #Coordinates => test for triangular course scoring
-  # lat=0
-  # lng=0
-  # i=1
-  # t=Time.now
+=begin
+    
+.(-2,6)-------.(2,6)
+ \    m(0,5)  |             m(5,5)
+	\						.(2,4)
+              |
+              |
+							.(2,1)
+      m(0,0)  |             m(5,0)      
+              |
+							.(2,-1)
+=end
+  lat=2
+  lng=-1
+  i=1
+  t=Time.now
 
-  # Coordinate.create!(latitude:  -0.5,
-  #                 longitude: 0.5,
-  #                 datetime:   t.strftime("%Y%m%d%H%M%S"),
-  #                 tracker_id: 4)
+	7.times do |n|
+		lng+=1.01
+		Coordinate.create!(latitude: lat,
+		                 longitude: lng,
+		                 datetime:   t.strftime("%Y%m%d%H%M%S"),
+		                 tracker_id: 1)
+		 t=t+5
+	end
 
-  # t=t+5
+	4.times do |n|
+		lat-=1
+  	Coordinate.create!(latitude:  lat,
+                   longitude: lng,
+                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+                   tracker_id: 1)
 
-  # Coordinate.create!(latitude:  0.5,
-  #                 longitude: 0.5,
-  #                 datetime:   t.strftime("%Y%m%d%H%M%S"),
-  #                 tracker_id: 4)
+   	t=t+5
+	end
 
-  # t=t+5
+	2.times do |n|
+		lng-=1
+		Coordinate.create!(latitude:  lat,
+                   longitude: lng,
+                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+                   tracker_id: 1)		
+		t=t+5	
+	end
 
+	8.times do |n|
+		lat+=1
+		lng-=0.25
+		Coordinate.create!(latitude:  lat,
+                   longitude: lng,
+                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+                   tracker_id: 1)		
+		t=t+5	
+	end
 
+	lng-=3
+	Coordinate.create!(latitude:  lat,
+                   longitude: lng,
+                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+                   tracker_id: 1)		
+	t=t+5	
 
-  # 50.times do |n|
-  #   lat = 1 + Math.sin(i)/3
-  #   lng = Math.cos(i)/3
-  #   Coordinate.create!(latitude:  lat,
-  #                   longitude: lng,
-  #                   datetime:   t.strftime("%Y%m%d%H%M%S"),
-  #                   tracker_id: 4)
-  #   t=t+5
-  #   i=i+0.1
-  # end
+	lat-=2
+	Coordinate.create!(latitude:  lat,
+                   longitude: lng,
+                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+                   tracker_id: 1)		
+	t=t+5	
 
+	5.times do |n|
+		lat-=1
+		lng+=0.4
+		Coordinate.create!(latitude:  lat,
+                   longitude: lng,
+                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+                   tracker_id: 1)		
+		t=t+5	
+	end
+
+=begin
+   50.times do |n|
+     lat = 1 + Math.sin(i)/3
+     lng = Math.cos(i)/3
+     Coordinate.create!(latitude:  lat,
+                     longitude: lng,
+                     datetime:   t.strftime("%Y%m%d%H%M%S"),
+                     tracker_id: 1)
+     t=t+5
+     i=i+0.1
+   end
+=end
   # i = 1 
 
   # 55.times do |n|
@@ -227,7 +286,7 @@ Marker.create!(longitude: -1,
   #                 tracker_id: 4)
 
 # Coordinate => test for race course
-
+=begin
   lat=0
   lng=0
   i=-0.8
@@ -398,7 +457,7 @@ Marker.create!(longitude: -1,
               tracker_id: 4)
 
   t = t + 5  
-
+=end
 #Coordinate  => attempt1
  # lat=0
  # lng=0
@@ -454,31 +513,34 @@ Marker.create!(longitude: -1,
 Mission.create!(name:  "Triangular Course Contest",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		mtype: "TriangularCourse")
+             		mtype: "TriangularCourse",
+								category: "Sailboat")
 
 #Mission 2
 Mission.create!(name:  "Station-Keeping Contest",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		mtype: "TriangularCourse")
+             		mtype: "TriangularCourse",
+								category: "Sailboat")
              		
 #Mission 3
 Mission.create!(name:  "Area Scanning Contest",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		mtype: "TriangularCourse")
+             		mtype: "TriangularCourse",
+								category: "Sailboat")
 #Mission 4
 Mission.create!(name:  "Fleet Race",
 								start: "20150601000000",
 								end:   "20150901000000",
              		mtype: "Race",
-                startOfRace: Time.now-100)
+                startOfRace: Time.now-100,
+								category: "Sailboat")
 
 #team 1
 Team.create!(name:  "Zombie",
              description: "root test for zombies",
-             leader_id: 2,
-             logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')
+             leader_id: 2)
 
 #robot1 
 Robot.create!(name:  "Zombie1",
@@ -497,8 +559,7 @@ Robot.create!(name:  "Zombie3",
 #team 2        
 Team.create!(name: "Pizza",
 						 description: "root test for pizzas",
-						 leader_id: 3,
-             logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')    
+						 leader_id: 3)    
 						 
 #robot4 
 Robot.create!(name:  "Pizza1",
@@ -518,8 +579,7 @@ Robot.create!(name:  "Pizza3",
 #team 3						 
 Team.create!(name: "Just for fun",
 						 description: "root test for just for fun",
-						 leader_id: 4,
-             logo: 'http://avatarbox.net/avatars/img5/rubber_ducky_avatar_picture_87102.jpg')   
+						 leader_id: 4)   
 
 #robot7 
 Robot.create!(name:  "just for fun1",

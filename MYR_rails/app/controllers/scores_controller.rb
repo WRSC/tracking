@@ -72,7 +72,7 @@ class ScoresController < ApplicationController
 	
 	def calculateScore
 		a_id=params[:attempt_id]
-		render json: getScorebyAttemptId(a_id)
+		render json: getTimecostbyAttemptId(a_id)
 	end
 
 	def finalstanding

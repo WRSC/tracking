@@ -182,6 +182,8 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
     shellany (0.0.1)
+    simple_captcha2 (0.3.4)
+      rails (>= 4.1)
     slop (3.6.0)
     sprockets (3.2.0)
       rack (~> 1.0)
@@ -230,6 +232,7 @@ DEPENDENCIES
   rake (>= 10.4.2)
   sass (~> 3.4.16)
   sass-rails (~> 5.0)
+  simple_captcha2
   sqlite3
   thin
   turbolinks

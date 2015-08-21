@@ -14,12 +14,12 @@
   <div id="content">
   <section class="round">
     <% flash.each do |key, value| %>
-      <div id="monflash" class="flash <%= key %>"><%= value %></div>
+      <div id="monflash" class="flash <%= key %>"><font color="red"><%= value %></font></div>
     <% end %>
   </section>
   <%= yield %>
   </div>
-
+	<br />
     <%= f.label :name %>
     <%= f.text_field :name %>
 
@@ -37,6 +37,10 @@
 
     <%= f.label :logo %>
     <%= f.file_field :logo %>
+
+		<br /><br />
+		<%= show_simple_captcha %>
+
     <!--%= f.label :logo %-->
     <!--%= f.text_field :logo, :placeholder => "http://www.example.com"%-->
   

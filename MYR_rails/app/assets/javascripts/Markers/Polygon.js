@@ -13,8 +13,11 @@ function savePolygonMarker(){
 			mission_id=$("#marker_missions_dropdown option:selected").val()
       var Polygonlng=""
       var polygonlat=""
+			var Polygonname=""
       for (var j=0;j<polygonMarkers.length;j++){
   	    dp=polygonMarkers[j] //desired polygon
+				
+				Polygonname=dp.mname
         for (var i=0; i<dp.getPath().length; i++) {
 				  xy=dp.getPath().getAt(i)
 				  lat=xy.lat()
@@ -24,8 +27,9 @@ function savePolygonMarker(){
 		    }
         Polygonlat+=";"
         Polygonlng+=";"
+				Polygonname+=""
       }
-			 p={"latitude": Polygonlat, "longitude": Polygonlng, "mtype": "Polygon", "datetime": getCurrentTime(), "mission_id": mission_id}
+			 p={"latitude": Polygonlat, "longitude": Polygonlng, "mtype": "Polygon", "datetime": getCurrentTime(), "mission_id": mission_id, "name": Polygonname}
 			 $.ajax({
 							type: "POST",
 							url: "/markers",
@@ -39,7 +43,7 @@ function savePolygonMarker(){
 	}
 
 function addFixPolygon(){
-	//alert('add fix polygon')
+	var name=prompt("Please input the name of polygon", "station keeping zone")
 	input=prompt("Please respect the format of input data, otherwise it could not recognize the data: lat,lng;lat,lng;...","lat,lng; lat,lng...")
 	/*====== need to check if th input data format is correct =====*/
 	coord=[]
@@ -57,12 +61,13 @@ function addFixPolygon(){
     strokeOpacity: 0.8,
     strokeWeight: 2,
     fillColor: '#FF0000',
-    fillOpacity: 0.35
+    fillOpacity: 0.35,
+		mname: name
   });
 	fixPolygon.setMap(map_marker)
   // Add a listener for the click event.
   google.maps.event.addListener(fixPolygon, 'click', showArrays);
-  infoWindowPolgon = new google.maps.InfoWindow();
+  infoWindowPolygon = new google.maps.InfoWindow();
   polygonMarkers.push(fixPolygon)
 }
 

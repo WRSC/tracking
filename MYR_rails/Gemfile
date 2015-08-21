@@ -54,6 +54,11 @@ gem 'rack-ssl', '~> 1.4.1'
 gem      'carrierwave'
 gem      'mini_magick'
 
+# Captcha
+gem 'simple_captcha2', require: 'simple_captcha'
+
+
+
 #pretty_print for rails console
 #gem      'hirb'
 
@@ -64,24 +69,25 @@ gem      'mini_magick'
 #Hirb.enable
 #ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-group :development do
+#group :development do
 	#autorub bundle when gemfile changed
-  gem 		  'guard-bundler', require: false
-	gem       'guard-migrate', require: false  #autorun rake db:migrate when migration created
-	gem       'guard-annotate', require: false #auto annotate db/schema 
-end
+#  gem 		  'guard-bundler', require: false
+#	gem       'guard-migrate', require: false  #autorun rake db:migrate when migration created
+#	gem       'guard-annotate', require: false #auto annotate db/schema 
+#end
 
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem       'faker'          ,           '1.4.2'
 
-group :development, :test, :production do
+group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   #gem 'debugger'
  
-  gem       'faker'          ,                 '1.4.2'
+
   gem       'awesome_print'
   # Access an IRB console on exception pages or by using <%= console %> in views
   #gem 'web-console', '~> 2.0'

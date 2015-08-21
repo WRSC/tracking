@@ -4,25 +4,15 @@ class ScoresController < ApplicationController
 	before_action :set_score, only: [:edit, :show, :update, :destroy]
 	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
 
-<<<<<<< HEAD
-  	def index			
-		@teamlist=Team.all
-		@TMission = Mission.where(mtype: "TriangularCourse")
-		@RMission = Mission.where(mtype: "Race")
-		@SKMission = Mission.where(mtype: "StationKeeping")
-		@ASMission = Mission.where(mtype: "AreaScanning")
-=======
-  	def index
 
+  	def index
 			@teamlist=Team.all
 			@TMission = Mission.where(mtype: "TriangularCourse")
 			@RMission = Mission.where(mtype: "Race")
 			@SKMission = Mission.where(mtype: "StationKeeping")
 			@ASMission = Mission.where(mtype: "AreaScanning")
-
 			@scores=Score.all
 
->>>>>>> 1bcbee4961adda16e6f80d34534b46040a10b826
   	end
 
   	def show
@@ -37,23 +27,9 @@ class ScoresController < ApplicationController
 			@score=Score.find(params[:id])
 		end
 
+		# POSt /scores
   	def create
-	    attempt = Attempt.find(params[:score][:attempt_id])
-	    mission = Mission.find(attempt.mission_id)
-	   	@score = Score.new
-	    case mission.mtype
-	    when "Race"
-	    	temp = getTimeRaceCourse(attempt)
-	    	@score.update_attribute(:timecost, temp)
-	    when "TriangularCourse"
-	    when "StationKeeping"
-	    when "AreaScanning"
-	   	else
-	   	end 
-
-
 	    @score = Score.new(score_params)
-
 	    respond_to do |format|
 	      if @score.save
 	        format.html { redirect_to @score, notice: 'Score was successfully created.' }
@@ -84,6 +60,20 @@ class ScoresController < ApplicationController
 	      format.json { head :no_content }
 	    end
   end
+	
+	def newAttemptinfo
+		m_id=params[:mission_id]
+		@attempts=Mission.find_by_id(m_id).attempts
+	end
+
+	def newScoreinfo
+		@a_id=params[:attempt_id]
+	end
+	
+	def calculateScore
+		a_id=params[:attempt_id]
+		render json: getTimecostbyAttemptId(a_id)
+	end
 
 	def finalstanding
 	end

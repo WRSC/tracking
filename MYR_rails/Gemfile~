@@ -10,7 +10,10 @@ gem     'rails'         ,                 '4.2.0'
 gem     'sqlite3'
 
 # Use SCSS for stylesheets
-#gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 5.0'
+gem 'sass', '~> 3.4.16'
+
+gem 'bootstrap-sass', '~> 3.3.5' 
 
 # Use Uglifier as compressor for JavaScript assets
 gem      'uglifier'      ,                 '>= 1.3.0'
@@ -28,8 +31,6 @@ gem      'jquery-cookie-rails'
 # jQuery plugin for drop-in fix binded events problem caused by Turbolinks
 #gem 'jquery-turbolinks'
 
-gem      'faker'          ,                 '1.4.2'
-
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem      'turbolinks'
 
@@ -42,11 +43,24 @@ gem      'jbuilder'       ,                  '~> 2.0'
 # Use ActiveModel has_secure_password
 gem      'bcrypt'        ,                   '~> 3.1.7'
 
-gem      'fastimage'
+#gem      'fastimage'
 gem      'thin'
 
+#to force ssl connection 
+
+gem 'rack-ssl', '~> 1.4.1'
+
+#in order to uploads some files
+gem      'carrierwave'
+gem      'mini_magick'
+
+# Captcha
+gem 'simple_captcha2', require: 'simple_captcha'
+
+
+
 #pretty_print for rails console
-gem      'hirb'
+#gem      'hirb'
 
 #Add these codes into the file ~/.irbrc
 #require 'rubygems'
@@ -62,19 +76,19 @@ group :development do
 	gem       'guard-annotate', require: false #auto annotate db/schema 
 end
 
-gem       'awesome_print'
-
-
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem       'faker'          ,           '1.4.2'
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   #gem 'debugger'
+ 
 
+  gem       'awesome_print'
   # Access an IRB console on exception pages or by using <%= console %> in views
   #gem 'web-console', '~> 2.0'
 end

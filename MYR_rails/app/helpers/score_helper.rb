@@ -1,5 +1,28 @@
-
 module ScoreHelper
+
+#if timecost==-1 => no coordinates
+#if timecost==-2 => no markers || one of marker necessary did not exisit 
+#if timecost==-3 => there are some markers but marker format incorrect
+	def getTimecostbyAttemptId(a_id)
+		
+		a=Attempt.find_by_id(a_id)
+		t=-100
+		if a==nil
+			return "attempt does not exist"
+		else
+			case a.mission.id
+			when 1
+				t=getTimeTriangularCourse(a)
+			when 2
+				t=stationKeepingTimecost(a_id)
+			when 3
+				t=getTimeRaceCourse(a)
+			when 4
+			end
+		end
+		return t
+	end
+
 
 #========================= Fleet Race  =============================
     def checkLineCrossed(myLine,coordinates)
@@ -90,11 +113,19 @@ module ScoreHelper
       startTime = attempt.start.strftime('%Y%m%d%H%M%S')
       endTime = attempt.end.strftime('%Y%m%d%H%M%S')
       coordinates = Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc)
+#if there is not any coordinate return -1
+			if coordinates.length <= 0
+				return -1
+			end
+
       # The markers should be created in this order : first => start line, second =>  end line, third => first buoy, fourth => second buoy
       sLine = Marker.where(mission_id: mission_id).find_by_name("startLine")
       eLine = Marker.where(mission_id: mission_id).find_by_name("endLine")
       myFirstBuoy = Marker.where(mission_id: mission_id).find_by_name("firstBuoy")
       mySecondBuoy = Marker.where(mission_id: mission_id).find_by_name("secondBuoy")
+			if sLine==nil || eLine==nil || myFirstBuoy==nil || mySecondBuoy==nil
+				return -2
+			end
 
      # mise en forme des lignes
 
@@ -126,12 +157,12 @@ module ScoreHelper
       time = 0
 
       tSL = checkLineCrossed(startLine,coordinates) # time for start line
-
+			
       if tSL != 0
         coordinates = coordinates.where("datetime >= ?", tSL-1).order(datetime: :asc)
 
         tFB = checkRoundBuoy(endLine,firstBuoy,coordinates,"NSEW")
-
+				
         if tFB != 0
           coordinates = coordinates.where("datetime >= ?", tFB-1).order(datetime: :asc)
 
@@ -160,7 +191,9 @@ module ScoreHelper
       endTime = attempt.end.strftime('%Y%m%d%H%M%S')
       globalStartTime = Mission.find(mission_id).startOfRace
       coordinates = (Coordinate.where(id: Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc))).where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).select(:datetime,:latitude,:longitude).order(datetime: :asc)
-
+			if coordinates.length <=0 
+				return -1
+			end
       # The markers should be created in this order : first => start line (first point of the start line = first Buoy), second => first Buoy, third => second Buoy, fourth => third Buoy, fifth => fourth Buoy
 
       sLine = Marker.where(mission_id: mission_id).find_by_name("startLine")
@@ -169,6 +202,9 @@ module ScoreHelper
       thirdCorner = Marker.where(mission_id: mission_id).find_by_name("thirdBuoy") # order
       fourthCorner = Marker.where(mission_id: mission_id).find_by_name("fourthBuoy") # order
 
+			if sLine==nil || firstCorner==nil || secondCorner==nil || thirdCorner==nil || fourthCorner==nil
+				return -2
+			end
       startLine = []
       startLine << sLine.longitude.split("_")
       startLine << sLine.latitude.split("_")     
@@ -252,11 +288,33 @@ module ScoreHelper
   end
 
   def stationKeepingTimecost(a_id)
-    a=Attempt.find_by(a_id)
+    a=Attempt.find_by_id(a_id)
     # find all markers for this mission
-    markers=Marker.where(mission_id: a.mission.id).order('id')
+    poly=Marker.where(mission_id: a.mission.id).where(name: "station keeping zone")
+		# poly.size <=0 did not create markers
+		# poly.size >0 more than one marker
+		if poly.size!=1
+			return -2
+		end
+		tablat=poly[0].latitude.split("_")
+		tablng=poly[0].longitude.split("_")
+		markers=[]
+		for i in 0..(tablat.length-1)
+			if tablat[i]!="" and tablng[i]!="" and tablat[i] and tablng[i]
+				markers.push({:latitude => tablat[i], :longitude => tablng[i]})
+			end
+		end
     # sort all coordiantes based on time
+		mission_id = a.mission.id
+    myTrackerID= a.tracker_id
+    startTime = a.start.strftime('%Y%m%d%H%M%S')
+    endTime = a.end.strftime('%Y%m%d%H%M%S')
+    coordinates = (Coordinate.where(id: Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc))).where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).select(:datetime,:latitude,:longitude).order(datetime: :asc)
     testCoords=a.coordinates.order('datetime')
+		#if there is not any coordinates return -1		
+		if testCoords.length <= 0
+			return -1
+		end 
     timecost=stationKeepingTimecostWithData(markers,testCoords)
     return timecost
   end
@@ -319,10 +377,10 @@ module ScoreHelper
     p_y=dp.latitude.to_f
     p_x=dp.longitude.to_f
     for i in 0..(p.length-1)
-      jy=p[j].latitude.to_f
-      jx=p[j].longitude.to_f
-      y=p[i].latitude.to_f
-      x=p[i].longitude.to_f
+      jy=p[j][:latitude].to_f
+      jx=p[j][:longitude].to_f
+      y=p[i][:latitude].to_f
+      x=p[i][:longitude].to_f
       # if is one of the vertex in polygon
       if (y==p_y and x==p_x or jy==p_y and jx=p_x)
         return 0

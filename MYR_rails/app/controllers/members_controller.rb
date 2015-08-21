@@ -1,3 +1,4 @@
+#https://github.com/galetahub/simple-captcha/pull/39/files
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy, :create, :wait_for_activated]
   
@@ -27,28 +28,33 @@ class MembersController < ApplicationController
   # POST /members
   # POST /members.json
   def create
-    if params[:member][:role] != "administrator" || (sign_in? && is_admin?)
-    	
-      @member = Member.new(member_params)
+		if simple_captcha_valid?
+		  if params[:member][:role] != "administrator" || (sign_in? && is_admin?)
+		  	
+		    @member = Member.new(member_params)
 
-      #respond_to do |format|
-        if @member.save
-          #sign_in(@member)
-          @member.send_activation_email
-     			flash[:info] = "Please check your email to activate your account."
-      		redirect_to '/account_activations/wait_for_activated'
-          #format.html { redirect_to @member, notice: 'Member was successfully created.' }
-          #format.json { render :show, status: :created, location: @member }
-        else
-          #format.html { render :new }
-          #format.json { render json: @member.errors, status: :unprocessable_entity }
-          render 'new'
-        end
-      #end
-    else
-      flash[:error] = "Ask an administrator for becoming administrator"
-      redirect_to '/members/new'
-    end
+		    #respond_to do |format|
+		      if @member.save
+		        #sign_in(@member)
+		        @member.send_activation_email
+		   			flash[:info] = "Please check your email to activate your account."
+		    		redirect_to '/account_activations/wait_for_activated'
+		        #format.html { redirect_to @member, notice: 'Member was successfully created.' }
+		        #format.json { render :show, status: :created, location: @member }
+		      else
+		        #format.html { render :new }
+		        #format.json { render json: @member.errors, status: :unprocessable_entity }
+		        render 'new'
+		      end
+		    #end
+		  else
+		    flash[:error] = "Ask an administrator for becoming administrator"
+		    redirect_to '/members/new'
+		  end
+		else
+			flash[:info] = "Captcha Invalid"
+			redirect_to '/members/new'
+		end
   end
 
 

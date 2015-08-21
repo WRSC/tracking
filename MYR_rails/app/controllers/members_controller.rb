@@ -1,3 +1,4 @@
+#https://github.com/galetahub/simple-captcha/pull/39/files
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy, :create, :wait_for_activated]
   

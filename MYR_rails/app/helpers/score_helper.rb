@@ -4,6 +4,7 @@ module ScoreHelper
 #if timecost==-2 => no markers || one of marker necessary did not exisit 
 #if timecost==-3 => there are some markers but marker format incorrect
 	def getTimecostbyAttemptId(a_id)
+		
 		a=Attempt.find_by_id(a_id)
 		t=-100
 		if a==nil
@@ -282,11 +283,33 @@ module ScoreHelper
   end
 
   def stationKeepingTimecost(a_id)
-    a=Attempt.find_by(a_id)
+    a=Attempt.find_by_id(a_id)
     # find all markers for this mission
-    markers=Marker.where(mission_id: a.mission.id).order('id')
+    poly=Marker.where(mission_id: a.mission.id).where(name: "station keeping zone")
+		# poly.size <=0 did not create markers
+		# poly.size >0 more than one marker
+		if poly.size!=1
+			return -2
+		end
+		tablat=poly[0].latitude.split("_")
+		tablng=poly[0].longitude.split("_")
+		markers=[]
+		for i in 0..(tablat.length-1)
+			if tablat[i]!="" and tablng[i]!="" and tablat[i] and tablng[i]
+				markers.push({:latitude => tablat[i], :longitude => tablng[i]})
+			end
+		end
     # sort all coordiantes based on time
+		mission_id = a.mission.id
+    myTrackerID= a.tracker_id
+    startTime = a.start.strftime('%Y%m%d%H%M%S')
+    endTime = a.end.strftime('%Y%m%d%H%M%S')
+    coordinates = (Coordinate.where(id: Coordinate.where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).order(datetime: :asc))).where("datetime > ?", startTime).where("datetime < ?", endTime).where(tracker_id: myTrackerID).select(:datetime,:latitude,:longitude).order(datetime: :asc)
     testCoords=a.coordinates.order('datetime')
+		#if there is not any coordinates return -1		
+		if testCoords.length <= 0
+			return -1
+		end 
     timecost=stationKeepingTimecostWithData(markers,testCoords)
     return timecost
   end
@@ -349,10 +372,10 @@ module ScoreHelper
     p_y=dp.latitude.to_f
     p_x=dp.longitude.to_f
     for i in 0..(p.length-1)
-      jy=p[j].latitude.to_f
-      jx=p[j].longitude.to_f
-      y=p[i].latitude.to_f
-      x=p[i].longitude.to_f
+      jy=p[j][:latitude].to_f
+      jx=p[j][:longitude].to_f
+      y=p[i][:latitude].to_f
+      x=p[i][:longitude].to_f
       # if is one of the vertex in polygon
       if (y==p_y and x==p_x or jy==p_y and jx=p_x)
         return 0

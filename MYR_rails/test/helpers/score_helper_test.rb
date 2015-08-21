@@ -192,7 +192,7 @@ require 'awesome_print'
     assert pInPolygon(testP,@p)==0, "=========== !!! Error with point out polygon test =========== and pInPolygon return #{pInPolygon(testP,@p)}"
   end
   
-  test "testP should be on  one of edge in the polygon" do
+  test "testP should be on one of edge in the polygon" do
     assert @p.length==4, "polygon is incorrect"
     testP=coordinates(:testOnEP)
     assert testP.datetime=='20150225153927', "test Point is incorrect"

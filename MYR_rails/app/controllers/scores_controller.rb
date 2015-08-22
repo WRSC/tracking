@@ -4,6 +4,7 @@ class ScoresController < ApplicationController
 	before_action :set_score, only: [:edit, :show, :update, :destroy]
 	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
 
+	before_action :share_score_with_ajax, only: [:newAttemptinfo,:newScoreinfo,:calculateScore,:new]
 
   	def index
 			@teamlist=Team.all
@@ -20,7 +21,7 @@ class ScoresController < ApplicationController
   	end
 
   	def new
-  		@score = Score.new
+  		#@score = Score.new
   	end
 	
 		def edit
@@ -56,7 +57,7 @@ class ScoresController < ApplicationController
   def destroy
 	    @score.destroy
 	    respond_to do |format|
-	      format.html { redirect_to missions_url, notice: 'score was successfully destroyed.' }
+	      format.html { redirect_to scores_url, notice: 'score was successfully destroyed.' }
 	      format.json { head :no_content }
 	    end
   end
@@ -138,6 +139,10 @@ class ScoresController < ApplicationController
 	end
   	
  	private
+		def share_score_with_ajax
+			@score=Score.new
+		end
+
 		def get_rob_by_category
 			@sailboatlist=Robot.where(category: "Sailboat")
 			@microSailboatlist=Robot.where(category: "MicroSailboat")

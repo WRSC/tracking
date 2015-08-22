@@ -1,26 +1,39 @@
 <div>
-<%= form_for :score, :url =>{ :action => :create} do |f| %>
+<% if @score.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@score.errors.count, "error") %> prohibited this member from being saved:</h2>
+      <ul>
+      <% @score.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<%= form_for @score, :url =>{ :action => :create} do |f| %>
 	<!-- attempt_id -->
 	<%= f.hidden_field :attempt_id, :value => @a_id.to_s %>
 
+	<br />
 	<!-- time cost --> <!-- add by hand or calculate by fonctions-->
 	<%= f.label :TimeCost %>
   <%= f.number_field :timecost %> seconds
 
 
-	<input id="cal-timecost" type="button" value="Calculate the timecost Automatically"></input>
+	<input id="cal-timecost" type="button" value="Calculate the timecost Automatically"></input><br /><br />
 
 	<!-- raws core --> <!-- add by hand or calculate by fonctions-->
-  <%= f.label :RawScore %>
-  <%= f.number_field :amount, :class => 'text_field', :step => 'any' %>
+  <%= f.label :RawScore %> 
+  <%= f.number_field :rawscore, :class => 'text_field', :step => 'any' %> points <br /><br />
 
 	<!-- penalty -->   <!-- add by hand -->
 	<%= f.label :Penalty %>
-  <%= f.number_field :penalty %> 
+  <%= f.number_field :penalty %> <br /> <br />
 
 	<!-- penalty description --> <!-- add by hand -->
 	<%= f.label :penalty_description, "Penalty Description" %>
-  <%= f.text_area :penalty_description %> 
+  <%= f.text_area :penalty_description %>  <br /><br />  
 
 	<!-- datetimes --> <!-- hidden -->
   <%= f.hidden_field :datetimes, :value => Time.now %>

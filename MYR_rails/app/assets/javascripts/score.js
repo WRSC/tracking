@@ -38,7 +38,7 @@ function requestRenderScoreinfo(a_id)	{
 
 		success: function(){
 				$("#cal-timecost").click(function(){
-					$("#score_timecost").prop('disabled', true);
+					$("#score_timecost").prop("readonly", true);
 					requestCalculateScore(a_id)
 				})
 		}       
@@ -52,6 +52,7 @@ function requestCalculateScore(a_id)	{
 		data: {attempt_id: a_id},
 
 		success: function(data){
+			$("#score_timecost").val(data)
 			alert(data)
 		}       
 	});

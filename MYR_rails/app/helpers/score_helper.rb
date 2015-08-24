@@ -10,14 +10,14 @@ module ScoreHelper
 		if a==nil
 			return "attempt does not exist"
 		else
-			case a.mission.id
-			when 1
+			case a.mission.mtype
+			when  "TriangularCourse"
 				t=getTimeTriangularCourse(a)
-			when 2
+			when "StationKeeping"
 				t=stationKeepingTimecost(a_id)
-			when 3
+			when "AreaScanning"
 				t=getTimeRaceCourse(a)
-			when 4
+			when "Race"
 			end
 		end
 		return t
@@ -283,8 +283,8 @@ module ScoreHelper
   end
 
   def stationKeepingRawScoreWithTimecost(timecost)
-    ans=10-(300-timecost).abs/10*1.0 
-    return 0 > ans ? 0 : ans
+    ans=10-(300-timecost).abs*1.0/10
+    return 0.0 > ans ? 0.0 : ans
   end
 
   def stationKeepingTimecost(a_id)

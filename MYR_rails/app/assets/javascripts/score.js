@@ -39,21 +39,42 @@ function requestRenderScoreinfo(a_id)	{
 		success: function(){
 				$("#cal-timecost").click(function(){
 					$("#score_timecost").prop("readonly", true);
-					requestCalculateScore(a_id)
+					requestCalculateTimecost(a_id)
 				})
 		}       
 	});
 }
 
-function requestCalculateScore(a_id)	{
+function requestCalculateTimecost(a_id)	{
 	$.ajax({
 		type: "GET",
-		url: "/calculateScore",
+		url: "/calculateTimecost",
 		data: {attempt_id: a_id},
 
 		success: function(data){
 			$("#score_timecost").val(data)
-			alert(data)
+			$("#score_timecost").css("border", "2px solid red");
+// calculate rawscore for stationkeeping
+			$("#cal-rawscore-stationkeeping").click(function(){
+					$("#cal-rawscore-stationkeeping").prop("readonly", true);
+					
+					requestCalculateRawscore(a_id,data)
+			})
 		}       
 	});
 }
+
+function requestCalculateRawscore(a_id,timecost){
+	$.ajax({
+		type: "GET",
+		url: "/calculateRawscore",
+		data: {attempt_id: a_id, timecost: timecost},
+
+		success: function(data){
+			$("#score_rawscore").val(data)
+			$("#score_rawscore").css("border", "2px solid red");
+		}       
+	});
+	
+}
+

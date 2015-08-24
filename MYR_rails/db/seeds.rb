@@ -88,6 +88,7 @@ Mission.create!(name:  "Triangular Course Contest",
 							robot_id: 1,
 							mission_id: 1,
 							tracker_id: 1)
+
 #http://programming-tut.blogspot.com/2009/09/ruby-on-rails-time.html
 
 #Coordinates => test for triangular course scoring
@@ -238,11 +239,67 @@ Member.create!(name:  "testStationkeeping",
       lng-=0.1
       Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 2 )
     end
+#================= test for area scanning ===============
+Mission.create!(name: "Area Scanning Contest",
+							start: "20150601000000",
+							end: "20150901000000",
+							mtype: "AreaScanning",
+							category: "Sailboat")
 
+ Marker.create!(latitude: 0,
+             longitude: 0,
+             mission_id: 1,
+             mtype: "Point",
+						 name: 'firstBuoy')
+
+ Marker.create!(latitude: 0,
+             longitude: 5,
+             mission_id: 1,
+             mtype: "Point",
+						 name: 'secondBuoy')
+
+ Marker.create!(latitude: 5,
+             longitude: 5,
+             mission_id: 1,
+             mtype: "Point",
+						 name: 'thirdBuoy')
+
+ Marker.create!(latitude: 5,
+             longitude: 0,
+             mission_id: 1,
+             mtype: "Point",
+						 name: 'fourthBuoy')
+
+#id=4
+Member.create!(name:  "testAreaScanning",
+               email: "testAreaScanning@gmail.com",
+               password:              "123456",
+               password_confirmation: "123456",
+               role:     'competitor',
+               activated: true,
+               activated_at: Time.zone.now)
+
+#id=3
+ Team.create!(name:  "testtestAreaScanning's team",
+             description: "root test for testAreaScanning",
+             leader_id: 4)
+#id=3
+ Robot.create!(name:  "testAreaScanning",
+              category: "Sailboat",
+              team_id: 3)
+#id=3
+ Attempt.create!(name: "testAreaScanning's first attempt",
+							start: "20150601000000",
+							end: "20150901000000",
+							robot_id: 3,
+							mission_id: 3,
+							tracker_id: 3)
+	
 #================= test for fleet race ==================
 #Mission 4
-=begin
+
 t=Time.now
+#id=4
 Mission.create!(name: "fleet-race Contest",
 							start: "20150601000000",
 							end: "20150901000000",
@@ -252,33 +309,34 @@ Mission.create!(name: "fleet-race Contest",
 
 Marker.create!(latitude: '0_0',
              longitude: '0_-1',
-             mission_id: 3,
+             mission_id: 4,
              mtype: "Line",
 						 name: 'startLine')
 
  Marker.create!(latitude: 0,
              longitude: 0,
-             mission_id: 3,
+             mission_id: 4,
              mtype: "Point",
 						 name: 'firstBuoy')
 
  Marker.create!(latitude: 5,
              longitude: 0,
-             mission_id: 3,
+             mission_id: 4,
              mtype: "Point",
 						 name: 'secondBuoy')
 
  Marker.create!(latitude: '5',
              longitude: '5',
-             mission_id: 3,
+             mission_id: 4,
              mtype: "Point",
 						 name: 'thirdBuoy')
+
 Marker.create!(latitude: '0',
              longitude: '5',
-             mission_id: 3,
+             mission_id: 4,
              mtype: "Point",
 						 name: 'fourthBuoy')
-#id=3
+#id=5
 Member.create!(name:  "testFleetrace",
                email: "testFleetrace@gmail.com",
                password:              "123456",
@@ -287,21 +345,21 @@ Member.create!(name:  "testFleetrace",
                activated: true,
                activated_at: Time.zone.now)
 
-#id=3
+#id=4
  Team.create!(name:  "testFleetrace's team",
              description: "root test for testFleetrace",
-             leader_id: 4)
-#id=3
+             leader_id: 5)
+#id=4
  Robot.create!(name:  "testFleetrace",
               category: "Sailboat",
-              team_id: 3)
-#id=3
+              team_id: 4)
+#id=4
  Attempt.create!(name: "testFleetrace's first attempt",
 							start: "20150601000000",
 							end: "20150901000000",
-							robot_id: 3,
-							mission_id: 3,
-							tracker_id: 3)
+							robot_id: 4,
+							mission_id: 4,
+							tracker_id: 4)
 	
  	lat=-0.5
 	lng=-0.5
@@ -315,4 +373,12 @@ Member.create!(name:  "testFleetrace",
       lng=2.5+r*Math::sin(theta)
 
 	end
-=end
+
+  5.times do |n|
+ 		 Attempt.create!(name: "testStationKeeping's #{n} attempt",
+							start: "20150601000000",
+							end: "20150901000000",
+							robot_id: 4,
+							mission_id: 2,
+							tracker_id: n+5)
+	end

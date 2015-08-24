@@ -1,11 +1,11 @@
-<% provide(:title, "Scores | Area Scanning") %>
+<% provide(:title, "Scores | Fleet Race") %>
 <p id="notice"><%= notice %></p>
 <%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 
-<!-------------------- Triangular Course ---------------------->
-<h1>Listing Area Scanning Scores</h1>
-<table id="datatable-score-areascanning" class="dataTable display" >
+<!-------------------- Fleet Race ---------------------->
+<h1>Listing Fleet Race Scores</h1>
+<table id="datatable-score-fleetrace" class="dataTable display" >
   <thead>
     <tr >
         <th >id</th>
@@ -50,7 +50,7 @@
 
 <script>
 $(document).ready( function () {
-  $('#datatable-score-areascanning').DataTable({
+  $('#datatable-score-fleetrace').DataTable({
 		paging: true
 	});
 

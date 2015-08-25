@@ -62,6 +62,7 @@
 		
 		latest_markers[0].push(marker);
 		latest_markers[1].push(tracker_id);
+		latest_markers[2].push(datetime);
 
 		return marker;
 	}
@@ -97,13 +98,14 @@
 		// 					//alert('change tracker')
 		// 					//alert(data)
 		// 					changeInfowindow = new google.maps.InfoWindow({
-		// 							content: data
+		// 					content: data
 		// 					});
 		// 					addInfoWindow(changeInfowindow,marker)
 		// 				}
 		// })       
 		latest_markers[0].push(marker);
 		latest_markers[1].push(tracker_id);
+		latest_markers[2].push(datetime);
 		// to create the side panel
 		//known_trackers.push(tracker_id);
 		return marker;
@@ -197,7 +199,7 @@
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
 					//addDot(latitude, longitude, tracker_id);	
 					//if (i%10==0)//every 10 coordinates add a small marker
-						addSmallMarker(latitude, longitude, tracker_id,tstart, tend, datetime, singleAttempt);	
+					addSmallMarker(latitude, longitude, tracker_id,tstart, tend, datetime, singleAttempt);	
 				}
 				else{ //derniere coordonnee du meme tracker si tracker different apres
 					//create polyline
@@ -236,7 +238,7 @@
 			var end_lat = latest_markers[0][index_of_marker].getPosition().lat();
 			var end_lng = latest_markers[0][index_of_marker].getPosition().lng();
 			var end_tracker_id = latest_markers[1][index_of_marker];
-			Gcoords.unshift(new google.maps.LatLng(end_lat, end_lng));
+			//Gcoords.unshift(new google.maps.LatLng(end_lat, end_lng));
 
 			//remove this marker from the map
 			//QUESTION better to replace the icon ??

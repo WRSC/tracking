@@ -1,4 +1,3 @@
-
 /*choose one robot*/
 function requestRefreshOnerobot(flag){
 	$.ajax({
@@ -46,11 +45,13 @@ function requestRefreshAttempts(){
 }
 
 function choose_attempts(){
+
 	$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
 	$("#attempts_dropdown").on("change", function () {
 		$.cookie("attemptslist",$("#attempts_dropdown option:selected").val());
 		requestRefreshUpdateButton(1);
 	});
+
 }
 
 function requestRefreshUpdateButton(nb){
@@ -90,11 +91,11 @@ function requestRefreshMapFromAttempt(){
 		success: function(data){
 			//alert(data)
 			//tstart: data[0]; tend: data[1]; trackers: data[2] 
-      //alert(data[0]+' '+data[1]+''+data[2])
-      //alert('trackers are '+data[2])
-      //alert(data[0])
-      // data 0 => tstart, data 1 => tend, data 2 => tracker id)
-      requestGatherCoordsBetweenDates(data[0],data[1],data[2],true);
+		    //alert(data[0]+' '+data[1]+''+data[2])
+		    //alert('trackers are '+data[2])
+		    //alert(data[0])
+		    // data 0 => tstart, data 1 => tend, data 2 => tracker id)
+     		requestGatherCoordsBetweenDates(data[0],data[1],data[2],true);
 		}       
 	});
 }
@@ -109,9 +110,11 @@ function requestGatherCoordsBetweenDates(tstart,tend,trackers,singleAttempt){//d
 		data: {tstart : tstart, tend: tend, trackers: trackers},
 		dataType: "json",
 		success: function(data){
-			//alert(data)
-      refreshWithNewMarkers2(data,tstart,tend,singleAttempt);
-			
+				//alert(data)
+	      	refreshWithNewMarkers2(data,tstart,tend,singleAttempt);
+			if (getShowInfo()){
+				requestWantInfo(tstart,tend,singleAttempt);
+			}
 		}       
 	});
 }

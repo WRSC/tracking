@@ -42,7 +42,7 @@ function manual_or_auto_refresh(){
         $.cookie("autorefresh",1);
       }else{//si décoché
       	if (myReset!= null){
-      		alert("Stop autorefresh")
+      		alert("Stopping autorefresh")
       		clearInterval(myReset);
       	}
         updateMap()

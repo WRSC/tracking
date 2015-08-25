@@ -183,7 +183,7 @@ class CoordinatesController < ApplicationController
 		if (params[:tstart] != nil && params[:tend] != nil)
       tstart = params[:tstart]
       tend   = params[:tend]
-      newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers)
+      newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers).order(datetime: :asc)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
     end
   end

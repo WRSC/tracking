@@ -9,6 +9,7 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w( Markers/markersCreation.js )
+Rails.application.config.assets.precompile += %w( Markers/markersVisualisation.js )
 Rails.application.config.assets.precompile += %w( Real_time/real_time.js )
 Rails.application.config.assets.precompile += %w( Replay/replay.js )
 

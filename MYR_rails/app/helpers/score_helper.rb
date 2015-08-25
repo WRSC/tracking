@@ -221,8 +221,12 @@ module ScoreHelper
       fourthBuoy.push(fourthCorner.longitude)
       fourthBuoy.push(fourthCorner.latitude)
 
-      time = 0
+      time = -1 #Time = -1 => the boat did not even cross the starting line, # Time = 0 the boat crossed the starting line
       turn = 0
+
+      if (checkLineCrossed(startLine,coordinates)!=0)
+        time = 0;
+      end
 
       for i in 1..2
         tFiB = 0

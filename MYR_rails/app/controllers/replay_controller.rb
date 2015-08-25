@@ -218,7 +218,7 @@
 			tabm = []
 		end	
 		markerinfos=Marker.where(mission_id: tabm)
-		render json: markerinfos.to_json(:only =>[:mtype,:latitude,:longitude,:datetime])
+		render json: markerinfos.to_json(:only =>[:mtype,:latitude,:longitude,:datetime, :name])
 	end
  	
  	def infowindow
@@ -239,7 +239,7 @@
 			@attempts=Attempt.find_by(id: a_id)
 	  	else 
 			@test=false
-		  	@attempts=Tracker.find_by(id: tracker_id).attempts.where("start < ? AND end > ?",@datetime,@datetime) 
+		  	@attempts=Tracker.find_by(id: tracker_id).attempts.where("start <= ? AND end >= ?",@datetime,@datetime) 
 	 	end
  	end
 

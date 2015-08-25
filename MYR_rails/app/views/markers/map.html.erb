@@ -1,0 +1,38 @@
+<% provide(:title, "Markers | Map") %>
+<head>
+	<%= javascript_include_tag 'Markers/markersVisualisation', 'data-turbolinks-track' => true %>
+</head>
+
+<style type="text/css">
+	#map_frame_container{
+		margin-left:10px;
+		margin-top: 10px;
+	}
+	.gm-style img { max-width: none; }
+	.gm-style label { width: auto; display: inline; }
+</style>
+
+<div id="above_the_map"></div>
+<!--------------------- google map container------------------------------>
+	<div id="map_frame_container" style='width: 99%; height: 93%'>
+		<div id="map-container" class="two_third first" style='height: 100%'>
+			<div id="map-canvas"></div>
+		</div>
+	
+		<div id="select-mission">	
+			<div id="select-mission">
+				<p><b><u>Select a mission to display the markers associated with:</u></b></p>
+<!--Do not need to display all the missions, just display the mission in a year, which means Time.now - 6 month ~Time.now + 6 month-->			
+				<select name="mission" id="marker_missions_dropdown">
+					<option value="NULL">Select a mission</option>
+					<% for i in 0..(@missions.size-1)%>
+  						<option value="<%= @missions[i].id %>"><%= @missions[i].name + " " + @missions[i].category %></option>
+					<% end %>
+				</select><br/>
+			</div>
+		</div>
+
+		<div id="mission-panel"></div>
+				
+		<div id="map-canvas"></div>
+</div>

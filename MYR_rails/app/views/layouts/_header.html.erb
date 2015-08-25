@@ -15,7 +15,7 @@
 						<%=li_actif(attempts_path) %><a href="<%= attempts_path%>" style="background-color:rgba(0,0,0,1)"> Attempts </a></li>	
 						<%=li_actif(trackers_path) %><a href="<%= trackers_path%>"> Trackers </a></li>
 						<%=li_actif(coordinates_path) %><a href="<%= coordinates_path%>"> Coordinates </a></li>
-						<%=li_actif(markers_path) %><a href="<%= markers_path%>"> Markers </a></li>
+						<%=li_actif(markers_path) %><a href="map"> Markers  </a></li>
 					<% elsif !current_user.nil? %>
 						<% if heIsInTeam?(current_user.name) %>
 							<%=li_actif(attempts_path) %><a href="<%= attempts_path%>"> Attempts </a></li>
@@ -29,6 +29,7 @@
 					<%=li_actif(real_time_path) %><a href="<%= real_time_path %>"> Real Time </a></li>
 					<%=li_actif(replay_path) %><a href="<%= replay_path %>"> Replay </a></li>
 					<%=li_actif(scores_path) %><a href="<%= scores_path %>"> Scores </a></li>
+					<%=li_actif(scores_path) %><a href="map"> Markers </a></li>
 			
 
 				</ul>

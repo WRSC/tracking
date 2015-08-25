@@ -1,96 +1,3 @@
-/*============================ Begin Add a Small Buoy================================================*/  
-  //Add a small Buoy to the map (a dot)
-	//mission_id is optional with  default value of 12 for the rendering
-	function addSmallBuoy(lat, lng, mission_id, map){
-		mission_id = typeof mission_id !== 'undefined' ? mission_id : 12;
-		var image = {
-			url: 'icons/small'+mission_id%12+'.png',
-			size: new google.maps.Size(16, 19),
-			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(8, 19)
-		};
-		var buoy = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			icon: image
-		}
-		);
-		//always needed ?
-		buoy.setMap(map);
-		//ADDED
-		latest_buoys[0].push(buoy);
-		latest_buoys[1].push(mission_id);
-		return buoy;
-	}
-/*=============================Begin Add a Medium Buoy========================================*/
-	
-	//to complete
-	//Add a Buoy to the map
-	//mission_id is optional with  default value of 12 for the rendering
-	function addBuoy(lat, lng, mission_id){
-		mission_id = typeof mission_id !== 'undefined' ? mission_id : 12;
-		var image = {
-			url: 'icons/medium'+mission_id%12+'.png',
-			size: new google.maps.Size(25, 29),
-			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(13, 29)
-		};
-		var buoy = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			icon: image
-		}
-		);
-		//always needed ?
-		buoy.setMap(map);
-		//ADDED
-		latest_buoys[0].push(buoy);
-		latest_buoys[1].push(mission_id);
-		return buoy;
-	}
-	
-	//Add a big Buoy to the map
-	//mission_id is optional with  default value of 12 for the rendering
-
-/*==============================Begin Add Big Buoy============================================*/
-	function addBigBuoy(lat, lng, mission_id, map){
-		mission_id = typeof mission_id !== 'undefined' ? mission_id : 12;
-		var image = {
-			url: 'icons/big'+mission_id%12+'.png',
-			size: new google.maps.Size(32, 37),
-			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(16, 37)
-		};
-		var buoy = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			icon: image
-		}
-		);
-		//always needed ?
-		buoy.setMap(map);
-		// to ease later addition of coordinqtes
-		latest_buoys[0].push(buoy);
-		latest_buoys[1].push(mission_id);
-		return buoy;
-	}
-/*================================End Add Big buoy=======================================*/
-
-/*=================================Begin Add Draggable buoy==============================*/
-	//Add a draggable buoy to the map
-	function addDraggableBuoy(lat, lng,map){
-		var buoy = new google.maps.Marker(
-		{
-			position: new google.maps.LatLng(lat,lng),
-			draggable: true
-		}
-		);
-		//always needed ?
-		buoy.setMap(map);
-		return buoy;
-	}
-/*=================================End Add Draggable buoy================================*/
-
 /*================================= Begin load line marker ==============================*/
 	function loadLine(lat,lng, mission_id){
 
@@ -127,7 +34,6 @@
 	}
 
 	function loadPolygon(lat,lng, mission_id){
-
 		// colors:  		   red 
 		var color = '#FF0000';
 		//get coords to add to polyline
@@ -136,20 +42,19 @@
 		var lineLng = lng.split("_")
 		for(var i=0; i < lineLat.length ; i++){
 			Lcoords.push(new google.maps.LatLng(lineLat[i], lineLng[i]));
-			if (i = lineLat.length-1){
-				Lcoords.push(new google.maps.LatLng(lineLat[0], lineLng[0]));
-			}
+			// if (i = lineLat.length-1){
+			// 	Lcoords.push(new google.maps.LatLng(lineLat[0], lineLng[0]));
+			// }
 		}
 
-		var lineSymbol = {
-		    path: 'M 0,-1 0,1',
-		    strokeOpacity: 1,
-		    scale: 4
-		};
+		// var lineSymbol = {
+		//     path: 'M 0,-1 0,1',
+		//     strokeOpacity: 1,
+		//     scale: 4
+		// };
 
 		var polyline = new google.maps.Polygon({
 			path: Lcoords,
-			geodesic: true,
 			strokeColor: color,
 			strokeOpacity: 0,
 			strokeWeight: 2,
@@ -168,11 +73,11 @@
 		var circlePos = lat.split("_");
 		var circleRadius = lng*110000;
 
-		var lineSymbol = {
-		    path: 'M 0,-1 0,1',
-		    strokeOpacity: 1,
-		    scale: 4
-		};
+		// var lineSymbol = {
+		//     path: 'M 0,-1 0,1',
+		//     strokeOpacity: 1,
+		//     scale: 4
+		// };
 
 		var polyline = new google.maps.Circle({
 			center: new google.maps.LatLng(circlePos[0],circlePos[1]),
@@ -188,29 +93,15 @@
 		latest_buoys_line[1].push(mission_id);
 	}
 
-/*================================= End load line marker ==============================*/
-
-	//Add all the given coordinates onto the map
-	function addAllThisBuoys(data,map){
-		var lat, lng, mission_id = 0;
-		for(var i=0; i < data.length ; i++){
-			lat = data[i].latitude;
-			lng = data[i].longitude;
-			mission_id = data[i].mission_id;
-			addSmallBuoy(lat,lng,mission_id,map);
-		}
-	}
-
-
 /*=================================load small buoy================================*/
 
-	function loadBuoy(lat, lng, mission_id){
+	function loadBuoy(lat, lng, mission_id, name){
 			mission_id = typeof mission_id !== 'undefined' ? mission_id : 12;
 				var image = {
-					url: 'icons/bigBuoy1.png',
-					size: new google.maps.Size(30, 47),
+					url: 'icons/bigBuoy2.png',
+					size: new google.maps.Size(23, 37),
 					origin: new google.maps.Point(0,0),
-					anchor: new google.maps.Point(15, 47)
+					anchor: new google.maps.Point(12, 37)
 				};
 				var buoy = new google.maps.Marker(
 				{
@@ -218,10 +109,30 @@
 					icon: image
 				}
 				);
+
+				data = '<font color=\'black\'><div>'+'<b>Name: </b>'+name+'</div>'
+				var temp = new google.maps.InfoWindow(
+					{
+						content: data
+					}
+				);
+
+				addBuoyInfo(temp,buoy)
+
 				latest_buoys[0].push(buoy);
 				latest_buoys[1].push(mission_id);
 				return buoy;
 
+	}
+
+	function addBuoyInfo(infowindow,buoy){
+		google.maps.event.addListener(buoy, 'click', function(event) {
+			var lat=event.latLng.lat()
+			var lng=event.latLng.lng()
+			myString='<div>'+'<b>Latitude: </b>'+lat+'&nbsp;'+'<b>Longitude: </b>'+lng+'</div>'+'</font>'
+			infowindow.content+=myString
+			infowindow.open(map,buoy);
+		});
 	}
 
 
@@ -233,8 +144,9 @@
 			lng = data[i].longitude;
 			mission_id = data[i].mission_id;
 			buoyType = data[i].mtype;
+			name = data[i].name;
 			if (buoyType == 'Point') {
-				loadBuoy(lat,lng,mission_id,map);
+				loadBuoy(lat,lng,mission_id,name,map);
 			}
 			else if(buoyType == 'Line'){
 				loadLine(lat,lng,mission_id,map);
@@ -263,16 +175,7 @@
 
 	//Add the given coordiantes on the map and save this last state
 	function refreshWithNewBuoys(data,map){
-		/*var lastCoordinate = data[data.length-1];
-		var lastLat = lastCoordinate.latitude;
-		var lastLng= lastCoordinate.longitude;
-		
-		alert(lastDate)
-		alert(lastLat)
-		alert(lastLng)
-		
-		addAllThisBuoys(data,map);
-		setCenter(lastLat,lastLng);*/
+
 		var mission_id = 0;
 		for(var i=0; i < data.length ; i++){
 			if(data[i].mtype =='Point'){
@@ -292,6 +195,7 @@
 				}
 			}
 		}
+		adaptZoom();
 	}
 
 	function refreshWithoutBuoys(data){
@@ -307,6 +211,7 @@
 			}
 			else if (data[i].mtype =='Line' || data[i].mtype =='Polygon' || data[i].mtype =='Circle'){
 				mission_id = data[i].mission_id;
+
 				var index_of_buoy = lineAlreadyPresent(mission_id);
 				//alert(index_of_buoy)
 				if(index_of_buoy != -1){

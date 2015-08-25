@@ -299,14 +299,22 @@ function hideTrackers(data){
 
 //Fit the zoom to see all the displayed points
 	function adaptZoom(){
-		var bounds = new google.maps.LatLngBounds();
-// boucle for allant du marker le plus ancien (first_marker) dans le tableau jusqu'au plus récent moduloPositif(index_first_marker-1,latest_markers[0].length)
-		for(var i=index_first_marker; i != moduloPositif(index_first_marker-1,latest_markers[0].length); i=(i+1)%MAX_NUM_COORDS){
-			bounds.extend(latest_markers[0][i].getPosition());
+		if (latest_markers[0].length != 0){
+			var bounds = new google.maps.LatLngBounds();
+			// boucle for allant du marker le plus ancien (first_marker) dans le tableau jusqu'au plus récent moduloPositif(index_first_marker-1,latest_markers[0].length)
+			for(var i=index_first_marker; i != moduloPositif(index_first_marker-1,latest_markers[0].length); i=(i+1)%MAX_NUM_COORDS){
+				bounds.extend(latest_markers[0][i].getPosition());
+			}
+			bounds.extend(latest_markers[0][moduloPositif(index_first_marker-1,latest_markers[0].length)].getPosition());
+			for(var i=0; i < latest_buoys[0].length ; i++){
+				bounds.extend(latest_buoys[0][i].getPosition());
+			}
 		}
-		bounds.extend(latest_markers[0][moduloPositif(index_first_marker-1,latest_markers[0].length)].getPosition());
-		for(var i=0; i < latest_buoys[0].length ; i++){
-			bounds.extend(latest_buoys[0][i].getPosition());
+		else{
+			var bounds = new google.maps.LatLngBounds();
+			for(var i=0; i < latest_buoys[0].length ; i=i+1){
+				bounds.extend(latest_buoys[0][i].getPosition());
+			}
 		}
 		map.fitBounds(bounds);
 	}

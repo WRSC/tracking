@@ -103,77 +103,77 @@ Mission.create!(name:  "Triangular Course Contest",
               |
 							.(2,-1)
 =end
-  lat=2
-  lng=-1
-  t=Time.now
-		Coordinate.create!(latitude: lat,
-		                 longitude: lng,
-		                 datetime:   t.strftime("%Y%m%d%H%M%S"),
-		                 tracker_id: 1)
-		 t=t+5
-  i=1
+ #  lat=2
+ #  lng=-1
+ #  t=Time.now
+	# 	Coordinate.create!(latitude: lat,
+	# 	                 longitude: lng,
+	# 	                 datetime:   t.strftime("%Y%m%d%H%M%S"),
+	# 	                 tracker_id: 1)
+	# 	 t=t+5
+ #  i=1
 
-	7.times do |n|
-		lng+=1.01
-		Coordinate.create!(latitude: lat,
-		                 longitude: lng,
-		                 datetime:   t.strftime("%Y%m%d%H%M%S"),
-		                 tracker_id: 1)
-		 t=t+5
-	end
+	# 7.times do |n|
+	# 	lng+=1.01
+	# 	Coordinate.create!(latitude: lat,
+	# 	                 longitude: lng,
+	# 	                 datetime:   t.strftime("%Y%m%d%H%M%S"),
+	# 	                 tracker_id: 1)
+	# 	 t=t+5
+	# end
 
-	4.times do |n|
-		lat-=1
-  	Coordinate.create!(latitude:  lat,
-                   longitude: lng,
-                   datetime:   t.strftime("%Y%m%d%H%M%S"),
-                   tracker_id: 1)
+	# 4.times do |n|
+	# 	lat-=1
+ #  	Coordinate.create!(latitude:  lat,
+ #                   longitude: lng,
+ #                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+ #                   tracker_id: 1)
 
-   	t=t+5
-	end
+ #   	t=t+5
+	# end
 
-	2.times do |n|
-		lng-=1
-		Coordinate.create!(latitude:  lat,
-                   longitude: lng,
-                   datetime:   t.strftime("%Y%m%d%H%M%S"),
-                   tracker_id: 1)		
-		t=t+5	
-	end
+	# 2.times do |n|
+	# 	lng-=1
+	# 	Coordinate.create!(latitude:  lat,
+ #                   longitude: lng,
+ #                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+ #                   tracker_id: 1)		
+	# 	t=t+5	
+	# end
 
-	8.times do |n|
-		lat+=1
-		lng-=0.25
-		Coordinate.create!(latitude:  lat,
-                   longitude: lng,
-                   datetime:   t.strftime("%Y%m%d%H%M%S"),
-                   tracker_id: 1)		
-		t=t+5	
-	end
+	# 8.times do |n|
+	# 	lat+=1
+	# 	lng-=0.25
+	# 	Coordinate.create!(latitude:  lat,
+ #                   longitude: lng,
+ #                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+ #                   tracker_id: 1)		
+	# 	t=t+5	
+	# end
 
-	lng-=3
-	Coordinate.create!(latitude:  lat,
-                   longitude: lng,
-                   datetime:   t.strftime("%Y%m%d%H%M%S"),
-                   tracker_id: 1)		
-	t=t+5	
+	# lng-=3
+	# Coordinate.create!(latitude:  lat,
+ #                   longitude: lng,
+ #                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+ #                   tracker_id: 1)		
+	# t=t+5	
 
-	lat-=2
-	Coordinate.create!(latitude:  lat,
-                   longitude: lng,
-                   datetime:   t.strftime("%Y%m%d%H%M%S"),
-                   tracker_id: 1)		
-	t=t+5	
+	# lat-=2
+	# Coordinate.create!(latitude:  lat,
+ #                   longitude: lng,
+ #                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+ #                   tracker_id: 1)		
+	# t=t+5	
 
-	5.times do |n|
-		lat-=1
-		lng+=0.4
-		Coordinate.create!(latitude:  lat,
-                   longitude: lng,
-                   datetime:   t.strftime("%Y%m%d%H%M%S"),
-                   tracker_id: 1)		
-		t=t+5	
-	end
+	# 5.times do |n|
+	# 	lat-=1
+	# 	lng+=0.4
+	# 	Coordinate.create!(latitude:  lat,
+ #                   longitude: lng,
+ #                   datetime:   t.strftime("%Y%m%d%H%M%S"),
+ #                   tracker_id: 1)		
+	# 	t=t+5	
+	# end
 
 #================= test for station keeping ==================
 #Mission 2
@@ -213,31 +213,31 @@ Member.create!(name:  "testStationkeeping",
 							mission_id: 2,
 							tracker_id: 2)
 	
-  t=Time.now
-	lat=2.5
-	lng=-1
-	r=2.5
-	5.times do |n|
-		lng+=0.2
-		Coordinate.create!(latitude:  lat,
-		               longitude: lng,
-		               datetime:   t.strftime("%Y%m%d%H%M%S"),
-		               tracker_id: 2)		
-		t=t+5	
-	end
-	theta=-Math::PI/2
-	for i in 1..300
-      t+=1
-			theta+=2*Math::PI/10
-      lat=2.5+r*Math::cos(theta)
-      lng=2.5+r*Math::sin(theta)
-      Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 2 )
-	end
-	for i in 1..10
-      t+=1
-      lng-=0.1
-      Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 2 )
-    end
+ #  t=Time.now
+	# lat=2.5
+	# lng=-1
+	# r=2.5
+	# 5.times do |n|
+	# 	lng+=0.2
+	# 	Coordinate.create!(latitude:  lat,
+	# 	               longitude: lng,
+	# 	               datetime:   t.strftime("%Y%m%d%H%M%S"),
+	# 	               tracker_id: 2)		
+	# 	t=t+5	
+	# end
+	# theta=-Math::PI/2
+	# for i in 1..300
+ #      t+=1
+	# 		theta+=2*Math::PI/10
+ #      lat=2.5+r*Math::cos(theta)
+ #      lng=2.5+r*Math::sin(theta)
+ #      Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 2 )
+	# end
+	# for i in 1..10
+ #      t+=1
+ #      lng-=0.1
+ #      Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 2 )
+ #    end
 
 #================= test for fleet race ==================
 #Mission 4

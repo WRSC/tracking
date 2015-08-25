@@ -2,7 +2,7 @@
 
 
 Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.length%>
-<%= @a.inspect%>
+<%= @robots.inspect%>
 <table id="datatable-score-race-sailboat" class="dataTable display" >
   <thead>
     <tr >
@@ -24,10 +24,10 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 		<% @sail_scores.each do |score| %>
 			<% if score != nil %>
 			<tr>
-		 		<% if score.attempt.robot.triangularRank!=nil%>
+		 		<% if score.attempt.robot.raceRank!=nil%>
 					
-					<% if score.id== score.attempt.robot.bestTriangularscoreId%>
-		 				<td><%= score.attempt.robot.triangularRank %></td>
+					<% if score.id== score.attempt.robot.bestRacescoreId%>
+		 				<td><%= score.attempt.robot.raceRank %></td>
 					<% else %>
 						<td>*</td>
 					<% end %>

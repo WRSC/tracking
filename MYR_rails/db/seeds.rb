@@ -367,7 +367,7 @@ Member.create!(name:  "testFleetrace",
 	theta=-Math::PI/2
 	for i in 1..70
       t+=1
-      Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 3)
+      Coordinate.create!( latitude: lat, longitude: lng, datetime: t.strftime("%Y%m%d%H%M%S"), tracker_id: 4)
 			theta-=2*Math::PI/10
       lat=2.5+r*Math::cos(theta)
       lng=2.5+r*Math::sin(theta)

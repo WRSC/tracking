@@ -16,8 +16,9 @@ module ScoreHelper
 			when "StationKeeping"
 				t=stationKeepingTimecost(a_id)
 			when "AreaScanning"
-				t=getTimeRaceCourse(a)
+				
 			when "Race"
+				t=getTimeRaceCourse(a)
 			end
 		end
 		return t

@@ -93,7 +93,10 @@ class ScoresController < ApplicationController
 					when "AreaScanning"
 						
 					when "Race"
-
+						if rob.bestRacescoreId==nil || Score.find_by_id(rob.bestRacescoreId).rawscore < @score.rawscore 
+							rob.update_attribute(:bestRacescoreId, @score.id) 
+							rob.update_attribute(:bestRacetime, @score.timecost) 
+						end
 					end
 	        format.html { redirect_to @score, notice: 'Score was successfully created.' }
 	        format.json { render :show, status: :created, location: @score }
@@ -165,7 +168,7 @@ class ScoresController < ApplicationController
 		flag=params[:flag]
 		if flag=="true"
 #ranking		
-			firstrobots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "Sailboat").order(bestStationscore: :desc).uniq
+			firstrobots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "Sailboat").order(:bestRacetime).uniq
 			@robots=[]
 			firstrobots.each do |rob|
 				if rob.bestStationscore != nil
@@ -173,7 +176,9 @@ class ScoresController < ApplicationController
 				end
 			end
 			for rank in 0..(@robots.length-1)
-				@robots[rank].update_attribute(:stationRank, rank+1)			
+				@robots[rank].update_attribute(:stationRank, rank+1)		
+				s=Score.find_by_id(@robots[rank].bestRacescoreId)
+				s.update_attribute(:rawscore, (16-rank > 0 ?  16-rank : 0))		
 			end
 		end
 	end
@@ -219,9 +224,37 @@ class ScoresController < ApplicationController
 	end
 	
 	def racesailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			firstrobots=Mission.where(mtype: "Race")[0].robots.where(category: "Sailboat").order(:bestRacetime).uniq
+			@robots=[]
+			firstrobots.each do |rob|
+				if rob.bestRacetime != nil
+					@robots.push(rob)
+				end
+			end
+			for rank in 0..(@robots.length-1)
+				@robots[rank].update_attribute(:raceRank, rank+1)			
+			end
+		end
 	end
 
 	def racemicrosailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			firstrobots=Mission.where(mtype: "Race")[0].robots.where(category: "MicroSailboat").order(bestscore: :desc).uniq
+			@robots=[]
+			firstrobots.each do |rob|
+				if rob.bestRacetime != nil
+					@robots.push(rob)
+				end
+			end
+			for rank in 0..(@robots.length-1)
+				@robots[rank].update_attribute(:raceRank, rank+1)			
+			end
+		end
 	end
   	
 #=================================== private functions ==================================

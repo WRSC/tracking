@@ -1,72 +1,88 @@
 <% provide(:title, "Markers | New") %>
-<head>
-	<%= javascript_include_tag 'Markers/markersCreation', 'data-turbolinks-track' => true %>
-</head>
 
-<style type="text/css">
-	#map_frame_container{
-		margin-left:10px;
-		margin-top: 10px;
-	}
-	.gm-style img { max-width: none; }
-	.gm-style label { width: auto; display: inline; }
-</style>
+<% if sign_in? %>
+  <% if is_admin? %>
 
-<div id="above_the_map"></div>
-<!------------------- google map container------------------------------>
-	<div id="map_frame_container" style='width: 99%; height: 93%'>
-		<div id="map-container" class="two_third first" style='height: 100%'>
-			<div id="map-canvas"></div>
-		</div>
-	
-		<div id="select-mission">	
-			<div id="select-mission">
-				<p><b><u>Select a mission</u></b></p>
-<!--Do not need to display all the missions, just display the mission in a year, which means Time.now - 6 month ~Time.now + 6 month-->			
-				<select name="mission" id="marker_missions_dropdown">
-					<option value="0"></option>
-					<% for i in 0..(@missions.size-1)%>
-  					<option value="<%= @missions[i].id %>"><%= @missions[i].name %></option>
-					<% end %>
-				</select><br />
-				<font size = 1>It just display all the missions in one year, which means <br /> from now - 6 monthes to now + 6 monthes </font>
-			</div>
-		</div>
-		
-		<div id="markers-zone">
-			<p><b><u>Add Markers:</u></b></p>
-<!--------------------Points------------------------>			
-			<!--<button id="AddBuoy" type="button">Draw a Buoy</button> <br /><br />-->
-		
-			<div id="point-marker-info"></div>
-			<input type="image" id="buoy-fix" src="/icons/buoy_fix.png" alt="Fix Buoy" height="42" width="42" title="add fix buoy" />
-			<input type="image" id="buoy-draggable" src="/icons/buoy_draggable.png" alt="Draggable Buoy" height="42" width="42" title="add draggable buoy" />
-			<button id="saveBuoy" type="button">Save Buoys</button>
-			<br />
-<!----------------------Lines---------------------->
-			<!--<button id="AddLine" type="button">Draw a start / end line</button> <br /><br />-->
-		
-			<input type="image" id="polyline-fix" src="/icons/fixPolyline.png" alt="Fix Polyline" height="42" width="42" title="add fix polyline" />
-			<input type="image" id="polyline-custom" src="/icons/customPolyline.png" alt="Custom Polyline" height="42" width="42" title="add custom polyline" />
-			<button id="saveLine" type="button">Save Lines</button>
-			<br />
-<!----------------------Polygons-------------------------->			
-			<!--<button id="AddPolygon" type="button">Draw a Polygon</button>-->
-		
-			<input type="image" id="polygon-fix" src="/icons/fixPolygon.png" alt="Fix Polygon" height="42" width="42" title="add fix polygon" />
-			<input type="image" id="polygon-custom" src="/icons/customPolygon.png" alt="Custom Polygon" height="42" width="42" title="add custom editable and draggable polygon" />
-			<button id="savePolygon" type="button">Save Polygons</button> 
-			<br />
-<!----------------------Circles------------------------------>
-	
-			<input type="image" id="circle-fix" src="/icons/fixCircle.png" alt="Fix Circle" height="42" width="42" title="add fix circle" />
-			<input type="image" id="circle-custom" src="/icons/customCircle.png" alt="Custom Circle" height="42" width="42" title="add custom editable and draggable circle" />
-			<button id="saveCircle" type="button">Save Circles</button> <br /><br />
-			<br />
+		<head>
+			<%= javascript_include_tag 'Markers/markersCreation', 'data-turbolinks-track' => true %>
+		</head>
+
+
+
+		<style type="text/css">
+			#map_frame_container{
+				margin-left:10px;
+				margin-top: 10px;
+			}
+			.gm-style img { max-width: none; }
+			.gm-style label { width: auto; display: inline; }
+		</style>
+
+		<div id="above_the_map"></div>
+		<!------------------- google map container------------------------------>
+			<div id="map_frame_container" style='width: 99%; height: 93%'>
+				<div id="map-container" class="two_third first" style='height: 100%'>
+					<div id="map-canvas"></div>
+				</div>
 			
-    </div>
-		
-		<div id="map-canvas"></div>
-</div>
+				<div id="select-mission">	
+					<div id="select-mission">
+						<p><b><u>Select a mission</u></b></p>
+		<!--Do not need to display all the missions, just display the mission in a year, which means Time.now - 6 month ~Time.now + 6 month-->			
+						<select name="mission" id="marker_missions_dropdown">
+							<option value="0"></option>
+							<% for i in 0..(@missions.size-1)%>
+		  					<option value="<%= @missions[i].id %>"><%= @missions[i].name %></option>
+							<% end %>
+						</select><br />
+						<font size = 1>It just display all the missions in one year, which means <br /> from now - 6 monthes to now + 6 monthes </font>
+					</div>
+				</div>
+				
+				<div id="markers-zone">
+					<p><b><u>Add Markers:</u></b></p>
+		<!--------------------Points------------------------>			
+					<!--<button id="AddBuoy" type="button">Draw a Buoy</button> <br /><br />-->
+				
+					<div id="point-marker-info"></div>
+					<input type="image" id="buoy-fix" src="/icons/buoy_fix.png" alt="Fix Buoy" height="42" width="42" title="add fix buoy" />
+					<input type="image" id="buoy-draggable" src="/icons/buoy_draggable.png" alt="Draggable Buoy" height="42" width="42" title="add draggable buoy" />
+					<button id="saveBuoy" type="button">Save Buoys</button>
+					<br />
+		<!----------------------Lines---------------------->
+					<!--<button id="AddLine" type="button">Draw a start / end line</button> <br /><br />-->
+				
+					<input type="image" id="polyline-fix" src="/icons/fixPolyline.png" alt="Fix Polyline" height="42" width="42" title="add fix polyline" />
+					<input type="image" id="polyline-custom" src="/icons/customPolyline.png" alt="Custom Polyline" height="42" width="42" title="add custom polyline" />
+					<button id="saveLine" type="button">Save Lines</button>
+					<br />
+		<!----------------------Polygons-------------------------->			
+					<!--<button id="AddPolygon" type="button">Draw a Polygon</button>-->
+				
+					<input type="image" id="polygon-fix" src="/icons/fixPolygon.png" alt="Fix Polygon" height="42" width="42" title="add fix polygon" />
+					<input type="image" id="polygon-custom" src="/icons/customPolygon.png" alt="Custom Polygon" height="42" width="42" title="add custom editable and draggable polygon" />
+					<button id="savePolygon" type="button">Save Polygons</button> 
+					<br />
+		<!----------------------Circles------------------------------>
+			
+					<input type="image" id="circle-fix" src="/icons/fixCircle.png" alt="Fix Circle" height="42" width="42" title="add fix circle" />
+					<input type="image" id="circle-custom" src="/icons/customCircle.png" alt="Custom Circle" height="42" width="42" title="add custom editable and draggable circle" />
+					<button id="saveCircle" type="button">Save Circles</button> <br /><br />
+					<br />
+					
+		    </div>
+				
+				<div id="map-canvas"></div>
+		</div>
 
-<%= link_to 'Back to index', markers_path %>
+		<%= link_to 'Back to index', markers_path %>
+
+    <% else %>
+
+    <h2>You cannot access this page.</h2>
+
+  <% end %>
+  <% else %>
+  <h2>You cannot access this page.</h2>
+
+<% end %>

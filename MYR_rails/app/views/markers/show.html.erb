@@ -2,7 +2,7 @@
 <p id="notice"><%= notice %></p>
 
 <% if sign_in? %>
-  <% if isInTeam? || is_admin? %>
+  <% if is_admin? %>
 
     <p>
       <strong>Name:</strong>
@@ -39,11 +39,14 @@
     <h2>You cannot access this page. </h2>
 
   <% end %>
+  <% else %>
+
+    <h2>You cannot access this page. </h2>
+
 <% end %>
 
 <% if is_admin? %>
   <%= link_to 'Edit', edit_marker_path(@marker) %> |
-| <%= link_to 'Delete', @marker, method: :delete, data: { confirm: 'Delete this coordinate ?' } %> |
+  <%= link_to 'Delete', @marker, method: :delete, data: { confirm: 'Delete this coordinate ?' } %> |
+  <%= link_to 'Back to index', markers_path %>
 <% end %>
-
-<%= link_to 'Back to index', markers_path %>

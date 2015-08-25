@@ -19,6 +19,10 @@
 			<div id="map-canvas"></div>
 		</div>
 	
+		<% if sign_A? %>
+			<a href="<%= markers_path%>"> Markers index </a></li>
+		<% end %>
+
 		<div id="select-mission">	
 			<div id="select-mission">
 				<p><b><u>Select a mission to display the markers associated with:</u></b></p>
@@ -35,4 +39,6 @@
 		<div id="mission-panel"></div>
 				
 		<div id="map-canvas"></div>
+
+
 </div>

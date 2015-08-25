@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
 
-    get 'map'     , to: 'markers#map'
+    get 'map'             , to: 'markers#map'
   # score
 		get 'finalstanding'   , to: 'scores#finalstanding'
 		get 'triangular'      , to: 'scores#triangular'

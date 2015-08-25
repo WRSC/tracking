@@ -1,11 +1,12 @@
 $(document).ready(function(){
 	requestRenderSailboatTable(false,true)
 	requestRenderMicroSailboatTable(false,true)
-	$("#ranking-staionkeeping-sailboat").click(function(){
+	$("#ranking-triangular-sailboat").click(function(){
+		//alert('clicked')
 		requestRenderSailboatTable(true,false)
 	})
 
-	$("#ranking-staionkeeping-microsailboat").click(function(){
+	$("#ranking-triangular-microsailboat").click(function(){
 		requestRenderMicroSailboatTable(true,false)
 	})
 })
@@ -13,13 +14,13 @@ $(document).ready(function(){
 function requestRenderSailboatTable(flag,isFirst){
 	$.ajax({
 		type: "GET",
-		url: "/stationkeepingsailboat",
+		url: "/triangularsailboat",
 		data: {flag: flag},
 		success: function(){
 			if (isFirst==false){
 				sailtable.destroy();
 			}
-			sailtable=$('#datatable-score-stationkeeping-sailboat').DataTable({
+			sailtable=$('#datatable-score-triangular-sailboat').DataTable({
 				paging: true
 			});
 		}       
@@ -29,13 +30,13 @@ function requestRenderSailboatTable(flag,isFirst){
 function requestRenderMicroSailboatTable(flag,isFirst){
 	$.ajax({
 		type: "GET",
-		url: "/stationkeepingmicrosailboat",
+		url: "/triangularmicrosailboat",
 		data: {flag: flag},
 		success: function(){
 			if (isFirst==false){
 				microsailtable.destroy();
 			}
-			microsailtable=$('#datatable-score-stationkeeping-microsailboat').DataTable({
+			microsailtable=$('#datatable-score-triangular-microsailboat').DataTable({
 				paging: true
 			});
 		}       

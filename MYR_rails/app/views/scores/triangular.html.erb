@@ -2,57 +2,30 @@
 <p id="notice"><%= notice %></p>
 <%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'triangular_ranking', 'data-turbolinks-track' => true %>
 
-<!-------------------- Triangular Course ---------------------->
-<h1>Listing Triangular Course Scores</h1>
-<table id="datatable-score-triangular" class="dataTable display" >
-  <thead>
-    <tr >
-        <th >id</th>
-				
-        <th >Attempt</th>
-        <th >Timecost</th>
-        <th >Rawscore</th>
-				<th >Penalty</th>
-				<th >PenaltyDescription</th>
-				<th>Calculated time</th>
-			<% if sign_in? %>
-				<th> Options</th>			
-			<% end %>
-    </tr>
-  </thead>
-  <tbody>
-		<% @sail_scores.each do |score| %>
-			<% if score != nil %>
-			<tr>
-		 		<td><%= link_to score.id, score %></td>
-		   	<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
-				<td><%= score.timecost %></td>
-				<td><%= score.rawscore %></td>
-				
-				<td><%= score.datetimes %></td>  
-				<% if sign_in? %>
-		      <% if is_admin? %>
-		        <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>
-		        <%= link_to 'Delete', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-		      <% end %>
-		    <% end %>
-			</tr>  
-			<% end %>
-		<% end %>
-  </tbody>
-</table>
 
+<!-------------------- Triangular Course---------------------->
+<center><h1>Listing Triangular Course Scores</h1>
+<% if @m!= nil %>
+	From <%= @m.start%> To <%= @m.end%>
+<% else %>
+	Not any "triangular-course" type mission was created.
+<% end %>
+<br />
+
+
+</center>
+<br />
+<button id="ranking-triangular-sailboat">Calculate the ranking (Category: Sailboat)</button><br />
+<br />
+<div id="triangular-sailboat-table"></div>
+
+<button id="ranking-triangular-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<div id="triangular-microsailboat-table"></div>
 
 
 
 <%= link_to 'New Score', new_score_path %>
 
-<script>
-$(document).ready( function () {
-  $('#datatable-score-triangular').DataTable({
-		paging: true
-	});
 
-} );
-</script>

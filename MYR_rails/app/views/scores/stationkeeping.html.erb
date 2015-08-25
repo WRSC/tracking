@@ -7,7 +7,11 @@
 
 <!-------------------- Station Keeping ---------------------->
 <center><h1>Listing Station Keeping Scores</h1>
-From <%= @m.start%> To <%= @m.end%>
+<% if @m!= nil %>
+	From <%= @m.start%> To <%= @m.end%>
+<% else %>
+	Not any "station-keeping" type mission was created.
+<% end %>
 <br />
 
 
@@ -17,7 +21,7 @@ From <%= @m.start%> To <%= @m.end%>
 <br />
 <div id="stationkeeping-sailboat-table"></div>
 
-<button id="ranking-staionkeeping-sailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<button id="ranking-staionkeeping-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
 <div id="stationkeeping-microsailboat-table"></div>
 
 

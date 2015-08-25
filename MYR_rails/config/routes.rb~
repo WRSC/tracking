@@ -95,8 +95,16 @@ Rails.application.routes.draw do
 		get  'newScoreinfo'            ,  to: 'scores#newScoreinfo'
 		get  'calculateTimecost'       ,  to: 'scores#calculateTimecost'
 		get  'calculateRawscore'       ,  to: 'scores#calculateRawscore'
+#===================== triangular ====================================
+		get  'triangularsailboat'      ,  to: 'scores#triangularsailboat'
+	  get  'triangularmicrosailboat' ,  to: 'scores#triangularmicrosailboat'
+#===================== station keeping ===============================
 		get  'stationkeepingsailboat'  ,  to: 'scores#stationkeepingsailboat'
-	  get  'stationkeepingmicrosailboat',  to: 'scores#stationkeepingmicrosailboat
+	  get  'stationkeepingmicrosailboat',  to: 'scores#stationkeepingmicrosailboat'
+#===================== fleet race =====================================
+		get  'racesailboat'            ,  to: 'scores#racesailboat'
+	  get  'racemicrosailboat'       ,  to: 'scores#racemicrosailboat'
+
 
 
 

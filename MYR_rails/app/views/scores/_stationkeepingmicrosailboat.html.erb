@@ -19,26 +19,30 @@ Finished <%= @microsail_scores.length%> / All station keeping attempts <%= @micr
   </thead>
   <tbody>
 		<% @microsail_scores.each do |score| %>
-			<tr>
-				<% if score.attempt.robot.finalrank!=nil%>
-		 		<td><%= score.attempt.robot.finalrank%></td>
-				<% else %>
-					<td>#</td>
-				<% end %>
-				<td><%= score.attempt.robot.team.name %></td>
-		   	<td><%= score.attempt.robot.name %></td>
-				<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
-				<td><%= score.timecost %></td>
-				<td><%= score.rawscore %></td>
+		
+				<% if score!=nil %>
+				<tr>
+					<% if score.attempt.robot.stationRank!=nil%>
+			 			<td><%= score.attempt.robot.stationRank%></td>
+					<% else %>
+						<td>#</td>
+					<% end %>
+					<td><%= score.attempt.robot.team.name %></td>
+				 	<td><%= score.attempt.robot.name %></td>
+					<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
+					<td><%= score.timecost %></td>
+					<td><%= score.rawscore %></td>
 			
-				<td><%= score.datetimes %></td>  
-				<% if sign_in? %>
-		      <% if is_admin? %>
-		        <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>
-		        <%= link_to 'Delete', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-		      <% end %>
-		    <% end %>
-			</tr>  
+					<td><%= score.datetimes %></td>  
+					<% if sign_in? %>
+				    <% if is_admin? %>
+				      <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>
+				      <%= link_to 'Delete', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				    <% end %>
+				  <% end %>
+				</tr>  
+				<% end %>
+			
 	
 		<% end %>
   </tbody>

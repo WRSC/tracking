@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825072111) do
+ActiveRecord::Schema.define(version: 20150825114606) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -80,13 +80,24 @@ ActiveRecord::Schema.define(version: 20150825072111) do
   create_table "robots", force: :cascade do |t|
     t.string   "name"
     t.string   "category"
-    t.integer  "team_id",     null: false
+    t.integer  "team_id",               null: false
     t.integer  "tracker_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "bestscoreId"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "finalrank"
-    t.float    "bestscore"
+    t.decimal  "bestTriangulartime"
+    t.integer  "bestTriangularscoreId"
+    t.integer  "triangularRank"
+    t.float    "bestStationscore"
+    t.integer  "bestStationscoreId"
+    t.integer  "stationRank"
+    t.float    "bestAreascore"
+    t.integer  "bestAreascoreId"
+    t.integer  "areaRank"
+    t.decimal  "bestRacetime"
+    t.integer  "bestRacescoreId"
+    t.integer  "raceRank"
+    t.float    "finalscore"
   end
 
   create_table "scores", force: :cascade do |t|

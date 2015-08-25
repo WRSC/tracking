@@ -285,7 +285,7 @@ Member.create!(name:  "testAreaScanning",
              leader_id: 4)
 #id=3
  Robot.create!(name:  "testAreaScanning",
-              category: "Sailboat",
+              category: "MicroSailboat",
               team_id: 3)
 #id=3
  Attempt.create!(name: "testAreaScanning's first attempt",
@@ -373,7 +373,7 @@ Member.create!(name:  "testFleetrace",
       lng=2.5+r*Math::sin(theta)
 
 	end
-
+=begin
   5.times do |n|
  		 Attempt.create!(name: "testStationKeeping's #{n} attempt",
 							start: "20150601000000",
@@ -381,4 +381,13 @@ Member.create!(name:  "testFleetrace",
 							robot_id: 4,
 							mission_id: 2,
 							tracker_id: n+5)
+	end
+=end
+	5.times do |n|
+		 Attempt.create!(name: "testTriangular's #{n} attempt",
+							start: "20150601000000",
+							end: "20150901000000",
+							robot_id: 2,
+							mission_id: 1,
+							tracker_id: n+5)	
 	end

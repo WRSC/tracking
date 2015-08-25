@@ -12,6 +12,7 @@ class ScoresController < ApplicationController
 	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
 
 	before_action :share_score_with_ajax, only: [:newAttemptinfo,:newScoreinfo,:calculateScore,:new]
+	before_action :share_stationkeeping_params, only:[:stationkeeping, :stationkeepingsailboat, :stationkeepingmicrosailboat]
 
 
   	def index
@@ -54,6 +55,7 @@ class ScoresController < ApplicationController
 					when "StationKeeping"
 						if rob.bestscoreId==nil || Score.find_by_id(rob.bestscoreId).rawscore < @score.rawscore 
 							rob.update_attribute(:bestscoreId, @score.id) 
+							rob.update_attribute(:bestscore, @score.rawscore) 
 						end
 					when "AreaScanning"
 						
@@ -144,29 +146,27 @@ class ScoresController < ApplicationController
 	end
 
 	def stationkeeping
-		# make sure the mission mtype is StaionKeeping
-		@m=Mission.where(mtype: "StationKeeping")[0]
-		sail_ids=[]
-		@sailboatlist.each do |rob|
-			sail_ids.push(rob.id)		
-		end	
-		m_id=@m.id
-		sail_atts=Attempt.where(mission_id: m_id).where(robot_id: sail_ids)		
-		@sail_scores=[]
-		sail_atts.each do |a|
-			if a.score != nil
-				@sail_scores.push(a.score)
+	end
+
+	def stationkeepingsailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			@robots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "Sailboat").order(bestscore: :desc).uniq
+			for rank in 0..(@robots.length-1)
+				@robots[rank].update_attribute(:finalrank, rank+1)			
 			end
 		end
+	end
 
-		microsail_ids=[]
-		@microSailboatlist.each do |rob|
-			microsail_ids.push(rob.id)		
-		end
-		microsail_atts=Attempt.where(mission_id: m_id).where(robot_id: microsail_ids)	
-		@microsail_scores=[]
-		microsail_atts.each do |a|
-			@microsail_scores.push(a.score)
+	def stationkeepingmicrosailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			@robots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "MicroSailboat").order(bestscore: :desc).uniq
+			for rank in 0..(@robots.length-1)
+				@robots[rank].update_attribute(:finalrank, rank+1)			
+			end
 		end
 	end
 
@@ -221,6 +221,34 @@ class ScoresController < ApplicationController
 	end
   	
  	private
+		def share_stationkeeping_params
+			get_rob_by_category
+			# make sure the mission mtype is StaionKeeping
+			@m=Mission.where(mtype: "StationKeeping")[0]
+			sail_ids=[]
+			@sailboatlist.each do |rob|
+				sail_ids.push(rob.id)		
+			end	
+			m_id=@m.id
+			@sail_atts=Attempt.where(mission_id: m_id).where(robot_id: sail_ids)		
+			@sail_scores=[]
+			@sail_atts.each do |a|
+				if a.score != nil
+					@sail_scores.push(a.score)
+				end
+			end
+
+			microsail_ids=[]
+			@microSailboatlist.each do |rob|
+				microsail_ids.push(rob.id)		
+			end
+			@microsail_atts=Attempt.where(mission_id: m_id).where(robot_id: microsail_ids)	
+			@microsail_scores=[]
+			@microsail_atts.each do |a|
+				@microsail_scores.push(a.score)
+			end
+		end
+
 		def share_score_with_ajax
 			@score=Score.new
 		end

@@ -1,0 +1,45 @@
+<h2>Listing Station Keeping Category MicroSailboats' Scores </h2>
+Finished <%= @microsail_scores.length%> / All station keeping attempts <%= @microsail_atts.length%>
+<table id="datatable-score-stationkeeping-microsailboat" class="dataTable display" >
+  <thead>
+    <tr >
+        <th >Rank</th>
+				<th>Team</th>
+        <th >Robot</th>
+				<th>Attempt</th>
+        <th >Timecost</th>
+        <th >Rawscore</th>
+				<th >Penalty</th>
+				<th >PenaltyDescription</th>
+				<th>Calculated time</th>
+			<% if sign_in? %>
+				<th> Options</th>			
+			<% end %>
+    </tr>
+  </thead>
+  <tbody>
+		<% @microsail_scores.each do |score| %>
+			<tr>
+				<% if score.attempt.robot.finalrank!=nil%>
+		 		<td><%= score.attempt.robot.finalrank%></td>
+				<% else %>
+					<td>#</td>
+				<% end %>
+				<td><%= score.attempt.robot.team.name %></td>
+		   	<td><%= score.attempt.robot.name %></td>
+				<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
+				<td><%= score.timecost %></td>
+				<td><%= score.rawscore %></td>
+			
+				<td><%= score.datetimes %></td>  
+				<% if sign_in? %>
+		      <% if is_admin? %>
+		        <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>
+		        <%= link_to 'Delete', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		      <% end %>
+		    <% end %>
+			</tr>  
+	
+		<% end %>
+  </tbody>
+</table>

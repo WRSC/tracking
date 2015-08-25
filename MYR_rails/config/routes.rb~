@@ -93,8 +93,11 @@ Rails.application.routes.draw do
 
 		get  'newAttemptinfo'          ,  to: 'scores#newAttemptinfo'
 		get  'newScoreinfo'            ,  to: 'scores#newScoreinfo'
-		get  'calculateScore'          ,  to: 'scores#calculateTimecost'
+		get  'calculateTimecost'       ,  to: 'scores#calculateTimecost'
 		get  'calculateRawscore'       ,  to: 'scores#calculateRawscore'
+		get  'stationkeepingsailboat'  ,  to: 'scores#stationkeepingsailboat'
+	  get  'stationkeepingmicrosailboat',  to: 'scores#stationkeepingmicrosailboat
+
 
 
 

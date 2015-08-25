@@ -8,22 +8,23 @@
 	<% end %>
 <% end %>
 
-<table  id="table_id" class="dataTable display">
+<table  id="datatable-robot" class="dataTable display">
   <thead>
     <tr>
       <th>Name</th>
       <th>Category</th>
       <th>Team</th>
 			<% if sign_in? %>
-      <th >Option</th>
+      <th>Options</th>
 			<% end %>
     </tr>
   </thead>
 
   <tbody>
     
-	<tr>
+
 		<% @robots.each do |robot| %>
+		<tr>
 			<td><%= link_to robot.name, robot %></td>
 			<td><%= robot.category %></td>
 			<td><%= link_to Team.find(robot.team_id).name, Team.find(robot.team_id) %></td>
@@ -46,9 +47,9 @@
 
 <script>
 $(document).ready( function () {
-    $('#table_id').DataTable({
-			paging: true,
-			scrollY: 500
+    $('#datatable-robot').DataTable({
+			paging: true
+		
 		});
 } );
 </script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824111302) do
+ActiveRecord::Schema.define(version: 20150825072111) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20150824111302) do
     t.datetime "updated_at",  null: false
     t.integer  "bestscoreId"
     t.integer  "finalrank"
+    t.float    "bestscore"
   end
 
   create_table "scores", force: :cascade do |t|

@@ -73,6 +73,10 @@ class TeamsController < ApplicationController
   # DELETE /teams/1.json
   def destroy
     @team.robots.each do |robot|
+      @attempts = Attempt.where(robot_id: robot.id)
+      @attempts.each do |att|
+        att.destroy
+      end
       robot.destroy
     end
     @team.members.each do |member|

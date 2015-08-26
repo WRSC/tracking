@@ -33,5 +33,13 @@
         <%= @score.rawscore.to_s+' points' %>
       <% end %>
     </p>
-
-<%= link_to 'Back to index', scores_path %>
+<% case mission.mtype %>
+<% when "TriangularCourse"%>
+	<%= link_to 'Back to index', triangular_path %>
+<% when "Stationkeeping"%>
+	<%= link_to 'Back to index', stationkeeping_path %>
+<% when "AreaScanning"%>
+	<%= link_to 'Back to index', areascanning_path %>
+<% when "Race"%>
+	<%= link_to 'Back to index', fleetrace_path %>
+<% end %>

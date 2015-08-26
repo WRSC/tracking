@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826131828) do
+ActiveRecord::Schema.define(version: 20150826200520) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20150826131828) do
     t.decimal  "ascoef"
     t.decimal  "pointpenalty"
     t.text     "pointpenalty_description"
+    t.decimal  "finalscore"
   end
 
   create_table "sessions", force: :cascade do |t|

@@ -103,14 +103,27 @@ class ScoresController < ApplicationController
 						end
 #====================== case area scanning ============================
 					when "AreaScanning"
-						if rob.bestAreascoreId==nil 
+						p=-1
+						if  @score.humanintervention != 1
+							if @score.pointpenalty!=nil
+								p=@score.pointpenalty
+							else
+								p=0
+							end
+							@score.update_attribute(:finalscore, @score.rawscore-p) 
+						else
+							@score.update_attribute(:finalscore, 0.0) 
+					  end
+								
+
+						if rob.bestAreascoreId==nil
 							rob.update_attribute(:bestAreascoreId, @score.id) 
-							rob.update_attribute(:bestAreascore, @score.rawscore) 
+							rob.update_attribute(:bestAreascore, @score.finalscore) 
 						else
 							if @score.humanintervention != 1
-								if Score.find_by_id(rob.bestAreascoreId).humanintervention==1 || @score.rawscore > rob.bestAreascore
+								if @score.finalscore > rob.bestAreascore
 										rob.update_attribute(:bestAreascoreId, @score.id) 
-										rob.update_attribute(:bestAreascore, @score.rawscore) 
+										rob.update_attribute(:bestAreascore, @score.finalscore) 
 								end
 							end
 						end
@@ -325,29 +338,20 @@ class ScoresController < ApplicationController
 		if flag=="true"
 #ranking		
 		firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "Sailboat").order(bestAreascore: :desc).uniq
-			noHi=[]
-			yesHi=[]
+			robots=[]
 			notPaticipated=[]
 			firstrobots.each do |r|
 				if r.bestAreascoreId !=nil
-					if Score.find_by_id(r.bestAreascoreId).humanintervention == 1
-						yesHi.push(r)
-					else
-						noHi.push(r)				
-					end
+					robots.push(r)
 				else
 					notPaticipated.push(r)
 				end
 			end
 			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:areaRank, rank+1)	
-	
+			for rank in 0..(robots.length-1)
+				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
-			rank=noHi.length
-			yesHi.each do |r|
-				r.update_attribute(:areaRank, rank+1)
-			end
+			rank=robots.length
 			notPaticipated.each do |r|
 				r.update_attribute(:areaRank, 0)	
 			end
@@ -355,32 +359,24 @@ class ScoresController < ApplicationController
 	end
 
 	def areascanningmicrosailboat
-		flag=params[:flag]
+			flag=params[:flag]
 		if flag=="true"
 #ranking		
-			firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "MicroSailboat").order(bestAreascore: :desc).uniq
-			noHi=[]
-			yesHi=[]
+		firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "MicroSailboat").order(bestAreascore: :desc).uniq
+			robots=[]
 			notPaticipated=[]
 			firstrobots.each do |r|
 				if r.bestAreascoreId !=nil
-					if Score.find_by_id(r.bestAreascoreId).humanintervention == 1
-						yesHi.push(r)
-					else
-						noHi.push(r)				
-					end
+					robots.push(r)
 				else
 					notPaticipated.push(r)
 				end
 			end
 			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:areaRank, rank+1)	
+			for rank in 0..(robots.length-1)
+				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
-			rank=noHi.length
-			yesHi.each do |r|
-				r.update_attribute(:areaRank, rank+1)
-			end
+			rank=robots.length
 			notPaticipated.each do |r|
 				r.update_attribute(:areaRank, 0)	
 			end
@@ -601,6 +597,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description)
     end
 end

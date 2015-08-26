@@ -67,7 +67,9 @@ class ScoresController < ApplicationController
   	def create
 	    @score = Score.new(score_params)
 #humanintervention timecost=-10
-		
+			if @score.timepenalty != nil
+				@score.timecost=@score.timecost*(1+@score.timepenalty)
+			end
 	    respond_to do |format|
 	      if @score.save
 # compare current score with best score and update the information
@@ -410,18 +412,22 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:raceRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestRacescoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				note= (16-rank > 2 ?  16-rank : 2)
+				if s.marginten == 1
+					note > 5 ? note=note : note=5
+				end
+				s.update_attribute(:finalscore,note)	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
 				r.update_attribute(:raceRank, rank+1)
 				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, 0)	
+				s.update_attribute(:finalscore, 0)	
 			end
 			notPaticipated.each do |r|
 				r.update_attribute(:raceRank, 0)	
 				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, -1)	
+				s.update_attribute(:finalscore, -1)	
 			end
 		end
 	end
@@ -597,6 +603,7 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description, :timepenalty
+, :timepenalty_description, :marginten)
     end
 end

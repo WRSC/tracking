@@ -11,10 +11,10 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
         <th >Robot</th>
 				<th> Attempt</th>
         <th >Timecost</th>
-        <th >Rawscore</th>
+        <th >Final score</th>
 				<th >H I </th>
 				<th >AIS</th>
-				<th></th>
+				<th>Margin 10</th>
 			<% if sign_in? %>
 				<th> Options</th>			
 			<% end %>
@@ -38,8 +38,8 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 		   	<td><%= score.attempt.robot.name %></td>
 				<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
 				<td><%= score.timecost %></td>
-				<% if score.rawscore != nil%>
-					<td><%= score.rawscore %></td>
+				<% if score.finalscore != nil%>
+					<td><%= score.finalscore %></td>
 				<% else %>
 					<td></td>
 				<% end %>
@@ -53,7 +53,11 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 				<% else %>
 					<td>Yes</td>	
 				<% end %>
-				
+				<% if score.marginten==0 %>
+					<td>No</td>	
+				<% else %>
+					<td>Yes</td>	
+				<% end %>
 				<td></td>  
 				<% if sign_in? %>
 		      <% if is_admin? %>

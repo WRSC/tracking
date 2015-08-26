@@ -41,7 +41,6 @@ Rails.application.routes.draw do
 
     get 'map'             , to: 'markers#map'
   # score
-		get 'finalstanding'   , to: 'scores#finalstanding'
 		get 'triangular'      , to: 'scores#triangular'
     get 'areascanning'    , to: 'scores#areascanning' 
 		get 'stationkeeping'  , to: 'scores#stationkeeping'

@@ -9,7 +9,7 @@ class ScoresController < ApplicationController
 =end
 
 	before_action :set_score, only: [:edit, :show, :update, :destroy]
-	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
+	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :index]
 	before_action :share_score_with_ajax, only: [:newAttemptinfo,:newScoreinfo,:calculateScore,:new]
 
 	before_action :share_triangular_params, only:[:triangular, :triangularsailboat, :triangularmicrosailboat]
@@ -20,10 +20,7 @@ class ScoresController < ApplicationController
 
   	def index
 			@teamlist=Team.all
-			@TMission = Mission.where(mtype: "TriangularCourse")
-			@RMission = Mission.where(mtype: "Race")
-			@SKMission = Mission.where(mtype: "StationKeeping")
-			@ASMission = Mission.where(mtype: "AreaScanning")
+			
 			@scores=Score.all
   	end
 
@@ -160,9 +157,6 @@ class ScoresController < ApplicationController
 	    end
   end
 	
-
-	def finalstanding
-	end
   
 #======================== triangular ===========================================
 	def triangular

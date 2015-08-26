@@ -183,7 +183,17 @@ class CoordinatesController < ApplicationController
 		if (params[:tstart] != nil && params[:tend] != nil)
       tstart = params[:tstart]
       tend   = params[:tend]
-      newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers).order(datetime: :asc)
+      newCoords = Coordinate.where("? < datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers).order(tracker_id: :asc).order(datetime: :asc)
+      render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
+    end
+  end
+
+  def gatherCoordsLittleByLittle
+    trackers=params[:trackers]
+    if (params[:tstart] != nil && params[:tend] != nil)
+      tstart = params[:tstart]
+      tend   = params[:tend]
+      newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers).order(datetime: :asc).limit(10)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
     end
   end

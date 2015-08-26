@@ -41,7 +41,7 @@ function displayMarkersOrnot(){
   $( "input[name='display-official-markers']"  ).each(function () { 
     //si on clique dessus
     $(this).click(function() {
-      alert('changed')
+      //alert('changed')
       //récupére l'id de la checkbox
       var id = $(this).attr('id');
       //si coché

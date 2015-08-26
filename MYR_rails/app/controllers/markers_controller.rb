@@ -12,6 +12,10 @@ class MarkersController < ApplicationController
   def show
   end
 
+  def map
+    @missions = Mission.all
+  end
+
   # GET /markers/new
   def new
     @marker = Marker.new
@@ -108,6 +112,16 @@ class MarkersController < ApplicationController
 	def pointinfo
 	end
 
+  def getMissionMarkers
+    markers = []
+    markers = Marker.where(mission_id: params[:mission_id])
+    render json: markers.to_json
+  end
+
+  def mission_panel
+    @mission=Mission.find(params[:mission_id])
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_marker

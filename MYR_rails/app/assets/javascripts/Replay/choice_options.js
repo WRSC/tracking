@@ -1,14 +1,10 @@
 // for the info windows check box
 
-function wantInfo(tstart,tend,singleAttempt){
+function wantInfo(){
 	$(document).ready(function(){
 		$("#disp_info").each(function(){
-	    	if($(this).is(':checked')){
-	     		setShowInfo(false);
-	    		$(this).prop('checked',false);
-	     	}else{//si décoché
-	     		setShowInfo(false);
-	      	}
+	     	setShowInfo(false);
+	    	$(this).prop('checked',false);
 		});
 	});
 
@@ -16,47 +12,49 @@ function wantInfo(tstart,tend,singleAttempt){
     	if($(this).is(':checked')){
      		setShowInfo(true);
      		if (latest_markers[0].length > 0){
-     			displayInfoWindow(tstart,tend,singleAttempt)
+     			displayInfoWindow()
      		}
      	}else{//si décoché
       		setShowInfo(false);
       		if (latest_markers[0].length > 0){
+      			alert("removing listeners")
       			hideInfoWindow()
       		}	
       	}
 	});
 }
 
-function requestWantInfo(tstart,tend,singleAttempt){
-    //if (latest_markers.length > 0){
-   		displayInfoWindow(tstart,tend,singleAttempt)
-    //}
+function requestWantInfo(){
+    if (latest_markers[0].length > 0){
+   		displayInfoWindow()
+    }
 }
 
-function requestHideInfo(tstart,tend,singleAttempt){
-    //if (latest_markers.length > 0){
+function requestHideInfo(){
+    if (latest_markers[0].length > 0){
    		hideInfoWindow()
-    //}
+    }
 }
 
 function wantDoReplay(){
 	$(document).ready(function(){
 		$("#do_replay").each(function(){
-	    	if($(this).is(':checked')){
-	    		$(this).prop('checked',false);
-	     		setDoReplay(false);
-	     	}else{//si décoché
-	      		setDoReplay(false);
-	      	}
+	    	$(this).prop('checked',false);
+	     	setDoReplay(false);
 		});
 	});
 
 	$("#do_replay").click(function(){
     	if($(this).is(':checked')){
-    		alert("show me from the beginning !")
      		setDoReplay(true);
+     		setFirstLaunch(true);
      	}else{//si décoché
+     		if (myReset!= null){
+	      		clearInterval(myReset);
+      		}
       		setDoReplay(false);
+      		setFirstLaunch(false);
+      		alert("You need to click on the update button to load a new map.")
       	}
 	});
 }

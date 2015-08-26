@@ -1,4 +1,5 @@
 <% provide(:title, "Robots | Index") %>
+<p id="notice"><%= notice %></p>
 <%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <h1>List of robots</h1><br>
@@ -15,7 +16,7 @@
       <th>Category</th>
       <th>Team</th>
 			<% if sign_in? %>
-      <th>Options</th>
+      			<th>Options</th>
 			<% end %>
     </tr>
   </thead>
@@ -35,8 +36,13 @@
 					<td><%= link_to 'Show', robot %></td>
 				<% end %>
 			<% end %>
+		<% end %>
 	</tr>
-<% end %>
+<<<<<<< HEAD
+	<% end %>
+=======
+
+>>>>>>> b5eee1c7442006b8d3954e5114172f41c6fcab0d
 
   </tbody>
 </table>

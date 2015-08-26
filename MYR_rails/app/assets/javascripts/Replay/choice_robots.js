@@ -25,8 +25,10 @@ function run_choice_robots(){
 			
 				//quand on coche une checkbox pour la premiere fois
 				requestRefreshOnerobot(true);//affiche le volet pour missions tries
+				setSingleAttempt(true);
 		}else if (c > 1){
 			requestRefreshDatetimes();
+			setSingleAttempt(false);
 		}else{
 			requestRefreshOnerobot(false);
 		}
@@ -54,8 +56,10 @@ function run_choice_robots(){
 			if (c==1){
 				//quand on coche une checkbox pour la premiere fois
 				requestRefreshOnerobot(true)//affiche le volet pour missions tries
+				setSingleAttempt(true);
 			}else if (c > 1){
 				requestRefreshDatetimes();
+				setSingleAttempt(false);
 			}
 			else if (c==0){
 				requestRefreshOnerobot(false);
@@ -243,8 +247,13 @@ function requestGetTrackersFromDatetimes(roblist,datetime){
 				trackers=data
 				//alert(data)
 				//alert(datetime)
-				tabtime=datetime.split("_")	
-				requestGatherCoordsBetweenDates(tabtime[0],tabtime[1],trackers,false)
+				tabtime=datetime.split("_")
+				if (!getDoReplay()){
+					requestGatherCoordsBetweenDates(tabtime[0],tabtime[1],trackers)
+				}
+				else {
+					requestGatherCoordsLittleByLittle(tabtime[0],tabtime[1],trackers)
+				}
 			}
 		}       
 	});

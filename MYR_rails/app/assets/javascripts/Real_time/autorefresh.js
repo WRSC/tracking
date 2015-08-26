@@ -108,7 +108,7 @@ function manual_or_auto_refresh(){
 //--------------------------------------------------------------------------------------------------
 	//gather newly added coordinates or add coordinates since begining of mission
 function getNewCoordinates(){
-	$("#getNewCoordinates").click( function() {
+	//$("#getNewCoordinates").click( function() {
 		$.ajax({
 			type: "GET",
 			url: "/gatherCoordsSince",
@@ -121,11 +121,13 @@ function getNewCoordinates(){
 				}
 			}       
 		});
-	});
+	//});
 }
 
 function getNewTrackers(){
-	$("#getNewTrackers").click(function() {
+	// for testing, replace the button refresh by two buttons one for getting the trackers, one for getting the coordinates afterwards
+	//$("#getNewTrackers").click(function() {
+		$("#requestRefresh").click(function() {
 		$.ajax({
 			type: "GET",
 			url: "/getNewTrackers",
@@ -133,11 +135,12 @@ function getNewTrackers(){
 			dataType: "json",
 			success: function(data){// retrieve an array containing the not yet known trackers
 				if(data.length > 0){
-					saveNewDesiredTracker(data);//need to check???? need to clear when finish
+					saveNewDesiredTracker(data);
 					saveNewKnownTracker(data);
 					loadMissionRobots();
 					//alert("Received data: "+data);
 				}
+				getNewCoordinates();
 			}       
 		});
 	});
@@ -152,7 +155,6 @@ function getNewCoordinatesAuto(){
 			success: function(data){
 				if(data.length > 0){
 					refreshWithNewMarkers2(data,getMyMap());
-					//clearDesiredTrackers(getDesiredTrackers()); //need to check
 					if(first_launch){
 						myReset = setInterval(function() {
 						getNewTrackersAuto();

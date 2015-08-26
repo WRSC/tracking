@@ -7,6 +7,9 @@ var known_trackers = [];
 var desired_trackers = [];
 var showInfo = false;
 var doReplay = false;
+var singleAttempt = true;
+var myReset = null;
+var firstLaunch = false;
 
 /*
 var tab = [2,12,1,5];
@@ -58,6 +61,23 @@ jQuery.expr.filters.offscreen = function(el) {
 	function setDoReplay(val){
 		doReplay=val
 	}
+
+	function getSingleAttempt(){
+		return singleAttempt
+	}
+
+	function setSingleAttempt(val){
+		singleAttempt=val
+	}
+
+	function getFirstLaunch(){
+		return firstLaunch
+	}
+
+	function setFirstLaunch(val){
+		firstLaunch=val
+	}
+
 //--------MAP----------------
 function FullScreenControl(controlDiv) {
 	//see https://developers.google.com/maps/documentation/javascript/examples/control-custom
@@ -145,7 +165,7 @@ function FullScreenControl(controlDiv) {
 		
 	}
 	
-	function displayInfoWindow(tstart,tend,singleAttempt){
+	function displayInfoWindow(){
 		var markerTemp = [];
 		var tracker_idTemp = 0;
 		var datetimeTemp = 0.0;
@@ -164,56 +184,59 @@ function FullScreenControl(controlDiv) {
 				$.ajax({
 								type: "GET",
 								url: "/infowindow",
-								data: {tracker_id: tracker_idTemp, timestart: tstart, timeend: tend, datetime: datetimeTemp, singleAttempt: singleAttempt, isEnd: false, lat: latTemp, lng:lngTemp},
+								data: {tracker_id: tracker_idTemp, datetime: datetimeTemp, singleAttempt: getSingleAttempt(), isEnd: false, lat: latTemp, lng:lngTemp},
 								dataType: "html",
 								success: function(data){
 									//alert('change tracker')
 									//alert(data)
+									// loop to wait for the end of the previous ajax request
+									var j = 0;
+									while (j < 100000){
+										j=j+1
+									}
 									var temp = new google.maps.InfoWindow(
 										{
 											content: data
 										}
 									);
 									changeInfowindow.push(temp);
-									var j = 0;
-									while (j < 100){
-										j=j+1
-									}
 								}
 				})  
 			} 
 		}
 
-				markerTemp.push(latest_markers[0][latest_markers[0].length-1]);
+
 				tracker_idTemp = latest_markers[1][latest_markers[0].length-1];
 				datetimeTemp = latest_markers[2][latest_markers[0].length-1];
-				latTemp = markerTemp[markerTemp.length-1].getPosition().lat();
-				lngTemp = markerTemp[markerTemp.length-1].getPosition().lng();
+				latTemp = latest_markers[0][latest_markers[0].length-1].getPosition().lat();
+				lngTemp = latest_markers[0][latest_markers[0].length-1].getPosition().lng();
 				$.ajax({
 								type: "GET",
 								url: "/infowindow",
-								data: {tracker_id: tracker_idTemp, timestart: tstart, timeend: tend, datetime: datetimeTemp, singleAttempt: singleAttempt, isEnd: true, lat: latTemp, lng:lngTemp},
+								data: {tracker_id: tracker_idTemp, datetime: datetimeTemp, singleAttempt: getSingleAttempt(), isEnd: true, lat: latTemp, lng:lngTemp},
 								dataType: "html",
 								success: function(data){
 									//alert('change tracker')
 									//alert(data)
+									// loop to wait for the end of the previous ajax request
+									var j = 0;
+									while (j < 100000){
+										j=j+1
+									}
 									var temp = new google.maps.InfoWindow(
 										{
 											content: data
 										}
 									);
+
+									setTimeout(function(){
+									markerTemp.push(latest_markers[0][latest_markers[0].length-1]);
 									changeInfowindow.push(temp);
-									alert(changeInfowindow.length)
-									alert(markerTemp.length)
-									var j = 0;
-									while (j < 100){
-										j=j+1
-									}
-									alert(changeInfowindow.length)
-									alert(markerTemp.length)
-									for(var i=0; i < markerTemp.length ; i++){
-										addInfoWindow(changeInfowindow[i],markerTemp[i])
-									}
+
+										for(var i=0; i < markerTemp.length ; i++){
+											addInfoWindow(changeInfowindow[i],markerTemp[i])
+										}
+									}, 2000);
 								}
 				})
  
@@ -221,7 +244,12 @@ function FullScreenControl(controlDiv) {
 	
 
 	function hideInfoWindow(){
-
+		for(var i=0; i < latest_markers[0].length-1 ; i++){
+			if ((i%10)==0){
+				google.maps.event.clearListeners(latest_markers[0][i],'click')
+			}
+		}
+		google.maps.event.clearListeners(latest_markers[0][latest_markers[0].length-1],'click')
 	}
 
 	function addInfoWindow(infowindow,marker){
@@ -230,7 +258,7 @@ function FullScreenControl(controlDiv) {
 				google.maps.event.addListener(marker, 'click', function(event) {
 					var lat=event.latLng.lat()
 					var lng=event.latLng.lng()
-					myString='<font color=\'black\'><div>'+'<b>Latitude:</b>'+lat+'&nbsp;'+'<b>Longitude</b>'+lng+'</div>'+'</font>'
+					myString='<font color=\'black\'><div>'+'<b>Latitude: </b>'+lat+'&nbsp;'+'<b>Longitude: </b>'+lng+'</div>'+'</font>'
 					infowindow.content+=myString
 					infowindow.open(replay_map,marker);
 				});

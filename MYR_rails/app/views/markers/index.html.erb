@@ -6,7 +6,7 @@
 <h1>Listing Markers</h1>
 
 <% if sign_in? %>
-  <% if isInTeam? || is_admin? %>
+  <% if is_admin? %>
 
     <table id="datatable-marker" class="dataTable display">
       <thead>
@@ -44,9 +44,12 @@
 
     <% else %>
 
-    <h2>You cannot access this page. </h2>
+    <h2>You cannot access this page.</h2>
 
   <% end %>
+  <% else %>
+  <h2>You cannot access this page.</h2>
+
 <% end %>
 
 <% if is_admin? %>

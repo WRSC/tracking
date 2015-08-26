@@ -54,6 +54,14 @@ class MissionsController < ApplicationController
   # DELETE /missions/1
   # DELETE /missions/1.json
   def destroy
+    @attempts = Attempt.where(mission_id: @mission.id)
+    @attempts.each do |attempt|
+      attempt.destroy
+    end
+    @markers = Marker.where(mission_id: @mission.id)
+    @markers.each do |marker|
+      marker.destroy
+    end
     @mission.destroy
     respond_to do |format|
       format.html { redirect_to missions_url, notice: 'Mission was successfully destroyed.' }

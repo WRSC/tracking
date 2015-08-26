@@ -1,14 +1,6 @@
 //----------------------GLOBAL VARIABLES-------------------
 
-var lastDatetime = "10000101";
-var latest_markers = [[],[]]; //[0] for markers and [1] for tracker id
-var latest_buoys = [[],[]]; //[0] for buoys and [1] for mission id
-var known_trackers = [];
-var desired_trackers = [];
-var all_current_missions=[];
-var current_mission;
-var myReset;
-var lines = []; // keep the lines in memories
+var latest_buoys = []; //[0] for buoys and [1] for mission id
 /*
 var tab = [2,12,1,5];
 tab.sort(function(a, b){return a-b});
@@ -64,12 +56,7 @@ function FullScreenControl(controlDiv) {
 	//Map initialization
 	function initializeMap() {
 		//reset the global variables
-		latest_markers = [[],[]];
-		latest_buoys = [[],[]];
-		desired_trackers = [];
-		known_trackers = [];
-		lines = [];
-		lastDatetime = "10000101";
+		latest_buoys = [];
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.ROAD,
@@ -103,26 +90,20 @@ function FullScreenControl(controlDiv) {
 
 	}
 
+function getMyMap(){
+	return map_marker;
+}
+
+
 /*============ Clear Google Map================================*/
 
 function eraseMap() {
 		//stop displaying the points
-		for(var i=0; i < latest_markers[0].length ; i++){
-			latest_markers[0][i].setMap(null);
-		}
 		for(var i=0; i < latest_buoys[0].length ; i++){
-			latest_buoys[0][i].setMap(null);
-		}
-		for(var i=0; i < lines.length ; i++){
-			lines[i].setMap(null);
+			latest_buoys[i].setMap(null);
 		}
 		//reset the global variables
-		latest_markers = [[],[]];
-		latest_buoys = [[],[]];
-		desired_trackers = [];
-		known_trackers = [];
-		lines = [];
-		lastDatetime = "10000101";
+		latest_buoys = [];
 	}
 
 /*======== End initialize Google Map===============================*/
@@ -138,13 +119,10 @@ function eraseMap() {
 //Fit the zoom to see all the displayed points
 	function adaptZoom(){
 		var bounds = new google.maps.LatLngBounds();
-		for(var i=0; i < latest_markers[0].length ; i++){
-			bounds.extend(latest_markers[0][i].getPosition());
+		for(var i=0; i < latest_buoys.length ; i++){
+			bounds.extend(latest_buoys[i].getPosition());
 		}
-		for(var i=0; i < latest_buoys[0].length ; i++){
-			bounds.extend(latest_buoys[0][i].getPosition());
-		}
-		map.fitBounds(bounds);
+		map_marker.fitBounds(bounds);
 	}
 	
 

@@ -97,6 +97,10 @@ class MembersController < ApplicationController
           @team=Team.find_by_leader_id(@member.id)
           @robots = Robot.where(team_id: @team.id)
           @robots.each do |rob|
+            @attempts = Attempt.where(robot_id: rob.id)
+            @attempts.each do |att|
+              att.destroy
+            end
             rob.destroy
           end
           @team.destroy

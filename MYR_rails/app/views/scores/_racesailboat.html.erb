@@ -2,7 +2,7 @@
 
 
 Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.length%>
-<%= @robots.inspect%>
+
 <table id="datatable-score-race-sailboat" class="dataTable display" >
   <thead>
     <tr >
@@ -12,9 +12,9 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 				<th> Attempt</th>
         <th >Timecost</th>
         <th >Rawscore</th>
-				<th >Human Intervention <br />(Not Collision avoidance)</th>
+				<th >H I </th>
 				<th >AIS</th>
-				<th>Calculated time</th>
+				<th></th>
 			<% if sign_in? %>
 				<th> Options</th>			
 			<% end %>
@@ -32,7 +32,7 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 						<td>*</td>
 					<% end %>
 				<% else %>
-					<td>#</td>
+					<td>?</td>
 				<% end %>
 				<td><%= score.attempt.robot.team.name %></td>
 		   	<td><%= score.attempt.robot.name %></td>
@@ -43,9 +43,18 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 				<% else %>
 					<td></td>
 				<% end %>
-				<td><%= score.humanintervention %></td>	
-				<td><%= score.AIS %></td>	
-				<td><%= score.datetimes %></td>  
+				<% if  score.humanintervention==0 %>
+					<td>No</td>	
+				<% else %>
+					<td>Yes</td>	
+				<% end %>
+				<% if   score.AIS==0 %>
+					<td>No</td>	
+				<% else %>
+					<td>Yes</td>	
+				<% end %>
+				
+				<td></td>  
 				<% if sign_in? %>
 		      <% if is_admin? %>
 		        <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>

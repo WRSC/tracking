@@ -25,8 +25,11 @@
 	<!-- time cost --> <!-- add by hand or calculate by fonctions-->
 	<%= f.label :TimeCost %>
   <%= f.number_field :timecost %> seconds
-	<input id="cal-timecost" type="button" value="Calculate the timecost Automatically"></input><br /><br />
-<!--===============================================================================================-->
+
+	<% if @mission.mtype!="AreaScanning"%>
+		<input id="cal-timecost" type="button" value="Calculate the timecost Automatically"></input><br /><br />
+	<% end %>
+<!--===============================================================================-->
 
 	<% case @mission.mtype %>
 	<% when "TriangularCourse"%>
@@ -39,6 +42,13 @@
 	<% when "AreaScanning"%>
 		<%= f.label :RawScore %> 
 		<%= f.number_field :rawscore, :class => 'text_field', :step => 'any' %> points 
+
+		<%= f.label :pointpenalty, "Point Penalty" %>
+		<%= f.number_field :pointpenalty, :class => 'text_field', :step => 'any' %> points 
+
+		<%= f.label :pointpenalty_description, "Point Penalty Description" %>
+		<%= f.text_area :pointpenalty_description %> 
+
 	<% when "Race" %>
 		<%= f.label :timepenalty, "Time Penalty coefficient ( Timecost_final=timecost*(timepenalty+1) )" %> 
 		<%= f.number_field :timepenalty, :class => 'text_field', :step => 'any' %><br /><br />

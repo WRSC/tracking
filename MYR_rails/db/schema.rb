@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825114606) do
+ActiveRecord::Schema.define(version: 20150826131828) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -106,12 +106,15 @@ ActiveRecord::Schema.define(version: 20150825114606) do
     t.float    "rawscore"
     t.datetime "datetimes"
     t.integer  "rank"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.float    "timepenalty"
     t.text     "timepenalty_description"
-    t.decimal  "humanintervention"
-    t.decimal  "AIS"
+    t.integer  "humanintervention"
+    t.integer  "AIS"
+    t.decimal  "ascoef"
+    t.decimal  "pointpenalty"
+    t.text     "pointpenalty_description"
   end
 
   create_table "sessions", force: :cascade do |t|

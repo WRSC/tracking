@@ -21,6 +21,7 @@ module ScoreHelper
 				t=getTimeRaceCourse(a)
 			end
 		end
+	
 		return t
 	end
 

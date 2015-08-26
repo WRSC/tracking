@@ -101,6 +101,9 @@ Rails.application.routes.draw do
 #===================== station keeping ===============================
 		get  'stationkeepingsailboat'  ,  to: 'scores#stationkeepingsailboat'
 	  get  'stationkeepingmicrosailboat',  to: 'scores#stationkeepingmicrosailboat'
+#===================== area scanning ==================================
+		get  'areascanningsailboat'    ,  to: 'scores#racesailboat'
+	  get  'areascanningmicrosailboat',  to: 'scores#areascanningmicrosailboat'
 #===================== fleet race =====================================
 		get  'racesailboat'            ,  to: 'scores#racesailboat'
 	  get  'racemicrosailboat'       ,  to: 'scores#racemicrosailboat'

@@ -4,8 +4,8 @@ class AddHumainInteractionToScore < ActiveRecord::Migration
 		 remove_column :scores, :penalty_description, :text
 		 add_column    :scores, :timepenalty, :float
 		 add_column    :scores, :timepenalty_description, :text
-	   add_column    :scores, :humanintervention, :decimal
-		 add_column    :scores, :AIS, :decimal
+	   add_column    :scores, :humanintervention, :int
+		 add_column    :scores, :AIS, :int
 		
   end
 end

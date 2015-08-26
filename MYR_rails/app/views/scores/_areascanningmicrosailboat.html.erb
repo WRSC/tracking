@@ -1,6 +1,6 @@
-<h2>Listing Station Keeping Category MicroSailboats' Scores </h2>
-Finished <%= @microsail_scores.length%> / All station keeping attempts <%= @microsail_atts.length%>
-<table id="datatable-score-stationkeeping-microsailboat" class="dataTable display" >
+<h2>Listing Area Scanning Category MicroSailboats' Scores </h2>
+Finished <%= @microsail_scores.length%> / All area scanning attempts <%= @microsail_atts.length%>
+<table id="datatable-score-areascanning-microsailboat" class="dataTable display" >
   <thead>
     <tr >
         <th >Rank</th>
@@ -21,9 +21,9 @@ Finished <%= @microsail_scores.length%> / All station keeping attempts <%= @micr
 		<% @microsail_scores.each do |score| %>
 				<% if score!=nil %>
 				<tr>
-					<% if score.attempt.robot.stationRank!=nil%>
-						<% if score.id== score.attempt.robot.bestStationscoreId%>
-			 				<td><%= score.attempt.robot.stationRank %></td>
+					<% if score.attempt.robot.areaRank!=nil %>
+						<% if score.id== score.attempt.robot.bestAreascoreId %>
+			 				<td><%= score.attempt.robot.areaRank %></td>
 						<% else %>
 							<td>*</td>
 						<% end %>

@@ -10,9 +10,9 @@ Finished <%= @microsail_scores.length%> / All triangular course attempts <%= @mi
 				<th> Attempt</th>
         <th >Timecost</th>
         <th >Rawscore</th>
-				<th >Human Intervention <br />(Not Collision avoidance)</th>
+				<th >H I</th>
 				<th >AIS</th>
-				<th>Calculated time</th>
+				<th></th>
 			<% if sign_in? %>
 				<th> Options</th>			
 			<% end %>
@@ -22,23 +22,35 @@ Finished <%= @microsail_scores.length%> / All triangular course attempts <%= @mi
 		<% @microsail_scores.each do |score| %>
 			<% if score != nil %>
 			<tr>
-		 		<% if score.attempt.robot.finalrank!=nil%>
+		 		<% if score.attempt.robot.triangularRank!=nil%>
 					<% if score.id== score.attempt.robot.bestTriangularscoreId%>
 		 				<td><%= score.attempt.robot.triangularRank%></td>
 					<% else %>
-						<td></td>
+						<td>*</td>
 					<% end %>
 				<% else %>
-					<td>#</td>
+					<td>?</td>
 				<% end %>
 				<td><%= score.attempt.robot.team.name %></td>
 		   	<td><%= score.attempt.robot.name %></td>
 				<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
 				<td><%= score.timecost %></td>
-				<td><%= score.rawscore %></td>
-				<td><%= score.humanintervention %></td>	
-				<td><%= score.AIS %></td>	
-				<td><%= score.datetimes %></td>  
+				<% if score.rawscore != nil%>
+					<td><%= score.rawscore %></td>
+				<% else %>
+					<td></td>
+				<% end %>
+				<% if  score.humanintervention==0 %>
+					<td>No</td>	
+				<% else %>
+					<td>Yes</td>	
+				<% end %>
+				<% if   score.AIS==0 %>
+					<td>No</td>	
+				<% else %>
+					<td>Yes</td>	
+				<% end %>
+				<td></td>  
 				<% if sign_in? %>
 		      <% if is_admin? %>
 		        <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>

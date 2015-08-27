@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     get 'markersCreation' , to: 'admin_markers#show'
 
     get 'map'             , to: 'markers#map'
+    
   # score
 		get 'finalstanding'   , to: 'scores#finalstanding'
 		get 'triangular'      , to: 'scores#triangular'

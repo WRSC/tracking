@@ -1,8 +1,14 @@
 <p> Click on the markers to see their attributes. </p>
 
-<h2><b><u>Mission attributes</u></b></h2>
-<p><b>Name: </b><%=@mission.name%></p>
-<p><b>Type: </b><%=@mission.mtype%></p>
-<p><b>Category: </b><%=@mission.category%></p>
-<p><b>Start: </b><%=@mission.start%></p>
-<p><b>End: </b><%=@mission.end%></p>
+	<h2><b><u>Mission attributes</u></b></h2>
+	<p><b>Name: </b><%=@mission.name%></p>
+	<p><b>Type: </b><%=@mission.mtype%></p>
+	<p><b>Category: </b><%=@mission.category%></p>
+	<p><b>Start: </b><%=@mission.start%></p>
+	<p><b>End: </b><%=@mission.end%></p>
+
+	<% if @markers != nil %>
+		<p> This mission has <%= @markers.length %> marker(s). </p>
+	<% else %>
+		<p> There is no markers created for this mission </p>
+	<% end %>

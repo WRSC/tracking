@@ -1,6 +1,6 @@
 class MarkersController < ApplicationController
   before_action :set_marker, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticateA, only: [:new, :edit, :update, :destroy]
   # GET /markers
   # GET /markers.json
   def index
@@ -120,6 +120,7 @@ class MarkersController < ApplicationController
 
   def mission_panel
     @mission=Mission.find(params[:mission_id])
+    @markers=Marker.where(mission_id: params[:mission_id])
   end
   
   private

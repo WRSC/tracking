@@ -43,7 +43,8 @@ end
                password_confirmation: "123456",
                role:     'competitor',
                activated: true,
-               activated_at: Time.zone.now)
+               activated_at: Time.zone.now,
+               team_id: n+1)
 #id=1-2		
 	Team.create!(name:  "testTriangular#{n}'s team",
            description: "root test for triangular",

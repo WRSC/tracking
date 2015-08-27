@@ -8,7 +8,7 @@ class Team < ActiveRecord::Base
 
 # Validations
     validates :name, presence: true, uniqueness: true, length: { in: 3..40, too_long: "%{count} characters is the maximum allowed", too_short:"%{count} characters is the minimum allowed"  }
-    validates :logo, allow_blank: true, format: {with: %r{\.(gif|jpg|png)\Z}i, message: 'must be a URL for GIF, JPG or PNG image'}	
+    validates :logo, allow_blank: true, format: {with: %r{\.(gif|jpg|jpeg|png)\Z}i, message: 'must be GIF, JPG or PNG image'}	
   #  validate :valid_size
 =begin
     def valid_size

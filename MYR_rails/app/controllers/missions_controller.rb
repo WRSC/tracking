@@ -1,6 +1,6 @@
 class MissionsController < ApplicationController
   before_action :set_mission, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticateA, only: [:new, :edit, :update, :destroy]
   # GET /missions
   # GET /missions.json
   def index
@@ -77,6 +77,6 @@ class MissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mission_params
-      params.require(:mission).permit(:name, :start, :end, :mtype)
+      params.require(:mission).permit(:name, :start, :end, :mtype, :category)
     end
 end

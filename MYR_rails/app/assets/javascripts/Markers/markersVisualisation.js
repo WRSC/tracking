@@ -43,9 +43,9 @@ function requestMissionMarkers(mission_id){
 			data: {mission_id: mission_id},
 			dataType: "json",
 			success: function(data){
-				if(data.length > 0){
+				// if(data.length > 0){
 					refreshWithNewMarkers(data,getMyMap());
-				}
+				// }
 			}       
 		});
 }

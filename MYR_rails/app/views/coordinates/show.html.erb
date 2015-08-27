@@ -1,6 +1,9 @@
 <% provide(:title, "Coordinates | show") %>
 <p id="notice"><%= notice %></p>
 
+<% if sign_in? %>
+  <% if isInTeam? || is_admin? %>
+
 <p>
   <strong>Latitude:</strong>
   <%= @coordinate.latitude %>
@@ -35,3 +38,6 @@
 	<%= link_to 'Edit', edit_coordinate_path(@coordinate) %> | <%= link_to 'Delete', @coordinate, method: :delete, data: { confirm: 'Delete this coordinate ?' } %> |
 <% end %>
 <%= link_to 'Back to index', coordinates_path %>
+
+  <% end %>
+<% end %>

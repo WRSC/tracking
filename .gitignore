@@ -1,9 +1,6 @@
 MYR_rails/app/views/real_time/UpdateMap.js.erb~
 *.sqlite3
 *.yml
-MYR_rails/db/development.sqlite3
-MYR_rails/db/production.sqlite3
-MYR_rails/db/test.sqlite3
 MYR_rails/public/assets/Replay/replay-9e0af0f4cdd44616193e16e475a84ced9f1ef12ccb11459e1730ac2027abcf7f.js
 MYR_rails/public/assets/Replay/choice_robots-7a9cf873c60dc7b0070679a589c4c92eec35e4ab99455b66296e32d320a3309c.js
 MYR_rails/public/assets/Replay/officialMarkers-3607ec6fa1454aa2f4045f471421c192b9b2768b3abc8b799eb7be24a26ce402.js

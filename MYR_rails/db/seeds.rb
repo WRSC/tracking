@@ -531,4 +531,12 @@
 		mission_id: 6,
 		description: "Zone for Station Keeping, category Micro Sailboats"
 		)
+
+	i=1
+	12.times do |n|
+		token=i
+		Tracker.create!(token:  "#{i}",
+	             		  description: "Tracker #{i}")
+	  i=i+1
+	end
 # end

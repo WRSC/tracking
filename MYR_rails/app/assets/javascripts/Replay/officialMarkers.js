@@ -24,12 +24,12 @@ function drawPoint(data){
 	tablng=data.longitude.split("_")
 	for (var i=0;i<tablat.length;i++){	
 		if (tablat[i]!="" && tablng[i]!=""){
-			fixPoint=addFixMarker(tablat[i],tablng[i],data.name)
+			fixPoint=addFixMarker(tablat[i],tablng[i],data)
 		}
 	}
 }
 
-function addFixMarker(lat, lng, name){
+function addFixMarker(lat, lng, marker){
 	//alert('lat is '+lat+' lng is '+lng)
 	var image = {
 					url: 'icons/bigBuoy2.png',
@@ -37,22 +37,22 @@ function addFixMarker(lat, lng, name){
 					origin: new google.maps.Point(0,0),
 					anchor: new google.maps.Point(12, 37)
 				};
-	data = '<font color=\'black\'><div>'+'<b>Name: </b>'+name+'</div>'
+	data = '<font color=\'black\'><div>'+'<b>Name: </b>'+marker.name+'<br><b>Type: </b>'+marker.mtype+'<br><b>Description: </b>'+marker.description+'</div>'
 	var temp = new google.maps.InfoWindow(
 		{
 			content: data
 		}
 	);
 
-	var marker = new google.maps.Marker(
+	var buoyMarker = new google.maps.Marker(
 	{
 		position: new google.maps.LatLng(lat,lng),
 		icon: image
 	});
 
-	marker.setMap(replay_map);
-	addBuoyInfo(temp,marker)
-	return marker;
+	buoyMarker.setMap(replay_map);
+	addBuoyInfo(temp,buoyMarker)
+	return buoyMarker;
 }
 	
 function addBuoyInfo(infowindow,buoy){

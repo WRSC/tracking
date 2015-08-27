@@ -15,10 +15,10 @@
 		<br>
 		<% end %>
 	<% end %>
-	<input type="checkbox" name="robot<%= currentAttempts.last.robot_id %>" id="<%= currentAttempts.last.robot_id %>"><%= Robot.find(currentAttempts.last.robot_id).name %><img src="/icons/medium<%=currentAttempts.last.tracker_id %>.png"/>
+	<input type="checkbox" name="robot<%= currentAttempts.last.robot_id %>" id="<%= currentAttempts.last.robot_id%12 %>"><%= Robot.find(currentAttempts.last.robot_id).name %><img src="/icons/medium<%=currentAttempts.last.tracker_id%12 %>.png"/>
 	<br>
 <% elsif currentAttempts.length == 1  %>
-	<input type="checkbox" name="robot<%= currentAttempts.first.robot_id %>" id="<%= currentAttempts.first.robot_id %>"><%= Robot.find(currentAttempts.first.robot_id).name %><img src="/icons/medium<%=currentAttempts.first.tracker_id %>.png"/>
+	<input type="checkbox" name="robot<%= currentAttempts.first.robot_id %>" id="<%= currentAttempts.first.robot_id %>"><%= Robot.find(currentAttempts.first.robot_id).name %><img src="/icons/medium<%=currentAttempts.first.tracker_id%12 %>.png"/>
 	<br>
 <% else %>
 	<p> No robots for this mission has sent coordinates for the moment !</p>

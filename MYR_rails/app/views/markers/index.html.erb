@@ -27,7 +27,7 @@
           <tr>
             <td><%= marker.mtype %></td>
 						<td><%= marker.name %></td>
-						<td><%= marker.mission_id %></td>
+						<td><%= Mission.find(marker.mission_id).name %></td>
             <td><%= marker.description %></td>
             <td><%= marker.latitude %></td>
             <td><%= marker.longitude %></td>

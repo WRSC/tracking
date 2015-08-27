@@ -61,6 +61,10 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     daemons (1.2.3)
+    dotenv (2.0.2)
+    dotenv-rails (2.0.2)
+      dotenv (= 2.0.2)
+      railties (~> 4.0)
     erubis (2.7.0)
     eventmachine (1.0.7)
     execjs (2.5.2)
@@ -201,6 +205,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   carrierwave
   coffee-rails (~> 4.1.0)
+  dotenv-rails
   faker (= 1.4.2)
   guard-minitest (= 2.3.1)
   jbuilder (~> 2.0)

@@ -1,6 +1,6 @@
 class TrackersController < ApplicationController
   before_action :set_tracker, only: [:show, :edit, :update, :destroy]
-  #before_filter :authenticateA
+  before_filter :authenticateA
   # GET /trackers
   # GET /trackers.json
   def index

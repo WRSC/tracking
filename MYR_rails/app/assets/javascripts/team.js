@@ -4,18 +4,35 @@ google.load("visualization", "1", {packages:["orgchart"]});
 google.setOnLoadCallback(drawChart);
 
 function renderuploadxml(a_id){
-	alert(a_id)
+
 	$.ajax({
 		type: "GET",
 		url: "/uploadXMLAS",
 		data: {attempt: {uploadxml_a_id: a_id}},
 		
 		success: function(data){
-			alert(data)
+			$("#generate-xml-file").click(function(){
+				
+				requestGenerateXML(a_id)
+			})
 		}       
 		
 	});
 }
+
+function requestGenerateXML(a_id){
+	$.ajax({
+		type: "GET",
+		url: "/generateXMLfile",
+		data: {uploadxml_a_id: a_id},
+		
+		success: function(data){
+			
+		}       
+		
+	});
+}
+
 function drawChart() {
 				var a_id
 				$("#draw-chart").click()

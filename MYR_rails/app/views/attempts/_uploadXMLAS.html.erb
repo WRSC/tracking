@@ -2,7 +2,7 @@
 <%= form_for(:attempt) do |f| %>
 
   <%= f.hidden_field :uploadxml_a_id, value:@a.id %>
-	<%= @a.id%>
+	<%= f.hidden_field :upload_timestamp, value:Time.now %>
   <div class="field">
     <font color="blue">Upload area scanning xml/json file</font><br />
 		<% if @a.uploadxml.file != nil %>
@@ -11,7 +11,8 @@
 			<!--Rails.root+"/public"+desiredfilename -->
 			<% fullname = @a.uploadxml.file.file %>
 			<% ind_s=Rails.root.to_s.length+7 %>
-			<%= link_to filename, fullname[ind_s,fullname.length] %>
+			<%= link_to filename, fullname[ind_s,fullname.length] %><br />
+			Uploaded time: <%= @a.upload_timestamp %>
 		<% else %>
 			no file uploaded
 		<% end %>
@@ -21,4 +22,15 @@
   <div class="actions">
     <%= f.submit "Save"%>
   </div>
+	<% if is_admin? %>
+		<% if @a.generated_filename !=nil%>
+			<% filename= @a.generated_filename.split("/").last %>
+			<!--Rails.root+"/public"+desiredfilename -->
+			<% fullname =  @a.generated_filename %>
+			<% ind_s=Rails.root.to_s.length+7 %>
+			<%= link_to filename, fullname[ind_s,fullname.length] %><br />
+		<% end %>
+		<input type="button" value="Generate file" id="generate-xml-file"></input>
+		<div id="generated-file"></div>
+	<% end %>
 <% end %>

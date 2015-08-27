@@ -40,8 +40,8 @@ Rails.application.routes.draw do
     get 'markersCreation' , to: 'admin_markers#show'
 
     get 'map'             , to: 'markers#map'
+    
   # score
-		get 'finalstanding'   , to: 'scores#finalstanding'
 		get 'triangular'      , to: 'scores#triangular'
     get 'areascanning'    , to: 'scores#areascanning' 
 		get 'stationkeeping'  , to: 'scores#stationkeeping'
@@ -70,6 +70,7 @@ Rails.application.routes.draw do
 
 		get  'uploadXMLAS'             ,  to: 'attempts#uploadXMLAS'
 		post 'uploadXMLAS'             ,  to: 'attempts#updateXMLAS'
+		get  'uploadXMLAS'             ,  to: 'attempts#uploadXMLAS'
        
 
    	get  'map_panel'               ,  to: 'real_time#map_panel' 

@@ -10,7 +10,10 @@
 <h1>WRSC 2015 FINAL STANDING</h1>
 <!--table for Sailboat-->
 <h2><center>Category: Sailboat</center></h2>
-<button id="calculate-final-ranking">Calculate the final rank</button>
+<% if is_admin? %>
+	
+	<button id="calculate-final-ranking">Calculate the final rank</button>
+<% end %>
 <br /><br />
 <table id="racetimes">
   <tr id="firstrow" >
@@ -92,6 +95,8 @@
 				<% else %>
 					<td>/</td>
 				<% end %>
+				<td></td>
+				<td></td>
 	  	</tr>				
       <% i+=1%>
   <% end %>
@@ -180,14 +185,14 @@
 				<% else %>
 					<td>/</td>
 				<% end %>
+				<td></td>
+				<td></td>
 	  	</tr>				
       <% i+=1%>
 		<% end %>
 </table>
 
-
-<p id="export"></p>
-<p>Updated in <%= Time.now %></p>
+<br />
 </div>
 </div>
 

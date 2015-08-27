@@ -17,15 +17,18 @@
 
 </center>
 <br />
+<% if is_admin? %>
 <button id="ranking-race-sailboat">Calculate the ranking (Category: Sailboat)</button><br />
 <br />
+<% end %>
 <div id="race-sailboat-table"></div>
-
+<% if is_admin? %>
 <button id="ranking-race-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<% end %>
 <div id="race-microsailboat-table"></div>
 
 
-
+<% if is_admin? %>
 <%= link_to 'New Score', new_score_path %>
-
+<% end %>
 

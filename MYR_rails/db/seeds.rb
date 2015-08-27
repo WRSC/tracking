@@ -19,68 +19,68 @@
 # #SEEDS for development and test environment
 # #specify rake db:reset RAILS_ENV=development to be sure you load them correctly
 
-# 	Member.create!(name:  "testAdmin",
-# 	               email: "example@gmail.com",
-# 	               password:              "foobar",
-# 	               password_confirmation: "foobar",
-# 	               role:     'administrator',
-# 	               activated: true,
-# 	               activated_at: Time.zone.now)
+ 	Member.create!(name:  "testAdmin",
+ 	               email: "example@gmail.com",
+ 	               password:              "foobar",
+ 	               password_confirmation: "foobar",
+ 	               role:     'administrator',
+ 	               activated: true,
+ 	               activated_at: Time.zone.now)
 
-# 	Mission.create!(name:  "triangular Contest",
-# 									start: "20150601000000",
-# 									end:   "20150901000000",
-# 	             		mtype: "TriangularCourse",
-# 									category: "Sailboat")
+ 	Mission.create!(name:  "area scanning",
+ 									start: "20150601000000",
+ 									end:   "20150901000000",
+ 	             		mtype: "AreaScanning",
+ 									category: "Sailboat")
 
-# 	i=1
-# 	20.times do |n|
-# 		token=i
-# 		Tracker.create!(token:  "#{i}",
-# 	             		  description: "It was the #{i} tracker.")
-# 	  i=i+1
-# 	end
-# 	#============= test triangular scores ==============
-# 	2.times do |n|
-# 	#id=2-4
-# 		 Member.create!(name:  "testTriangular#{n}",
-# 	               email: "testTriangular@gmail.com",
-# 	               password:              "123456",
-# 	               password_confirmation: "123456",
-# 	               role:     'competitor',
-# 	               activated: true,
-# 	               activated_at: Time.zone.now,
-# 	               team_id: n+1)
-# 	#id=1-2		
-# 		Team.create!(name:  "testTriangular#{n}'s team",
-# 	           description: "root test for triangular",
-# 	           leader_id: 2+n)
-# 		Robot.create!(name:  "triangular#{n}'s sailrobot",
-# 	              category: "Sailboat",
-# 	              team_id: 1+n)
-# 		2.times do |m|
-# 			Attempt.create!(name: "triangular#{n}'s attempt",
-# 									start: "20150601000000",
-# 									end: "20150901000000",
-# 									robot_id: 1+2*n,
-# 									mission_id: 1,
-# 									tracker_id: m+1+n*2)
-# 		end
+ 	i=1
+ 	20.times do |n|
+ 		token=i
+ 		Tracker.create!(token:  "#{i}",
+ 	             		  description: "It was the #{i} tracker.")
+ 	  i=i+1
+ 	end
+ 	#============= test triangular scores ==============
+ 	2.times do |n|
+ 	#id=2-4
+ 		 Member.create!(name:  "testTriangular#{n}",
+ 	               email: "testTriangular@gmail.com",
+ 	               password:              "123456",
+ 	               password_confirmation: "123456",
+ 	               role:     'competitor',
+ 	               activated: true,
+ 	               activated_at: Time.zone.now,
+ 	               team_id: n+1)
+ 	#id=1-2		
+ 		Team.create!(name:  "testTriangular#{n}'s team",
+ 	           description: "root test for triangular",
+ 	           leader_id: 2+n)
+ 		Robot.create!(name:  "triangular#{n}'s sailrobot",
+ 	              category: "Sailboat",
+ 	              team_id: 1+n)
+ 		2.times do |m|
+ 			Attempt.create!(name: "triangular#{n}'s attempt",
+ 									start: "20150601000000",
+ 									end: "20150901000000",
+ 									robot_id: 1+2*n,
+ 									mission_id: 1,
+ 									tracker_id: m+1+n*2)
+ 		end
 
-# 		Robot.create!(name:  "triangular#{n}'s microsailrobot",
-# 	              category: "MicroSailboat",
-# 	              team_id: 1+n)
+ 		Robot.create!(name:  "triangular#{n}'s microsailrobot",
+ 	              category: "MicroSailboat",
+ 	              team_id: 1+n)
 
-# 		2.times do |m|
-# 			Attempt.create!(name: "triangular#{n}'s micro attempt",
-# 									start: "20150601000000",
-# 									end: "20150901000000",
-# 									robot_id: 2+2*n,
-# 									mission_id: 1,
-# 									tracker_id: 4*n+m+3)
+ 		2.times do |m|
+ 			Attempt.create!(name: "triangular#{n}'s micro attempt",
+ 									start: "20150601000000",
+ 									end: "20150901000000",
+ 									robot_id: 2+2*n,
+ 									mission_id: 1,
+ 									tracker_id: 4*n+m+3)
 
-# 		end
-# 	end
+ 		end
+ 	end
 
 # when "production"
 

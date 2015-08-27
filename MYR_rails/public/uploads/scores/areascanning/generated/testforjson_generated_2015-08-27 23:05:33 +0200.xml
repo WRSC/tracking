@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hash>
+  <name>testforjson</name>
+  <explanation>All the differences from trackers to team's coordinates are in absolute values with unity meter</explanation>
+  <data type="array">
+    <datum>
+      <sectioni>1</sectioni>
+      <sectionj>1</sectionj>
+      <geo-position-checking type="array">
+        <geo-position-checking>
+          <datetime>20150724102039</datetime>
+          <difference-from-tracker-to-team>tracker error</difference-from-tracker-to-team>
+        </geo-position-checking>
+      </geo-position-checking>
+      <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
+    </datum>
+    <datum>
+      <sectioni>1</sectioni>
+      <sectionj>2</sectionj>
+      <geo-position-checking type="array">
+        <geo-position-checking>
+          <datetime>20150724102253</datetime>
+          <difference-from-tracker-to-team>tracker error</difference-from-tracker-to-team>
+        </geo-position-checking>
+      </geo-position-checking>
+      <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>2</sectionj>
+      <geo-position-checking type="array">
+        <geo-position-checking>
+          <datetime>20150724102402</datetime>
+          <difference-from-tracker-to-team>tracker error</difference-from-tracker-to-team>
+        </geo-position-checking>
+      </geo-position-checking>
+      <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
+    </datum>
+    <datum>
+      <sectioni>1</sectioni>
+      <sectionj>2</sectionj>
+      <geo-position-checking type="array">
+        <geo-position-checking>
+          <datetime>20150724102253</datetime>
+          <difference-from-tracker-to-team>tracker error</difference-from-tracker-to-team>
+        </geo-position-checking>
+      </geo-position-checking>
+      <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>1</sectionj>
+      <geo-position-checking type="array">
+        <geo-position-checking>
+          <datetime>20150724102402</datetime>
+          <difference-from-tracker-to-team>tracker error</difference-from-tracker-to-team>
+        </geo-position-checking>
+      </geo-position-checking>
+      <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>1</sectionj>
+      <geo-position-checking type="array">
+        <geo-position-checking>
+          <datetime>20150724100427</datetime>
+          <difference-from-tracker-to-team>tracker error</difference-from-tracker-to-team>
+        </geo-position-checking>
+      </geo-position-checking>
+      <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
+    </datum>
+    <datum>
+      <sectioni>2</sectioni>
+      <sectionj>1</sectionj>
+      <geo-position-checking type="array">
+        <geo-position-checking>
+          <datetime>20150724142427</datetime>
+          <difference-from-tracker-to-team>tracker error</difference-from-tracker-to-team>
+        </geo-position-checking>
+      </geo-position-checking>
+      <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
+    </datum>
+  </data>
+  <Max-distance-from-all-sections>tracker error</Max-distance-from-all-sections>
+</hash>

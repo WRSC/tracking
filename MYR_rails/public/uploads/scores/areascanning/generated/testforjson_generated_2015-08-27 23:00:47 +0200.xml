@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <hash>
   <name>testforjson</name>
+  <explanation>All the differences from trackers to team's coordinates are in absolute values with unity meter</explanation>
   <data type="array">
     <datum>
       <sectioni>1</sectioni>
@@ -80,5 +81,5 @@
       <Section-Max-difference-from-tracker-to-team>tracker error</Section-Max-difference-from-tracker-to-team>
     </datum>
   </data>
-  <Max-distance-from-all-sections type="integer">-1</Max-distance-from-all-sections>
+  <Max-distance-from-all-sections>tracker error</Max-distance-from-all-sections>
 </hash>

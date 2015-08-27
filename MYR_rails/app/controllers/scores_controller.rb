@@ -203,19 +203,17 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:triangularRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:triangularRank, rank+1)
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, 0)	
+				if r!=nil
+					r.update_attribute(:triangularRank, rank+1)
+					s=Score.find_by_id(r.bestTriangularscoreId)
+					s.update_attribute(:finalscore, 0)
+				end	
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:triangularRank, 0)	
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, -1)	
-			end
+			
 		end
 	end
 	
@@ -243,19 +241,17 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:triangularRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:triangularRank, rank+1)
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, 0)	
+				if r!=nil
+					r.update_attribute(:triangularRank, rank+1)
+					s=Score.find_by_id(r.bestTriangularscoreId)
+					s.update_attribute(:finalscore, 0)	
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:triangularRank, 0)	
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, -1)	
-			end
+		
 		end
 	end
 
@@ -291,11 +287,11 @@ class ScoresController < ApplicationController
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:stationRank, rank+1)
+				if r!=nil
+					r.update_attribute(:stationRank, rank+1)
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:stationRank, 0)	
-			end
+		
 		end
 	end
 
@@ -326,11 +322,11 @@ class ScoresController < ApplicationController
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:stationRank, rank+1)
+				if r!=nil
+					r.update_attribute(:stationRank, rank+1)
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:stationRank, 0)	
-			end
+			
 		end
 	end
 #============================ area scanning ======================================
@@ -356,9 +352,7 @@ class ScoresController < ApplicationController
 				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
 			rank=robots.length
-			notPaticipated.each do |r|
-				r.update_attribute(:areaRank, 0)	
-			end
+		
 		end
 	end
 
@@ -381,9 +375,7 @@ class ScoresController < ApplicationController
 				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
 			rank=robots.length
-			notPaticipated.each do |r|
-				r.update_attribute(:areaRank, 0)	
-			end
+		
 		end
 	end
 
@@ -422,15 +414,13 @@ class ScoresController < ApplicationController
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:raceRank, rank+1)
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:finalscore, 0)	
+				if r!=nil
+					r.update_attribute(:raceRank, rank+1)
+					s=Score.find_by_id(r.bestRacescoreId)
+					s.update_attribute(:finalscore, 0)	
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:raceRank, 0)	
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:finalscore, -1)	
-			end
+			
 		end
 	end
 
@@ -461,15 +451,13 @@ class ScoresController < ApplicationController
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:raceRank, rank+1)
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:finalscore, 0)	
+				if r!=nil
+					r.update_attribute(:raceRank, rank+1)
+					s=Score.find_by_id(r.bestRacescoreId)
+					s.update_attribute(:finalscore, 0)	
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:raceRank, 0)	
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:finalscore, -1)	
-			end
+		
 		end
 	end
   	

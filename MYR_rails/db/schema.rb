@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826204821) do
+ActiveRecord::Schema.define(version: 20150827133223) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -20,9 +20,11 @@ ActiveRecord::Schema.define(version: 20150826204821) do
     t.integer  "robot_id"
     t.integer  "mission_id"
     t.integer  "tracker_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "uploadxml"
+    t.string   "upload_timestamp"
+    t.string   "generated_filename"
   end
 
   create_table "coordinates", force: :cascade do |t|

@@ -69,13 +69,15 @@ class AttemptsController < ApplicationController
 	# post uploadXMLAS
 	def updateXMLAS
 		a=Attempt.find_by_id(attempt_params[:uploadxml_a_id])
+		#render json: attempt_params[:uploadxml].original_filename
+
 		a.update(uploadxml: attempt_params[:uploadxml])
 		if a.save
 			redirect_to a.robot
 		else
 			redirect_to "/404"
 		end
-	
+
 	end
 
   private

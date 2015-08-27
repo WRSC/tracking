@@ -1,8 +1,8 @@
 
 <%= form_for(:attempt) do |f| %>
-  
-  <%= f.hidden_field :id, value:@a.id %>
-	
+
+  <%= f.hidden_field :uploadxml_a_id, value:@a.id %>
+	<%= @a.id%>
   <div class="field">
     <font color="blue">Upload area scanning xml/json file</font><br />
 		<% if @a.uploadxml.file != nil %>
@@ -13,6 +13,7 @@
 			<% ind_s=Rails.root.to_s.length+7 %>
 			<%= link_to filename, fullname[ind_s,fullname.length] %>
 		<% else %>
+			no file uploaded
 		<% end %>
     <%= f.file_field :uploadxml %>
   </div>

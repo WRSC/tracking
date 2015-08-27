@@ -421,6 +421,34 @@ module ScoreHelper
 		return a.to_i-b.to_i	
 	end
 
+
+=begin
+http://www.movable-type.co.uk/scripts/latlong.html
+	var R = 6371000; // metres
+	var φ1 = lat1.toRadians();
+	var φ2 = lat2.toRadians();
+	var Δφ = (lat2-lat1).toRadians();
+	var Δλ = (lon2-lon1).toRadians();
+
+	var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+		      Math.cos(φ1) * Math.cos(φ2) *
+		      Math.sin(Δλ/2) * Math.sin(Δλ/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+	var d = R * c;	
+=end
+	def d_to_m(s_lat_d,s_lng_d,d_lat_d,d_lng_d)
+		r = 6371000
+		s_lat_r=s_lat_d*Math::PI/180
+		d_lat_r=d_lat_d*Math::PI/180
+		delta_lat=d_lat_r-s_lat_r
+		delta_lng=(d_lng_d-s_lng_d)*Math::PI/180
+		a= Math.sin(delta_lat/2) * Math.sin(delta_lat/2) +Math.cos(s_lat_r) * Math.cos(d_lat_r) *Math.sin(delta_lng/2) * Math.sin(delta_lng/2);
+		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+		d = r * c
+	end
+	
+
 # enable download some files for users
 #http://stackoverflow.com/questions/13164063/file-download-link-in-rails 
  #here the json data files are in rails.root/public/uploads/scores/areascanning/nameoffile.json

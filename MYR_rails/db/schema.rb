@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150821090743) do
+ActiveRecord::Schema.define(version: 20150826131828) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -80,22 +80,41 @@ ActiveRecord::Schema.define(version: 20150821090743) do
   create_table "robots", force: :cascade do |t|
     t.string   "name"
     t.string   "category"
-    t.integer  "team_id",    null: false
+    t.integer  "team_id",               null: false
     t.integer  "tracker_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "finalrank"
+    t.decimal  "bestTriangulartime"
+    t.integer  "bestTriangularscoreId"
+    t.integer  "triangularRank"
+    t.float    "bestStationscore"
+    t.integer  "bestStationscoreId"
+    t.integer  "stationRank"
+    t.float    "bestAreascore"
+    t.integer  "bestAreascoreId"
+    t.integer  "areaRank"
+    t.decimal  "bestRacetime"
+    t.integer  "bestRacescoreId"
+    t.integer  "raceRank"
+    t.float    "finalscore"
   end
 
   create_table "scores", force: :cascade do |t|
     t.integer  "attempt_id"
     t.integer  "timecost"
     t.float    "rawscore"
-    t.float    "penalty"
     t.datetime "datetimes"
     t.integer  "rank"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.text     "penalty_description"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.float    "timepenalty"
+    t.text     "timepenalty_description"
+    t.integer  "humanintervention"
+    t.integer  "AIS"
+    t.decimal  "ascoef"
+    t.decimal  "pointpenalty"
+    t.text     "pointpenalty_description"
   end
 
   create_table "sessions", force: :cascade do |t|

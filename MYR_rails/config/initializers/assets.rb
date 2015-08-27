@@ -19,5 +19,9 @@ Rails.application.config.assets.precompile += %w( layout.css )
 
 Rails.application.config.assets.precompile += %w( team.js )
 Rails.application.config.assets.precompile += %w( score.js )
+Rails.application.config.assets.precompile += %w( stationkeeping_ranking.js )
+Rails.application.config.assets.precompile += %w( triangular_ranking.js )
+Rails.application.config.assets.precompile += %w( areascanning_ranking.js )
+Rails.application.config.assets.precompile += %w( race_ranking.js )
 
 

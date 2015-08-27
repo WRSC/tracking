@@ -1,9 +1,22 @@
 class ScoresController < ApplicationController
 	include ScoreHelper
+=begin
+	mtype of missions:
+		TriangularCourse
+		StationKeeping
+		AreaScanning
+		Race
+=end
 
 	before_action :set_score, only: [:edit, :show, :update, :destroy]
 	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
+	before_action :share_score_with_ajax, only: [:newAttemptinfo,:newScoreinfo,:calculateScore,:new]
 
+	before_action :share_triangular_params, only:[:triangular, :triangularsailboat, :triangularmicrosailboat]
+	before_action :share_stationkeeping_params, only:[:stationkeeping, :stationkeepingsailboat, :stationkeepingmicrosailboat]
+	before_action :share_areascanning_params, only:[:areascanning, :areascanningsailboat, :areascanningmicrosailboat]
+	before_action :share_race_params, only:[:race, :racesailboat, :racemicrosailboat]
+	
 
   	def index
 			@teamlist=Team.all
@@ -12,26 +25,112 @@ class ScoresController < ApplicationController
 			@SKMission = Mission.where(mtype: "StationKeeping")
 			@ASMission = Mission.where(mtype: "AreaScanning")
 			@scores=Score.all
-
   	end
 
   	def show
   		@score=Score.find(params[:id])
   	end
-
+#=============== new page ====================
   	def new
-  		@score = Score.new
+  		#@score = Score.new
   	end
+
+			def newAttemptinfo
+		m_id=params[:mission_id]
+		@allAttempts=Mission.find_by_id(m_id).attempts
+		@attempts=[]
+		@allAttempts.each do |a|
+			if a.score==nil
+				@attempts.push(a)
+			end		
+		end	
+	end
+
+	def newScoreinfo
+		@a_id=params[:attempt_id]
+		@mission=Attempt.find_by_id(@a_id).mission
+	end
+	
+	def calculateTimecost
+		a_id=params[:attempt_id]
+		render json: getTimecostbyAttemptId(a_id)
+	end
+	
+	def calculateRawscore
+		timecost=params[:timecost].to_i
+		render json:  stationKeepingRawScoreWithTimecost(timecost)
+	end
+#=====================================================
 	
 		def edit
 			@score=Score.find(params[:id])
 		end
 
-		# POSt /scores
+		# POST /scores
   	def create
 	    @score = Score.new(score_params)
+#humanintervention timecost=-10
+		
 	    respond_to do |format|
 	      if @score.save
+# compare current score with best score and update the information
+# need to add th penalty
+					rob=@score.attempt.robot
+					case @score.attempt.mission.mtype
+#===================== case triangular ==========================================
+					when "TriangularCourse"
+#bestTriangularscore => timecost
+						if rob.bestTriangularscoreId==nil 
+							rob.update_attribute(:bestTriangularscoreId, @score.id) 
+							rob.update_attribute(:bestTriangulartime, @score.timecost) 
+						else
+							if @score.humanintervention != 1
+								if Score.find_by_id(rob.bestTriangularscoreId).humanintervention==1 || @score.timecost < rob.bestTriangulartime
+										rob.update_attribute(:bestTriangularscoreId, @score.id) 
+										rob.update_attribute(:bestTriangulartime, @score.timecost) 
+								end
+							end
+						end
+#======================= case station keeping ===============================
+					when "StationKeeping"
+						if rob.bestStationscoreId==nil 
+							rob.update_attribute(:bestStationscoreId, @score.id) 
+							rob.update_attribute(:bestStationscore, @score.rawscore) 
+						else
+							if @score.humanintervention != 1
+								if Score.find_by_id(rob.bestStationscoreId).humanintervention==1 || @score.rawscore > rob.bestStationscore
+										rob.update_attribute(:bestStationscoreId, @score.id) 
+										rob.update_attribute(:bestStationscore, @score.rawscore) 
+								end
+							end
+						end
+#====================== case area scanning ============================
+					when "AreaScanning"
+						if rob.bestAreascoreId==nil 
+							rob.update_attribute(:bestAreascoreId, @score.id) 
+							rob.update_attribute(:bestAreascore, @score.rawscore) 
+						else
+							if @score.humanintervention != 1
+								if Score.find_by_id(rob.bestAreascoreId).humanintervention==1 || @score.rawscore > rob.bestAreascore
+										rob.update_attribute(:bestAreascoreId, @score.id) 
+										rob.update_attribute(:bestAreascore, @score.rawscore) 
+								end
+							end
+						end
+#====================== case fleet race ===============================
+					when "Race"
+						if rob.bestRacescoreId==nil 
+							rob.update_attribute(:bestRacescoreId, @score.id) 
+							rob.update_attribute(:bestRacetime, @score.timecost) 
+						else
+							if @score.humanintervention!=1
+								if Score.find_by_id(rob.bestRacescoreId).humanintervention==1 || @score.timecost < rob.bestRacetime
+										rob.update_attribute(:bestRacescoreId, @score.id) 
+										rob.update_attribute(:bestRacetime, @score.timecost) 
+								end
+							end
+						end
+					end
 	        format.html { redirect_to @score, notice: 'Score was successfully created.' }
 	        format.json { render :show, status: :created, location: @score }
 	      else
@@ -56,88 +155,446 @@ class ScoresController < ApplicationController
   def destroy
 	    @score.destroy
 	    respond_to do |format|
-	      format.html { redirect_to missions_url, notice: 'score was successfully destroyed.' }
+	      format.html { redirect_to scores_url, notice: 'score was successfully destroyed.' }
 	      format.json { head :no_content }
 	    end
   end
 	
-	def newAttemptinfo
-		m_id=params[:mission_id]
-		@attempts=Mission.find_by_id(m_id).attempts
-	end
-
-	def newScoreinfo
-		@a_id=params[:attempt_id]
-	end
-	
-	def calculateScore
-		a_id=params[:attempt_id]
-		render json: getTimecostbyAttemptId(a_id)
-	end
 
 	def finalstanding
 	end
   
+#======================== triangular ===========================================
 	def triangular
-		# make sure the mission 1 is triangular
-		sail_ids=[]
-		@sailboatlist.each do |rob|
-			sail_ids.push(rob.id)		
-		end
-		@sail_atts=Attempt.where(mission_id: 1).where(robot_id: sail_ids)		
-		microsail_ids=[]
-		@microSailboatlist.each do |rob|
-			microsail_ids.push(rob.id)		
-		end
-		@microsail_atts=Attempt.where(mission_id: 1).where(robot_id: microsail_ids)	
-		
 	end
 
+	def triangularsailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			firstrobots=Mission.where(mtype: "TriangularCourse")[0].robots.where(category: "Sailboat").order(:bestTriangulartime).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestTriangularscoreId !=nil
+					if Score.find_by_id(r.bestTriangularscoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:triangularRank, rank+1)	
+				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
+				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:triangularRank, rank+1)
+				s=Score.find_by_id(r.bestTriangularscoreId)
+				s.update_attribute(:rawscore, 0)	
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:triangularRank, 0)	
+				s=Score.find_by_id(r.bestTriangularscoreId)
+				s.update_attribute(:rawscore, -1)	
+			end
+		end
+	end
+	
+	def triangularmicrosailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			firstrobots=Mission.where(mtype: "TriangularCourse")[0].robots.where(category: "MicroSailboat").order(:bestTriangulartime).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestTriangularscoreId !=nil
+					if Score.find_by_id(r.bestTriangularscoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:triangularRank, rank+1)	
+				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
+				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:triangularRank, rank+1)
+				s=Score.find_by_id(r.bestTriangularscoreId)
+				s.update_attribute(:rawscore, 0)	
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:triangularRank, 0)	
+				s=Score.find_by_id(r.bestTriangularscoreId)
+				s.update_attribute(:rawscore, -1)	
+			end
+		end
+	end
+
+#=========================== station keeping ==================================
 	def stationkeeping
-		# make sure the mission 2 is stationkeeping
-		sail_ids=[]
-		@sailboatlist.each do |rob|
-			sail_ids.push(rob.id)		
-		end
-		@sail_atts=Attempt.where(mission_id: 2).where(robot_id: sail_ids)		
-		microsail_ids=[]
-		@microSailboatlist.each do |rob|
-			microsail_ids.push(rob.id)		
-		end
-		@microsail_atts=Attempt.where(mission_id: 2).where(robot_id: microsail_ids)	
-		
 	end
 
+
+	def stationkeepingsailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			#firstrobots=Mission.where(mtype: "TriangularCourse")[0].robots.where(category: "Sailboat").order(:bestTriangulartime).uniq
+			firstrobots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "Sailboat").order(bestStationscore: :desc).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestStationscoreId !=nil
+					if Score.find_by_id(r.bestStationscoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:stationRank, rank+1)	
+	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:stationRank, rank+1)
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:stationRank, 0)	
+			end
+		end
+	end
+
+	def stationkeepingmicrosailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			#firstrobots=Mission.where(mtype: "TriangularCourse")[0].robots.where(category: "Sailboat").order(:bestTriangulartime).uniq
+			firstrobots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "MicroSailboat").order(:bestStationscore).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestStationscoreId !=nil
+					if Score.find_by_id(r.bestStationscoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:stationRank, rank+1)	
+	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:stationRank, rank+1)
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:stationRank, 0)	
+			end
+		end
+	end
+#============================ area scanning ======================================
   def areascanning
-		# make sure the mission 3 is areascanning
-		sail_ids=[]
-		@sailboatlist.each do |rob|
-			sail_ids.push(rob.id)		
-		end
-		@sail_atts=Attempt.where(mission_id: 3).where(robot_id: sail_ids)		
-		microsail_ids=[]
-		@microSailboatlist.each do |rob|
-			microsail_ids.push(rob.id)		
-		end
-		@microsail_atts=Attempt.where(mission_id: 3).where(robot_id: microsail_ids)	
-		
   end
 
+	def areascanningsailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+		firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "Sailboat").order(bestAreascore: :desc).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestAreascoreId !=nil
+					if Score.find_by_id(r.bestAreascoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:areaRank, rank+1)	
+	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:areaRank, rank+1)
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:areaRank, 0)	
+			end
+		end
+	end
+
+	def areascanningmicrosailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "MicroSailboat").order(bestAreascore: :desc).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestAreascoreId !=nil
+					if Score.find_by_id(r.bestAreascoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:areaRank, rank+1)	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:areaRank, rank+1)
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:areaRank, 0)	
+			end
+		end
+	end
+
+#============================= fleet race ==========================================
 	def fleetrace
-		# make sure the mission 4 is fleetrace
-		sail_ids=[]
-		@sailboatlist.each do |rob|
-			sail_ids.push(rob.id)		
+	end
+	
+	def racesailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			firstrobots=Mission.where(mtype: "Race")[0].robots.where(category: "Sailboat").order(:bestRacetime).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestRacescoreId !=nil
+					if Score.find_by_id(r.bestRacescoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:raceRank, rank+1)	
+				s=Score.find_by_id(noHi[rank].bestRacescoreId)
+				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:raceRank, rank+1)
+				s=Score.find_by_id(r.bestRacescoreId)
+				s.update_attribute(:rawscore, 0)	
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:raceRank, 0)	
+				s=Score.find_by_id(r.bestRacescoreId)
+				s.update_attribute(:rawscore, -1)	
+			end
 		end
-		@sail_atts=Attempt.where(mission_id: 4).where(robot_id: sail_ids)		
-		microsail_ids=[]
-		@microSailboatlist.each do |rob|
-			microsail_ids.push(rob.id)		
+	end
+
+	def racemicrosailboat
+		flag=params[:flag]
+		if flag=="true"
+#ranking		
+			firstrobots=Mission.where(mtype: "Race")[0].robots.where(category: "MicroSailboat").order(:bestRacetime).uniq
+			noHi=[]
+			yesHi=[]
+			notPaticipated=[]
+			firstrobots.each do |r|
+				if r.bestRacescoreId !=nil
+					if Score.find_by_id(r.bestRacescoreId).humanintervention == 1
+						yesHi.push(r)
+					else
+						noHi.push(r)				
+					end
+				else
+					notPaticipated.push(r)
+				end
+			end
+			
+			for rank in 0..(noHi.length-1)
+				noHi[rank].update_attribute(:raceRank, rank+1)	
+				s=Score.find_by_id(noHi[rank].bestRacescoreId)
+				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+			end
+			rank=noHi.length
+			yesHi.each do |r|
+				r.update_attribute(:raceRank, rank+1)
+				s=Score.find_by_id(r.bestRacescoreId)
+				s.update_attribute(:rawscore, 0)	
+			end
+			notPaticipated.each do |r|
+				r.update_attribute(:raceRank, 0)	
+				s=Score.find_by_id(r.bestRacescoreId)
+				s.update_attribute(:rawscore, -1)	
+			end
 		end
-		@microsail_atts=Attempt.where(mission_id: 4).where(robot_id: microsail_ids)
 	end
   	
+#=================================== private functions ==================================
  	private
+		def share_triangular_params
+			get_rob_by_category
+			@m=Mission.where(mtype: "TriangularCourse")[0]
+			# make sure the mission mtype is TriangularCourse
+			sail_ids=[]
+			@sailboatlist.each do |rob|
+				sail_ids.push(rob.id)		
+			end	
+			m_id=@m.id
+			@sail_atts=Attempt.where(mission_id: m_id).where(robot_id: sail_ids)		
+			@sail_scores=[]
+			@sail_atts.each do |a|
+				if a.score != nil
+					@sail_scores.push(a.score)
+				end
+			end
+
+			microsail_ids=[]
+			@microSailboatlist.each do |rob|
+				microsail_ids.push(rob.id)		
+			end
+			@microsail_atts=Attempt.where(mission_id: m_id).where(robot_id: microsail_ids)	
+			@microsail_scores=[]
+			@microsail_atts.each do |a|
+				@microsail_scores.push(a.score)
+			end
+		end
+
+		def share_stationkeeping_params
+			get_rob_by_category
+			# make sure the mission mtype is StaionKeeping
+			@m=Mission.where(mtype: "StationKeeping")[0]
+			sail_ids=[]
+			@sailboatlist.each do |rob|
+				sail_ids.push(rob.id)		
+			end	
+			m_id=@m.id
+			@sail_atts=Attempt.where(mission_id: m_id).where(robot_id: sail_ids)		
+			@sail_scores=[]
+			@sail_atts.each do |a|
+				if a.score != nil
+					@sail_scores.push(a.score)
+				end
+			end
+
+			microsail_ids=[]
+			@microSailboatlist.each do |rob|
+				microsail_ids.push(rob.id)		
+			end
+			@microsail_atts=Attempt.where(mission_id: m_id).where(robot_id: microsail_ids)	
+			@microsail_scores=[]
+			@microsail_atts.each do |a|
+				if a.score != nil
+					@microsail_scores.push(a.score)
+				end
+			end
+		end
+	
+		def share_areascanning_params
+			get_rob_by_category
+			@m=Mission.where(mtype: "AreaScanning")[0]
+			# make sure the mission mtype is TriangularCourse
+			sail_ids=[]
+			@sailboatlist.each do |rob|
+				sail_ids.push(rob.id)		
+			end	
+			m_id=@m.id
+			@sail_atts=Attempt.where(mission_id: m_id).where(robot_id: sail_ids)		
+			@sail_scores=[]
+			@sail_atts.each do |a|
+				if a.score != nil
+					@sail_scores.push(a.score)
+				end
+			end
+
+			microsail_ids=[]
+			@microSailboatlist.each do |rob|
+				microsail_ids.push(rob.id)		
+			end
+			@microsail_atts=Attempt.where(mission_id: m_id).where(robot_id: microsail_ids)	
+			@microsail_scores=[]
+			@microsail_atts.each do |a|
+				@microsail_scores.push(a.score)
+			end
+		end
+
+		def share_race_params
+			get_rob_by_category
+			@m=Mission.where(mtype: "Race")[0]
+			# make sure the mission mtype is TriangularCourse
+			sail_ids=[]
+			@sailboatlist.each do |rob|
+				sail_ids.push(rob.id)		
+			end	
+			m_id=@m.id
+			@sail_atts=Attempt.where(mission_id: m_id).where(robot_id: sail_ids)		
+			@sail_scores=[]
+			@sail_atts.each do |a|
+				if a.score != nil
+					@sail_scores.push(a.score)
+				end
+			end
+
+			microsail_ids=[]
+			@microSailboatlist.each do |rob|
+				microsail_ids.push(rob.id)		
+			end
+			@microsail_atts=Attempt.where(mission_id: m_id).where(robot_id: microsail_ids)	
+			@microsail_scores=[]
+			@microsail_atts.each do |a|
+				@microsail_scores.push(a.score)
+			end
+		end
+
+		def share_score_with_ajax
+			@score=Score.new
+		end
+
 		def get_rob_by_category
 			@sailboatlist=Robot.where(category: "Sailboat")
 			@microSailboatlist=Robot.where(category: "MicroSailboat")
@@ -150,6 +607,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :penalty, :penalty_description, :datetimes)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes)
     end
 end

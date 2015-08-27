@@ -1,0 +1,31 @@
+<% provide(:title, "Scores | Triangular Course") %>
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'triangular_ranking', 'data-turbolinks-track' => true %>
+
+
+<!-------------------- Triangular Course---------------------->
+<center><h1>Listing Triangular Course Scores</h1>
+<% if @m!= nil %>
+	From <%= @m.start%> To <%= @m.end%>
+<% else %>
+	Not any "triangular-course" type mission was created.
+<% end %>
+<br />
+
+
+</center>
+<br />
+<button id="ranking-triangular-sailboat">Calculate the ranking (Category: Sailboat)</button><br />
+<br />
+<div id="triangular-sailboat-table"></div>
+
+<button id="ranking-triangular-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<div id="triangular-microsailboat-table"></div>
+
+
+
+<%= link_to 'New Score', new_score_path %>
+
+

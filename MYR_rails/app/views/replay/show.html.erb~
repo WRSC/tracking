@@ -20,8 +20,16 @@
 		<!----------------------Start Side Panel------------------>
 		<div class="one_third" style='height: 100%;overflow:scroll'>
 			<p><b>Buoys:</b></p>
-			<input type="checkbox" name="display-buoys" > &nbsp Display Official Buoys</input>
+			<input type="checkbox" name="display-official-markers" > &nbsp Display Official Buoys</input>
+<<<<<<< HEAD
+=======
+
+			<p><b>Options:</b></p>
+			<input type="checkbox" name="display-info_windows" id="disp_info"> &nbsp Display Information Windows</input>
+			<br>
+			<input type="checkbox" name="replay-from-begin" id="do_replay"> &nbsp Replay from the beginning</input>
 			
+>>>>>>> e4fbd4524af411e7d81a726006f5a85f8da1888d
 		</div>
 		<!--------------------End of Side Panel--------------------->
 		<style>

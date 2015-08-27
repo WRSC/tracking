@@ -1,79 +1,31 @@
-<% provide(:title, "Scores | Triangular Course") %>
-<%= stylesheet_link_tag 'scores_table.css', media: 'all', 'data-turbolinks-track' => true %>
+<% provide(:title, "Scores | Area Scanning") %>
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'areascanning_ranking', 'data-turbolinks-track' => true %>
 
 
-<div id="score-awesome-table">
-<div id="score-background-container">
-<h1>Area Scanning Standing</h1>
-<!--table for Sailboat-->
-<h2><center>Category: Sailboat</center></h2>
-<table id="datatable-areascanning" class="dataTable display">
-  <thead>
-    <tr id="firstrow">
-			<th>#</th>
-			<th>Robot</th>
-      <th>Team</th>
-			<th>Logo</th>
- 			<th>Raw Score</th>
-			<th>Final Score</th>
-			<% if is_admin? %>
-        <th>Options</th>
-			<% end %>
-	    </tr>
-  </thead>
-  <tbody>
-		<% rank=1 %>
-		<% @sail_atts.each do |att|%>
-			<tr>
-				<td><%= rank%></td><!--need to fill woth rank-->
-				<td><%= att.robot.name %></td>
-				<td><%= att.robot.team.name %></td>
-				<% logoimage= image_tag att.robot.team.logo_url(:index) %>
-				<td><center><%= link_to logoimage , att.robot.team  %></center></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<% rank+=1%>
-			</tr>		
-		<% end %>
-  </tbody>
-</table>
-
-<!--table for MicroSailboat-->
-<h2><center>Category: MicroSailboat</center></h2>
-<table id="datatable-areascanning" class="dataTable display">
-  <thead>
-    <tr id="firstrow">
-			<th>#</th>
-			<th>Robot</th>
-      <th>Team</th>
-			<th>Logo</th>
- 			<th>Raw Score</th>
-			<th>Final Score</th>
-			<% if is_admin? %>
-        <th>Options</th>
-			<% end %>
-	    </tr>
-  </thead>
-  <tbody>
-		<% rank=1 %>
-		<% @microsail_atts.each do |att|%>
-			<tr>
-				<td><%= rank%></td><!--need to fill woth rank-->
-				<td><%= att.robot.name %></td>
-				<td><%= att.robot.team.name %></td>
-				<% logoimage= image_tag att.robot.team.logo_url(:index) %>
-				<td><center><%= link_to logoimage , att.robot.team  %></center></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<% rank+=1%>
-			</tr>		
-		<% end %>
-  </tbody>
-</table>
+<!-------------------- Area Scanning ---------------------->
+<center><h1>Listing Area Scanning Scores</h1>
+<% if @m!= nil %>
+	From <%= @m.start%> To <%= @m.end%>
+<% else %>
+	Not any "area-scanning" type mission was created.
+<% end %>
 <br />
-</div>
-</div>
+
+
+</center>
+<br />
+<button id="ranking-areascanning-sailboat">Calculate the ranking (Category: Sailboat)</button><br />
+<br />
+<div id="areascanning-sailboat-table"></div>
+
+<button id="ranking-areascanning-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<div id="areascanning-microsailboat-table"></div>
+
+
+
+<%= link_to 'New Score', new_score_path %>
 
 

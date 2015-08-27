@@ -1,0 +1,31 @@
+<% provide(:title, "Scores | Station Keeping") %>
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'stationkeeping_ranking', 'data-turbolinks-track' => true %>
+
+
+<!-------------------- Station Keeping ---------------------->
+<center><h1>Listing Station Keeping Scores</h1>
+<% if @m!= nil %>
+	From <%= @m.start%> To <%= @m.end%>
+<% else %>
+	Not any "station-keeping" type mission was created.
+<% end %>
+<br />
+
+
+</center>
+<br />
+<button id="ranking-staionkeeping-sailboat">Calculate the ranking (Category: Sailboat)</button><br />
+<br />
+<div id="stationkeeping-sailboat-table"></div>
+
+<button id="ranking-staionkeeping-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<div id="stationkeeping-microsailboat-table"></div>
+
+
+
+<%= link_to 'New Score', new_score_path %>
+
+

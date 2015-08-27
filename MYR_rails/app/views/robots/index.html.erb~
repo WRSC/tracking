@@ -1,4 +1,5 @@
 <% provide(:title, "Robots | Index") %>
+<p id="notice"><%= notice %></p>
 <%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
 <h1>List of robots</h1><br>
@@ -8,22 +9,23 @@
 	<% end %>
 <% end %>
 
-<table  id="table_id" class="dataTable display">
+<table  id="datatable-robot" class="dataTable display">
   <thead>
     <tr>
       <th>Name</th>
       <th>Category</th>
       <th>Team</th>
 			<% if sign_in? %>
-      <th >Option</th>
+      			<th>Options</th>
 			<% end %>
     </tr>
   </thead>
 
   <tbody>
     
-	<tr>
+
 		<% @robots.each do |robot| %>
+		<tr>
 			<td><%= link_to robot.name, robot %></td>
 			<td><%= robot.category %></td>
 			<td><%= link_to Team.find(robot.team_id).name, Team.find(robot.team_id) %></td>
@@ -34,8 +36,13 @@
 					<td><%= link_to 'Show', robot %></td>
 				<% end %>
 			<% end %>
+		<% end %>
 	</tr>
-<% end %>
+<<<<<<< HEAD
+	<% end %>
+=======
+
+>>>>>>> b5eee1c7442006b8d3954e5114172f41c6fcab0d
 
   </tbody>
 </table>
@@ -46,9 +53,9 @@
 
 <script>
 $(document).ready( function () {
-    $('#table_id').DataTable({
-			paging: true,
-			scrollY: 500
+    $('#datatable-robot').DataTable({
+			paging: true
+		
 		});
 } );
 </script>

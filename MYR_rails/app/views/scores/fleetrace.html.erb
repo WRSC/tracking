@@ -1,0 +1,31 @@
+<% provide(:title, "Scores | Fleet Race") %>
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'race_ranking', 'data-turbolinks-track' => true %>
+
+
+<!-------------------- Station Keeping ---------------------->
+<center><h1>Listing Fleet Race Scores</h1>
+<% if @m!= nil %>
+	From <%= @m.start%> To <%= @m.end%>
+<% else %>
+	Not any "fleet-race" type mission was created.
+<% end %>
+<br />
+
+
+</center>
+<br />
+<button id="ranking-race-sailboat">Calculate the ranking (Category: Sailboat)</button><br />
+<br />
+<div id="race-sailboat-table"></div>
+
+<button id="ranking-race-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<div id="race-microsailboat-table"></div>
+
+
+
+<%= link_to 'New Score', new_score_path %>
+
+

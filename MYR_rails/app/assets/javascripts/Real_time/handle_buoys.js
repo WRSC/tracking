@@ -95,7 +95,7 @@
 
 /*=================================load small buoy================================*/
 
-	function loadBuoy(lat, lng, mission_id, name){
+	function loadBuoy(lat, lng, mission_id, buoy){
 			mission_id = typeof mission_id !== 'undefined' ? mission_id : 12;
 				var image = {
 					url: 'icons/bigBuoy2.png',
@@ -103,23 +103,24 @@
 					origin: new google.maps.Point(0,0),
 					anchor: new google.maps.Point(12, 37)
 				};
-				var buoy = new google.maps.Marker(
+				var buoyMarker = new google.maps.Marker(
 				{
 					position: new google.maps.LatLng(lat,lng),
 					icon: image
 				}
 				);
 
-				data = '<font color=\'black\'><div>'+'<b>Name: </b>'+name+'</div>'
+				data = '<font color=\'black\'><div>'+'<b>Name: </b>'+buoy.name+'<br><b>Type: </b>'+buoy.mtype+'<br><b>Description: </b>'+buoy.description+'</div>'
+	
 				var temp = new google.maps.InfoWindow(
 					{
 						content: data
 					}
 				);
 
-				addBuoyInfo(temp,buoy)
+				addBuoyInfo(temp,buoyMarker)
 
-				latest_buoys[0].push(buoy);
+				latest_buoys[0].push(buoyMarker);
 				latest_buoys[1].push(mission_id);
 				return buoy;
 
@@ -146,7 +147,7 @@
 			buoyType = data[i].mtype;
 			name = data[i].name;
 			if (buoyType == 'Point') {
-				loadBuoy(lat,lng,mission_id,name,map);
+				loadBuoy(lat,lng,mission_id,data[i],map);
 			}
 			else if(buoyType == 'Line'){
 				loadLine(lat,lng,mission_id,map);

@@ -218,7 +218,7 @@
 			tabm = []
 		end	
 		markerinfos=Marker.where(mission_id: tabm)
-		render json: markerinfos.to_json(:only =>[:mtype,:latitude,:longitude,:datetime, :name])
+		render json: markerinfos.to_json(:only =>[:mtype,:latitude,:longitude,:datetime, :name, :description])
 	end
  	
  	def infowindow

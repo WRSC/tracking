@@ -439,13 +439,14 @@ http://www.movable-type.co.uk/scripts/latlong.html
 =end
 	def d_to_m(s_lat_d,s_lng_d,d_lat_d,d_lng_d)
 		r = 6371000
-		s_lat_r=s_lat_d*Math::PI/180
-		d_lat_r=d_lat_d*Math::PI/180
+		s_lat_r=s_lat_d.to_f*Math::PI/180
+		d_lat_r=d_lat_d.to_f*Math::PI/180
 		delta_lat=d_lat_r-s_lat_r
-		delta_lng=(d_lng_d-s_lng_d)*Math::PI/180
+		delta_lng=(d_lng_d.to_f-s_lng_d.to_f)*Math::PI/180
 		a= Math.sin(delta_lat/2) * Math.sin(delta_lat/2) +Math.cos(s_lat_r) * Math.cos(d_lat_r) *Math.sin(delta_lng/2) * Math.sin(delta_lng/2);
 		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
 		d = r * c
+		return d
 	end
 	
 
@@ -465,8 +466,10 @@ http://www.movable-type.co.uk/scripts/latlong.html
 	def calculateMaxDistance(f_hash)
 		d_hash=Hash.new #the desired hash which contains the result of comparison
 		d_hash['name']=f_hash['name']
+		d_hash['explanation']="All the differences from trackers to team's coordinates are in absolute values with unity meter"
 		datas=[]
 		data_length=f_hash['data'].length
+		max_d=-1
 		for i in 0..(data_length-1)
 			section_hash=Hash.new
 			section_hash['sectioni']=f_hash['data'][i]['sectioni']
@@ -474,50 +477,39 @@ http://www.movable-type.co.uk/scripts/latlong.html
 			position = f_hash['data'][i]['position']
 			position_length=position.length
 			positions=[]
-			max_err_lat=0
-			max_err_lng=0
+			max_dis=-1
       tracker_err_count=0
 			for k in 0..(position_length-1)
 				coord = Coordinate.where(datetime: position[k]['datetime'])
 				p_hash=Hash.new
 				p_hash['datetime']=position[k]['datetime']
-        p_hash['tracker_coords_length']=coord.size
+        #p_hash['tracker_coords_length']=coord.size
 				if coord.size != 1
 				# if there is any data in the tracker		
           tracker_err_count+=1
-          #p_hash['latitude_tracker']='tracker error'
-          #p_hash['longitude_tracker']='tracker error'
-					p_hash['latitude_difference']= 'tracker error'
-					p_hash['longitude_difference']='tracker error'
+					p_hash['difference_from_tracker_to_team']= 'tracker error'
 				else
-					# lat_diff= robot.lat - tracker.lat
-          #p_hash['latitude_tracker']=coord[0].latitude
-          #p_hash['longitude_tracker']=coord[0].longitude
-					
-          #p_hash['latitude_uploads']=position[k]['latitude']
-          #p_hash['longitude_uploads']=position[k]['longitude']
-          diff_lat=AminusB(position[k]['latitude'],coord[0].latitude)
-					p_hash['latitude_difference']=diff_lat
-					max_err_lat = max_err_lat > diff_lat.abs ? max_err_lat : diff_lat 
-					diff_lng=AminusB(position[k]['longitude'],coord[0].longitude)
-					p_hash['longitude_difference']=diff_lng
-					max_err_lng = max_err_lng > diff_lng.abs ? max_err_lng : diff_lng 
+					dis=d_to_m(position[k]['latitude'],position[k]['longitude'],coord[0].latitude,coord[0].longitude)
+					p_hash['difference_from_tracker_to_team']=dis
+					dis > max_dis ? max_dis=dis : max_dis=max_dis
 				end
 				positions.push(p_hash)
 			end
-			section_hash['position']=positions
+			section_hash['geo-position-checking']=positions
       if tracker_err_count != positions.length
-			  section_hash['Max_lat_err']=max_err_lat
-			  section_hash['Max_lng_err']=max_err_lng
+			  section_hash['Section-Max_difference_from_tracker_to_team']=max_dis
       else
-			  section_hash['Max_lat_err']='tracker error'
-			  section_hash['Max_lng_err']='tracker error'
+			  section_hash['Section-Max_difference_from_tracker_to_team']="tracker error"
       end
-      #section_hash['position_count']=position_length-1
-      #section_hash['tracker_err_count']=tracker_err_count
 			datas.push(section_hash)
+			max_d > max_dis ? max_d=max_d : max_d = max_dis
 		end
 		d_hash['data']=datas
+		if max_d != -1
+			d_hash['Max_distance_from_all_sections']=max_d
+		else
+			d_hash['Max_distance_from_all_sections']="tracker error"
+		end
 		return d_hash	
 	end
 
@@ -527,13 +519,18 @@ http://www.movable-type.co.uk/scripts/latlong.html
 #xml  file object.to_xml 
 
   def generateJsonFile(f_hash)
-    outputname=f_hash['name']+'_generated_'+Time.now.to_s+'.json'
+    outputname=f_hash['name']+'_generated_'+Time.now.to_s+'.xml'
     filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'generated', outputname) 
+		#saveOutputnameToattempt(filename,a)
     File.open(filename,"w") do |f|
       f.write(f_hash.to_xml)
     end
     return File.exist?(filename)
   end
+
+	def saveOutputnameToattempt(filename,attempt)
+		attempt.update_attribute(:generated_filename, filename) 
+	end
 
 	
 

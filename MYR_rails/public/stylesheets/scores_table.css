@@ -3,8 +3,12 @@
 #score-awesome-table h1, table { text-align: center; }
 
 #score-awesome-table table {border-collapse: collapse;  width: 0%; margin: 0 auto 5rem;}
-
+/*
 #score-awesome-table th, td { padding: 1.1rem; font-size: 1.1rem; }
+*/
+#score-awesome-table th, td  { padding: 1.1rem;font-size: 1.2rem;}
+#score-awesome-table th, td .big {  font-size: 1.4rem; }
+#score-awesome-table th, td .small { font-size: 1.1rem; }
 
 #score-awesome-table tr {background: hsl(50, 50%, 80%); }
 

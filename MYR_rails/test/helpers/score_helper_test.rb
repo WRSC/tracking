@@ -330,10 +330,12 @@ require 'awesome_print'
     assert data_hash.datetime=="20150807144743",data_hash.inspect
   end
   
+=begin
   test "should generate a json file in Rails.root/public/uploads/scores/areascanning/generated" do
     assert loadJsonDataAreaScanning('moredatas.json'),"please check it in Rails.root/public/uploads/scores/areascanning/generated"
   end
-  
+=end
+
   test "should generate a json file in Rails.root/public/uploads/scores/areascanning/generated with data provided by conny" do
     assert loadJsonDataAreaScanning('jsondata.json'),"please check it in Rails.root/public/uploads/scores/areascanning/generated"
   end

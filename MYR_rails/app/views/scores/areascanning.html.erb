@@ -17,15 +17,19 @@
 
 </center>
 <br />
+<% if is_admin? %>
 <button id="ranking-areascanning-sailboat">Calculate the ranking (Category: Sailboat)</button><br />
+<% end %>
 <br />
 <div id="areascanning-sailboat-table"></div>
 
+<% if is_admin? %>
 <button id="ranking-areascanning-microsailboat">Calculate the ranking (Category: MicroSailboat)</button><br /><br />
+<% end %>
 <div id="areascanning-microsailboat-table"></div>
 
 
-
+<% if is_admin? %>
 <%= link_to 'New Score', new_score_path %>
-
+<% end %>
 

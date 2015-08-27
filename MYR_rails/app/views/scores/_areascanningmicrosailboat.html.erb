@@ -11,7 +11,8 @@ Finished <%= @microsail_scores.length%> / All area scanning attempts <%= @micros
         <th >Rawscore</th>
 				<th >H I</th>
 				<th >AIS</th>
-				<th></th>
+				<th>Point Penalty</th>
+				<th>Final Score</th>
 			<% if sign_in? %>
 				<th> Options</th>			
 			<% end %>
@@ -45,7 +46,8 @@ Finished <%= @microsail_scores.length%> / All area scanning attempts <%= @micros
 					<% else %>
 						<td>Yes</td>	
 					<% end %>
-					<td></td>  
+					<td><%= number_with_precision(score.pointpenalty, precision: 2) %></td>  
+					<td><%= number_with_precision(score.finalscore, precision: 2) %></td>   
 					<% if sign_in? %>
 				    <% if is_admin? %>
 				      <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>

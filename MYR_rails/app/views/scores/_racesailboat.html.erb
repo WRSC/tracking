@@ -11,10 +11,11 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
         <th >Robot</th>
 				<th> Attempt</th>
         <th >Timecost</th>
-        <th >Rawscore</th>
+        <th>Time Penalty</th>
 				<th >H I </th>
 				<th >AIS</th>
-				<th></th>
+				<th>Margin 10</th>
+				<th >Final score</th>
 			<% if sign_in? %>
 				<th> Options</th>			
 			<% end %>
@@ -38,10 +39,10 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 		   	<td><%= score.attempt.robot.name %></td>
 				<td><%= score.attempt_id%>&nbsp;&nbsp;<%= score.attempt.name%></td>
 				<td><%= score.timecost %></td>
-				<% if score.rawscore != nil%>
-					<td><%= score.rawscore %></td>
+				<% if score.timepenalty!=nil %>
+					<td><% score.timepenalty %></td>	
 				<% else %>
-					<td></td>
+					<td>0</td>	
 				<% end %>
 				<% if  score.humanintervention==0 %>
 					<td>No</td>	
@@ -53,8 +54,17 @@ Finished <%= @sail_scores.length%> / All fleet race attempts <%= @sail_atts.leng
 				<% else %>
 					<td>Yes</td>	
 				<% end %>
-				
-				<td></td>  
+				<% if score.marginten==0 %>
+					<td>No</td>	
+				<% else %>
+					<td>Yes</td>	
+				<% end %>
+				<% if score.finalscore != nil%>
+					<td><%= score.finalscore %></td>
+				<% else %>
+					<td></td>
+				<% end %>
+			
 				<% if sign_in? %>
 		      <% if is_admin? %>
 		        <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>

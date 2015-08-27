@@ -9,7 +9,7 @@ class ScoresController < ApplicationController
 =end
 
 	before_action :set_score, only: [:edit, :show, :update, :destroy]
-	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :finalstanding]
+	before_action :get_rob_by_category, only:[:triangular, :stationkeeping, :areascanning, :fleetrace, :index]
 	before_action :share_score_with_ajax, only: [:newAttemptinfo,:newScoreinfo,:calculateScore,:new]
 
 	before_action :share_triangular_params, only:[:triangular, :triangularsailboat, :triangularmicrosailboat]
@@ -20,10 +20,7 @@ class ScoresController < ApplicationController
 
   	def index
 			@teamlist=Team.all
-			@TMission = Mission.where(mtype: "TriangularCourse")
-			@RMission = Mission.where(mtype: "Race")
-			@SKMission = Mission.where(mtype: "StationKeeping")
-			@ASMission = Mission.where(mtype: "AreaScanning")
+			
 			@scores=Score.all
   	end
 
@@ -70,7 +67,9 @@ class ScoresController < ApplicationController
   	def create
 	    @score = Score.new(score_params)
 #humanintervention timecost=-10
-		
+			if @score.timepenalty != nil
+				@score.timecost=@score.timecost*(1+@score.timepenalty)
+			end
 	    respond_to do |format|
 	      if @score.save
 # compare current score with best score and update the information
@@ -95,25 +94,40 @@ class ScoresController < ApplicationController
 					when "StationKeeping"
 						if rob.bestStationscoreId==nil 
 							rob.update_attribute(:bestStationscoreId, @score.id) 
-							rob.update_attribute(:bestStationscore, @score.rawscore) 
+							rob.update_attribute(:bestStationscore, @score.rawscore)
+							@score.update_attribute(:finalscore, @score.rawscore) 
 						else
 							if @score.humanintervention != 1
 								if Score.find_by_id(rob.bestStationscoreId).humanintervention==1 || @score.rawscore > rob.bestStationscore
 										rob.update_attribute(:bestStationscoreId, @score.id) 
 										rob.update_attribute(:bestStationscore, @score.rawscore) 
+										@score.update_attribute(:finalscore, @score.rawscore) 
 								end
 							end
 						end
 #====================== case area scanning ============================
 					when "AreaScanning"
-						if rob.bestAreascoreId==nil 
+						p=-1
+						if  @score.humanintervention != 1
+							if @score.pointpenalty!=nil
+								p=@score.pointpenalty
+							else
+								p=0
+							end
+							@score.update_attribute(:finalscore, @score.rawscore-p) 
+						else
+							@score.update_attribute(:finalscore, 0.0) 
+					  end
+								
+
+						if rob.bestAreascoreId==nil
 							rob.update_attribute(:bestAreascoreId, @score.id) 
-							rob.update_attribute(:bestAreascore, @score.rawscore) 
+							rob.update_attribute(:bestAreascore, @score.finalscore) 
 						else
 							if @score.humanintervention != 1
-								if Score.find_by_id(rob.bestAreascoreId).humanintervention==1 || @score.rawscore > rob.bestAreascore
+								if @score.finalscore > rob.bestAreascore
 										rob.update_attribute(:bestAreascoreId, @score.id) 
-										rob.update_attribute(:bestAreascore, @score.rawscore) 
+										rob.update_attribute(:bestAreascore, @score.finalscore) 
 								end
 							end
 						end
@@ -160,9 +174,6 @@ class ScoresController < ApplicationController
 	    end
   end
 	
-
-	def finalstanding
-	end
   
 #======================== triangular ===========================================
 	def triangular
@@ -192,19 +203,17 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:triangularRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:triangularRank, rank+1)
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, 0)	
+				if r!=nil
+					r.update_attribute(:triangularRank, rank+1)
+					s=Score.find_by_id(r.bestTriangularscoreId)
+					s.update_attribute(:finalscore, 0)
+				end	
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:triangularRank, 0)	
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, -1)	
-			end
+			
 		end
 	end
 	
@@ -232,19 +241,17 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:triangularRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:triangularRank, rank+1)
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, 0)	
+				if r!=nil
+					r.update_attribute(:triangularRank, rank+1)
+					s=Score.find_by_id(r.bestTriangularscoreId)
+					s.update_attribute(:finalscore, 0)	
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:triangularRank, 0)	
-				s=Score.find_by_id(r.bestTriangularscoreId)
-				s.update_attribute(:rawscore, -1)	
-			end
+		
 		end
 	end
 
@@ -280,11 +287,11 @@ class ScoresController < ApplicationController
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:stationRank, rank+1)
+				if r!=nil
+					r.update_attribute(:stationRank, rank+1)
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:stationRank, 0)	
-			end
+		
 		end
 	end
 
@@ -315,11 +322,11 @@ class ScoresController < ApplicationController
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:stationRank, rank+1)
+				if r!=nil
+					r.update_attribute(:stationRank, rank+1)
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:stationRank, 0)	
-			end
+			
 		end
 	end
 #============================ area scanning ======================================
@@ -331,65 +338,44 @@ class ScoresController < ApplicationController
 		if flag=="true"
 #ranking		
 		firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "Sailboat").order(bestAreascore: :desc).uniq
-			noHi=[]
-			yesHi=[]
+			robots=[]
 			notPaticipated=[]
 			firstrobots.each do |r|
 				if r.bestAreascoreId !=nil
-					if Score.find_by_id(r.bestAreascoreId).humanintervention == 1
-						yesHi.push(r)
-					else
-						noHi.push(r)				
-					end
+					robots.push(r)
 				else
 					notPaticipated.push(r)
 				end
 			end
 			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:areaRank, rank+1)	
-	
+			for rank in 0..(robots.length-1)
+				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
-			rank=noHi.length
-			yesHi.each do |r|
-				r.update_attribute(:areaRank, rank+1)
-			end
-			notPaticipated.each do |r|
-				r.update_attribute(:areaRank, 0)	
-			end
+			rank=robots.length
+		
 		end
 	end
 
 	def areascanningmicrosailboat
-		flag=params[:flag]
+			flag=params[:flag]
 		if flag=="true"
 #ranking		
-			firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "MicroSailboat").order(bestAreascore: :desc).uniq
-			noHi=[]
-			yesHi=[]
+		firstrobots=Mission.where(mtype: "AreaScanning")[0].robots.where(category: "MicroSailboat").order(bestAreascore: :desc).uniq
+			robots=[]
 			notPaticipated=[]
 			firstrobots.each do |r|
 				if r.bestAreascoreId !=nil
-					if Score.find_by_id(r.bestAreascoreId).humanintervention == 1
-						yesHi.push(r)
-					else
-						noHi.push(r)				
-					end
+					robots.push(r)
 				else
 					notPaticipated.push(r)
 				end
 			end
 			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:areaRank, rank+1)	
+			for rank in 0..(robots.length-1)
+				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
-			rank=noHi.length
-			yesHi.each do |r|
-				r.update_attribute(:areaRank, rank+1)
-			end
-			notPaticipated.each do |r|
-				r.update_attribute(:areaRank, 0)	
-			end
+			rank=robots.length
+		
 		end
 	end
 
@@ -420,19 +406,21 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:raceRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestRacescoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				note= (16-rank > 2 ?  16-rank : 2)
+				if s.marginten == 1
+					note > 5 ? note=note : note=5
+				end
+				s.update_attribute(:finalscore,note)	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:raceRank, rank+1)
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, 0)	
+				if r!=nil
+					r.update_attribute(:raceRank, rank+1)
+					s=Score.find_by_id(r.bestRacescoreId)
+					s.update_attribute(:finalscore, 0)	
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:raceRank, 0)	
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, -1)	
-			end
+			
 		end
 	end
 
@@ -459,19 +447,17 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:raceRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestRacescoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
-				r.update_attribute(:raceRank, rank+1)
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, 0)	
+				if r!=nil
+					r.update_attribute(:raceRank, rank+1)
+					s=Score.find_by_id(r.bestRacescoreId)
+					s.update_attribute(:finalscore, 0)	
+				end
 			end
-			notPaticipated.each do |r|
-				r.update_attribute(:raceRank, 0)	
-				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, -1)	
-			end
+		
 		end
 	end
   	
@@ -607,6 +593,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description, :timepenalty, :timepenalty_description, :marginten)
     end
 end

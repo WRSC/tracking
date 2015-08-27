@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     get 'real-time'       , to: 'real_time#show'
     get 'replay'          , to: 'replay#show'
     get 'markersCreation' , to: 'admin_markers#show'
+
+    get 'map'             , to: 'markers#map'
   # score
 		get 'finalstanding'   , to: 'scores#finalstanding'
 		get 'triangular'      , to: 'scores#triangular'
@@ -53,6 +55,7 @@ Rails.application.routes.draw do
 
     
     get  'gatherCoordsBetweenDates',  to: 'coordinates#gatherCoordsBetweenDates'
+    get  'gatherCoordsLittleByLittle',  to: 'coordinates#gatherCoordsLittleByLittle'
     get  'gatherCoordsSince'       ,  to: 'coordinates#gatherCoordsSince'
    	
 		get  'teamMembers'             ,  to: 'teams#teamMembers'
@@ -60,6 +63,8 @@ Rails.application.routes.draw do
 		get  'kick'                    ,  to: 'teams#kick'
 	
 		get  'pointinfo'               ,  to: 'markers#pointinfo'
+    get  'missionMarkers'          ,  to: 'markers#getMissionMarkers'
+    get  'mission_panel'           ,  to: 'markers#mission_panel'
 
 		get  'robotChart'              ,  to: 'robots#robotChart'
 
@@ -102,7 +107,7 @@ Rails.application.routes.draw do
 		get  'stationkeepingsailboat'  ,  to: 'scores#stationkeepingsailboat'
 	  get  'stationkeepingmicrosailboat',  to: 'scores#stationkeepingmicrosailboat'
 #===================== area scanning ==================================
-		get  'areascanningsailboat'    ,  to: 'scores#racesailboat'
+		get  'areascanningsailboat'    ,  to: 'scores#areascanningsailboat'
 	  get  'areascanningmicrosailboat',  to: 'scores#areascanningmicrosailboat'
 #===================== fleet race =====================================
 		get  'racesailboat'            ,  to: 'scores#racesailboat'
@@ -121,6 +126,7 @@ Rails.application.routes.draw do
     match '/404', to: 'errors#file_not_found', via: :all
     match '/422', to: 'errors#unprocessable', via: :all
     match '/500', to: 'errors#internal_server_error', via: :all
+
 
   #errors
   #get "/404", :to => "errors#not_found"

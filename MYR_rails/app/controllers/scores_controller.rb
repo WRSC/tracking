@@ -94,12 +94,14 @@ class ScoresController < ApplicationController
 					when "StationKeeping"
 						if rob.bestStationscoreId==nil 
 							rob.update_attribute(:bestStationscoreId, @score.id) 
-							rob.update_attribute(:bestStationscore, @score.rawscore) 
+							rob.update_attribute(:bestStationscore, @score.rawscore)
+							@score.update_attribute(:finalscore, @score.rawscore) 
 						else
 							if @score.humanintervention != 1
 								if Score.find_by_id(rob.bestStationscoreId).humanintervention==1 || @score.rawscore > rob.bestStationscore
 										rob.update_attribute(:bestStationscoreId, @score.id) 
 										rob.update_attribute(:bestStationscore, @score.rawscore) 
+										@score.update_attribute(:finalscore, @score.rawscore) 
 								end
 							end
 						end
@@ -455,18 +457,18 @@ class ScoresController < ApplicationController
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:raceRank, rank+1)	
 				s=Score.find_by_id(noHi[rank].bestRacescoreId)
-				s.update_attribute(:rawscore, (10-rank > 4 ?  10-rank : 4))	
+				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
 			end
 			rank=noHi.length
 			yesHi.each do |r|
 				r.update_attribute(:raceRank, rank+1)
 				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, 0)	
+				s.update_attribute(:finalscore, 0)	
 			end
 			notPaticipated.each do |r|
 				r.update_attribute(:raceRank, 0)	
 				s=Score.find_by_id(r.bestRacescoreId)
-				s.update_attribute(:rawscore, -1)	
+				s.update_attribute(:finalscore, -1)	
 			end
 		end
 	end
@@ -603,7 +605,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description, :timepenalty
-, :timepenalty_description, :marginten)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description, :timepenalty, :timepenalty_description, :marginten)
     end
 end

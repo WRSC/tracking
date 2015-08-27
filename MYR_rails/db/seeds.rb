@@ -21,10 +21,10 @@ Member.create!(name:  "testAdmin",
                activated: true,
                activated_at: Time.zone.now)
 
-Mission.create!(name:  "fleet race Contest",
+Mission.create!(name:  "station keeping Contest",
 								start: "20150601000000",
 								end:   "20150901000000",
-             		mtype: "Race",
+             		mtype: "StationKeeping",
 								category: "Sailboat")
 
 i=1

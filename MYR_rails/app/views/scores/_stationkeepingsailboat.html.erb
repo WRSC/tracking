@@ -12,7 +12,7 @@ Finished <%= @sail_scores.length%> / All station keeping attempts <%= @sail_atts
         <th >Rawscore</th>
 				<th >H I</th>
 				<th >AIS</th>
-				<th></th>
+				<th>Final Score</th>
 			<% if sign_in? %>
 				<th> Options</th>			
 			<% end %>
@@ -46,7 +46,11 @@ Finished <%= @sail_scores.length%> / All station keeping attempts <%= @sail_atts
 				<% else %>
 					<td>Yes</td>	
 				<% end %>
-				<td></td>    
+				<% if   score.finalscore!=nil %>
+					<td><%= number_with_precision(score.finalscore, precision: 2) %></td>	
+				<% else %>
+					<td></td>	
+				<% end %>   
 				<% if sign_in? %>
 		      <% if is_admin? %>
 		        <td><%= link_to 'Edit', edit_score_path(score) %> <%=' | '%>

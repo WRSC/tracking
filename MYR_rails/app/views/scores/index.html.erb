@@ -3,13 +3,14 @@
 <!--http://codepen.io/ashblue/pen/mCtuA-->
 <% provide(:title, "Scores | Index") %>
 <%= stylesheet_link_tag 'scores_table.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'finalstanding', 'data-turbolinks-track' => true %>
 <div id="score-awesome-table">
 <div id="score-background-container">
 <br>
 <h1>WRSC 2015 FINAL STANDING</h1>
 <!--table for Sailboat-->
 <h2><center>Category: Sailboat</center></h2>
-<button>Calculate the final rank</button>
+<button id="calculate-final-ranking">Calculate the final rank</button>
 <br /><br />
 <table id="racetimes">
   <tr id="firstrow" >
@@ -34,10 +35,63 @@
 			  <td ><%= rob.team.name %></td>
 			  <td ><%= rob.name%></td>
 				<!---------------station keeping------------------->
-			  <td >1</td>
-			  <td >2</td>
-			  <td >3</td>
-		  	<td >4</td>
+			  <% if rob.bestStationscoreId != nil%>
+					<% score= Score.find_by_id(rob.bestStationscoreId) %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
+				<!---------------area scanning-------------------->
+			  <% if rob.bestAreascoreId != nil%>
+					<% score= Score.find_by_id(rob.bestAreascoreId)   %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+						
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
+				<!---------------triangular------------------->
+			  <% if rob.bestTriangularscoreId != nil%>
+					<% score= Score.find_by_id(rob.bestTriangularscoreId ) %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+						
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
+				<!---------------fleet race------------------->
+		  	<% if rob.bestRacescoreId != nil%>
+					<% score= Score.find_by_id(rob.bestRacescoreId  ) %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
 	  	</tr>				
       <% i+=1%>
   <% end %>
@@ -48,58 +102,90 @@
 <h2><center>Category: MicroSailboat</center></h2>
 <table id="racetimes">
   <tr id="firstrow" >
-    <th>#</th>
+    <th>Rank</th>
     <th>Team</th>
     <th>Robot</th>
-		<th>Category</th>
-    <th><%= link_to "Mission 1", triangular_path %></th>
-    <th><%= link_to "Mission 2", stationkeeping_path %></th>
-    <th><%= link_to "Mission 3", areascanning_path %></th>
-    <th><%= link_to "Mission 4", fleetrace_path %></th>
+		<th><%= link_to "Station keeping", stationkeeping_path %></th>
+    <th><%= link_to "Area scanning", areascanning_path %></th>
+		<th><%= link_to "Triangular course", triangular_path %></th>
+    <th><%= link_to "Fleet race", fleetrace_path %></th>
+		<th>Extra Points</th>
+		<th>Final Score</th>
     <% if is_admin? %>
       <th>Option</th>
     <% end %>
   </tr>
+
   <% i=1 %>
-  <% if is_admin? %>
-	  <% @microSailboatlist.each do |rob| %>
-			  <tr id= <%= 'scores-'+i.to_s %> >
-          <td><%= i %></td>
-				  <td contenteditable="true" ><%= rob.team.name %></td>
-				  <td contenteditable="true" ><%= rob.name%></td>
-				  <td contenteditable="true" ><%= rob.category%></td>
-				  <td contenteditable="true" >1</td>
-				  <td contenteditable="true" >2</td>
-				  <td contenteditable="true" >3</td>
-			  	<td contenteditable="true" >4</td>
-          <td>
-            <span class="table-option">
-              <input type="image" src="/icons/scores-ok.png" width=25 height=25 ></input>
-              <input class="table-remove" type="image" src="/icons/scores-delete.png" width=25 height=25 > </input>
-            </span>
-          </td>
-          <% i+=1 %>
-       	</tr>		
-	  <% end %>
-  <% else %>
-    <% i=1 %>
-	  <% @microSailboatlist.each do |rob| %>
-			  <tr id=<%= 'scores-'+i.to_s %> >
-          <td><%= i %></td>
-				  <td ><%= rob.team.name %></td>
-				  <td ><%= rob.name%></td>
-				  <td ><%= rob.category%></td>
-				  <td >1</td>
-				  <td >2</td>
-				  <td >3</td>
-			  	<td >4</td>
-		  	</tr>				
-        <% i+=1%>
-	  <% end %>
-  <% end %>
+  <% @microSailboatlist.each do |rob| %>
+<tr id=<%= 'scores-'+i.to_s %> >
+        <td><%= i %></td>
+			  <td ><%= rob.team.name %></td>
+			  <td ><%= rob.name%></td>
+				<!---------------station keeping------------------->
+			  <% if rob.bestStationscoreId != nil%>
+					<% score= Score.find_by_id(rob.bestStationscoreId) %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
+				<!---------------area scanning-------------------->
+			  <% if rob.bestAreascoreId != nil%>
+					<% score= Score.find_by_id(rob.bestAreascoreId)   %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+						
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
+				<!---------------triangular------------------->
+			  <% if rob.bestTriangularscoreId != nil%>
+					<% score= Score.find_by_id(rob.bestTriangularscoreId ) %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+						
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
+				<!---------------fleet race------------------->
+		  	<% if rob.bestRacescoreId != nil%>
+					<% score= Score.find_by_id(rob.bestRacescoreId  ) %>
+					<td>
+						<div class="big">
+							<font color="red"><%= score.finalscore %></font><br />
+						</div>
+						<div class="small">
+							<font color="green"><%= score.timecost %></font>
+						</div>
+					</td>
+				<% else %>
+					<td>/</td>
+				<% end %>
+	  	</tr>				
+      <% i+=1%>
+		<% end %>
 </table>
 
-<button id="export-btn" class="btn btn-primary">Export Data</button>
+
 <p id="export"></p>
 <p>Updated in <%= Time.now %></p>
 </div>

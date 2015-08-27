@@ -93,7 +93,7 @@
 	# be sure to initialize them by running rake db:reset RAILS_ENV=production
 
 	#Admins
-
+=begin
 	Member.create!(name:  "[ADMIN]Sylvain ENSTA",
 		               email: "sylvain.hunault@ensta-bretagne.org",
 		               password:              "sylvan64",
@@ -540,3 +540,4 @@
 	  i=i+1
 	end
 # end
+=end

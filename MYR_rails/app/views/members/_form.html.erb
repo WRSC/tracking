@@ -32,8 +32,15 @@
     <%= f.label :email %>
     <%= f.text_field :email %>
 
-  	<%= f.label :role %>
-    <%= f.select :role, ['visitor','competitor'] %>
+    <% if sign_in? %>
+      <% if is_admin? %>
+      	<%= f.label :role %>
+        <%= f.select :role, ['administrator'] %>
+      <% end %>
+    <% else %>
+      <%= f.label :role %>
+      <%= f.select :role, ['visitor','competitor'] %>
+    <% end %>
 
     <%= f.label :logo %>
     <%= f.file_field :logo %>

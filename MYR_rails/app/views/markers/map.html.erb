@@ -30,7 +30,7 @@
 				<select name="mission" id="marker_missions_dropdown">
 					<option value="NULL">Select a mission</option>
 					<% for i in 0..(@missions.size-1)%>
-  						<option value="<%= @missions[i].id %>"><%= @missions[i].name + " " + @missions[i].category %></option>
+  						<option value="<%= @missions[i].id %>"><%= @missions[i].name %></option>
 					<% end %>
 				</select><br/>
 			</div>

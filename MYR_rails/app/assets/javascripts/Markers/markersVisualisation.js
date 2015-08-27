@@ -30,6 +30,7 @@ function loadMission(){
 	$("#marker_missions_dropdown").change(function(){
 		var state = $('#marker_missions_dropdown :selected').val();
 		if (state != "NULL"){
+			initializeMap();
 			mission_id = state;
 			requestMissionMarkers(mission_id)
 		}
@@ -83,12 +84,12 @@ function drawPoint(data,map){
 	tablng=data.longitude.split("_")
 	for (var i=0;i<tablat.length;i++){	
 		if (tablat[i]!="" && tablng[i]!=""){
-			fixPoint=addFixMarker(tablat[i],tablng[i],data.name,map)
+			fixPoint=addFixMarker(tablat[i],tablng[i],data,map)
 		}
 	}
 }
 
-function addFixMarker(lat, lng, name, map){
+function addFixMarker(lat, lng, marker, map){
 	//alert('lat is '+lat+' lng is '+lng)
 	var image = {
 					url: 'icons/bigBuoy2.png',
@@ -96,7 +97,7 @@ function addFixMarker(lat, lng, name, map){
 					origin: new google.maps.Point(0,0),
 					anchor: new google.maps.Point(12, 37)
 				};
-	data = '<font color=\'black\'><div>'+'<b>Name: </b>'+name+'</div>'
+	data = '<font color=\'black\'><div>'+'<b>Name: </b>'+marker.name+'<br><b>Type: </b>'+marker.mtype+'<br><b>Description: </b>'+marker.description+'</div>'
 	var temp = new google.maps.InfoWindow(
 		{
 			content: data

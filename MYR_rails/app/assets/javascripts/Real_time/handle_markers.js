@@ -243,7 +243,7 @@
 		var polyline = new google.maps.Polyline({
 			path: Gcoords,
 			geodesic: true,
-			strokeColor: colors[tracker_id%12],
+			strokeColor: colors[tracker_id%13],
 			strokeOpacity: 1.0,
 			strokeWeight: 1
 		});

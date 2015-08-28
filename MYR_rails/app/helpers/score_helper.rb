@@ -296,7 +296,7 @@ module ScoreHelper
   def stationKeepingTimecost(a_id)
     a=Attempt.find_by_id(a_id)
     # find all markers for this mission
-    poly=Marker.where(mission_id: a.mission.id).where(name: "station keeping zone")
+    poly=Marker.where(mission_id: a.mission.id).where(name: "Station Keeping Zone")
 		# poly.size <=0 did not create markers
 		# poly.size >0 more than one marker
 		if poly.size!=1

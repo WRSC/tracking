@@ -55,7 +55,7 @@ address{font-style:normal; font-weight:normal;}
 hr{display:block; width:100%; height:1px; border:solid; border-width:1px 0 0 0;}
 
 .wrapper{display:block; width:100%; margin:0; padding:0; text-align:left; word-wrap:break-word;}
-#header, #announce, #breadcrumb, #container, #footer, #copyright{display:block; width:978px; margin:0 auto;}
+#header, #announce, #breadcrumb, #container, #footer, #copyright{display:block; width:1348px; margin:0 auto;}
 
 
 /* HTML 5 Overrides

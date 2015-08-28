@@ -30,10 +30,10 @@
 		//alert(lat,lng)
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
-			url: 'icons/small'+tracker_id%12+'.png',
-			size: new google.maps.Size(16, 19),
+			url: 'icons/dot'+tracker_id%13+'.png',
+			size: new google.maps.Size(5, 5),
 			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(8, 19)
+			anchor: new google.maps.Point(3, 3)
 		};
 		//alert(tracker_id)
 		var marker = new google.maps.Marker(
@@ -59,7 +59,7 @@
 	function addBigMarker(lat, lng, tracker_id,datetime){
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
-			url: 'icons/big'+tracker_id%12+'.png',
+			url: 'icons/big'+tracker_id%13+'.png',
 			size: new google.maps.Size(32, 37),
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(16, 37)
@@ -155,20 +155,21 @@
 			latitude = data[i].latitude;
 			longitude = data[i].longitude;
 			tracker_id = data[i].tracker_id;
-			if (last_coord != null && last_track == tracker_id){
-				tracker_Gcoords.push(last_coord);
-				latest_markers[0][latest_markers[0].length-1].setMap(null);
-				addSmallMarker(last_latitude, last_longitude, last_track, last_datetime);	
-				last_coord = null;
-			}		
+			// if (last_coord != null && last_track == tracker_id){
+			// 	tracker_Gcoords.push(last_coord);
+			// 	latest_markers[0][latest_markers[0].length-1].setMap(null);
+			// 	addSmallMarker(last_latitude, last_longitude, last_track, last_datetime);	
+			// 	last_coord = null;
+			// }		
 			datetime=data[i].datetime
 			tracker_Gcoords.push(new google.maps.LatLng(latitude, longitude));
 			
 			if(i != data.length -1){ //not end of array
 				if(data[i].tracker_id == data[i+1].tracker_id){ //the same tracker
 					//addDot(latitude, longitude, tracker_id);	
-					//if (i%10==0)//every 10 coordinates add a small marker
-					addSmallMarker(latitude, longitude, tracker_id, datetime);	
+					if (i%10==0){//every 10 coordinates add a small marker
+						addSmallMarker(latitude, longitude, tracker_id, datetime);
+					}	
 				}
 				else{ //derniere coordonnee du meme tracker si tracker different apres
 					//create polyline
@@ -218,7 +219,7 @@
 		var polyline = new google.maps.Polyline({
 			path: Gcoords,
 			geodesic: true,
-			strokeColor: colors[tracker_id%12],
+			strokeColor: colors[tracker_id%13],
 			strokeOpacity: 1.0,
 			strokeWeight: 1
 		});

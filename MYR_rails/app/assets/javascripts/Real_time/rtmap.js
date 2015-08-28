@@ -196,7 +196,7 @@ function FullScreenControl(controlDiv, map) {
 			mapTypeControl: true,
 			mapTypeControlOptions: {
 				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-				position: google.maps.ControlPosition.BOTTOM_LEFT
+				position: google.maps.ControlPosition.TOP_CENTER
 			},
 			scaleControl: true,
 			streetViewControl: false,

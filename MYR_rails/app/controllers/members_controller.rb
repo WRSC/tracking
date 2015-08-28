@@ -6,7 +6,7 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.all
+    @members = Member.where(activated: true)
   end
 
   # GET /members/1

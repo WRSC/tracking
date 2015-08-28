@@ -12,7 +12,8 @@
         <% @tabrobots.each do |robot| %>
         	
           <% if robot.missions != nil and robot.missions !=[]%>
-            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"><%= robot.name %><img src="/icons/medium<%=robot.id %>.png"/>
+            <% tracker = Attempt.find_by_robot_id(robot.id).tracker_id %>
+            <input type="checkbox" name="robot<%= robot.id %>" id="<%= robot.id %>"><%= robot.name %><img src="/icons/medium<%=tracker%13 %>.png"/>
             <br>
           <% end %> 
           <style>

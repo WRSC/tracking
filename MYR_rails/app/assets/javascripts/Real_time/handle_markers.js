@@ -25,7 +25,13 @@
 		else{
 			//latest_markers[0][latest_markers[0].length-1].setMap(null);
 			if (latest_markers[0][index_next_new_marker].getMap()!=null){
-				latest_markers[0][index_next_new_marker].setMap(null);
+				var dot = {
+					url: 'icons/dot'+tracker_id%13+'.png',
+					size: new google.maps.Size(5, 5),
+					origin: new google.maps.Point(0,0),
+					anchor: new google.maps.Point(3, 3)
+				};
+				latest_markers[0][index_next_new_marker].icon(dot);
 			}
 			latest_markers[0][index_next_new_marker]=[];
 			latest_markers[0][index_next_new_marker]=marker;

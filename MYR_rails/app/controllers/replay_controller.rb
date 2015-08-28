@@ -221,26 +221,20 @@
 		render json: markerinfos.to_json(:only =>[:mtype,:latitude,:longitude,:datetime, :name, :description])
 	end
  	
- 	def infowindow
- 		tracker_id=params[:tracker_id]
-		#if singleAttempt = true, it is from choosing attempt
-		#if singleAttempt = false, it is from choosing datetims 
- 		singleAttempt=params[:singleAttempt]
- 		@lat=params[:lat]
- 		@lng=params[:lng]
- 		@isEnd=params[:isEnd]
- 		@datetime=params[:datetime].to_datetime
- 		@attmepts=[]
-		@single=false
-	  	if singleAttempt=='true'
-			@test=true
+	def infoAttempt
+		singleAttempt=params[:singleAttempt]
+		res = []
+		if singleAttempt=='true'
 		 	a_id=cookies[:attemptslist].to_i
-			@single=true
-			@attempts=Attempt.find_by(id: a_id)
-	  	else 
-			@test=false
-		  	@attempts=Tracker.find_by(id: tracker_id).attempts.where("start <= ? AND end >= ?",@datetime,@datetime) 
+		 	myAttempt = Attempt.find_by(id: a_id)
+		 	mission = Mission.find(myAttempt.mission_id)
+		 	robot = Robot.find(myAttempt.robot_id)
+			res.push(myAttempt)
+			res.push(robot)
+			res.push(mission)
+			res.push(Team.find(robot.team_id))
 	 	end
- 	end
+	 	render json: res.to_json
+	end
 
 end

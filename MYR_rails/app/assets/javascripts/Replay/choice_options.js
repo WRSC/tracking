@@ -17,7 +17,6 @@ function wantInfo(){
      	}else{//si décoché
       		setShowInfo(false);
       		if (latest_markers[0].length > 0){
-      			alert("removing listeners")
       			hideInfoWindow()
       		}	
       	}

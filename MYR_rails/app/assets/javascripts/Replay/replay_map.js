@@ -173,81 +173,42 @@ function FullScreenControl(controlDiv) {
 		var lngTemp = 0.0;
 		var changeInfowindow=[];
 		var count = 0;
-		for(var i=0; i < latest_markers[0].length-1 ; i++){
-			if ((i%10)==0){
-				markerTemp.push(latest_markers[0][i]);
-				tracker_idTemp = latest_markers[1][i];
-				datetimeTemp = latest_markers[2][i];
-				latTemp = markerTemp[count].getPosition().lat();
-				lngTemp = markerTemp[count].getPosition().lng();
-				count = count + 1;
-				$.ajax({
-								type: "GET",
-								url: "/infowindow",
-								data: {tracker_id: tracker_idTemp, datetime: datetimeTemp, singleAttempt: getSingleAttempt(), isEnd: false, lat: latTemp, lng:lngTemp},
-								dataType: "html",
-								success: function(data){
-									//alert('change tracker')
-									//alert(data)
-									// loop to wait for the end of the previous ajax request
-									var j = 0;
-									while (j < 100000){
-										j=j+1
-									}
-									var temp = new google.maps.InfoWindow(
-										{
-											content: data
-										}
-									);
-									changeInfowindow.push(temp);
-								}
-				})  
-			} 
-		}
-
-
-				tracker_idTemp = latest_markers[1][latest_markers[0].length-1];
-				datetimeTemp = latest_markers[2][latest_markers[0].length-1];
-				latTemp = latest_markers[0][latest_markers[0].length-1].getPosition().lat();
-				lngTemp = latest_markers[0][latest_markers[0].length-1].getPosition().lng();
-				$.ajax({
-								type: "GET",
-								url: "/infowindow",
-								data: {tracker_id: tracker_idTemp, datetime: datetimeTemp, singleAttempt: getSingleAttempt(), isEnd: true, lat: latTemp, lng:lngTemp},
-								dataType: "html",
-								success: function(data){
-									//alert('change tracker')
-									//alert(data)
-									// loop to wait for the end of the previous ajax request
-									var j = 0;
-									while (j < 100000){
-										j=j+1
-									}
-									var temp = new google.maps.InfoWindow(
-										{
-											content: data
-										}
-									);
-
-									setTimeout(function(){
-									markerTemp.push(latest_markers[0][latest_markers[0].length-1]);
-									changeInfowindow.push(temp);
-
-										for(var i=0; i < markerTemp.length ; i++){
-											addInfoWindow(changeInfowindow[i],markerTemp[i])
-										}
-									}, 2000);
-								}
-				})
+		var string = '';
+		$.ajax({
+				type: "GET",
+				url: "/infoAttempt",
+				data: {singleAttempt: getSingleAttempt()},
+				dataType: "json",
+				success: function(data){
+					var attempt = data[0];
+					var robot = data[1];
+					var mission = data[2];
+					var team = data[3];
+					for(var i=0; i < latest_markers[0].length ; i++){
+						if (i!= latest_markers[0].length-1){
+							string = '<font color=\'black\'>'+'<div id=\'infowindow-title\'><p><b><center><u>Data Info:</u>'+'</center></b><p></div>'+'<div id=\'infowindow\'>'+'<p><b>Team:</b>'+ team.name+ '&nbsp <b>Robot:</b>'+robot.name +'</p>'+'<p><b>Mission:</b>'+mission.name+' &nbsp; <b>Attempt</b>'+ attempt.name + '</p><p><b>Datetime:</b>'+latest_markers[2][i]+' UTC</p></div></font>'
+						}
+						else{
+							string = '<font color=\'black\'>'+'<div id=\'infowindow-title\'><p><b><center><u>End of attempt.</u>'+'</center></b><p></div>'+'<div id=\'infowindow\'>'+'<p><b>Team:</b>'+ team.name+ '&nbsp <b>Robot:</b>'+robot.name +'</p>'+'<p><b>Mission:</b>'+mission.name+' &nbsp; <b>Attempt</b>'+ attempt.name + '</p><p><b>Datetime:</b>'+latest_markers[2][i]+' UTC</p></div></font>'
+						}
+						var temp = new google.maps.InfoWindow(
+							{
+								content: string
+							}
+						);
+						addInfoWindow(temp, latest_markers[0][i])
+					}
+				}
+		})
  
 	} 
 	
 
 	function hideInfoWindow(){
 		for(var i=0; i < latest_markers[0].length-1 ; i++){
-			if ((i%10)==0){
+			//if ((i%10)==0){
 				google.maps.event.clearListeners(latest_markers[0][i],'click')
-			}
+			//}
 		}
 		google.maps.event.clearListeners(latest_markers[0][latest_markers[0].length-1],'click')
 	}

@@ -186,8 +186,13 @@ class ScoresController < ApplicationController
 					when "StationKeeping"
 						if rob.bestStationscoreId==nil 
 							rob.update_attribute(:bestStationscoreId, @score.id) 
-							rob.update_attribute(:bestStationscore, @score.rawscore)
-							@score.update_attribute(:finalscore, @score.rawscore) 
+							
+							if @score.humanintervention==1
+								@score.update_attribute(:finalscore, 0.0) 
+							else
+								@score.update_attribute(:finalscore, @score.rawscore)
+							end						
+							rob.update_attribute(:bestStationscore, @score.finalscore)
 						else
 							if @score.humanintervention != 1
 								if Score.find_by_id(rob.bestStationscoreId).humanintervention==1 || @score.rawscore > rob.bestStationscore
@@ -363,16 +368,44 @@ class ScoresController < ApplicationController
 			notPaticipated=[]
 			firstrobots.each do |r|
 				if r.bestStationscoreId !=nil
+					noHi.push(r)	
+=begin
 					if Score.find_by_id(r.bestStationscoreId).humanintervention == 1
 						yesHi.push(r)
 					else
 						noHi.push(r)				
 					end
+=end
 				else
 					notPaticipated.push(r)
 				end
 			end
 			
+			rank=1
+			i=0
+			repeat=1
+			while i< noHi.length
+				if i!=noHi.length-1
+					if noHi[i].bestStationscore==noHi[i+1].bestStationscore
+						noHi[i].update_attribute(:stationRank, rank)
+						repeat+=1
+						i+=1
+					else
+						noHi[i].update_attribute(:stationRank, rank)
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					noHi[i].update_attribute(:stationRank, rank)
+					i+=1
+				end		
+			end
+=begin
 			for rank in 0..(noHi.length-1)
 				noHi[rank].update_attribute(:stationRank, rank+1)	
 	
@@ -383,7 +416,7 @@ class ScoresController < ApplicationController
 					r.update_attribute(:stationRank, rank+1)
 				end
 			end
-		
+=end		
 		end
 	end
 
@@ -392,33 +425,43 @@ class ScoresController < ApplicationController
 		if flag=="true"
 #ranking		
 			#firstrobots=Mission.where(mtype: "TriangularCourse")[0].robots.where(category: "Sailboat").order(:bestTriangulartime).uniq
-			firstrobots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "MicroSailboat").order(:bestStationscore).uniq
+			firstrobots=Mission.where(mtype: "StationKeeping")[0].robots.where(category: "MicroSailboat").order(bestStationscore: :desc).uniq
 			noHi=[]
 			yesHi=[]
 			notPaticipated=[]
 			firstrobots.each do |r|
 				if r.bestStationscoreId !=nil
-					if Score.find_by_id(r.bestStationscoreId).humanintervention == 1
-						yesHi.push(r)
-					else
-						noHi.push(r)				
-					end
+					noHi.push(r)	
 				else
 					notPaticipated.push(r)
 				end
 			end
 			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:stationRank, rank+1)	
+			rank=1
+			i=0
+			repeat=1
+			while i< noHi.length
+				if i!=noHi.length-1
+					if noHi[i].bestStationscore==noHi[i+1].bestStationscore
+						noHi[i].update_attribute(:stationRank, rank)
+						repeat+=1
+						i+=1
+					else
+						noHi[i].update_attribute(:stationRank, rank)
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					noHi[i].update_attribute(:stationRank, rank)
+					i+=1
+				end		
+			end
 	
-			end
-			rank=noHi.length
-			yesHi.each do |r|
-				if r!=nil
-					r.update_attribute(:stationRank, rank+1)
-				end
-			end
-			
 		end
 	end
 #============================ area scanning ======================================
@@ -439,12 +482,37 @@ class ScoresController < ApplicationController
 					notPaticipated.push(r)
 				end
 			end
-			
+
+			rank=1
+			i=0
+			repeat=1
+			while i< robots.length
+				if i!=robots.length-1
+					if robots[i].bestAreascore==robots[i+1].bestAreascore
+						robots[i].update_attribute(:areaRank, rank)
+						repeat+=1
+						i+=1
+					else
+						robots[i].update_attribute(:areaRank, rank)
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					robots[i].update_attribute(:areaRank, rank)
+					i+=1
+				end		
+			end			
+=begin
 			for rank in 0..(robots.length-1)
 				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
 			rank=robots.length
-		
+=end
 		end
 	end
 
@@ -463,11 +531,36 @@ class ScoresController < ApplicationController
 				end
 			end
 			
+			rank=1
+			i=0
+			repeat=1
+			while i< robots.length
+				if i!=robots.length-1
+					if robots[i].bestAreascore==robots[i+1].bestAreascore
+						robots[i].update_attribute(:areaRank, rank)
+						repeat+=1
+						i+=1
+					else
+						robots[i].update_attribute(:areaRank, rank)
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					robots[i].update_attribute(:areaRank, rank)
+					i+=1
+				end		
+			end
+=begin			
 			for rank in 0..(robots.length-1)
 				robots[rank].update_attribute(:areaRank, rank+1)	
 			end
 			rank=robots.length
-		
+=end		
 		end
 	end
 

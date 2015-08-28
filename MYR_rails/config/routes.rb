@@ -70,6 +70,8 @@ Rails.application.routes.draw do
 
 		get  'uploadXMLAS'             ,  to: 'attempts#uploadXMLAS'
 		post 'uploadXMLAS'             ,  to: 'attempts#updateXMLAS'
+		get  'uploadJsonAS'            ,  to: 'attempts#uploadJsonAS'
+		post 'uploadJsonAS'            ,  to: 'attempts#updateJsonAS'
 		get  'generateXMLfile'         ,  to: 'attempts#generateXMLfile'
        
 

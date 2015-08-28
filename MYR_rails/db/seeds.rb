@@ -27,10 +27,10 @@
  	               activated: true,
  	               activated_at: Time.zone.now)
 
- 	Mission.create!(name:  "Race",
+ 	Mission.create!(name:  "area scanning",
  									start: "20150601000000",
  									end:   "20150901000000",
- 	             		mtype: "Race",
+ 	             		mtype: "AreaScanning",
  									category: "Sailboat")
 
  	i=1

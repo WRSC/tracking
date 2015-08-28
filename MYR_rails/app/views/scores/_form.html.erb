@@ -22,17 +22,41 @@
 
     
     <%= f.label :TimeCost %>
-    <%= f.number_field :timecost %> seconds
+    <%= f.number_field :timecost %> seconds<br /><br />
 
     <%= f.label :RawScore %>
-    <%= f.number_field :rawscore %> 
+    <%= f.number_field :rawscore %> <br /><br />
 
-		<%= f.label :Penalty %>
-    <%= f.number_field :penalty %> 
+		<%= f.check_box :humanintervention %>
+		<%= f.label :humanintervention,"Human Intervention(Not collision avoidance)"%>
 
-		<%= f.label :penalty_description, "Penalty Description" %>
-    <%= f.text_area :penalty_description %> 
+		<%= f.check_box :AIS %>
+		<%= f.label :AIS,"AIS class B onboard and sending AIS-data meanwhile"%>
 
+		<% case @score.attempt.mission.mtype %>
+		<% when "TriangularCourse" %>
+		<% when "StationKeeping" %>
+		<% when "AreaScanning" %>
+			<%= f.label :pointpenalty, "Point Penalty" %>
+			<%= f.number_field :pointpenalty, :class => 'text_field', :step => 'any' %> points 
+
+			<%= f.label :pointpenalty_description, "Point Penalty Description" %>
+			<%= f.text_area :pointpenalty_description %> 
+
+		<% when "Race"%>
+			
+			<%= f.check_box :marginten %>
+			<%= f.label :marginten,"margin within 10m from markers"%>
+
+			<%= f.label :timepenalty, "Time Penalty coefficient ( Timecost_final=timecost*(timepenalty+1) )" %> 
+			<%= f.number_field :timepenalty, :class => 'text_field', :step => 'any' %><br /><br />
+			<%= f.label :timepenalty_description, "Time Penalty Description" %> 
+			<%= f.text_area :timepenalty_description %><br />
+		<% end %>
+
+		<%= f.label :FinalScore %>
+    <%= f.number_field :finalscore %> <br /><br />
+	
 		<%= f.hidden_field :datetimes, :value => Time.now %>
  
   

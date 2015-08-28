@@ -82,10 +82,29 @@ class AttemptsController < ApplicationController
 		end
 	end
 
+# get uploadJsonAS
+	def uploadJsonAS
+		@a=Attempt.find_by_id(attempt_params[:uploadxml_a_id])
+	end
+
+# post uploadJsonAS
+	def updateJsonAS
+		a=Attempt.find_by_id(attempt_params[:uploadxml_a_id])
+		#render json: attempt_params[:uploadxml].original_filename
+
+		a.update(uploadjson: attempt_params[:uploadjson])
+		
+		if a.save
+			redirect_to a.robot
+		else
+			redirect_to "/404"
+		end
+	end
+
 	def generateXMLfile
 		@a=Attempt.find_by_id(params[:uploadxml_a_id])
 		#inputname=a.uploadxml.file.original_filename
-		input=@a.uploadxml.file.file.split("/").last
+		input=@a.uploadjson.file.file.split("/").last
 
 		#filetab=file.split("/")
 		#inputname=filetab.last
@@ -104,6 +123,6 @@ class AttemptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attempt_params
-      params.require(:attempt).permit(:name, :start, :end, :robot_id, :mission_id, :tracker_id, :uploadxml, :uploadxml_a_id, :upload_timestamp)
+      params.require(:attempt).permit(:name, :start, :end, :robot_id, :mission_id, :tracker_id, :uploadxml,:uploadjson, :uploadxml_a_id, :upload_timestamp)
     end
 end

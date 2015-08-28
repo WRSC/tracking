@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828123737) do
+ActiveRecord::Schema.define(version: 20150828132652) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150828123737) do
     t.string   "uploadxml"
     t.string   "upload_timestamp"
     t.string   "generated_filename"
+    t.string   "uploadjson"
   end
 
   create_table "coordinates", force: :cascade do |t|

@@ -1,5 +1,6 @@
 class Attempt < ActiveRecord::Base
 	mount_uploader :uploadxml, XmlasUploader
+	mount_uploader :uploadjson, XmlasUploader
 # Associations
 	belongs_to :robot
 	belongs_to :mission
@@ -8,7 +9,7 @@ class Attempt < ActiveRecord::Base
   has_many :coordinates, through: :tracker
 
 # Validations
-    validates :name, presence: true, length: { in: 3..40, too_long: "%{count} characters is the maximum allowed", too_short:"%{count} characters is the minimum allowed"  },  #uniqueness: true,
+    validates :name, presence: true, length: { in: 3..40, too_long: "%{count} characters is the maximum allowed", too_short:"%{count} characters is the minimum allowed"  } #,uniqueness: true,
     validates :start, presence: true
     validates :end, presence: true
     validates :mission_id, presence: true

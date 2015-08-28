@@ -3,20 +3,38 @@
 google.load("visualization", "1", {packages:["orgchart"]});
 google.setOnLoadCallback(drawChart);
 
-function renderuploadxml(){
-	
+function renderuploadxml(a_id){
+
 	$.ajax({
 		type: "GET",
 		url: "/uploadXMLAS",
 		data: {attempt: {uploadxml_a_id: a_id}},
 		
-		success: function(){
+		success: function(data){
+			$("#generate-xml-file").click(function(){
+				
+				requestGenerateXML(a_id)
+			})
+		}       
+		
+	});
+}
+
+function requestGenerateXML(a_id){
+	$.ajax({
+		type: "GET",
+		url: "/generateXMLfile",
+		data: {uploadxml_a_id: a_id},
+		
+		success: function(data){
 			
 		}       
 		
 	});
 }
+
 function drawChart() {
+				var a_id
 				$("#draw-chart").click()
 				$("#draw-chart").bind('ajax:success', function(evt, teaminfo, status, xhr){
 /*
@@ -47,7 +65,7 @@ teaminfo[1] => info about missions => [mission,[attempts]]
 					atts=teaminfo[1][i][1]
 					for (var j=0; j< atts.length;j++){
 						
-						if (m.id==3){
+						if (m.mtype=="AreaScanning"){
 							a_id=atts[j].id
 							data.addRows([
 								//[atts[j].name, m.name, 'Attempt'],
@@ -71,7 +89,7 @@ teaminfo[1] => info about missions => [mission,[attempts]]
 				}
 				var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
 				chart.draw(data, option);
-				renderuploadxml()
+				renderuploadxml(a_id)
 			})
 	    
 }

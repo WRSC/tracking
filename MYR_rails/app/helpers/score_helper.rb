@@ -525,7 +525,8 @@ http://www.movable-type.co.uk/scripts/latlong.html
     File.open(filename,"w") do |f|
       f.write(f_hash.to_xml)
     end
-    return File.exist?(filename)
+    #return File.exist?(filename)
+		return filename
   end
 
 	def saveOutputnameToattempt(filename,attempt)

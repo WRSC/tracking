@@ -1,0 +1,6 @@
+<% filename= @a.generated_filename.split("/").last %>
+			<!--Rails.root+"/public"+desiredfilename -->
+			<% fullname =  @a.generated_filename %>
+			<% ind_s=Rails.root.to_s.length+7 %>
+			<%= link_to filename, fullname[ind_s,fullname.length] %><br />
+

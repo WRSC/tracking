@@ -1,5 +1,7 @@
 class AttemptsController < ApplicationController
+	include ScoreHelper
   before_action :set_attempt, only: [ :show, :edit, :update, :destroy]
+	
 	
   # GET /attempts
   # GET /attempts.json
@@ -69,16 +71,32 @@ class AttemptsController < ApplicationController
 	# post uploadXMLAS
 	def updateXMLAS
 		a=Attempt.find_by_id(attempt_params[:uploadxml_a_id])
+		#render json: attempt_params[:uploadxml].original_filename
+
 		a.update(uploadxml: attempt_params[:uploadxml])
+		a.update(upload_timestamp: attempt_params[:upload_timestamp])
 		if a.save
 			redirect_to a.robot
 		else
 			redirect_to "/404"
 		end
-	
+	end
+
+	def generateXMLfile
+		@a=Attempt.find_by_id(params[:uploadxml_a_id])
+		#inputname=a.uploadxml.file.original_filename
+		input=@a.uploadxml.file.file.split("/").last
+
+		#filetab=file.split("/")
+		#inputname=filetab.last
+		#render json: file
+		done=loadJsonDataAreaScanning(input)
+
+		@a.update_attribute(:generated_filename,done)
 	end
 
   private
+	
     # Use callbacks to share common setup or constraints between actions.
     def set_attempt
       @attempt = Attempt.find(params[:id])
@@ -86,6 +104,6 @@ class AttemptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attempt_params
-      params.require(:attempt).permit(:name, :start, :end, :robot_id, :mission_id, :tracker_id, :uploadxml, :uploadxml_a_id)
+      params.require(:attempt).permit(:name, :start, :end, :robot_id, :mission_id, :tracker_id, :uploadxml, :uploadxml_a_id, :upload_timestamp)
     end
 end

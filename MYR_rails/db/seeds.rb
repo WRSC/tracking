@@ -27,10 +27,10 @@
  	               activated: true,
  	               activated_at: Time.zone.now)
 
- 	Mission.create!(name:  "triangular Course",
+ 	Mission.create!(name:  "Race",
  									start: "20150601000000",
  									end:   "20150901000000",
- 	             		mtype: "TriangularCourse",
+ 	             		mtype: "Race",
  									category: "Sailboat")
 
  	i=1

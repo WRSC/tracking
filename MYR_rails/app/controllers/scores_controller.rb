@@ -632,21 +632,54 @@ class ScoresController < ApplicationController
 				end
 			end
 			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:raceRank, rank+1)	
-				s=Score.find_by_id(noHi[rank].bestRacescoreId)
-				note= (16-rank > 2 ?  16-rank : 2)
-				if s.marginten == 1
-					note > 5 ? note=note : note=5
-				end
-				s.update_attribute(:finalscore,note)	
+			rank=1
+			i=0
+			repeat=1
+			while i< noHi.length
+				if i!=noHi.length-1
+					if noHi[i].bestRacetime==noHi[i+1].bestRacetime
+						noHi[i].update_attribute(:raceRank, rank)
+						s=Score.find_by_id(noHi[i].bestRacescoreId)
+						note= (17-rank > 2 ?  17-rank : 2)
+						if s.marginten == 1
+							note > 5 ? note=note : note=5
+						end
+						Score.find_by_id(noHi[i].bestRacescoreId).update_attribute(:finalscore, note)
+						#noHi[i].update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))
+						repeat+=1
+						i+=1
+					else
+						noHi[i].update_attribute(:raceRank, rank)
+						s=Score.find_by_id(noHi[i].bestRacescoreId)
+						note= (17-rank > 2 ?  17-rank : 2)
+						if s.marginten == 1
+							note > 5 ? note=note : note=5
+						end
+						Score.find_by_id(noHi[i].bestRacescoreId).update_attribute(:finalscore, note)
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					noHi[i].update_attribute(:raceRank, rank)
+					s=Score.find_by_id(noHi[i].bestRacescoreId)
+						note= (17-rank > 2 ?  17-rank : 2)
+						if s.marginten == 1
+							note > 5 ? note=note : note=5
+						end
+						Score.find_by_id(noHi[i].bestRacescoreId).update_attribute(:finalscore, note)
+					i+=1
+				end		
 			end
-			rank=noHi.length
 			yesHi.each do |r|
 				if r!=nil
-					r.update_attribute(:raceRank, rank+1)
+					r.update_attribute(:raceRank, rank)
 					s=Score.find_by_id(r.bestRacescoreId)
-					s.update_attribute(:finalscore, 0)	
+					s.update_attribute(:finalscore, 0.0)	
 				end
 			end
 			
@@ -654,7 +687,7 @@ class ScoresController < ApplicationController
 	end
 
 	def racemicrosailboat
-		flag=params[:flag]
+				flag=params[:flag]
 		if flag=="true"
 #ranking		
 			firstrobots=Mission.where(mtype: "Race")[0].robots.where(category: "MicroSailboat").order(:bestRacetime).uniq
@@ -673,20 +706,57 @@ class ScoresController < ApplicationController
 				end
 			end
 			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:raceRank, rank+1)	
-				s=Score.find_by_id(noHi[rank].bestRacescoreId)
-				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
+			rank=1
+			i=0
+			repeat=1
+			while i< noHi.length
+				if i!=noHi.length-1
+					if noHi[i].bestRacetime==noHi[i+1].bestRacetime
+						noHi[i].update_attribute(:raceRank, rank)
+						s=Score.find_by_id(noHi[i].bestRacescoreId)
+						note= (17-rank > 2 ?  17-rank : 2)
+						if s.marginten == 1
+							note > 5 ? note=note : note=5
+						end
+						Score.find_by_id(noHi[i].bestRacescoreId).update_attribute(:finalscore, note)
+						#noHi[i].update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))
+						repeat+=1
+						i+=1
+					else
+						noHi[i].update_attribute(:raceRank, rank)
+						s=Score.find_by_id(noHi[i].bestRacescoreId)
+						note= (17-rank > 2 ?  17-rank : 2)
+						if s.marginten == 1
+							note > 5 ? note=note : note=5
+						end
+						Score.find_by_id(noHi[i].bestRacescoreId).update_attribute(:finalscore, note)
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					noHi[i].update_attribute(:raceRank, rank)
+					s=Score.find_by_id(noHi[i].bestRacescoreId)
+						note= (17-rank > 2 ?  17-rank : 2)
+						if s.marginten == 1
+							note > 5 ? note=note : note=5
+						end
+						Score.find_by_id(noHi[i].bestRacescoreId).update_attribute(:finalscore, note)
+					i+=1
+				end		
 			end
-			rank=noHi.length
 			yesHi.each do |r|
 				if r!=nil
-					r.update_attribute(:raceRank, rank+1)
+					r.update_attribute(:raceRank, rank)
 					s=Score.find_by_id(r.bestRacescoreId)
-					s.update_attribute(:finalscore, 0)	
+					s.update_attribute(:finalscore, 0.0)	
 				end
 			end
-		
+			
 		end
 	end
   	

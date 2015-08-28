@@ -533,6 +533,43 @@ http://www.movable-type.co.uk/scripts/latlong.html
 		attempt.update_attribute(:generated_filename, filename) 
 	end
 
-	
+#================== sort by finalscore ==============
+	def getRank(roblist)
+		for i in 0..(roblist.length-1)
+			for j in i..(roblist.length-1)
+				if roblist[i].finalscore < roblist[j].finalscore
+					tmp=  roblist[j]
+					roblist[j]= roblist[i]
+					roblist[i]= tmp		
+				end 			
+			end	
+		end
+		rank=1
+		i=0
+		repeat=1
+		while i< roblist.length
+			if i!=roblist.length-1
+				if roblist[i].finalscore==roblist[i+1].finalscore
+					roblist[i].update_attribute(:finalrank, rank)
+					repeat+=1
+					i+=1
+				else
+					roblist[i].update_attribute(:finalrank, rank)
+					if repeat==1
+						rank+=1
+					else
+						rank+=repeat
+					end
+					i+=1
+					repeat=1
+				end
+			else
+				roblist[i].update_attribute(:finalrank, rank)
+				i+=1
+			end		
+
+		end
+		return roblist
+	end
 
 end

@@ -19,9 +19,101 @@ class ScoresController < ApplicationController
 	
 
   	def index
-			@teamlist=Team.all
-			
-			@scores=Score.all
+			@sailboatlist.each do |rob|
+				@s_ais=0
+				finalscore=0
+				s=Score.find_by_id(rob.bestTriangularscoreId)
+				if s!=nil
+					if s.AIS==1
+						@s_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+					else	
+					end
+				end			
+				s=Score.find_by_id(rob.bestStationscoreId)
+				if s!=nil
+					if s.AIS==1
+						@s_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+					else	
+					end
+				end			
+				s=Score.find_by_id(rob.bestAreascoreId)
+				if s!=nil
+					if s.AIS==1
+						@s_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+					else	
+					end
+				end			
+				s=Score.find_by_id(rob.bestRacescoreId)
+				if s!=nil
+					if s.AIS==1
+						@s_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+					end
+				end		
+				finalscore+=@s_ais
+				rob.update_attribute(:finalscore, finalscore)	
+			end
+			@sailboatlist=getRank(@sailboatlist)
+
+
+			@microSailboatlist.each do |rob|
+				@ms_ais=0
+				finalscore=0
+				s=Score.find_by_id(rob.bestTriangularscoreId)
+				if s!=nil
+					if s.AIS==1
+						@ms_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+				
+					end
+				end			
+				s=Score.find_by_id(rob.bestStationscoreId)
+				if s!=nil
+					if s.AIS==1
+						@ms_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+				
+					end
+				end			
+				s=Score.find_by_id(rob.bestAreascoreId)
+				if s!=nil
+					if s.AIS==1
+						@ms_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+					else	
+					end
+				end			
+				s=Score.find_by_id(rob.bestRacescoreId)
+				if s!=nil
+					if s.AIS==1
+						@ms_ais+=1
+					end
+					if s.finalscore!=nil
+						finalscore+=s.finalscore
+					
+					end
+				end		
+				finalscore+=@ms_ais
+				rob.update_attribute(:finalscore, finalscore)	
+			end
+			@microSailboatlist=getRank(@microSailboatlist)
   	end
 
   	def show

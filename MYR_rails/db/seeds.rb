@@ -27,10 +27,10 @@
  	               activated: true,
  	               activated_at: Time.zone.now)
 
- 	Mission.create!(name:  "area scanning",
+ 	Mission.create!(name:  "Race",
  									start: "20150601000000",
  									end:   "20150901000000",
- 	             		mtype: "AreaScanning",
+ 	             		mtype: "Race",
  									category: "Sailboat")
 
  	i=1
@@ -41,7 +41,7 @@
  	  i=i+1
  	end
  	#============= test triangular scores ==============
- 	2.times do |n|
+ 	5.times do |n|
  	#id=2-4
  		 Member.create!(name:  "testTriangular#{n}",
  	               email: "testTriangular@gmail.com",
@@ -81,6 +81,8 @@
 
  		end
  	end
+
+	
 
 # when "production"
 

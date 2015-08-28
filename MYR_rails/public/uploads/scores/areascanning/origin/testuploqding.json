@@ -1,0 +1,38 @@
+{
+	"name": "testforjson", 	
+	"tracker_id": "1", 
+	"data": [
+		{
+		 "sectioni": "1", 
+		 "sectionj": "1", 
+		 "position": [{"datetime": "20150724102039", "latitude": 60.1076, "longitude": 19.9228}]
+		}, 
+		{
+		 "sectioni": "1", 
+		 "sectionj": "2", 
+		 "position": [{"datetime": "20150724102253", "latitude": 60.1078, "longitude": 19.9217}]
+		}, 
+		{
+		 "sectioni": "2", 
+		 "sectionj": "2", 
+		 "position": [{"datetime": "20150724102402", "latitude": 60.1072, "longitude": 19.9224}]
+		}, 
+		{
+		 "sectioni": "1", 
+		 "sectionj": "2", 
+		 "position": [{"datetime": "20150724102253", "latitude": 60.1078, "longitude": 19.9217}]
+		}, 
+		{
+		 "sectioni": "2", 
+		 "sectionj": "1", 
+		 "position": [{"datetime": "20150724102402", "latitude": 60.0014, "longitude": 19.92}]
+		}, 
+		{
+		 "sectioni": "2", 
+		 "sectionj": "1", 
+		 "position": [{"datetime": "20150724100427", "latitude": 60.0019, "longitude": 19.92}]}, 
+		{
+ 		 "sectioni": "2", 
+		 "sectionj": "1", 
+	   "position": [{"datetime": "20150724142427", "latitude": 60.0019, "longitude": 19.92}]}]
+		}

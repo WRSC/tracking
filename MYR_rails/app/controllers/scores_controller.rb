@@ -62,6 +62,7 @@ class ScoresController < ApplicationController
 					end
 				end		
 				finalscore+=@s_ais
+				rob.update_attribute(:aispoints, @s_ais)	
 				rob.update_attribute(:finalscore, finalscore)	
 			end
 			@sailboatlist=getRank(@sailboatlist)
@@ -111,6 +112,7 @@ class ScoresController < ApplicationController
 					end
 				end		
 				finalscore+=@ms_ais
+				rob.update_attribute(:aispoints, @ms_ais)	
 				rob.update_attribute(:finalscore, finalscore)	
 			end
 			@microSailboatlist=getRank(@microSailboatlist)

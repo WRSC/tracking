@@ -296,13 +296,35 @@ class ScoresController < ApplicationController
 				end
 			end
 			
-			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:triangularRank, rank+1)	
-				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
-				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
+			rank=1
+			i=0
+			repeat=1
+			while i< noHi.length
+				if i!=noHi.length-1
+					if noHi[i].bestTriangulartime==noHi[i+1].bestTriangulartime
+						noHi[i].update_attribute(:triangularRank, rank)
+						Score.find_by_id(noHi[i].bestTriangularscoreId).update_attribute(:finalscore,(11-rank > 4 ?  11-rank : 4))
+						#noHi[i].update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))
+						repeat+=1
+						i+=1
+					else
+						noHi[i].update_attribute(:triangularRank, rank)
+						Score.find_by_id(noHi[i].bestTriangularscoreId).update_attribute(:finalscore,(11-rank > 4 ?  11-rank : 4))
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					noHi[i].update_attribute(:triangularRank, rank)
+					Score.find_by_id(noHi[i].bestTriangularscoreId).update_attribute(:finalscore,(11-rank > 4 ?  11-rank : 4))
+					i+=1
+				end		
 			end
-			rank=noHi.length
+
 			yesHi.each do |r|
 				if r!=nil
 					r.update_attribute(:triangularRank, rank+1)
@@ -310,7 +332,7 @@ class ScoresController < ApplicationController
 					s.update_attribute(:finalscore, 0)
 				end	
 			end
-			
+		
 		end
 	end
 	
@@ -334,19 +356,41 @@ class ScoresController < ApplicationController
 				end
 			end
 			
-			
-			for rank in 0..(noHi.length-1)
-				noHi[rank].update_attribute(:triangularRank, rank+1)	
-				s=Score.find_by_id(noHi[rank].bestTriangularscoreId)
-				s.update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))	
+			rank=1
+			i=0
+			repeat=1
+			while i< noHi.length
+				if i!=noHi.length-1
+					if noHi[i].bestTriangulartime==noHi[i+1].bestTriangulartime
+						noHi[i].update_attribute(:triangularRank, rank)
+						Score.find_by_id(noHi[i].bestTriangularscoreId).update_attribute(:finalscore,(11-rank > 4 ?  11-rank : 4))
+						#noHi[i].update_attribute(:finalscore, (10-rank > 4 ?  10-rank : 4))
+						repeat+=1
+						i+=1
+					else
+						noHi[i].update_attribute(:triangularRank, rank)
+						Score.find_by_id(noHi[i].bestTriangularscoreId).update_attribute(:finalscore,(11-rank > 4 ?  11-rank : 4))
+						if repeat==1
+							rank+=1
+						else
+							rank+=repeat
+						end
+						i+=1
+						repeat=1
+					end
+				else
+					noHi[i].update_attribute(:triangularRank, rank)
+					Score.find_by_id(noHi[i].bestTriangularscoreId).update_attribute(:finalscore,(11-rank > 4 ?  11-rank : 4))
+					i+=1
+				end		
 			end
-			rank=noHi.length
+
 			yesHi.each do |r|
 				if r!=nil
 					r.update_attribute(:triangularRank, rank+1)
 					s=Score.find_by_id(r.bestTriangularscoreId)
-					s.update_attribute(:finalscore, 0)	
-				end
+					s.update_attribute(:finalscore, 0)
+				end	
 			end
 		
 		end

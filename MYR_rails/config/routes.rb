@@ -25,7 +25,8 @@ Rails.application.routes.draw do
     resources :missions
     resources :markers
     resources :sessions
-    resources :scores 
+    resources :scores
+    resources :editions 
    
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update, :sent_password_reset_email]
@@ -50,6 +51,9 @@ Rails.application.routes.draw do
     get 'password_resets/sent_password_reset_email'
     get 'account_activations/wait_for_activated'
 
+  # CSV
+
+    get 'export', to: 'coordinates#export', as: :coordinates_export
 
   # Ajax
 
@@ -87,11 +91,11 @@ Rails.application.routes.draw do
     get  'manageDispRobot'         ,  to: 'real_time#manageDispRobot'
     
     get  'choice_teams'            ,  to: 'replay#choice_teams'
+    get  'choice_editions'         ,  to: 'replay#choice_editions'
     get  'choice_robots'           ,  to: 'replay#choice_robots'
     get  'choice_onerobot'         ,  to: 'replay#choice_onerobot'
     get  'choice_replay_missions'  ,  to: 'replay#choice_replay_missions'
     get  'choice_datetimes'        ,  to: 'replay#choice_datetimes'
-    get  'choice_attempts'         ,  to: 'replay#choice_attempts'
     get  'update_replay_map'       ,  to: 'replay#update_replay_map'
     get  'choice_attempts'         ,  to: 'replay#choice_attempts'
     get  'getSingleAttemptInfos'   ,  to: 'replay#getSingleAttemptInfos'

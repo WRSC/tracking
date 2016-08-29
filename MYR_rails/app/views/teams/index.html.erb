@@ -11,6 +11,7 @@
         <th >Logo</th>
         <th >Description</th>
         <th >Team Leader</th>
+        <th >Participated in</th>
 			<% if sign_in? %>
 				<th> Options</th>			
 			<% end %>
@@ -24,7 +25,11 @@
       <% logoimage= image_tag team.logo_url(:small) %>
       <td><center><%= link_to logoimage , team  %></center></td>
       <td><%= team.description %></td>
-      <td><%= link_to Member.find(team.leader_id.to_i).name, Member.find(team.leader_id.to_i) %></td>  	
+      <td><%= link_to Member.find(team.leader_id.to_i).name, Member.find(team.leader_id.to_i) %></td>
+      <td><% editions = Edition.where(id: Mission.where(id: Attempt.where(robot_id: team.robot_ids).pluck(:mission_id)).pluck(:edition_id)).each do |edition| %>
+          <%= edition.name %>, 
+        <% end %>
+      </td>
 			<% if sign_in? %>
             <% if (is_leader(team.name) || is_admin?) %>
               <td><%= (link_to 'Show', team) + ' | ' + (link_to 'Edit', edit_team_path(team)) + ' | ' + (link_to 'Delete', team, method: :delete, data: { confirm: 'Are you sure do delete your team ? This action will also delete all the boats attached to this team.' }) %></td>

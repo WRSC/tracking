@@ -1,0 +1,8 @@
+<br>
+<img src="/step/step1F.png" height="50" width="150">
+
+<p><u><b>Select a competition</b></u></p>  	
+    <% @editions.each do |edition| %>
+	  <input type="checkbox" name="edition<%= edition.id %>" id="<%= edition.id %>"><b><%= edition.name %></b>
+    <% end %>
+<br>

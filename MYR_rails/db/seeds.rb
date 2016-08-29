@@ -86,11 +86,11 @@
 
 # when "production"
 
-	#SEEDS for WRSC2015
+	#SEEDS for WRSC2016
 
 	#SEEDS for production mode
 	# /!\ BE CAREFUL WHEN CHANGING THIS SEEDS
-	# In fact this seeds should be loaded only once before the WRSC2015 ! 
+	# In fact this seeds should be loaded only once before the WRSC2016 ! 
 	# After, forget about using rake db:reset because it will suppress all the previous database !!
 	# be sure to initialize them by running rake db:reset RAILS_ENV=production
 

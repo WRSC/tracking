@@ -3,6 +3,7 @@ class Mission < ActiveRecord::Base
 	has_many :attempts
 	has_many :markers
 	has_many :robots, through: :attempts
+	belongs_to :edition
 	
 # Validations
 	validates :name, presence: true, uniqueness: true, length: { in: 3..40, too_long: "%{count} characters is the maximum allowed", too_short:"%{count} characters is the minimum allowed"}

@@ -1,0 +1,43 @@
+<% provide(:title, "WRSC Editions | Index") %>
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'layout/styles/dataTables.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'jquery.dataTables', 'data-turbolinks-track' => true %>
+
+<% if is_admin? %>
+
+	<h1>Listing Editions</h1>
+
+	<table id="datatable-edition" class="dataTable display">
+	  <thead>
+	    <tr>
+	      <th>Name</th>
+	      <th>ID</th>
+	  	</tr>	
+	  </thead>
+
+	  <tbody>
+	  	<% @editions.each do |edition| %>
+	        <tr>
+	          <td><%= edition.name %></td>
+	          <td><%= edition.id  %></td>
+	      	</tr>
+	    <% end %>
+	  </tbody>
+	</table>
+
+	<%= link_to 'New Edition', new_edition_path %>
+
+<% else %>
+
+	<h2> Only an admin can configure WRSC Editions.</h2>
+
+<% end %>
+
+<script>
+ $(document).ready( function () {
+    $('#datatable-edition').DataTable({
+			paging: true
+			
+		});
+} );
+</script>

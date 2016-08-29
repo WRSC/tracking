@@ -3,7 +3,7 @@
 	<header id="header" class="clear">
 		<!-- ################################################################################################ -->
 		<div id="logo" class="fl_left">
-			<h1><img class="imgTitleLogo" src= /stylesheets/images/default/logo.PNG > <a href="<%= home_path %>" style="font-size:14px"> WRSC 2015 Tracking </a></h1>
+			<h1><img class="imgTitleLogo" src= /stylesheets/images/default/logo.PNG > <a href="<%= home_path %>" style="font-size:14px"> WRSC 2016 Tracking </a></h1>
 		</div>
 		<!-- ################################################################################################ -->
 		<nav id="mainav" class="fl_right">
@@ -13,6 +13,7 @@
 				<ul>
 					<% if sign_A? %>
 						<%=li_actif(attempts_path) %><a href="<%= attempts_path%>" style="background-color:rgba(0,0,0,1)"> Attempts </a></li>	
+						<%=li_actif(editions_path) %><a href="<%= editions_path%>"> Editions </a></li>
 						<%=li_actif(trackers_path) %><a href="<%= trackers_path%>"> Trackers </a></li>
 						<%=li_actif(coordinates_path) %><a href="<%= coordinates_path%>"> Coordinates </a></li>
 					<% elsif !current_user.nil? %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828132652) do
+ActiveRecord::Schema.define(version: 20160819151518) do
 
   create_table "attempts", force: :cascade do |t|
     t.string   "name"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(version: 20150828132652) do
     t.string   "course"
   end
 
+  create_table "editions", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "edition_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "markers", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -57,6 +64,7 @@ ActiveRecord::Schema.define(version: 20150828132652) do
     t.string   "email"
     t.string   "role"
     t.string   "logo"
+    t.integer  "team_id"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "password_digest"
@@ -66,7 +74,6 @@ ActiveRecord::Schema.define(version: 20150828132652) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
-    t.integer  "team_id"
   end
 
   create_table "missions", force: :cascade do |t|
@@ -78,6 +85,7 @@ ActiveRecord::Schema.define(version: 20150828132652) do
     t.string   "startOfRace"
     t.string   "mtype"
     t.string   "category"
+    t.integer  "edition_id"
   end
 
   create_table "robots", force: :cascade do |t|

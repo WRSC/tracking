@@ -1,0 +1,24 @@
+<% provide(:title, "WRSC Editions | show") %>
+<p id="notice"><%= notice %></p>
+
+<% if is_admin? %>
+
+	<p>
+	  <strong>Name:</strong>
+	  <%= @edition.name %>
+	</p>
+
+	<p>
+	  <strong>ID:</strong>
+	  <%= @edition.id %>
+	</p>
+
+	<%= link_to 'Edit', edit_edition_path(@edition) %> |
+	<%= link_to 'Delete', @edition, method: :delete, data: { confirm: 'Delete this edition ?' } %> |
+	<%= link_to 'Back to index', editions_path %>
+
+<% else %>
+
+	<h2> Only an admin can configure WRSC Editions.</h2>
+
+<% end %>

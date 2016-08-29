@@ -3,7 +3,7 @@ class Team < ActiveRecord::Base
   mount_uploader :logo, TeamlogoUploader
 # Associations
 	has_many :members		
-	has_many :robots		
+	has_many :robots	
 
 
 # Validations

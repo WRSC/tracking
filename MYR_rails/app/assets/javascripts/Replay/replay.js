@@ -1,5 +1,6 @@
 //=require Replay/replay_map
 //=require Replay/choice_teams
+//=require Replay/choice_editions
 //=require Replay/choice_robots
 //=require Replay/choice_onerobot
 //=require Replay/handle_markers_replay

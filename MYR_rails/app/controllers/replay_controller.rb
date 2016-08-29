@@ -70,6 +70,10 @@
 	end
 	#------------------------------------------------------------------------------------
 	
+	def choice_editions
+		@editions = Edition.all
+	end
+
 	def choice_teams
 			#-------------- HTML PRESENTATION ----------------------------------
 		#-------- variables d instance passees a la vue -------------------

@@ -60,7 +60,20 @@
 <br>
 
 <% if is_admin? %>
-  <%= link_to 'New Coordinate', new_coordinate_path %>
+  <p><%= link_to 'New Coordinate', new_coordinate_path %></p>
+  <br><div class="field">
+    <% if Robot.all!=nil %>
+     <% allRobots = Robot.all %>
+      <b>Select a robot</b>
+      <select name="Select refresh rate" id="dropdown_select_robot">
+        <% allRobots.each do |rob| %>
+          <option value="<%= rob.id %>">  <%= rob.name %>, tracker = <%= rob.trackers.first.id %>  </option>
+        <% end %>
+      </select>
+    <% end %>
+  </div><br>
+  <p><%= link_to "Export coordinates in a CSV file", coordinates_export_path(format: "csv") %></p>
+  <p>This will export the coordinates of the selected robot between the start and end time chosen in a CSV file.</p>
 <% end %>
 
 <script>
@@ -114,6 +127,18 @@ function fillcookie(start,end){
 
 function readcookie(){
   return $.cookie("rdatetimes");
+}
+
+function fillcookieRobot(robot_id){
+  $.cookie("robotCookie",robot_id);
+  var date = new Date();
+  //expires in 60 minutes (browser time)
+  date.setTime(date.getTime() + (60 * 60 * 1000));
+  $.cookie("robotCookie",robot_id,{ expires: date});
+}
+
+function readcookieRobot(){
+  return $.cookie("robotCookie");
 }
 
 function initialize(){
@@ -186,10 +211,15 @@ function initialize(){
     $("#end_minute option[value="+endminute+"]").prop('selected', true);
 
   } 
+
+  var robId = readcookieRobot();
+  $("#dropdown_select_robot option[value="+robId+"]").prop('selected', true);
+
 }
 
 //---------- WHEN CLICKING ON ANY DROPDOWM LIST----------------
 $('select').on("change", function () {
+    fillcookieRobot($('#dropdown_select_robot :selected').val());
     fillcookie(getstartselectedvalue(),getendselectedvalue());
 });
 //-------------------------------------------------------------

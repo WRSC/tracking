@@ -1,0 +1,15 @@
+<% provide(:title, "WRSC Editions | New") %>
+
+<% if is_admin? %>
+
+	<h1>New Edition</h1>
+
+	<%= render 'form' %>
+
+	<%= link_to 'Back to index', missions_path %>
+
+<% else %>
+
+	<h2> Only an admin can configure WRSC Editions.</h2>
+
+<% end %>

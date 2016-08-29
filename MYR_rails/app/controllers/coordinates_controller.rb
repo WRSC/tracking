@@ -21,12 +21,25 @@ class CoordinatesController < ApplicationController
         mesDateTimes=[trySelect.start.to_s,trySelect.end.to_s]
       end
     end
+
+    if cookies[:robotCookie]!= nil && cookies[:robotCookie]!= ""
+      myRobotId=cookies[:robotCookie]
+      myTrackerId = Robot.find_by_id(myRobotId).trackers.ids
+    else
+      myTrackerId = nil
+    end
+
     if mesDateTimes != nil && mesDateTimes != []
       nbptsmax=599
-      allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1])[0..nbptsmax]
+      if sign_A?
+        allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId)[0..nbptsmax]
+      else
+        allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1])[0..nbptsmax]
+      end
+
       if allCoordinate!=[]
         if sign_A?
-          @coordinates = allCoordinate
+            @coordinates = allCoordinate
         else
           if myTeam != nil
             if Robot.find_by_team_id(myTeam.id) != nil
@@ -253,6 +266,47 @@ class CoordinatesController < ApplicationController
       end
     else
       return []
+    end
+  end
+
+  def export
+    #selectionner les coordonnées dans la plage de temps
+    mesDateTimes=[]
+    if cookies[:rdatetimes]!= nil && cookies[:rdatetimes]!= ""
+      mesDateTimes=cookies[:rdatetimes].split("_") 
+    elsif cookies[:rtrieslist]!= nil && cookies[:rtrieslist]!= ""
+      trySelect=Try.find_by_id(cookies[:rtrieslist].to_i)
+      if trySelect!=nil
+        mesDateTimes=[trySelect.start.to_s,trySelect.end.to_s]
+      end
+    end
+
+    if cookies[:robotCookie]!= nil && cookies[:robotCookie]!= ""
+      myRobotId=cookies[:robotCookie]
+      myTrackerId = Robot.find_by_id(myRobotId).trackers.pluck(:id)
+    else
+      myTrackerId = nil
+    end
+
+    if mesDateTimes != nil && mesDateTimes != [] && myTrackerId != nil
+      allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId)
+      if allCoordinate!=[]
+        if sign_A?
+          @coordinates = allCoordinate
+        else
+          @coordinates =[]
+        end
+      else
+        @coordinates =[]
+      end
+    else
+      @coordinates =[]
+    end
+
+    @data = allCoordinate
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.csv { send_data @data.to_csv }
     end
   end
 

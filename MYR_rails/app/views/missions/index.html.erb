@@ -15,13 +15,17 @@
 			<% if is_admin? %>
         <th>Options</th>
 			<% end %>
-	    </tr>
+    </tr>
   </thead>
 
   <tbody>
 		<% @missions.each do |mission| %>
        <tr>
-          <td><%= link_to mission.name, mission %></td>
+          <td><%= link_to mission.name, mission %>
+              <% if mission.edition_id? %>
+                <%= Edition.find(mission.edition_id).name %>
+              <% end %>
+          </td>
           <td><%= mission.mtype %></td>
           <td><%= mission.category %></td>
           <td><%= mission.start %></td>

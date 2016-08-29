@@ -1,0 +1,22 @@
+<%= form_for(@edition) do |f| %>
+  <% if @edition.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@edition.errors.count, "error") %> prohibited this edition from being saved:</h2>
+
+      <ul>
+      <% @edition.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

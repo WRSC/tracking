@@ -1,0 +1,16 @@
+<% provide(:title, "WRSC Editions  | Edit") %>
+
+<% if is_admin? %>
+
+	<h1>Editing Edition</h1>
+
+	<%= render 'form' %>
+
+	<%= link_to 'Back to index', editions_path %>
+
+<% else %>
+
+	<h2> Only an admin can configure WRSC Editions.</h2>
+
+<% end %>
+

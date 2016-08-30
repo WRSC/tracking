@@ -26,7 +26,7 @@
       <td><center><%= link_to logoimage , team  %></center></td>
       <td><%= team.description %></td>
       <td><%= link_to Member.find(team.leader_id.to_i).name, Member.find(team.leader_id.to_i) %></td>
-      <td><% editions = Edition.where(id: Mission.where(id: Attempt.where(robot_id: team.robot_ids).pluck(:mission_id)).pluck(:edition_id)).each do |edition| %>
+      <td><% editions = Edition.where(id: Mission.where(id: Attempt.where(robot_id: team.robot_ids).pluck(:mission_id)).pluck(:edition_id)).uniq.each do |edition| %>
           <%= edition.name %>, 
         <% end %>
       </td>

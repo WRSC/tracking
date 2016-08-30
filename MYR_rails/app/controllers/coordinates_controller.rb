@@ -24,33 +24,42 @@ class CoordinatesController < ApplicationController
 
     if cookies[:robotCookie]!= nil && cookies[:robotCookie]!= ""
       myRobotId=cookies[:robotCookie]
-      myTrackerId = Robot.find_by_id(myRobotId).trackers.ids
+      if Robot.find_by_id(myRobotId) == nil
+        myTrackerId = 0
+      else
+        myTrackerId = Robot.find_by_id(myRobotId).trackers.ids
+      end
     else
       myTrackerId = nil
     end
 
     if mesDateTimes != nil && mesDateTimes != []
       nbptsmax=599
-      if sign_A?
-        allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId)[0..nbptsmax]
+      if myTrackerId == 0
+        allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1])
       else
-        allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1])[0..nbptsmax]
+        allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId)
       end
 
       if allCoordinate!=[]
         if sign_A?
-            @coordinates = allCoordinate
+            @coordinates = allCoordinate[0..nbptsmax]
         else
           if myTeam != nil
-            if Robot.find_by_team_id(myTeam.id) != nil
-              mytrackers = Tracker.find_by_id(Robot.find_by_team_id(myTeam.id).tracker_id)
-              if mytrackers != nil
-                @coordinates = allCoordinate.where(tracker_id: mytrackers.id)
+            if myTrackerId == 0
+              if Robot.find_by_team_id(myTeam.id) != nil
+                #Tracker.find_by_id(Robot.find_by_team_id(myTeam.id).tracker_id)
+                myTrackersId = Attempt.where(robot_id: Robot.where(team_id: myTeam.id).ids).pluck(:tracker_id).uniq
+                if myTrackersId != nil
+                  @coordinates = allCoordinate.where(tracker_id: myTrackersId)[0..nbptsmax]
+                else
+                  @coordinates =[]
+                end
               else
                 @coordinates =[]
               end
             else
-              @coordinates =[]
+              @coordinates = allCoordinate.where(tracker_id: myTrackerId)[0..nbptsmax]
             end
           else
             @coordinates =[]
@@ -272,6 +281,7 @@ class CoordinatesController < ApplicationController
   def export
     #selectionner les coordonnées dans la plage de temps
     mesDateTimes=[]
+    nbptsmax=100000
     if cookies[:rdatetimes]!= nil && cookies[:rdatetimes]!= ""
       mesDateTimes=cookies[:rdatetimes].split("_") 
     elsif cookies[:rtrieslist]!= nil && cookies[:rtrieslist]!= ""
@@ -283,24 +293,36 @@ class CoordinatesController < ApplicationController
 
     if cookies[:robotCookie]!= nil && cookies[:robotCookie]!= ""
       myRobotId=cookies[:robotCookie]
-      myTrackerId = Robot.find_by_id(myRobotId).trackers.pluck(:id)
+      if Robot.find_by_id(myRobotId) == nil
+        myTrackerId = 0
+      else
+        myTrackerId = Robot.find_by_id(myRobotId).trackers.pluck(:id).uniq
+      end
     else
       myTrackerId = nil
     end
 
     if mesDateTimes != nil && mesDateTimes != [] && myTrackerId != nil
-      allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId)
-      if allCoordinate!=[]
-        if sign_A?
-          @coordinates = allCoordinate
+      if sign_A?
+        if myTrackerId == 0
+          allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).order(datetime: :asc)
         else
-          @coordinates =[]
+          allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId).order(datetime: :asc)
         end
       else
-        @coordinates =[]
+        if myTeam != nil
+          if myTrackerId == 0
+            if Robot.find_by_team_id(myTeam.id) != nil
+              myTrackersId = Attempt.where(robot_id: Robot.where(team_id: myTeam.id).ids).pluck(:tracker_id).uniq
+              if myTrackersId != nil
+                allCoordinate = Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackersId).order(datetime: :asc)
+              end
+            end
+          else
+            allCoordinate = Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId).order(datetime: :asc)
+          end
+        end
       end
-    else
-      @coordinates =[]
     end
 
     @data = allCoordinate

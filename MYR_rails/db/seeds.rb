@@ -64,7 +64,7 @@
  									end: "20150901000000",
  									robot_id: 1+2*n,
  									mission_id: 1,
- 									tracker_id: m+1+n*2)
+ 									tracker_id: 1+n*2)
  		end
 
  		Robot.create!(name:  "triangular#{n}'s microsailrobot",
@@ -77,7 +77,7 @@
  									end: "20150901000000",
  									robot_id: 2+2*n,
  									mission_id: 1,
- 									tracker_id: 4*n+m+3)
+ 									tracker_id: n*2+2)
 
  		end
  	end

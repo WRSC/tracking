@@ -12,8 +12,8 @@ class Coordinate < ActiveRecord::Base
 	  	CSV.generate(options) do |csv|
 		    all.select("datetime, latitude, longitude").each do |coordinate|
 			    date = Time.strptime(coordinate.attributes['datetime'],'%Y%m%d%H%M%S').strftime("%H%M%S%d")
-			    latitude = (coordinate.attributes['latitude']).to_f*(10**7)
-			    longitude = (coordinate.attributes['longitude']).to_f*(10**7)
+			    latitude = ((coordinate.attributes['latitude']).to_f*(10**7)).to_i
+			    longitude = ((coordinate.attributes['longitude']).to_f*(10**7)).to_i
 			    values =  [date,latitude,longitude]
 			    csv.add_row values
 		    end

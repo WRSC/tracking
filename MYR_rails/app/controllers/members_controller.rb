@@ -28,7 +28,7 @@ class MembersController < ApplicationController
   # POST /members
   # POST /members.json
   def create
-		if simple_captcha_valid?
+		#if simple_captcha_valid?
 		  if params[:member][:role] != "administrator" || (sign_in? && is_admin?)
 		  	
 		    @member = Member.new(member_params)
@@ -51,10 +51,10 @@ class MembersController < ApplicationController
 		    flash[:error] = "Ask an administrator for becoming administrator"
 		    redirect_to '/members/new'
 		  end
-		else
-			flash[:info] = "Captcha Invalid"
-			redirect_to '/members/new'
-		end
+    #else
+		#	flash[:info] = "Captcha Invalid"
+		#	redirect_to '/members/new'
+		#end
   end
 
 

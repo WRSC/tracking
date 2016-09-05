@@ -1,6 +1,6 @@
 <% provide(:title, "Members | Edit") %>
 <h1>Editing Member</h1>
-<% if sign_in? && (is_admin? || @member.id == cookies.signed[:user_id]) %>
+<% if sign_in? && (is_admin? || @member.id == current_user.id) %>
 
 <%= render 'form' %>
 

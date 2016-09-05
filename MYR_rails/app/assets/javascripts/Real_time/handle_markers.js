@@ -26,7 +26,7 @@
 			//latest_markers[0][latest_markers[0].length-1].setMap(null);
 			if (latest_markers[0][index_next_new_marker].getMap()!=null){
 				var dot = {
-					url: 'icons/dot'+tracker_id%13+'.png',
+					url: 'icons/dot'+tracker_id%12+'.png',
 					size: new google.maps.Size(5, 5),
 					origin: new google.maps.Point(0,0),
 					anchor: new google.maps.Point(3, 3)
@@ -249,7 +249,7 @@
 		var polyline = new google.maps.Polyline({
 			path: Gcoords,
 			geodesic: true,
-			strokeColor: colors[tracker_id%13],
+			strokeColor: colors[tracker_id%12],
 			strokeOpacity: 1.0,
 			strokeWeight: 1
 		});

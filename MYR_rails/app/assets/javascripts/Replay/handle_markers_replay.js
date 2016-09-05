@@ -30,7 +30,7 @@
 		//alert(lat,lng)
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
-			url: 'icons/dot'+tracker_id%13+'.png',
+			url: 'icons/dot'+tracker_id%12+'.png',
 			size: new google.maps.Size(5, 5),
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(3, 3)
@@ -59,7 +59,7 @@
 	function addBigMarker(lat, lng, tracker_id,datetime){
 		tracker_id = typeof tracker_id !== 'undefined' ? tracker_id : 12;
 		var image = {
-			url: 'icons/big'+tracker_id%13+'.png',
+			url: 'icons/big'+tracker_id%12+'.png',
 			size: new google.maps.Size(32, 37),
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(16, 37)
@@ -219,7 +219,7 @@
 		var polyline = new google.maps.Polyline({
 			path: Gcoords,
 			geodesic: true,
-			strokeColor: colors[tracker_id%13],
+			strokeColor: colors[tracker_id%12],
 			strokeOpacity: 1.0,
 			strokeWeight: 1
 		});

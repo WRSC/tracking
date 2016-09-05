@@ -1,11 +1,6 @@
 <% provide(:title, "Member | show") %>
 <p id="notice"><%= notice %></p>
 <p>
-<% if @member.logo!="" && @member.logo!=nil %>
-  <%= image_tag @member.logo_url(:small) %>
-<% end %>
-</p>
-<p>
   <strong>Name:</strong>
   <%= @member.name %>
 </p>

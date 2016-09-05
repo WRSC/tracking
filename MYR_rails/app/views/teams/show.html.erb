@@ -2,12 +2,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <% if @team.logo!= "" and @team.logo !=nil%>
-    <%= image_tag @team.logo_url(:small) %>
-  <% end %>
-</p>
-
-<p>
   <strong>Name:</strong>
   <%= @team.name %>
 </p>

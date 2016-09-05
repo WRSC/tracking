@@ -21,8 +21,6 @@
   <thead>
     <tr >
         <th>Name</th>
-        <th>Logo</th>
-        <th>Email</th>
         <th>Role</th>
         <th>Team</th> 
     <% if sign_in? %>
@@ -46,9 +44,6 @@
       <% nameteam="" %>
       <tr>
       <td><%= link_to member.name, member %></td>
-		  <% logoimage= image_tag member.logo_url(:small) %>
-		  <td><center><%= link_to logoimage , member %></center></td>
-      <td><%= member.email %></td>
       <td><%= member.role %></td>
       
       <% rep=[] %>

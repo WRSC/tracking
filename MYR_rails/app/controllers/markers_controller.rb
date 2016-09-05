@@ -62,9 +62,17 @@ class MarkersController < ApplicationController
   # POST /markers.json
   def create
     @marker=Marker.new(marker_params)
-    tablat=@marker.latitude.split(";")
-    tablng=@marker.longitude.split(";")
-    tabname=@marker.name.split(";")
+    if @marker.mtype == "Circle"
+      tablat=@marker.latitude.split("_")
+      tablng=[longitude,0]
+      tabname=["Center"]
+    else
+      tablat=@marker.latitude.split(";")
+      tablng=@marker.longitude.split(";")
+      if @marker.name != nil
+        tabname=@marker.name.split(";")
+      end
+    end
     flag=false
     for i in (0..tablat.length-1)
       if tablat[i]!="" && tablat[i]!=nil

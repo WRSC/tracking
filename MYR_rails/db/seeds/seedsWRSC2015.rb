@@ -4,14 +4,13 @@
 # /!\ BE CAREFUL WHEN CHANGING THIS SEEDS
 # In fact this seeds should be loaded only once before the WRSC2015 ! 
 # After, forget about using rake db:reset because it will suppress all the previous database !!
-# be sure to initialize them by running rake db:reset RAILS_ENV=production
-
+# be sure to initialize them by running 'RAILS_ENV=production rake db:seed:seedsWRSC2015'
 #Admins
 
 Member.create!(name:  "[ADMIN]Sylvain ENSTA",
 	               email: "sylvain.hunault@ensta-bretagne.org",
-	               password:              "sylvan64",
-	               password_confirmation: "sylvan64",
+	               password:              "foobar",
+	               password_confirmation: "foobar",
 	               role:     'administrator',
 	               activated: true,
 	               activated_at: Time.zone.now)

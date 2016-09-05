@@ -18,8 +18,8 @@ function saveCircleMarker(){
       var CircleRadius=""
       for (var i=0;i<circleMarkers.length;i++){
   		  latlng=circleMarkers[i].getCenter() 
-			  CircleCenter+=latlng.lat()+"_"+latlng.lng()+";"
-			  CircleRadius+=circleMarkers[i].getRadius()+";"
+			  CircleCenter+=latlng.lat()+"_"+latlng.lng()
+			  CircleRadius+=circleMarkers[i].getRadius()
       }
 			p={"latitude": CircleCenter, "longitude": CircleRadius, "mtype": "Circle", "datetime": getCurrentTime(), "mission_id": mission_id}
 			$.ajax({
@@ -35,8 +35,8 @@ function saveCircleMarker(){
 	}
 
 function addFixCircle(){
-	cen=prompt("Please input the center:","")
-	radius=prompt("Please input the radius","")
+	cen=prompt("Please input the center:","lat,long")
+	radius=prompt("Please input the radius","radius")
 	
 	/*====== need to check if th input data format is correct =====*/
 	latlng=cen.split(",")	
@@ -60,8 +60,8 @@ function addFixCircle(){
 }
 
 function addCustomCircle(){
-	cen=prompt("Please input the initial center:","")
-	radius=prompt("Please input the initial radius","")
+	cen=prompt("Please input the initial center:","lat,long")
+	radius=prompt("Please input the initial radius","radius")
 /*====== need to check if th input data format is correct =====*/
 	latlng=cen.split(",")	
 	lat=latlng[0]

@@ -894,6 +894,6 @@ class ScoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description, :timepenalty, :timepenalty_description, :marginten)
+      params.require(:score).permit(:attempt_id, :timecost, :rawscore, :humanintervention, :AIS, :datetimes, :pointpenalty,:pointpenalty_description, :timepenalty, :timepenalty_description, :marginten, :finalscore)
     end
 end

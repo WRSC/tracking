@@ -7,7 +7,7 @@
 <div id="score-awesome-table">
 <div id="score-background-container">
 <br>
-<h1>WRSC 2015 FINAL STANDING</h1>
+<h1>WRSC 2016 FINAL STANDING</h1>
 <!--table for Sailboat-->
 <h2><center>Category: Sailboat</center></h2>
 
@@ -17,12 +17,12 @@
     <th>Rank</th>
     <th>Team</th>
     <th>Robot</th>
-		<th><%= link_to "Station keeping", stationkeeping_path %></th>
-    <th><%= link_to "Area scanning", areascanning_path %></th>
-		<th><%= link_to "Triangular course", triangular_path %></th>
-    <th><%= link_to "Fleet race", fleetrace_path %></th>
-		<th>AIS Points</th>
-		<th>Final Score</th>
+	<th><%= link_to "Station keeping", stationkeeping_path %></th>
+	<th><%= link_to "Area scanning", areascanning_path %></th>
+	<th><%= link_to "Collision Avoidance", triangular_path %></th>
+	<th><%= link_to "Fleet race", fleetrace_path %></th>
+	<th>AIS Points</th>
+	<th>Final Score</th>
     
   </tr>
 
@@ -32,7 +32,7 @@
         <td><%= rob.finalrank %></td>
 			  <td ><%= rob.team.name %></td>
 			  <td ><%= rob.name%></td>
-				<!---------------station keeping------------------->
+				<!---------------station keeping------------------>
 			  <% if rob.bestStationscoreId != nil%>
 					<% score= Score.find_by_id(rob.bestStationscoreId) %>
 					<td>
@@ -61,7 +61,7 @@
 				<% else %>
 					<td>?</td>
 				<% end %>
-				<!---------------triangular------------------->
+				<!---------------triangular------------------>
 			  <% if rob.bestTriangularscoreId != nil%>
 					<% score= Score.find_by_id(rob.bestTriangularscoreId ) %>
 					<td>
@@ -76,7 +76,7 @@
 				<% else %>
 					<td>?</td>
 				<% end %>
-				<!---------------fleet race------------------->
+				<!---------------fleet race------------------>
 		  	<% if rob.bestRacescoreId != nil%>
 					<% score= Score.find_by_id(rob.bestRacescoreId  ) %>
 					<td>
@@ -105,12 +105,11 @@
     <th>Rank</th>
     <th>Team</th>
     <th>Robot</th>
-		<th><%= link_to "Station keeping", stationkeeping_path %></th>
-    <th><%= link_to "Area scanning", areascanning_path %></th>
-		<th><%= link_to "Triangular course", triangular_path %></th>
-    <th><%= link_to "Fleet race", fleetrace_path %></th>
-		<th>AIS Points</th>
-		<th>Final Score</th>
+	<th><%= link_to "Station keeping", stationkeeping_path %></th>
+	<th><%= link_to "Area scanning", areascanning_path %></th>
+	<th><%= link_to "Collision Avoidance", triangular_path %></th>
+	<th><%= link_to "Fleet race", fleetrace_path %></th>
+	<th>Final Score</th>
    
   </tr>
 
@@ -120,7 +119,7 @@
         <td><%= rob.finalrank %></td>
 			  <td ><%= rob.team.name %></td>
 			  <td ><%= rob.name%></td>
-				<!---------------station keeping------------------->
+				<!---------------station keeping------------------>
 			  <% if rob.bestStationscoreId != nil%>
 					<% score= Score.find_by_id(rob.bestStationscoreId) %>
 					<td>
@@ -149,7 +148,7 @@
 				<% else %>
 					<td>?</td>
 				<% end %>
-				<!---------------triangular------------------->
+				<!---------------triangular------------------>
 			  <% if rob.bestTriangularscoreId != nil%>
 					<% score= Score.find_by_id(rob.bestTriangularscoreId ) %>
 					<td>
@@ -164,7 +163,7 @@
 				<% else %>
 					<td>?</td>
 				<% end %>
-				<!---------------fleet race------------------->
+				<!---------------fleet race------------------>
 		  	<% if rob.bestRacescoreId != nil%>
 					<% score= Score.find_by_id(rob.bestRacescoreId  ) %>
 					<td>
@@ -178,7 +177,6 @@
 				<% else %>
 					<td>?</td>
 				<% end %>
-				<td><%= rob.aispoints%></td>
 				<td><%= rob.finalscore%></td>
 	  	</tr>				
   

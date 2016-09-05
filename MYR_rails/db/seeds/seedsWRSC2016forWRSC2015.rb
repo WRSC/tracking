@@ -1,21 +1,13 @@
 #SEEDS for WRSC2016
-#Independant from the WRSC 2015 database
+#Meant to be added to the WRSC 2015 database
 
 #SEEDS for production mode
 # /!\ BE CAREFUL WHEN CHANGING THIS SEEDS
 # In fact this seeds should be loaded only once before the WRSC2016 ! 
 # After, forget about using rake db:reset because it will suppress all the previous database !!
-# be sure to initialize them by running 'RAILS_ENV=production rake db:seed:seedsWRSC2016'
+# be sure to initialize them by running 'RAILS_ENV=production rake db:seed:seedsWRSC2016Partial'
 
 #Admins
-
-Member.create!(name:  "[ADMIN]Sylvain ENSTA",
-	               email: "sylvain.hunault@ensta-bretagne.org",
-	               password:              "foobar",
-	               password_confirmation: "foobar",
-	               role:     'administrator',
-	               activated: true,
-	               activated_at: Time.zone.now)
 
 Member.create!(name:  "[ADMIN]Nuno FEUP",
 	               email: "nunogranjafernandes@gmail.com",
@@ -36,7 +28,7 @@ Member.create!(name:  "[ADMIN]Jose FEUP",
 #Edition
 
 Edition.create!(name: "WRSC 2016",
-				id: 1)
+				id: 2)
 
 #Missions
 
@@ -47,16 +39,14 @@ Edition.create!(name: "WRSC 2016",
 					end:   "20160910230000",
              		mtype: "Race",
 					category: "Sailboat",
-					edition_id: 1,
-					id: 1)
+					edition_id: 2)
 
 	Mission.create!(name:  "Fleet Race Micro Sailboat",
 					start: "20160905000000",
 					end:   "20160910230000",
              		mtype: "Race",
 					category: "MicroSailboat",
-					edition_id: 1,
-					id: 2)	
+					edition_id: 2)	
 
 	#Station Keeping
 
@@ -65,16 +55,14 @@ Edition.create!(name: "WRSC 2016",
 					end:   "20160910230000",
              		mtype: "StationKeeping",
 					category: "Sailboat",
-					edition_id: 1,
-					id: 3)
+					edition_id: 2)
 
 	Mission.create!(name:  "Station Keeping Micro Sailboat",
 					start: "20160905000000",
 					end:   "20160910230000",
              		mtype: "StationKeeping",
 					category: "MicroSailboat",
-					edition_id: 1,
-					id: 4)
+					edition_id: 2)
 
 	#Area Scanning
 
@@ -83,16 +71,14 @@ Edition.create!(name: "WRSC 2016",
 					end:   "20160910230000",
              		mtype: "AreaScanning",
 					category: "Sailboat",
-					edition_id: 1,
-					id: 5)
+					edition_id: 2)
 
 	Mission.create!(name:  "Area Scanning Micro Sailboat",
 					start: "20160905000000",
 					end:   "20160910230000",
              		mtype: "AreaScanning",
 					category: "MicroSailboat",
-					edition_id: 1,
-					id: 6)
+					edition_id: 2)
 
 	#Collision Avoidance
 
@@ -101,22 +87,20 @@ Edition.create!(name: "WRSC 2016",
 					end:   "20160910230000",
 		     		mtype: "CollisionAvoidance",
 					category: "Sailboat",
-					edition_id: 1,
-					id: 7)
+					edition_id: 2)
 
 	Mission.create!(name:  "Collision Avoidance Micro Sailboat",
 					start: "20160905000000",
 					end:   "20160910230000",
 		     		mtype: "CollisionAvoidance",
 					category: "MicroSailboat",
-					edition_id: 1,
-					id: 8)
+					edition_id: 2)
 
 #Markers
 
 #Trackers
-i=1
-13.times do |n|
+i=14
+10.times do |n|
 	token=i
 	Tracker.create!(token:  "#{i}",
          		   description: "Tracker #{i}")

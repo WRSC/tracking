@@ -114,12 +114,13 @@ class AttemptsController < ApplicationController
 		@a.update_attribute(:generated_filename,done)
 	end
 
-  def export
+  def export_attempt
       #selectionner les coordonnées dans la plage de temps
+      attempt = Attempt.find(params[:attempt_id])
       mesDateTimes=[]
       nbptsmax=100000
-      mesDateTimes=[@attempt.start,@attempt.end]
-      myTrackerId = @attempt.tracker_id
+      mesDateTimes=[attempt.start.strftime('%Y%m%d%H%M%S'),attempt.end.strftime('%Y%m%d%H%M%S')]
+      myTrackerId = attempt.tracker_id
  
 
       if mesDateTimes != nil && mesDateTimes != [] && myTrackerId != nil

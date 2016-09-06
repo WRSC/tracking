@@ -39,7 +39,7 @@
                   <% if is_admin? %>
                     <td><%= link_to 'Edit', edit_attempt_path(attempt) %> <%= ' | '%>
                     <%= link_to 'Delete', attempt, method: :delete, data: { confirm: 'Are you sure?' } %><%= ' | '%>
-                    <p><%= link_to "Export coordinates", attempts_export_path(format: "csv") %></p></td>
+                    <p><%= link_to "Export coordinates", attempts_export_path(format: "csv", :attempt_id => attempt.id)%></p></td>
                   <% end %>
                 </tr>
             <% end %>

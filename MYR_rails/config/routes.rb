@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   # CSV
 
     get 'export', to: 'coordinates#export', as: :coordinates_export
-    get 'export', to: 'attempts#export', as: :attempts_export
+    get 'export_attempt', to: 'attempts#export_attempt', as: :attempts_export
 
   # Ajax
 

@@ -78,7 +78,7 @@
   <p><%= link_to "Export coordinates in a CSV file", coordinates_export_path(format: "csv") %></p>
   <p>This will export the coordinates of the selected robot between the start and end time chosen in a CSV file.</p>
 <% end %>
-<% if isInTeam? %>
+<% if isInTeam? && !is_admin? %>
   <br><div class="field">
     <% if Robot.all!=nil %>
      <% allRobots = Robot.where(team_id: myTeam.id)%>

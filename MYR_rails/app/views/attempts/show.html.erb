@@ -21,7 +21,7 @@
 
     <p>
       <strong>Robot:</strong>
-      <%= @attempt.robot_id %>
+      <%= Robot.find(@attempt.robot_id).name %> (ID = <%= @attempt.robot_id %>)
     </p>
 
     <p>

@@ -114,6 +114,34 @@ class AttemptsController < ApplicationController
 		@a.update_attribute(:generated_filename,done)
 	end
 
+  def export
+      #selectionner les coordonnées dans la plage de temps
+      mesDateTimes=[]
+      nbptsmax=100000
+      mesDateTimes=[@attempt.start,@attempt.end]
+      myTrackerId = @attempt.tracker_id
+ 
+
+      if mesDateTimes != nil && mesDateTimes != [] && myTrackerId != nil
+        if sign_A?
+          if myTrackerId == 0
+            allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).order(datetime: :asc)
+          else
+            allCoordinate=Coordinate.where(datetime: mesDateTimes[0]..mesDateTimes[1]).where(tracker_id: myTrackerId).order(datetime: :asc)
+          end
+          @data = allCoordinate
+        else
+          @data = []
+        end
+      end
+
+
+      respond_to do |format|
+        format.html { redirect_to root_url }
+        format.csv { send_data @data.to_csv }
+      end
+    end
+
   private
 	
     # Use callbacks to share common setup or constraints between actions.

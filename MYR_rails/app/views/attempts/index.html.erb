@@ -36,9 +36,10 @@
                   <td><%= link_to Mission.find_by_id(attempt.mission_id).name, Mission.find_by_id(attempt.mission_id) %></td>
                   <td><%= attempt.tracker_id %></td>
                  
-                  <% if is_leaderById(Robot.find(attempt.robot_id).team_id) || is_admin? %>
+                  <% if is_admin? %>
                     <td><%= link_to 'Edit', edit_attempt_path(attempt) %> <%= ' | '%>
-                    <%= link_to 'Delete', attempt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                    <%= link_to 'Delete', attempt, method: :delete, data: { confirm: 'Are you sure?' } %><%= ' | '%>
+                    <p><%= link_to "Export coordinates", attempts_export_path(format: "csv") %></p></td>
                   <% end %>
                 </tr>
             <% end %>

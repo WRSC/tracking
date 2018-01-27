@@ -186,8 +186,10 @@ function FullScreenControl(controlDiv, map) {
 		//map options
 		var mapOptions = {
 			mapTypeId: google.maps.MapTypeId.HYBRID,
-			center: new google.maps.LatLng(41.691806, -8.821782),
-			zoom: 14,
+//			center: new google.maps.LatLng(41.691806, -8.821782),
+			center: new google.maps.LatLng(59.425896, 10.471915),
+			zoom: 18,
+			tilt: 0,
 			zoomControl: true,
 			zoomControlOptions: {
 				style: google.maps.ZoomControlStyle.SMALL,

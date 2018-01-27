@@ -113,9 +113,11 @@ function FullScreenControl(controlDiv) {
 		desired_trackers = [];
 		//map options
 		var mapOptions = {
-			mapTypeId: google.maps.MapTypeId.ROAD,
-			center: new google.maps.LatLng(41.691806, -8.821782),
-			zoom: 14,
+			mapTypeId: google.maps.MapTypeId.MAP,
+//			center: new google.maps.LatLng(41.691806, -8.821782),
+			center: new google.maps.LatLng(59.425896, 10.471915),
+			zoom: 18,
+			tilt: 0,
 			zoomControl: true,
 			zoomControlOptions: {
 				style: google.maps.ZoomControlStyle.SMALL,
@@ -149,7 +151,7 @@ function FullScreenControl(controlDiv) {
 				title: 'Aland University'
 		});
 */		
-		initialmarker=addDraggableMarker(60.103462, 19.928225,  replay_map)
+//		initialmarker=addDraggableMarker(59.368729, 10.442065,  replay_map)
 		// addInfoWindow(infowindow,initialmarker)
 		
 		

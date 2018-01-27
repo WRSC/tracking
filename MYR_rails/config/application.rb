@@ -25,7 +25,7 @@ module MYRRails
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.force_ssl = false
     config.active_record.raise_in_transactional_callbacks = true
-    config.exceptions_app = self.routes
+    config.exceptions_app = self.routes                                      #coment out Geir
 
   end
 end

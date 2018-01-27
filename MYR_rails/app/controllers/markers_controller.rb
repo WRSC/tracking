@@ -19,38 +19,42 @@ class MarkersController < ApplicationController
   # GET /markers/new
   def new
     @marker = Marker.new
-    t=Time.now
-    t.strftime("%Y%m%d%H%M%S")
-		year=t.strftime("%Y").to_i
-		month=t.strftime("%m").to_i
-		t_rest= t.strftime("%d%H%M%S")
-		#start time for the inteval of mission
-		if month <=6 
-			lmonth=month+12-6
-			lyear=year-1
-		else
-    	lmonth=month-6
-    	lyear=year
-    end
-    #@tstart=(lyear.to_s+lmonth.to_s+t_rest)
-    if lmonth < 10 
-    	lmonth='0'+lmonth.to_s 
-    else
-    	lmonth=lmonth.to_s 
-    end
-    @tstart=(lyear.to_s+lmonth.to_s+t_rest).to_datetime
+#    t=Time.now
+#    t.strftime("%Y%m%d%H%M%S")
+#		year=t.strftime("%Y").to_i
+#		month=t.strftime("%m").to_i
+#		day=t.strftime("%d").to_i
+#		t_rest= t.strftime("T%H:%M:%S")
+#		#start time for the inteval of mission
+#		if month <=6 
+#			lmonth=month+12-6
+#			lyear=year-1
+#		else
+#    	lmonth=month-6
+#    	lyear=year
+#    end
+#    if lmonth < 10 
+#    	lmonth='0'+lmonth.to_s 
+#    else
+#    	lmonth=lmonth.to_s 
+#    end
+
+    @tstart=DateTime.now.midnight - 184.days
+
     #end time for the inteval of mission
-    if month >=6
-			rmonth=month-12+6
-			ryear=year+1
-		else
-    	rmonth=month+6
-    	ryear=year
-    end
-    if rmonth < 10  
-    	rmonth='0'+rmonth.to_s  
-    end
-    @tend=(ryear.to_s+rmonth.to_s+t_rest).to_datetime
+#    if month >=6
+#			rmonth=month-12+6
+#			ryear=year+1
+#		else
+#    	rmonth=month+6
+#    	ryear=year
+#    end
+#    if rmonth < 10  
+#    	rmonth='0'+rmonth.to_s  
+#    end
+
+    @tend=DateTime.now.midnight + 184.days
+
     @missions=Mission.where("? <=start AND end <= ?", @tstart, @tend)
   end
 
@@ -61,6 +65,7 @@ class MarkersController < ApplicationController
   # POST /markers
   # POST /markers.json
   def create
+logger.debug "Time cerate marker: #{Time.now}"
     @marker=Marker.new(marker_params)
     if @marker.mtype == "Circle"
       tablat=@marker.latitude.split("_")

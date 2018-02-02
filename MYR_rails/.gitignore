@@ -16,3 +16,5 @@ seeds.rb
 /tmp
 #ignore all the internal files made by gedit
 *.*~
+# And swap files saved by vim
+*.swp

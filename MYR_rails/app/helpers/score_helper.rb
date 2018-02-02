@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module ScoreHelper
 
 #if timecost==-1 => no coordinates
@@ -520,8 +522,10 @@ http://www.movable-type.co.uk/scripts/latlong.html
 
   def generateJsonFile(f_hash)
     outputname=f_hash['name']+'_generated_'+Time.now.to_s+'.xml'
-    filename = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'generated', outputname) 
-		#saveOutputnameToattempt(filename,a)
+    directory = File.join(Rails.root, 'public','uploads', 'scores','areascanning', 'generated')
+    FileUtils::mkdir_p directory
+    filename = File.join(directory, outputname)
+    #saveOutputnameToattempt(filename,a)
     File.open(filename,"w") do |f|
       f.write(f_hash.to_xml)
     end

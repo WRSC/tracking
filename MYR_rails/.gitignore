@@ -18,3 +18,11 @@ seeds.rb
 *.*~
 # And swap files saved by vim
 *.swp
+
+.vagrant
+
+vendor
+
+*.log
+
+.idea

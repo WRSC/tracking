@@ -1,5 +1,5 @@
---Token pour tester la nouvelle version du site
--- print("Demarrage script\r\n")
+--Token to test the new website version
+-- print("Script startup\r\n")
 vmsleep(5000)
 sio.send('at+cpin=1234\r\n')
 vmsleep(15000)
@@ -123,9 +123,9 @@ while true do
 
 		strk = str2[8]
 
-		-- Fin mise en forme
+        -- End of formating
 
-		-- Un truc
+        -- Something
 		if comp==1 then
 			mesLats=str2[0]
 			mesLons=str2[2]
@@ -150,7 +150,7 @@ while true do
 			mescourses=string.concat(mescourses,str2[8])
 		end
 
-		if comp==5 then -- Ouvertur connection
+		if comp==5 then -- Connexion opening
 			print(" Open connexion \r \n")
 			cmd1='at+chttpact="194.112.1.150",80 \r ' 
 			sio.send(cmd1); 
@@ -190,7 +190,7 @@ while true do
 			str10=string.concat(str10,str9)
 			str10=string.concat(str10,string.char(0x1A))
 
-			-- Ecriture des donne dans un fichier
+            -- Writing of data in a file
 			nameFileLatitude=string.concat("D:\\latitude",date)
 			nameFileLatitude=string.concat(nameFileLatitude,".txt")
 
@@ -239,7 +239,7 @@ while true do
 				file:close()
 
 			end
-				-- Envois donnes
+                -- Sending of data
 				print(" Start data transfert \r \n ")
 				 sio.send(str10);
 				print(str10)

@@ -1,96 +1,63 @@
 source 'https://rubygems.org'
 
-#need rake
-gem     'rake'          ,                 '>= 10.4.2'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem     'rails'         ,                 '~> 4.2.0'
+gem 'rails', '~> 4.2.0'
 
 # Use sqlite3 as the database for Active Record
-gem     'sqlite3'
+gem 'sqlite3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'sass', '~> 3.4.16'
 
-gem 'bootstrap-sass', '~> 3.3.5' 
+gem 'bootstrap-sass', '~> 3.3.5'
 
 # Use Uglifier as compressor for JavaScript assets
-gem      'uglifier'      ,                 '>= 1.3.0'
+gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
-gem      'coffee-rails'  ,                 '~> 4.1.0'
+gem 'coffee-rails', '~> 4.1.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem      'jquery-rails'
+gem 'jquery-rails'
 # Allow to use cookie in jquery
-gem      'jquery-cookie-rails'
+gem 'jquery-cookie-rails'
 # jQuery plugin for drop-in fix binded events problem caused by Turbolinks
 #gem 'jquery-turbolinks'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem      'turbolinks'
+gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem      'jbuilder'       ,                  '~> 2.0'
-
-# bundle exec rake doc:rails generates the API under doc/api.
-#gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'jbuilder', '~> 2.0'
 
 # Use ActiveModel has_secure_password
-gem      'bcrypt'        ,                   '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
-#gem      'fastimage'
-gem      'thin'
+gem 'thin'
 
-#to force ssl connection 
-
+# to force ssl connection
 gem 'rack-ssl', '~> 1.4.1'
 
 #in order to uploads some files
-gem      'carrierwave'
-gem      'mini_magick'
+gem 'carrierwave'
+gem 'mini_magick'
 
 # Captcha
 gem 'simple_captcha2', require: 'simple_captcha'
-
-# dotenv to load environment variables in rails root
-
-# gem 'dotenv-rails'
-
-#pretty_print for rails console
-#gem      'hirb'
-
-#Add these codes into the file ~/.irbrc
-#require 'rubygems'
-#require 'hirb'
-#require 'active_record'
-#Hirb.enable
-#ActiveRecord::Base.logger = Logger.new(STDOUT)
-
-#group :development do
-	#autorub bundle when gemfile changed
-#  gem 		  'guard-bundler', require: false
-#	gem       'guard-migrate', require: false  #autorun rake db:migrate when migration created
-#	gem       'guard-annotate', require: false #auto annotate db/schema 
-#end
 
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem       'faker'          ,           '1.4.2'
+gem 'faker', '1.4.2'
 
 group :development, :test do
-  # Call 'debugger' anywhere in the code to stop execution and get a debugger console
-  #gem 'debugger'
- 
-
-  gem       'awesome_print'
+  gem 'awesome_print'
   # Access an IRB console on exception pages or by using <%= console %> in views
   #gem 'web-console', '~> 2.0'
 end
@@ -99,7 +66,6 @@ group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mini_backtrace',     '0.1.3'
   gem 'guard-minitest',     '2.3.1'
-
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

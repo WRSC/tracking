@@ -215,7 +215,6 @@ DEPENDENCIES
   minitest-reporters (= 1.0.5)
   rack-ssl (~> 1.4.1)
   rails (~> 4.2.0)
-  rake (>= 10.4.2)
   sass (~> 3.4.16)
   sass-rails (~> 5.0)
   simple_captcha2

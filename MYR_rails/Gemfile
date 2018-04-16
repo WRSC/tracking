@@ -62,6 +62,8 @@ group :development, :test do
   #gem 'web-console', '~> 2.0'
 end
 
+gem "letter_opener", group: :development
+
 group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mini_backtrace',     '0.1.3'

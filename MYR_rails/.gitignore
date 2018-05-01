@@ -20,3 +20,4 @@ seeds.rb
 *.*~
 # And swap files saved by vim
 *.swp
+public/uploads/scores/areascanning/generated/

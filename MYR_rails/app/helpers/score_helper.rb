@@ -276,14 +276,6 @@ module ScoreHelper
       return res
     end
 
-    def timeAddition(t1,t2)
-      # +1 is to stay in the same zone, may be this cannot work correctly if the server is set to an other zone than UTC + 3
-      temp1 = DateTime.strptime(t1+"UTC",'%Y%m%d%H%M%S%z').to_time.utc
-      temp2 = DateTime.strptime(t2+"UTC",'%Y%m%d%H%M%S%z').to_i
-      res = temp1 + temp2
-      return res.strftime('%Y%m%d%H%M%S')
-    end
-
 #================================= Station Keeping ==============================================
   def stationKeepingRawScore(a_id)
     timecost=stationKeepingTimecost(a_id)

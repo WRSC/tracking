@@ -221,6 +221,7 @@ DEPENDENCIES
   mini_backtrace (= 0.1.3)
   mini_magick
   minitest-reporters (= 1.0.5)
+  pry
   rack-ssl (~> 1.4.1)
   rails (~> 4.2.0)
   sass (~> 3.4.16)

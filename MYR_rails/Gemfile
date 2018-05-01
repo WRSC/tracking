@@ -57,6 +57,7 @@ gem 'simple_captcha2', require: 'simple_captcha'
 gem 'faker', '1.4.2'
 
 group :development, :test do
+  gem 'pry'
   gem 'awesome_print'
   # Access an IRB console on exception pages or by using <%= console %> in views
   #gem 'web-console', '~> 2.0'

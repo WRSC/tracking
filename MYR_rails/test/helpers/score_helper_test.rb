@@ -8,8 +8,8 @@ require 'awesome_print'
 	def setup()
 	  p=[]
 	  p.push(markers(:m1))
-	  p.push(markers(:m2)) 
-	  p.push(markers(:m3)) 
+	  p.push(markers(:m2))
+	  p.push(markers(:m3))
 	  p.push(markers(:m4))
 	  @p=p
 	end
@@ -80,7 +80,7 @@ require 'awesome_print'
 
   	res = checkRoundBuoy(myLine,buoySample,coordSample,"NWSE")
   	assert res !=0, "Problem ! Check the fixtures so that the first buoy of triangular course is correctly rounded."
-    
+
   end
 
   test "should turn second buoy" do
@@ -159,18 +159,14 @@ require 'awesome_print'
 
   end
 
-
   test "should add times" do
-    res = timeAddition("19930924010303","19700101000001")
-
-    assert res != "19930924010303", "Result should be 19930924010304"
-
-
+    res = CoordinatesFixtureHelper.increment_time("19930924010303", 1)
+    assert_equal "19930924010304", res
   end
 
 
 #===================================================== station keeping ==============================================
- 
+
   #==========================  Test Point in a Polygon =======================
   test " testP should be out the polygon" do
     assert @p.length==4
@@ -192,15 +188,15 @@ require 'awesome_print'
     assert testP.datetime=='20150225153927', "test Point is incorrect"
     assert pInPolygon(testP,@p)==0, "=========== !!! Error with point out polygon test =========== and pInPolygon return #{pInPolygon(testP,@p)}"
   end
-  
+
   test "testP should be on one of edge in the polygon" do
     assert @p.length==4, "polygon is incorrect"
     testP=coordinates(:testOnEP)
     assert testP.datetime=='20150225153927', "test Point is incorrect"
     assert pInPolygon(testP,@p)==0, "=========== !!! Error with point out polygon test =========== and pInPolygon return #{pInPolygon(testP,@p)}"
   end
-  
-  test "Many points in a circle should be out of the polygon" do 
+
+  test "Many points in a circle should be out of the polygon" do
     assert @p.length==4, "polygon is incorrect"
     for i in 0..50
       lat=5*Math::sin(i)+2.5
@@ -208,9 +204,9 @@ require 'awesome_print'
       testP=Coordinate.create!( latitude:lat, longitude:lng, datetime:'20150225153927', tracker_id:1 )
       assert pInPolygon(testP,@p)==-1, "=========== !!! Error with point out polygon test =========== and pInPolygon return #{pInPolygon(testP,@p)}"
     end
-  end 
+  end
 
-  test "Many points in a circle should be in or on the polygon" do 
+  test "Many points in a circle should be in or on the polygon" do
     assert @p.length==4, "polygon is incorrect"
     for i in 0..50
       lat=2.5*Math::sin(i)+2.5
@@ -218,7 +214,7 @@ require 'awesome_print'
       testP=Coordinate.create!( latitude:lat, longitude:lng, datetime:'20150225153927', tracker_id:1 )
       assert pInPolygon(testP,@p)>=0, "=========== !!! Error with point out polygon test =========== and pInPolygon return #{pInPolygon(testP,@p)}"
     end
-  end 
+  end
 
 #======================= test stationkeeping timecost and rawscore =====================
   test "Calculating stationkeeping timecost should near to 300" do
@@ -235,7 +231,7 @@ require 'awesome_print'
       coords.push(Coordinate.create!( latitude:lat, longitude:lng, datetime:t.strftime("%Y%m%d%H%M%S"), tracker_id:1 ))
     end
     #assert false, "coords[30].dateime is #{coords[30].datetime} !!! and lat is #{coords[30].latitude} !!! and lng is #{coords[30].longitude}"
-    # then turn around alone the path of a circle during 300s 
+    # then turn around alone the path of a circle during 300s
     for i in 1..300
       t+=1
       lat=2.5+2.5*Math::sin(-Math::PI/2+i*Math::PI/15)
@@ -250,7 +246,7 @@ require 'awesome_print'
       coords.push(Coordinate.create!( latitude:lat, longitude:lng, datetime:t.strftime("%Y%m%d%H%M%S"), tracker_id:1 ))
     end
     #assert false, "coords[360].dateime is #{coords[360].datetime} !!! and lat is #{coords[360].latitude} !!! and lng is #{coords[360].longitude}"
-    
+
     res=stationKeepingTimecostWithData(@p,coords)
 #    assert false, "error with timecost and return coord is : timecost is #{res} "
     rawscore=stationKeepingRawScoreWithTimecost(res)
@@ -278,7 +274,7 @@ require 'awesome_print'
       coords.push(Coordinate.create!( latitude:lat, longitude:lng, datetime:t.strftime("%Y%m%d%H%M%S"), tracker_id:1 ))
     end
     #assert false, "coords[30].dateime is #{coords[30].datetime} !!! and lat is #{coords[30].latitude} !!! and lng is #{coords[30].longitude}"
-    # then turn around alone the path of a circle during 300s 
+    # then turn around alone the path of a circle during 300s
     theta=-Math::PI/2
     for i in 1..280
       t+=1
@@ -295,7 +291,7 @@ require 'awesome_print'
       coords.push(Coordinate.create!( latitude:lat, longitude:lng, datetime:t.strftime("%Y%m%d%H%M%S"), tracker_id:1 ))
     end
     #assert false, "coords[340].dateime is #{coords[340].datetime} !!! and lat is #{coords[340].latitude} !!! and lng is #{coords[340].longitude}"
-    
+
     res=stationKeepingTimecostWithData(@p,coords)
     #assert false, "coords[res].dateime is #{coords[res].datetime} !!! and lat is #{coords[res].latitude} !!! and lng is #{coords[res].longitude}"
     #assert false, "error with timecost and return coord is : dateime is #{res}"
@@ -308,18 +304,18 @@ require 'awesome_print'
 #===================================================== test Area Scanning===============================================
   test "should be ok with erb" do
     c=coordinates(:testErbyml)
-		assert c.tracker_id==1 
+		assert c.tracker_id==1
   end
-		
+
 	test "should load json data" do
 		data_hash=coordinates(:testjson)
-		assert data_hash.tracker_id==1,"===== !!! Error with load json data and return #{data_hash.tracker_id}======"	
+		assert data_hash.tracker_id==1,"===== !!! Error with load json data and return #{data_hash.tracker_id}======"
 	end
-  
+
   test "should load more json datas manully" do
-    filename = File.join(Rails.root, 'test','fixtures', 'json', 'moredatas.json') 
-    f=File.read(filename) 
-    f_hash = JSON.parse(f) 
+    filename = File.join(Rails.root, 'test','fixtures', 'json', 'moredatas.json')
+    f=File.read(filename)
+    f_hash = JSON.parse(f)
     assert 1==f_hash['data'][0]['sectionj'],"error with loading json data and return #{f_hash['data'][0]['sectionj']}"
     assert 2==f_hash['data'][1]['sectionj'],"error with loading json data and return #{f_hash['data'][1]['sectionj']}"
     assert "20150807144740"==f_hash['data'][1]['position'][0]['datetime'],"return #{ f_hash['data'][1]['position'].length}"
@@ -329,7 +325,7 @@ require 'awesome_print'
 		data_hash=coordinates(:testforjson123)
     assert data_hash.datetime=="20150807144743",data_hash.inspect
   end
-  
+
 =begin
   test "should generate a json file in Rails.root/public/uploads/scores/areascanning/generated" do
     assert loadJsonDataAreaScanning('moredatas.json'),"please check it in Rails.root/public/uploads/scores/areascanning/generated"
@@ -341,4 +337,3 @@ require 'awesome_print'
   end
 
 end
-

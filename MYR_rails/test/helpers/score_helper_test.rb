@@ -159,13 +159,9 @@ require 'awesome_print'
 
   end
 
-
   test "should add times" do
-    res = timeAddition("19930924010303","19700101000001")
-
-    assert res != "19930924010303", "Result should be 19930924010304"
-
-
+    res = CoordinatesFixtureHelper.increment_time("19930924010303", 1)
+    assert_equal "19930924010304", res
   end
 
 

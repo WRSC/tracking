@@ -1,20 +1,28 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 myTriangle:
-    name: myTriangle
-    start: 2015-06-05 01:01:00
-    end: 2015-09-01 00:00:00
-    robot_id: 1
-    mission_id: 1
-    tracker_id: 4
+  name: myTriangle
+  start: 2015-06-05 01:01:00
+  end: 2015-09-01 00:00:00
+  robot: testotron
+  mission_id: 1
+  tracker: testotron_tracker
 
 myRace:
-    name: myRace
-    start: 2015-06-05 01:01:00
-    end: 2015-09-01 00:00:00
-    robot_id: 1
-    mission_id: 3
-    tracker_id: 2
+  name: myRace
+  start: 2015-06-05 01:01:00
+  end: 2015-09-01 00:00:00
+  robot: testotron
+  mission_id: 3
+  tracker: testotron_tracker
+
+myRace2:
+  name: myRace2
+  start: 2015-06-05 01:01:00
+  end: 2015-09-01 00:00:00
+  robot: snowball
+  mission_id: 3
+  tracker: snowball_tracker
 
 #one:
 #  name: MyString

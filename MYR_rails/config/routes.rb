@@ -22,7 +22,13 @@ Rails.application.routes.draw do
     end
     resources :robots
     resources :attempts
-    resources :missions
+
+  resources :missions do
+    member do
+      get :coordinates, to: "coordinates#index_by_mission"
+    end
+  end
+
     resources :markers
     resources :sessions
     resources :scores

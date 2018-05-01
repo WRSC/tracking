@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CoordinatesControllerTest < ActionController::TestCase
   setup do
-    @tracker = trackers(:mytracker)
+    @tracker = trackers(:testotron_tracker)
     @coordinate = coordinates(:c1)
   end
 
@@ -49,10 +49,35 @@ class CoordinatesControllerTest < ActionController::TestCase
     assert_response :created
   end
 
-
   test "should show coordinate" do
     get :show, id: @coordinate
     assert_response :success
+  end
+
+  test "#index_by_mission" do
+    mission = missions(:triangularRace)
+    datetime = 5.minutes.from_now.strftime("%Y%m%d%H%M%S")
+
+    mission.attempts.each do |attempt|
+      Coordinate.create!(
+        tracker: attempt.tracker,
+        datetime: datetime,
+        longitude: 1,
+        latitude: 2,
+        speed: 1,
+      )
+    end
+
+    get :index_by_mission, id: mission.id
+
+    parsed_response = JSON.parse(response.body)
+    assert_equal 2, parsed_response.size
+
+    expected_keys = %w(id tracker_id datetime latitude
+      longitude robot_id robot_name team_id team_name)
+    assert_equal expected_keys, parsed_response.first.keys
+
+    assert_equal [datetime, datetime], parsed_response.map { |c| c["datetime"] }
   end
 
 =begin

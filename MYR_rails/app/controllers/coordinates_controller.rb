@@ -73,6 +73,25 @@ class CoordinatesController < ApplicationController
     end
   end
 
+  def index_by_mission
+    mission = Mission.find(params[:id])
+
+    latest_coordinates = mission.attempts.map do |attempt|
+      [attempt, attempt.coordinates.order(datetime: :desc).first]
+    end.select do |attempt, coordinate|
+      coordinate
+    end.map do |attempt, coordinate|
+      coordinate.as_json(only: [:id, :datetime, :latitude, :longitude, :tracker_id]).merge(
+        "robot_id" => attempt.robot.id,
+        "robot_name" => attempt.robot.name,
+        "team_id" => attempt.robot.team.id,
+        "team_name" => attempt.robot.team.name,
+      )
+    end
+
+    render json: latest_coordinates
+  end
+
   # GET /coordinates/1
   # GET /coordinates/1.json
   def show

@@ -54,30 +54,32 @@ class CoordinatesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "#index_by_mission" do
+  test "#latest_by_mission" do
     mission = missions(:triangularRace)
-    datetime = 5.minutes.from_now.strftime("%Y%m%d%H%M%S")
+    datetime = 5.minutes.from_now
 
     mission.attempts.each do |attempt|
       Coordinate.create!(
         tracker: attempt.tracker,
-        datetime: datetime,
+        datetime: datetime.strftime("%Y%m%d%H%M%S"),
         longitude: 1,
         latitude: 2,
         speed: 1,
       )
     end
 
-    get :index_by_mission, id: mission.id
+    get :latest_by_mission, id: mission.id
 
     parsed_response = JSON.parse(response.body)
     assert_equal 2, parsed_response.size
 
-    expected_keys = %w(id tracker_id datetime latitude
-      longitude robot_id robot_name team_id team_name)
-    assert_equal expected_keys, parsed_response.first.keys
+    tracker_keys = %w(tracker_id robot_id robot_name team_name latest_coordinates)
+    assert_equal tracker_keys, parsed_response.first.keys
 
-    assert_equal [datetime, datetime], parsed_response.map { |c| c["datetime"] }
+    coordinate_keys = %w(latitude longitude datetime)
+    assert_equal coordinate_keys, parsed_response.first["latest_coordinates"][0].keys
+
+    assert_equal [datetime.iso8601, datetime.iso8601], parsed_response.map { |c| c.dig("latest_coordinates", 0, "datetime") }
   end
 
 =begin

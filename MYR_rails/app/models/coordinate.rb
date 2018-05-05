@@ -20,5 +20,8 @@ class Coordinate < ActiveRecord::Base
 	  	end
 	end
 
+  def datetime_as_time
+    Time.strptime("#{datetime}UTC",'%Y%m%d%H%M%S%z')
+  end
 end
 

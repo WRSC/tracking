@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :missions do
     member do
-      get :coordinates, to: "coordinates#index_by_mission"
+      get :latest_coordinates, to: "coordinates#latest_by_mission"
     end
   end
 

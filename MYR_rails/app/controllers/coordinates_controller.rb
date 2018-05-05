@@ -73,20 +73,29 @@ class CoordinatesController < ApplicationController
     end
   end
 
-  def index_by_mission
+  def latest_by_mission
     mission = Mission.find(params[:id])
 
+    limit = params.fetch(:limit, 1).to_i
+    if limit < 1 || limit > 500
+      render plain: "?limit must be greater than zero and less than 500", status: 400
+      return
+    end
+
     latest_coordinates = mission.attempts.map do |attempt|
-      [attempt, attempt.coordinates.order(datetime: :desc).first]
-    end.select do |attempt, coordinate|
-      coordinate
-    end.map do |attempt, coordinate|
-      coordinate.as_json(only: [:id, :datetime, :latitude, :longitude, :tracker_id]).merge(
-        "robot_id" => attempt.robot.id,
-        "robot_name" => attempt.robot.name,
-        "team_id" => attempt.robot.team.id,
-        "team_name" => attempt.robot.team.name,
-      )
+      coordinates = attempt.coordinates.order(datetime: :desc).first(limit).map do |coordinate|
+        coordinate.as_json(only: [:latitude, :longitude]).merge(
+          datetime: coordinate.datetime_as_time.iso8601
+        )
+      end
+
+      {
+        tracker_id: attempt.tracker_id,
+        robot_id: attempt.robot.id,
+        robot_name: attempt.robot.name,
+        team_name: attempt.robot.team.name,
+        latest_coordinates: coordinates
+      }
     end
 
     render json: latest_coordinates

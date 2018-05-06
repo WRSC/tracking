@@ -13,6 +13,12 @@
 #  datetime: 2015-02-25 15:39:26
 #  tracker_id: 1
 
+snowball_coordinate_1:
+  latitude: 5
+  longitude: 2
+  datetime: '20150225153927'
+  tracker: snowball_tracker
+
 #coordinates for testing the triangular course scoring function
 
 <% t = 20150605010101 %>
@@ -22,7 +28,7 @@ c1:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 <% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
@@ -32,7 +38,7 @@ c2:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 <% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
@@ -50,7 +56,7 @@ c<%=n+3%>:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 
 <% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
@@ -72,7 +78,7 @@ c<%=n+53%>:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 
 <% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
@@ -86,7 +92,7 @@ c108:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 # coordinates for testing the race course scoring function
 

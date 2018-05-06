@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CoordinatesControllerTest < ActionController::TestCase
   setup do
-    @tracker = trackers(:mytracker)
+    @tracker = trackers(:testotron_tracker)
     @coordinate = coordinates(:c1)
   end
 
@@ -49,10 +49,74 @@ class CoordinatesControllerTest < ActionController::TestCase
     assert_response :created
   end
 
-
   test "should show coordinate" do
     get :show, id: @coordinate
     assert_response :success
+  end
+
+  def create_coordinate(tracker, datetime)
+    Coordinate.create!(
+      tracker: tracker,
+      datetime: datetime.strftime("%Y%m%d%H%M%S"),
+      longitude: 1,
+      latitude: 2,
+      speed: 1,
+    )
+  end
+
+  test "#latest_by_mission without ?limit" do
+    mission = missions(:triangularRace)
+    datetime = 5.minutes.from_now
+
+    mission.attempts.each do |attempt|
+      create_coordinate(attempt.tracker, datetime)
+    end
+
+    get :latest_by_mission, id: mission.id
+    assert_response :success
+
+    parsed_response = JSON.parse(response.body)
+    assert_equal 2, parsed_response.size
+
+    tracker_keys = %w(tracker_id robot_id robot_name team_name latest_coordinates)
+    assert_equal tracker_keys, parsed_response.first.keys
+
+    coordinate_keys = %w(latitude longitude datetime)
+    assert_equal coordinate_keys, parsed_response.first["latest_coordinates"][0].keys
+
+    assert_equal [datetime.iso8601, datetime.iso8601], parsed_response.map { |c| c.dig("latest_coordinates", 0, "datetime") }
+  end
+
+  test "#latest_by_mission with ?limit=5" do
+    mission = missions(:triangularRace)
+    datetime = 5.minutes.from_now
+
+    mission.attempts.each do |attempt|
+      6.times { create_coordinate(attempt.tracker, datetime) }
+    end
+
+    get :latest_by_mission, id: mission.id, limit: 5
+    assert_response :success
+
+    parsed_response = JSON.parse(response.body)
+    assert_equal 2, parsed_response.size
+
+    assert_equal 5, parsed_response[0]["latest_coordinates"].size
+    assert_equal 5, parsed_response[1]["latest_coordinates"].size
+  end
+
+  test "#latest_by_mission with ?limit=501" do
+    mission = missions(:triangularRace)
+
+    get :latest_by_mission, id: mission.id, limit: 501
+    assert_response :bad_request
+  end
+
+  test "#latest_by_mission with ?limit=0" do
+    mission = missions(:triangularRace)
+
+    get :latest_by_mission, id: mission.id, limit: 501
+    assert_response :bad_request
   end
 
 =begin

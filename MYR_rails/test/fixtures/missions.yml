@@ -1,22 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 triangularRace:
-    name: triangularRace
-    start: 2015-06-01 00:00:00
-    end: 2015-09-01 00:00:00
-    id: 1
+  name: triangularRace
+  start: 2015-06-01 00:00:00
+  end: 2015-09-01 00:00:00
+  id: 1
 
 triangularRace:
-    name: triangularRace
-    start: 2015-06-01 00:00:00
-    end: 2015-09-01 00:00:00
-    id: 3
-    startOfRace: 20150605010100
-
-#one:
-#  name: MyString
-#  description: MyText
-
-#two:
-#  name: MyString
-#  description: MyText
+  name: triangularRace
+  start: 2015-06-01 00:00:00
+  end: 2015-09-01 00:00:00
+  id: 3
+  startOfRace: 20150605010100

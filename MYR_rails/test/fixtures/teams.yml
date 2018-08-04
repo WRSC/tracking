@@ -1,7 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-SylvainTeam:
-    name: SylvainTeam
+sylvain:
+  name: SylvainTeam
+
+senators:
+  name: senators
 
 #one:
 #  name: MyString

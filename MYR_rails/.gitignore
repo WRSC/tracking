@@ -6,6 +6,8 @@
 
 # Ignore bundler config.
 /.bundle
+# And bundled dependencies
+/vendor/bundle/
 
 # Ignore the default SQLite database.
 *.sqlite3
@@ -18,3 +20,4 @@ seeds.rb
 *.*~
 # And swap files saved by vim
 *.swp
+public/uploads/scores/areascanning/generated/

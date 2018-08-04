@@ -13,19 +13,24 @@
 #  datetime: 2015-02-25 15:39:26
 #  tracker_id: 1
 
+snowball_coordinate_1:
+  latitude: 5
+  longitude: 2
+  datetime: '20150225153927'
+  tracker: snowball_tracker
+
 #coordinates for testing the triangular course scoring function
 
 <% t = 20150605010101 %>
-<% t_ref = 19700101000000 %>
 c1:
     latitude: -0.5
     longitude: 0.5
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 c2:
     latitude: 0.5
@@ -33,9 +38,9 @@ c2:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% lat=0 %>
 <% lng=0 %>
@@ -51,10 +56,10 @@ c<%=n+3%>:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <% 	i=i+0.1 %>
 
 <% end %>
@@ -73,10 +78,10 @@ c<%=n+53%>:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <% 	i=i-0.1 %>
 
 <% end %>
@@ -87,7 +92,7 @@ c108:
     datetime: <%= t %>
     speed: 1
     course: 1
-    tracker_id: 4
+    tracker: testotron_tracker
 
 # coordinates for testing the race course scoring function
 
@@ -101,7 +106,7 @@ d1:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 d2:
     latitude: 0.5
@@ -111,7 +116,7 @@ d2:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% lat=0 %>
 <% lng=0 %>
@@ -130,7 +135,7 @@ d<%=n+3%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -143,7 +148,7 @@ d23:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% i=0.75 %>
 <% 20.times do |n| %>
@@ -160,7 +165,7 @@ d<%=n+24%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -173,7 +178,7 @@ d44:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% i=2.4 %>
 <% 20.times do |n| %>
@@ -190,7 +195,7 @@ d<%=n+45%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -203,7 +208,7 @@ d65:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% i=-2.4 %>
 <% 20.times do |n| %>
@@ -220,7 +225,7 @@ d<%=n+66%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -233,7 +238,7 @@ d86:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% i=-0.8 %>
 <% 20.times do |n| %>
@@ -250,7 +255,7 @@ d<%=n+87%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -263,7 +268,7 @@ d107:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% i=0.75 %>
 <% 20.times do |n| %>
@@ -280,7 +285,7 @@ d<%=n+108%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -293,7 +298,7 @@ d128:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% i=2.4 %>
 <% 20.times do |n| %>
@@ -310,7 +315,7 @@ d<%=n+129%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -323,7 +328,7 @@ d149:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 <% i=-2.4 %>
 <% 20.times do |n| %>
@@ -340,7 +345,7 @@ d<%=n+150%>:
     tracker_id: 2
 
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 <%  i=i+0.1 %>
 
 <% end %>
@@ -353,7 +358,7 @@ d170:
     course: 1
     tracker_id: 2
 
-<% t = timeAddition(t.to_s, (t_ref + 5).to_s) %>
+<% t = CoordinatesFixtureHelper.increment_time(t.to_s, 5) %>
 
 # end coordinates for testing race course scoring
 
@@ -387,7 +392,7 @@ testErbyml:
   latitude: 5
   longitude: 2
   datetime: '20150225153927'
-  tracker_id: 1 
+  tracker_id: 1
   #<%= 9%2 %>
 
 <% filename = File.join(Rails.root, 'test','fixtures', 'json', 'onedata.json') %>
@@ -410,8 +415,6 @@ testjson:
   latitude: 5
   longitude: 2
   datetime:  <%= f_hash['data'][i]['position'][k]['datetime'] %>
-  tracker_id: 1 
+  tracker_id: 1
 <% end %>
 <% end %>
-
-

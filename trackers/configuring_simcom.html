@@ -1,0 +1,141 @@
+<h1><strong>Configuration of the SIMCOM 5218 module</strong></h1>
+
+<p><em>Usefull documentation for this section:</em> development<em>kit</em>manual.pdf </p>
+
+<h2>How to start the SIMCOM with the development kit:</h2>
+
+<ul>
+<li>Plug the antenna on the module directly (slot main for the 3G, slot GPS for the GPS)</li>
+<li>Insert the SIM card in its slot (needed to start)</li>
+<li>Switch on both UART (serial link) and RF CONTROL (flight mode) buttons</li>
+<li>Connect the serial link to the PC (using the USB connector)</li>
+<li>Power the card (USB or mains 220V) and move the power jumper to the correct position</li>
+<li>Turn on the module by pressing the POWER ON button</li>
+</ul>
+
+<p><em>When you have power the RED light is on</em>
+<em>When you press the POWER ON button the STATE light turn to green</em></p>
+
+<p>WARNING: The module will not start without the SIM card and the antenna</p>
+
+<h1>Communication with the module using Linux</h1>
+
+<p><em>Usefull documentation for this section:</em> documentation<em>SIM5218</em>ATcommands.pdf</p>
+
+<p>First you need to find on wich port is attached the serial Link.
+To do so you can type this command line in a terminal:
+<code>
+dmesg | grep tty
+<code>
+Write down the number of the USB port (e.g.:ttyUSB0)</p>
+
+<p>Now you have two solutions to communicate with the module:</p>
+
+<ul>
+<li>To use  PUTTY to type directly the command lines</li>
+<li>To use PYTHON SERIAL (You will not be able to read the port)</li>
+</ul>
+
+<h2>Using Putty</h2>
+
+<ul>
+<li>Start PUTTY (install Putty on your system with for instance &quotapt-get install putty&quot on Linux and then launch it in sudo )</li>
+<li>In the home page (when you click on “Session” in the list in the left of the window) fill the following field to establish a serial connection:
+<ul><li><strong>Hostname:</strong> /dev/ttyUSB0    #put the correct port number instead of ttyUSB0</li>
+<li><strong>Speed:</strong> 115200</li>
+<li><strong>Connection type:</strong> Serial</li></ul></li>
+<li>Finaly click on OPEN</li>
+</ul>
+
+<p>NOTE: In Putty you can save a session for next uses</p>
+
+<h2>Using Python serial</h2>
+
+<p><code>
+python
+import serial
+ser=serial.Serial('/dev/ttyUSB0',115200)
+ser.write('ati 
+')
+<code></p>
+
+<p>NOTE: When using Python Serial you are not able to read the port</p>
+
+<h1>Configuration of the internet access:</h1>
+
+<ul>
+<li>First you have to find find the configuration of your specific operator:</li>
+</ul>
+
+<p>You can find a list of pdp configurations <a href="http://www.twayf.com/blog/apn-settings-for-mobile-broadband-network-operators/">here</a> or <a href="http://forums.pinstack.com/f24/tcp_apn_wap_gateway_port_carrier_settings-360/">here</a></p>
+
+<p>For instance if you are in Aland:</p>
+
+<p><strong>Alcom</strong>: APN: internet / no password needed
+<strong>Sonera</strong>: APN: internet / no password needed</p>
+
+<ul>
+<li>Then start the card and enter your PIN code:</li>
+</ul>
+
+<p><code>
+at+cpin=1234 #enter your PIN code, where 1234 is YOUR PIN code
+<code></p>
+
+<ul>
+<li>Then configure the module with the correct PDP configuration (here with Sonera):
+<code>
+at+cgsockcont=1,&quotIP&quot,&quotinternet&quot  # define your APN regarding to the PDP configuration you use for the profile 1
+at+csockauth=1,0  #configure authentification for profile 1, 0 = no password needed
+at+csocksetpn=1 #select the profile 1 (up to 16 profiles can be used)
+<code>
+Now your card should be configured !</li>
+</ul>
+
+<h2>Test your internet connection:</h2>
+
+<p>Open the internet connection (do not forget to plug the antenna):</p>
+
+<p><code>
+at+netopen=,,1
+<code></p>
+
+<p>NOTE: It can take some time for your first connection</p>
+
+<h2>If you want to test your connection:</h2>
+
+<p><code>
+at+csq #give the strongness of the 3G signal, the higher the better i.e:20
+<code></p>
+
+<h2>Utilisation of LUA scripts:</h2>
+
+<p><em>usefull documentation:</em> sim52xx<em>lua</em>application<em>note</em>v0.04</p>
+
+<ul>
+<li>To launch a script from the SIM card:</li>
+</ul>
+
+<p><code>
+at+cscriptstart=&quotD:\script.lua&quot  #where &quotscript&quot is the name of your scipt
+<code></p>
+
+<ul>
+<li>To stop the script:</li>
+</ul>
+
+<p><code>
+at+cscriptstop
+<code></p>
+
+<ul>
+<li>To copy the script in the SIMCOM's memory:</li>
+</ul>
+
+<p><code>
+at+fscopy=&quot;D:\script.lua&quot;,&quot;C:\script.lua&quot;
+<code></p>
+
+<p>NOTE: If you name your script as &quot;autorun.lua&quot; and put it in the memory of the SIMCOM, the script will automatically be launched when you start the module. </p>
+
+

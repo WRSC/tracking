@@ -41,8 +41,8 @@ date=''
 -- Fin Define script lua envois
 
 while true do
-	rst= gps.gpsinfo();
-	--rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
+	--rst= gps.gpsinfo();
+	rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
 	if rst==",,,,,,,," then
 	print("Pas de fix\r\n")
 	vmsleep(1000)
@@ -52,7 +52,7 @@ while true do
 		msg = string.concat(rst,"\r\n")
 		print(msg)
 
-		-- Mise en forme des donnee
+		-- Data formating
 		j=0
 		str2={}
 		for word in string.gmatch(rst, '([^,]+)') do
@@ -152,7 +152,7 @@ while true do
 
 		if comp==5 then -- Connexion opening
 			print(" Open connexion \r \n")
-			cmd1='at+chttpact="194.112.1.150",80 \r ' 
+			cmd1='at+chttpact="167.99.205.49",80 \r ' 
 			sio.send(cmd1); 
 			rtc1=sio.recv(5000) 
 			print(" Connexion opened \r \n")

@@ -1,11 +1,12 @@
-#SEEDS for WRSC2016
-#Independant from the WRSC 2015 database
+#SEEDS for WRSC2018
 
 #SEEDS for production mode
 # /!\ BE CAREFUL WHEN CHANGING THIS SEEDS
-# In fact this seeds should be loaded only once before the WRSC2016 ! 
-# After, forget about using rake db:reset because it will suppress all the previous database !!
-# be sure to initialize them by running 'RAILS_ENV=production rake db:seed:seedsWRSC2016'
+# This seed help to configure admin account and setup missions in the competition.
+# Follow example seed file to configure your own. 
+# When the seed file is ready run 'RAILS_ENV=production rake db:seed:seeds2018'
+# This will add both admin users and missions to the corresponding database.
+
 
 #Admins
 
@@ -25,7 +26,7 @@ Member.create!(name:  "Thomas Kluyver",
 	               activated: true,
 	               activated_at: Time.zone.now)
 
-Member.create!(name:  "Capital Seb",
+Member.create!(name:  "Captain Seb",
 	               email: "sebastien.lemaire@soton.ac.uk",
 	               password:              "foobar",
 	               password_confirmation: "foobar",

@@ -1,5 +1,5 @@
 --Token to test the new website version
--- print("Script startup\r\n")
+print("Script startup\r\n")
 vmsleep(5000)
 sio.send('at+cpin=1234\r\n')
 vmsleep(15000)
@@ -41,8 +41,8 @@ date=''
 -- Fin Define script lua envois
 
 while true do
-	--rst= gps.gpsinfo();
-	rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
+    rst= gps.gpsinfo();
+    -- rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
 	if rst==",,,,,,,," then
 	print("Pas de fix\r\n")
 	vmsleep(1000)

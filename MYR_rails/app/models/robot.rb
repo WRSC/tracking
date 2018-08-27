@@ -11,5 +11,7 @@ validates :name, presence: true,  length: { in: 3..100, too_long: "%{count} char
 validates :category, inclusion: { in: %w(MicroSailboat Sailboat), message: "%{value} is not a valid category" }, allow_nil: true
 validates :team_id, presence: true
 
-
+    def name_and_team
+        self.name + ' (' + self.team.name + ')' 
+    end
 end

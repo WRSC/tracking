@@ -28,7 +28,7 @@
     <%= f.label :robot_id %>
     <% if is_admin? %>
       <% if Robot.all!=nil %>
-  			<%= f.collection_select(:robot_id, Robot.all, :id, :name) %>
+  			<%= f.collection_select(:robot_id, Robot.all, :id, :name_and_team) %>
   		<% end %>
     <% else %>
       <% if ((myrobs=Robot.where("team_id = ?", current_user.team_id)) != nil) %>

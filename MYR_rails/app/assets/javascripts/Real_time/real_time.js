@@ -37,7 +37,9 @@ function choosetMission(){
 			if (e=="select_mission"){
 				alert("Please choose a correct mission!!!")
 			}else{
-				alert("Loading up to "+getMaxCoords()+" coordinates associated to this mission. This can take several seconds.")
+				if (getMaxCoords() > 1000){
+				  alert("Loading up to "+getMaxCoords()+" coordinates associated to this mission. This can take several seconds.")
+				}
 				saveCurrentMission(e)
 				loadMissionBuoys();
 				displayMissionsBuoys();

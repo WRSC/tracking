@@ -1,9 +1,7 @@
 <% missionsArray = getCurrentMission %>
 <% nbMissions = missionsArray.size %>
 <% if ( nbMissions > 0 ) %>
-		<p>Cannot display multiple missions at a time</p>
-		<p>Please choose a mission !</p>
-		<p>Current missions are: 
+		<p>Cannot display multiple missions at a time, please choose a mission: <br/>
 			<select name="Select mission" id="dropdown_select_mission">
 				<option value="select_mission">Select a mission</option>
 				<% for m in missionsArray %>
@@ -11,8 +9,6 @@
 				<% end %>
 			</select>
 		</p>
-		<button id="chooseMission" type="button" >Select this mission</button>
-
 <% else %>
 	<h1>No mission in progress currently.</h1>
 	<p>Please come back later !</p>

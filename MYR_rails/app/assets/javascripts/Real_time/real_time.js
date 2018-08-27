@@ -54,7 +54,7 @@ function choosetMission(){
 }
 
 function selectMissions(){
-	$("#map-panel").on("click", "#chooseMission", function() {
+	$("#map-panel").on("change", "#dropdown_select_mission", function() {
 		$.ajax({
 				type: "GET",
 				url: "/getMissions",

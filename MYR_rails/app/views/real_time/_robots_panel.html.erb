@@ -1,21 +1,26 @@
-<h2>Robots in the mission</h2>
-<p> Select the robots you want to see in real time !</p>
+<h3>Robots in the mission</h3>
+<p> Select the robots you want to see in real time:</p>
 <% tracks = [] %>
 <% @trackers.each do  |t|%>
 	<% tracks.push(t) %>
 <% end %>
 
-<% currentAttempts=Attempt.where(tracker_id: tracks).where("mission_id = ?", @current_mission_id).order(robot_id: :asc) %>
+<% currentAttempts=Attempt.where(tracker_id: tracks).where("mission_id = ?", @current_mission_id).group(:robot_id) %>
 <% if currentAttempts.length > 1 %>
 	<ul>
-	<input type="checkbox" name="All" id="allRobots">Display all the robots
-	<% currentAttempts.each() do |attempt| %>
-		<li><input type="checkbox" name="robot<%= attempt.robot_id %>" id="<%= attempt.robot_id %>"><%= robot.name %><img src="/icons/medium<%=attempt.tracker_id%12 %>.png"/>(<%= attempt.robot.team.name %>)</li>
-	<% end %>
+		<li><input type="checkbox" name="All" id="allRobots">Display all the robots</li>
+		<% currentAttempts.each do |attempt| %>
+			<li>
+				<input type="checkbox" name="robot<%= attempt.robot_id %>" id="<%= attempt.robot_id %>">
+				<%= attempt.robot.name %>
+				<img src="/icons/medium<%=attempt.tracker_id%12 %>.png" />
+				(<%= attempt.robot.team.name %>)
+			</li>
+		<% end %>
 	</ul>
 <% elsif currentAttempts.length == 1  %>
 	<input type="checkbox" name="robot<%= currentAttempts.first.robot_id %>" id="<%= currentAttempts.first.robot_id %>"><%= Robot.find(currentAttempts.first.robot_id).name %><img src="/icons/medium<%=currentAttempts.first.tracker_id%12 %>.png"/>
-	<br/>
+	<br>
 <% else %>
 	<p> No robots for this mission has sent coordinates for the moment !</p>
 <% end %>

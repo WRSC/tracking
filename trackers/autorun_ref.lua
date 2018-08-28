@@ -44,8 +44,8 @@ while true do
     rst= gps.gpsinfo();
     -- rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
 	if rst==",,,,,,,," then
-	print("Pas de fix\r\n")
-	vmsleep(1000)
+		print("No GPS fix\r\n")
+		vmsleep(1000)
 	else
 		print("GPS data received \r\n")
 		str1='POST /coordinates HTTP/1.1\r\nContent-type: application/json\r\nAccept: application/json\r\nContent-length: '
@@ -208,12 +208,12 @@ while true do
 				file:close()
 
 			end
-                -- Sending of data
-				print(" Start data transfert \r \n ")
-				 sio.send(str10);
-				print(str10)
-				rtc2=sio.recv(5000) 
-				print(" Data transfer is complete \r \n")
+			-- Sending of data
+			print(" Start data transfer \r\n")
+			sio.send(str10);
+			--print(str10)
+			rtc2=sio.recv(5000) 
+			print(" Data transfer is complete \r\n")
 			
 			
 		end

@@ -65,20 +65,8 @@ while true do
 			strx[k]=string.sub(str2[0],k,k)
 			k=k+1
 		end
-		latitude1=tonumber(string.concat(strx[1],strx[2]))*1.0
-		latitude2=string.concat(strx[3],strx[4])
-		latitude2=string.concat(latitude2,strx[5])
-		latitude2=string.concat(latitude2,strx[6])
-		latitude2=string.concat(latitude2,strx[7])
-		latitude2=string.concat(latitude2,strx[8])
-		latitude2=string.concat(latitude2,strx[9])
-		latitude2=string.concat(latitude2,strx[10])
-		latitude2=string.concat(latitude2,strx[11])
-		latitude2=tonumber(latitude2)*1.0
-		latitude2=latitude2/60*1.0
-		latitude3=latitude1+latitude2
-		str2[0]=tostring(latitude3)
-		stry={}
+		latitude=tonumber(string.sub(x, 1, 2)) + tonumber(string.sub(x, 3, 11))/60*1.0
+		str2[0]=tostring(latitude)
 		l=1
 		while l<=string.len(str2[2]) do
 			stry[l]=string.sub(str2[2],l,l)
@@ -204,17 +192,17 @@ while true do
 				file:write(mesLons)
 				file:close()
 				
-				file=io.open(string.format("D:\\datetime%s.txt", "a")
+				file=io.open(string.format("D:\\datetime%s.txt", date), "a")
 				mesdatetimes=string.concat(mesdatetimes, "_")
 				file:write(mesdatetimes)
 				file:close()
 
-				file=io.open(string.format("D:\\speed%s.txt", "a")
+				file=io.open(string.format("D:\\speed%s.txt", date), "a")
 				messpeeds=string.concat(messpeeds, "_")
 				file:write(messpeeds)
 				file:close()
 
-				file=io.open(string.format("D:\\course%s.txt", "a")
+				file=io.open(string.format("D:\\course%s.txt", date), "a")
 				mescourses=string.concat(mescourses, "_")
 				file:write(mescourses)
 				file:close()

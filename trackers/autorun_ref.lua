@@ -191,22 +191,7 @@ while true do
 			str10=string.concat(str10,string.char(0x1A))
 
             -- Writing of data in a file
-			nameFileLatitude=string.concat("D:\\latitude",date)
-			nameFileLatitude=string.concat(nameFileLatitude,".txt")
-
-			nameFileLongitude=string.concat("D:\\longitude",date)
-			nameFileLongitude=string.concat(nameFileLongitude,".txt")
-
-			nameFileDatetime=string.concat("D:\\datetime",date)
-			nameFileDatetime=string.concat(nameFileDatetime,".txt")
-
-			nameFileSpeed=string.concat("D:\\speed",date)
-			nameFileSpeed=string.concat(nameFileSpeed,".txt")
-
-			nameFileCourse=string.concat("D:\\course",date)
-			nameFileCourse=string.concat(nameFileCourse,".txt")
-
-			file=io.open(nameFileLatitude,"a")
+			file=io.open(string.format("D:\\latitude%s.txt", date), "a")
 			print("file= ")
 			print(file)
 			if file ~= nil then -- IF no SD card
@@ -214,27 +199,23 @@ while true do
 				file:write(mesLats)
 				file:close()
 				
-				file=io.open(nameFileLongitude,"a")
-
+				file=io.open(string.format("D:\\longitude%s.txt", date), "a")
 				mesLons=string.concat(mesLons,"_")
 				file:write(mesLons)
 				file:close()
 				
-				file=io.open(nameFileDatetime,"a")
-
-				mesdatetimes=string.concat(mesdatetimes,"_")
+				file=io.open(string.format("D:\\datetime%s.txt", "a")
+				mesdatetimes=string.concat(mesdatetimes, "_")
 				file:write(mesdatetimes)
 				file:close()
 
-				file=io.open(nameFileSpeed,"a")
-
-				messpeeds=string.concat(messpeeds,"_")
+				file=io.open(string.format("D:\\speed%s.txt", "a")
+				messpeeds=string.concat(messpeeds, "_")
 				file:write(messpeeds)
 				file:close()
 
-				file=io.open(nameFileCourse,"a")
-
-				mescourses=string.concat(mescourses,"_")
+				file=io.open(string.format("D:\\course%s.txt", "a")
+				mescourses=string.concat(mescourses, "_")
 				file:write(mescourses)
 				file:close()
 

@@ -20,7 +20,7 @@ mesLons = ''
 mesdatetimes = ''
 messpeeds = ''
 mescourses = ''
-comp = 1;
+counter = 1;
 date = ''
 --os.remove("D:/latitude.txt")
 --os.remove("D:/longitude.txt")
@@ -48,7 +48,6 @@ while true do
 		-- Data formating
 		j=0
 		data={}
-		str1='POST /coordinates HTTP/1.1\r\nContent-type: application/json\r\nAccept: application/json\r\nContent-length: '
 		for word in string.gmatch(rst, '([^,]+)') do
 			data[j] = word
 			j = j + 1
@@ -110,8 +109,8 @@ while true do
 
         -- End of formating
 
-        -- Something
-		if comp == 1 then
+		-- Something
+		if counter == 1 then
 			mesLats = data[0]
 			mesLons = data[2]
 			mesdatetimes = raiponce
@@ -122,7 +121,7 @@ while true do
 				date = mesdatetimes
 			end
 		end
-		if comp ~= 1 then
+		if counter ~= 1 then
 			mesLats = string.concat(mesLats, "_")
 			mesLats = string.concat(mesLats, data[0])
 			mesLons = string.concat(mesLons, "_")
@@ -135,47 +134,43 @@ while true do
 			mescourses = string.concat(mescourses, data[8])
 		end
 
-		if comp == 5 then -- Connexion opening
+		if counter == 5 then -- Connexion opening
 			print(" Open connection \r\n")
 			cmd1 = 'at+chttpact="167.99.205.49",80 \r ' 
 			sio.send(cmd1); 
 			rtc1 = sio.recv(5000) 
 			print(" Connection opened \r\n")
 		end
-		if comp == 10	then
-			comp=0
+		if counter == 10	then
+			counter=0
 
-			str3='\r\n\r\n'
-			str4='{"latitude":"'
-			str5='","longitude":"'
-			str6='","datetime":"'
-			str8='","tracker_id":'
-			str8=string.concat(str8,tracker_id)
-			str9=',"token":"'
-			str9=string.concat(str9,token)	
-			str9=string.concat(str9,'"')
-			str9=string.concat(str9,"}")
-			str11='","speed":"'
-			str12='","course":"'	
-			length1 = string.len(str4)+string.len(mesLats)+string.len(str5)+string.len(mesLons)+string.len(str6)+string.len(mesdatetimes)+string.len(str8)+string.len(str9)+string.len(str11)+string.len(messpeeds)+string.len(str12)+string.len(mescourses)
+			body = '{"latitude":"'
+			body = string.concat(body, mesLats)
 
-			str10=string.concat(str1,tostring(length1))
-			str10=string.concat(str10,str3)
-			str10=string.concat(str10,str4)
-			str10=string.concat(str10,mesLats)
-			str10=string.concat(str10,str5)
-			str10=string.concat(str10,mesLons)
-			str10=string.concat(str10,str6)
-			str10=string.concat(str10,mesdatetimes)
-			str10=string.concat(str10,str11)
-			str10=string.concat(str10,messpeeds)
-			str10=string.concat(str10,str12)
-			str10=string.concat(str10,mescourses)
-			str10=string.concat(str10,str8)
-			str10=string.concat(str10,str9)
-			str10=string.concat(str10,string.char(0x1A))
+			body = string.concat(body, '","longitude":"')
+			body = string.concat(body, mesLons)
 
-            -- Writing of data in a file
+			body = string.concat(body, '","datetime":"')
+			body = string.concat(body, mesdatetimes)
+
+			body = string.concat(body, '","speed":"')
+			body = string.concat(body, messpeeds)
+
+			body = string.concat(body, '","course":"')
+			body = string.concat(body, mescourses)
+			
+			body = string.concat(body, '","tracker_id":' .. tracker_id)
+
+			str9 = string.format(',"token":"%s"', token)
+			body = string.concat(body, str9)
+
+			body = string.concat(body, "}")
+			length = string.len(body)
+
+			header = string.format('POST /coordinates HTTP/1.1\r\nContent-type: application/json\r\nAccept: application/json\r\nContent-length: %d\r\n\r\n', length)
+		
+
+			-- Writing of data in a file
 			file = io.open(string.format("D:\\latitude%s.txt", date), "a")
 			print("file= ")
 			print(file)
@@ -214,7 +209,7 @@ while true do
 			
 			
 		end
-		comp = comp + 1
+		counter = counter + 1
 		vmsleep(1000)
 	end	
 end

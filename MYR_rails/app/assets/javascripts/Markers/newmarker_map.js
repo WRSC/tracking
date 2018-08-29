@@ -1,5 +1,4 @@
 //----------------------GLOBAL VARIABLES-------------------
-//var config = require("./latLng.js");
 
 var latest_buoys = []; //[0] for buoys and [1] for mission id
 /*
@@ -60,10 +59,10 @@ function FullScreenControl(controlDiv) {
 		latest_buoys = [];
 		//map options
 		var mapOptions = {
-			mapTypeId: google.maps.MapTypeId.ROAD,
-			center: new google.maps.LatLng(59.425896, 10.471915),
-//			center: new google.maps.LatLng(config.lat, config.lng),
-			zoom: 14,
+			mapTypeId: 'satellite',
+			// see config.js if you you want to change the default map center
+			center: config.center,
+			zoom: config.zoom-2,
 			zoomControl: true,
 			zoomControlOptions: {
 				style: google.maps.ZoomControlStyle.SMALL,

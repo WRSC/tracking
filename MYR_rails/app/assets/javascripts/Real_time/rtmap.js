@@ -185,10 +185,10 @@ function FullScreenControl(controlDiv, map) {
 		first_launch = true;
 		//map options
 		var mapOptions = {
-			mapTypeId: google.maps.MapTypeId.HYBRID,
-//			center: new google.maps.LatLng(41.691806, -8.821782),
-			center: new google.maps.LatLng(50.816272 -1.306495),
-			zoom: 18,
+			mapTypeId: 'satellite',
+			// see config.js if you you want to change the default map center
+			center: config.center,
+			zoom: config.zoom,
 			tilt: 0,
 			zoomControl: true,
 			zoomControlOptions: {

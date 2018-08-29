@@ -5,6 +5,9 @@
 <h1>Listing Attempts</h1>
 
 <% if !current_user.nil? %>
+  <% if is_leader? || is_admin? %>
+    <%= link_to 'New Attempt', new_attempt_path %>
+  <% end %>
   <% if heIsInTeam?(current_user.name) || is_admin? %>
     <table id="datatable-attempt" class="dataTable display">
       <thead>
@@ -46,12 +49,6 @@
           <% end %>
       </tbody>
     </table>
-
-    <br>
-
-    <% if is_leader? || is_admin? %>
-      <%= link_to 'New Attempt', new_attempt_path %>
-    <% end %>
 
   <% else %>
 

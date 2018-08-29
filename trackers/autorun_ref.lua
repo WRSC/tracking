@@ -35,15 +35,14 @@ date = ''
 -- Fin Define script lua envois
 
 while true do
-    rst = gps.gpsinfo();
-    -- rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
+	rst = gps.gpsinfo();
+	-- rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
 	if rst==",,,,,,,," then
 		print("No GPS fix\r\n")
 		vmsleep(1000)
 	else
-		print("GPS data received \r\n")
-		msg = string.concat(rst,"\r\n")
-		print(msg)
+		print("GPS data received:\r\n ")
+		print(rst .. "\r\n")
 
 		-- Data formating
 		j=0
@@ -107,7 +106,7 @@ while true do
 		strz = data[7]
 		strk = data[8]
 
-        -- End of formating
+		-- End of formating
 
 		-- Something
 		if counter == 1 then
@@ -201,15 +200,16 @@ while true do
 
 			end
 			-- Sending of data
-			print(" Start data transfer \r\n")
+			print("Starting data transfer... \r\n")
 			sio.send(header .. body .. string.char(0x1A));
 			--print(body)
 			rtc2 = sio.recv(5000) 
-			print(" Data transfer is complete \r\n")
+			print(" Data transfer (possibly) complete. \r\n")
+			print(rtc2)
 			
 			
 		end
 		counter = counter + 1
 		vmsleep(1000)
-	end	
+	end 
 end

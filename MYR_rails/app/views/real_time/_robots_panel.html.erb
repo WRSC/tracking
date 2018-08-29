@@ -6,7 +6,7 @@
 <% end %>
 
 <% currentAttempts=Attempt.where(tracker_id: tracks).where("mission_id = ?", @current_mission_id).group(:robot_id) %>
-<% if currentAttempts.length > 1 %>
+<% if currentAttempts.length > 0 %>
 	<ul>
 		<li><input type="checkbox" name="All" id="allRobots">Display all the robots</li>
 		<% currentAttempts.each do |attempt| %>
@@ -18,9 +18,6 @@
 			</li>
 		<% end %>
 	</ul>
-<% elsif currentAttempts.length == 1  %>
-	<input type="checkbox" name="robot<%= currentAttempts.first.robot_id %>" id="<%= currentAttempts.first.robot_id %>"><%= Robot.find(currentAttempts.first.robot_id).name %><img src="/icons/medium<%=currentAttempts.first.tracker_id%12 %>.png"/>
-	<br>
 <% else %>
-	<p> No robots for this mission has sent coordinates for the moment !</p>
+	<p>No robots for this mission has sent coordinates for the moment!</p>
 <% end %>

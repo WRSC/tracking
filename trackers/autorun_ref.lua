@@ -103,19 +103,15 @@ while true do
 		-- append time
 		raiponce=string.concat(no, data[5])
 
-		strz = data[7]
-		strk = data[8]
 
-		-- End of formating
-
-		-- Something
+		-- concating data and further processing
 		if counter == 1 then
 			mesLats = data[0]
 			mesLons = data[2]
 			mesdatetimes = raiponce
 			-- 1 knot = 1.852 km/h
-			messpeeds = tonumber(strz)*1.852
-			mescourses = strk
+			messpeeds = tonumber(data[7])*1.852
+			mescourses = data[8]
 			if string.len(date) == 0 then
 				date = mesdatetimes
 			end

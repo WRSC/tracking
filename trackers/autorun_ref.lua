@@ -44,48 +44,24 @@ while true do
 		print("GPS data received:\r\n ")
 		print(rst .. "\r\n")
 
-		-- Data formating
-		j=0
-		data={}
+		-- content of var rst is e.g. 
+		-- - 3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0
+		-- - 5049.134774,N,00118.424937,W,290818,185118.0,54.5,0,0
+		
+		-- Data formating: split rst by , into data
+		j = 0
+		data = {}
 		for word in string.gmatch(rst, '([^,]+)') do
 			data[j] = word
-			j = j + 1
+			j = j+1
 		end
-		x={}
-		k=1
-		while k <= string.len(data[0]) do
-			x[k] = string.sub(data[0],k,k)
-			k = k+1
-		end
-		latitude = tonumber(string.sub(x, 1, 2)) + tonumber(string.sub(x, 3, 11))/60*1.0
-		data[0] = tostring(latitude)
-		y = {}
-		l = 1
-		while l <= string.len(data[2]) do
-			y[l] = string.sub(data[2], l, l)
-			l = l + 1
-		end
-		longitude1=string.concat(y[1],y[2])
-		longitude1=tonumber(string.concat(longitude1,y[3]))*1.0
-		longitude2=string.concat(y[4],y[5])
-		longitude2=string.concat(longitude2,y[6])
-		longitude2=string.concat(longitude2,y[7])
-		longitude2=string.concat(longitude2,y[8])
-		longitude2=string.concat(longitude2,y[9])
-		longitude2=string.concat(longitude2,y[10])
-		longitude2=string.concat(longitude2,y[11])
-		longitude2=string.concat(longitude2,y[12])
-		longitude2=tonumber(longitude2)*1.0
-		longitude2=longitude2/60*1.0
-		longitude3=longitude1+longitude2
-		data[2]=tostring(longitude3)
 
+		-- latitude: "5049.134774,N" to "50.8189129"
+		latitude = tonumber(string.sub(data[0], 1, 2)) + tonumber(string.sub(data[0], 3, 11))/60.0
+		-- prepend minus when neccessary
 		if data[1] == "S" then
-			data[0] = string.concat('-', data[0])
-		end
-		if data[3] == "W" then
-			data[2] = string.concat('-', data[2])
-		end
+			latitude = -latitude
+		end	
 
 		-- format the date from DD-MM-YY to YYYY-MM-DD
 		v1 = data[4]
@@ -95,6 +71,11 @@ while true do
 		for word in string.gmatch(v2, '([^-]+)') do
 			v3[j] = word
 			j = j + 1
+		-- longitude: "00118.424937,W" to "-1.3070822833333"
+		longitude = tonumber(string.sub(data[2], 1, 3)) + tonumber(string.sub(data[2], 4, 12))/60.0
+		-- prepend minus when neccessary
+		if data[3] == "W" then
+			longitude = -longitude
 		end
 
 		raiponce1=string.concat("20", v3[2])

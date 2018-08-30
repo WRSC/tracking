@@ -63,14 +63,6 @@ while true do
 			latitude = -latitude
 		end	
 
-		-- format the date from DD-MM-YY to YYYY-MM-DD
-		v1 = data[4]
-		v2 = string.gsub(v1, "(%d%d)", "%1-")
-		j = 0
-		v3={}
-		for word in string.gmatch(v2, '([^-]+)') do
-			v3[j] = word
-			j = j + 1
 		-- longitude: "00118.424937,W" to "-1.3070822833333"
 		longitude = tonumber(string.sub(data[2], 1, 3)) + tonumber(string.sub(data[2], 4, 12))/60.0
 		-- prepend minus when neccessary
@@ -78,11 +70,10 @@ while true do
 			longitude = -longitude
 		end
 
-		raiponce1=string.concat("20", v3[2])
-		raiponce2=string.concat(raiponce1, v3[1])
-		no=string.concat(raiponce2, v3[0])
+		-- format the date "290818" from DDMMYY to YYYYMMDD
+		datetime = string.gsub(data[4], "(%d%d)(%d%d)(%d%d)", "20%3%2%1")
 		-- append time
-		raiponce=string.concat(no, data[5])
+		datetime = string.concat(datetime, data[5])
 
 
 		-- concating data and further processing

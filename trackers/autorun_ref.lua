@@ -40,11 +40,12 @@ while true do
 	rst = gps.gpsinfo();
 	-- rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
 	if rst==",,,,,,,," then
-		print("No GPS fix\r\n")
+		print("Waiting for GPS fix...\r\n")
 		vmsleep(1000)
 	else
-		print("GPS data received:\r\n ")
-		print(rst .. "\r\n")
+		print("GPS data received: ")
+		print(rst)
+		print("\r\n")
 
 		-- content of var rst is e.g. 
 		-- - 3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0
@@ -99,11 +100,10 @@ while true do
 		end
 
 		if counter == 5 then -- Connexion opening
-			print(" Open connection \r\n")
-			cmd1 = 'at+chttpact="167.99.205.49",80 \r ' 
-			sio.send(cmd1); 
+			print("Opening connection to server...")
+			sio.send('at+chttpact="' .. server .. '",80 \r' )
 			rtc1 = sio.recv(5000) 
-			print(" Connection opened \r\n")
+			print(" opened ")
 		end
 		if counter == 10	then
 			counter=0
@@ -127,37 +127,47 @@ while true do
 			print("file= ")
 			print(file)
 			if file ~= nil then -- IF no SD card
+				print("Writing data to SD card...")
 				mesLats = string.concat(mesLats,"_")
 				file:write(mesLats)
 				file:close()
+				print(".")
 				
 				file = io.open(string.format("D:\\longitude%s.txt", date), "a")
 				mesLons = string.concat(mesLons,"_")
 				file:write(mesLons)
 				file:close()
+				print(".")
 				
 				file = io.open(string.format("D:\\datetime%s.txt", date), "a")
 				mesdatetimes = string.concat(mesdatetimes, "_")
 				file:write(mesdatetimes)
 				file:close()
+				print(".")
 
 				file = io.open(string.format("D:\\speed%s.txt", date), "a")
 				messpeeds = string.concat(messpeeds, "_")
 				file:write(messpeeds)
 				file:close()
+				print(".")
 
 				file = io.open(string.format("D:\\course%s.txt", date), "a")
 				mescourses = string.concat(mescourses, "_")
 				file:write(mescourses)
 				file:close()
 
+				print(".")
+			else 
+				print("WARNING: no SD card available!\r\n")
 			end
+			print("Done \r\n")
 			-- Sending of data
-			print("Starting data transfer... \r\n")
+			print("Starting data transfer...")
+			print(".")
 			sio.send(header .. body .. string.char(0x1A));
 			--print(body)
 			rtc2 = sio.recv(5000) 
-			print(" Data transfer (possibly) complete. \r\n")
+			print("\r\nData transfer attempt done, response:\r\n")
 			print(rtc2)
 			
 			

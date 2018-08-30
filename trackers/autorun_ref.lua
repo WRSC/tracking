@@ -33,6 +33,8 @@ date = ''
 --file:write("printdir(1) \n print(\"Demarrage envois \\r \\n\") \n cmd1=\'at+chttpact=\"haggis.ensta-bretagne.fr\",3000 \\r \' \n file2=io.open(\"donnee.txt\",\"r\") \n str10=file2:read(\"*all\") \n file2:close() \n reponce=os.remove(\"donnee.txt\") \n print(\"\\n \\r\") \n print(\"os.remove=\") \n print(reponce) \n print(\"\\n \\r\") \n print(\"\\n \\r\") \n print(\"\\n\\r\") \n print(\"str10=\") \n print(str10) \n print(\" \\n \\r\") \n print(\"\\n \\r\") \n sio.send(cmd1); \n rtc1=sio.recv(5000) \n vmsleep(5000) \n print(\"rtc1=\") \n print(rtc1, \" \\r \\n\") \n sio.send(str10); \n rtc2=sio.recv(5000) \n vmsleep(5000) \n print(\"rtc2=\") \n print(rtc2, \" \\r \\n\") \n print(\"Fin envois\\r\\n\") \n ")
 -- file:close()
 -- Fin Define script lua envois
+success = 0
+errors = 0
 
 while true do
 	rst = gps.gpsinfo();
@@ -159,6 +161,16 @@ while true do
 			print(rtc2)
 			
 			
+			print("\r\n")
+			rlen = string.len(rtc2)
+			if rlen > 23 then
+				success = success + 1
+			else
+				errors = errors + 1
+			end
+			print("\r\nSuccessful transmissions: " .. success .. ", errors: " .. errors)
+			print("\r\n")
+			print("\r\n")
 		end
 		counter = counter + 1
 		vmsleep(1000)

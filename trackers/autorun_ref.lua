@@ -89,16 +89,11 @@ while true do
 			end
 		end
 		if counter ~= 1 then
-			mesLats = string.concat(mesLats, "_")
-			mesLats = string.concat(mesLats, data[0])
-			mesLons = string.concat(mesLons, "_")
-			mesLons = string.concat(mesLons, data[2])
-			mesdatetimes = string.concat(mesdatetimes, "_")
-			mesdatetimes = string.concat(mesdatetimes, raiponce)
-			messpeeds = string.concat(messpeeds, '_')
-			messpeeds = string.concat(messpeeds, tonumber(data[7])*1.852)
-			mescourses = string.concat(mescourses, '_')
-			mescourses = string.concat(mescourses, data[8])
+			mesLats = mesLats .. "_" .. latitude
+			mesLons = mesLons .. "_" .. longitude
+			mesdatetimes = mesdatetimes .. "_" .. datetime
+			messpeeds = messpeeds .. '_' .. tonumber(data[7])*1.852
+			mescourses = mescourses .. '_' .. data[8]
 		end
 
 		if counter == 5 then -- Connexion opening
@@ -111,31 +106,19 @@ while true do
 		if counter == 10	then
 			counter=0
 
-			body = '{"latitude":"'
-			body = string.concat(body, mesLats)
 
-			body = string.concat(body, '","longitude":"')
-			body = string.concat(body, mesLons)
+		if counter == 10 then
+			counter=0
 
-			body = string.concat(body, '","datetime":"')
-			body = string.concat(body, mesdatetimes)
-
-			body = string.concat(body, '","speed":"')
-			body = string.concat(body, messpeeds)
-
-			body = string.concat(body, '","course":"')
-			body = string.concat(body, mescourses)
-			
+			body = '{"latitude":"' .. mesLats .. '","longitude":"' .. mesLons
+			body = body .. '","datetime":"' .. mesdatetimes
+			body = string.concat(body, '","speed":"' .. messpeeds)
+			body = string.concat(body, '","course":"' .. mescourses)
 			body = string.concat(body, '","tracker_id":' .. tracker_id)
+			body = string.concat(body, string.format(',"token":"%s"', token))
 
-			str9 = string.format(',"token":"%s"', token)
-			body = string.concat(body, str9)
-
-			body = string.concat(body, "}")
-			length = string.len(body)
-
-			header = string.format('POST /coordinates HTTP/1.1\r\nContent-type: application/json\r\nAccept: application/json\r\nContent-length: %d\r\n\r\n', length)
-		
+			print(body)
+			print("\r\n")
 
 			-- Writing of data in a file
 			file = io.open(string.format("D:\\latitude%s.txt", date), "a")

@@ -1,20 +1,25 @@
---Token to test the new website version
-print("Script startup\r\n")
-vmsleep(5000)
-sio.send('at+cpin=1234\r\n')
-vmsleep(15000)
-sio.send('at+cgps=1\r\n')
-vmsleep(10000)
-sio.send('at+netopen=,,1\r\n')
-vmsleep(10000)
+-- insert data from your MYT rails instance here:
+server = "167.99.205.49"
+tracker_id = "1"
+token = "XXXXX"
+
 sio.send('at+printdir=1\r\n')
 
--- The version I got from Sylvain had a token here. I've removed it from the
--- public version, but we can find it if needed. -TK
-token = ""
+print("WRSC tracing hardware revision 1, script 2.0 \r\nStartup")
+-- Unlock sim card when necessary
+-- sio.send('at+cpin=1234')
+sio.send('at+cgsockcont=1,\"IP\",\"giffgaff.com\"\r\n')
+sio.send('at+csockauth=1,1,\"giffgaff\",\"\"\r\n')
+sio.send('at+csocksetpn=1\r\n')
+sio.send('at+cgps=1\r\n')
+print(".")
+vmsleep(10000)
+sio.send('at+netopen=,,1\r\n')
+print(".")
 
 
-tracker_id = '"6"'
+
+-- initialize variables
 mesLats = ''
 mesLons = ''
 mesdatetimes = ''

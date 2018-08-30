@@ -81,14 +81,14 @@ while true do
 
 		-- concating data and further processing
 		if counter == 1 then
-			mesLats = data[0]
-			mesLons = data[2]
-			mesdatetimes = raiponce
+			mesLats = latitude
+			mesLons = longitude
+			mesdatetimes = datetime
 			-- 1 knot = 1.852 km/h
 			messpeeds = tonumber(data[7])*1.852
 			mescourses = data[8]
 			if string.len(date) == 0 then
-				date = mesdatetimes
+				date = datetime
 			end
 		end
 		if counter ~= 1 then
@@ -105,8 +105,6 @@ while true do
 			rtc1 = sio.recv(5000) 
 			print(" opened ")
 		end
-		if counter == 10	then
-			counter=0
 
 
 		if counter == 10 then
@@ -161,9 +159,14 @@ while true do
 				print("WARNING: no SD card available!\r\n")
 			end
 			print("Done \r\n")
+			body = string.concat(body, "}")
 			-- Sending of data
 			print("Starting data transfer...")
+			length = string.len(body)
 			print(".")
+			header = string.format('POST /coordinates HTTP/1.1\r\nContent-type: application/json\r\nAccept: application/json\r\nContent-length: %d\r\n\r\n', length)
+			print(".")
+
 			sio.send(header .. body .. string.char(0x1A));
 			--print(body)
 			rtc2 = sio.recv(5000) 

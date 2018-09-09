@@ -17,14 +17,13 @@ $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap());
 
-	AR_checkbox_cookie();
 	dispBuoys_checkbox_cookie();
 
+	autorefreshBindEvents();
 	//initializeMap();
 	initialScroll();
+	choosetMission();
 });
-
-	
 
 /*=========================== Begin select a mission==================================*/
 function choosetMission(){
@@ -33,11 +32,28 @@ function choosetMission(){
 		if (getMaxCoords() > 1000){
 		  alert("Loading up to "+getMaxCoords()+" coordinates associated to this mission. This can take several seconds.")
 		}
-		saveCurrentMission(e)
+		saveCurrentMission(e);
+		updateMissionDetails(e);
 		loadMissionBuoys();
 		displayMissionsBuoys();
-		manual_or_auto_refresh();
+	} else {
+		$("#mission-details").empty();
+		$("#robots-panel").empty()
 	}
+	resetAutoRefresh();
+}
+
+function updateMissionDetails(mission_id) {
+	$.ajax("/missions/" + mission_id + ".json", {
+		dataType: "json",
+		success: function(data) {
+			$("#mission-details").empty().append(
+				$('<p>').text("Mission start: " + data.start),
+				$('<p>').text("Mission end: " + data.end),
+				$('<p>').text("Mission type: " + data.mtype),
+			);
+		}
+	});
 }
 
 /*============================End select a mission=========================================*/

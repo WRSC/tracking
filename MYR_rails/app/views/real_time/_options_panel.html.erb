@@ -1,11 +1,13 @@
 <h1>Options available</h1>
-<input type="checkbox" name="autoRefreshCheckBox" id="aRCB">Auto refresh<select name="Select refresh rate" id="dropdown_select_refreshRate">
+<input type="checkbox" name="autoRefreshCheckBox" id="autoRefreshCheckBox"/> Auto refresh
+<select name="Select refresh rate" id="dropdown_select_refreshRate">
 	<option value="10000">Every 10 seconds</option>
 	<% for m in 1..20 %>
 		<option value="<%= m*1000 %>">Every <%= m %> seconds </option>
 	<% end %>
 </select>
 <br>
+
 Maximum number of coordinates loaded <select name="Select max number of coordinates" id="dropdown_select_maxCoords">
 	<option value="1000">1000 coordinates</option>
 	<% for m in 2..100 %>
@@ -19,7 +21,7 @@ Load the coordinates from <select name="Select latest coordinates loaded" id="dr
 	<option value="1800">30 minutes ago</option>
 	<option value="3600">1 hour ago</option>
 	<option value="7200">2 hours ago</option>
-	
 </select>
 <br>
-<input type="checkbox" name="displayBuoys" id="dispBuoys" checked>Display the mission's markers
+
+<input type="checkbox" name="displayBuoys" id="dispBuoys" checked/> Display the mission's markers

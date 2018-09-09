@@ -8,59 +8,11 @@ module RealTimeHelper
     return currentMission
   end
 
-	def getMissionIds
-		now = Time.zone.now #time in UTC 00
-    missionsArray = Mission.where "start < ? AND ? < end", now, now
-    if missionsArray != []
-      #missionsArray = getCurrentMission
-      nbMissions = missionsArray.size
-      if nbMissions == 0
-      	#TO DO
-      	return 0
-      else
-      	result = []
-      	for i in 0..(nbMissions-1)
-      		mission = missionsArray[i]
-		    	result.push(mission.id.to_s)
-      	end
-      	return result
-      end
-    else
-      return []
-    end
-	end
-
-  def getMissionInfos
+  # Get the IDs for currently active missions
+  def getMissionIds
     now = Time.zone.now #time in UTC 00
     missionsArray = Mission.where "start < ? AND ? < end", now, now
-    if missionsArray != []
-      #missionsArray = getCurrentMission
-      nbMissions = missionsArray.size
-      if nbMissions == 0
-      	#TO DO
-      	return 0
-      elsif nbMissions ==1
-      	mission = missionsArray[0]
-      	timeStart = mission.start.to_s(:number)
-      	timeEnd = mission.end.to_s(:number)
-      	result = []
-      	result.push(timeStart).push(timeEnd)
-      	return result
-      else
-      	list=[]
-      	for i in 0..(nbMissions-1)
-      		mission = missionsArray[i]
-		    	timeStart = mission.start.to_s(:number)
-		    	timeEnd = mission.end.to_s(:number)
-		    	result = []
-		    	result.push(timeStart).push(timeEnd)
-		    	list.push(result)
-      	end
-      	return list
-      end
-    else
-      return []
-    end
+    return missionsArray.map { |m| m.id.to_s}
   end
 
   #input: datetime, array of tracker_id
@@ -94,7 +46,7 @@ module RealTimeHelper
       end
       return trackers
     else #the map does not have any coordinates
-      if getMissionInfos.size > 0 #if there is currently a mission
+      if getMissionIds.size > 0 #if there is currently a mission
         if offset.to_i == 0
           start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #missionsInfos = [start, end]
         else

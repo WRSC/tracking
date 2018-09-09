@@ -212,7 +212,7 @@ class CoordinatesController < ApplicationController
       end
       render json: newCoords.to_json #(:only =>[:datetime,:tracker_id,:latitude,:longitude])  -> remove ID but is not a direct SQL request
     else #the map does not have any coordinates
-      if getMissionInfos.size > 0 #if there is currently a mission
+      if getMissionIds.size > 0 #if there is currently a mission
         if offset.to_i == 0
           start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #missionsInfos = [start, end]
         else

@@ -73,3 +73,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Useful for inserting a lot of coordinates into the DB efficiently
+gem 'activerecord-import'

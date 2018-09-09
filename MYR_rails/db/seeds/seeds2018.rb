@@ -125,3 +125,39 @@ i=1
          		   description: "Tracker #{i}")
   i=i+1
 end
+
+# Coordinates - for testing the site
+require "csv"
+soton_track_f = File.join(File.dirname(__FILE__), "soton-2018-fleetrace.csv")
+soton_track = CSV.read(soton_track_f, options={headers: true}).map {|row|
+	Coordinate.new(
+		datetime: row["datetime"],
+		latitude: row["latitude"].to_f,
+		longitude: row["longitude"].to_f,
+		speed: row["speed"].to_f,
+		course: row["course"].to_f,
+		tracker_id: 1,
+	)
+}
+Coordinate.import(soton_track)
+
+Team.create(
+	name: "Southampton",
+	id: 1,
+)
+
+Robot.create(
+	name: "Black Python",
+	category: "MicroSailboat",
+	team_id: 1,
+	id: 1,
+)
+
+Attempt.create(
+	name: "Soton fleet 1",
+	start: "20180827120000",
+	end: "20180827160000",
+	mission_id: 2,
+	robot_id: 1,
+	tracker_id: 1,
+)

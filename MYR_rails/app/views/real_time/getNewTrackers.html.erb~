@@ -1,6 +1,0 @@
-<body>
-<p>what</p>
-<p><%= @mission_id%></p>
-<p>what is fuck</p>
-<p></p>
-</body>

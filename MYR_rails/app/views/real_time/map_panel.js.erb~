@@ -1,1 +1,0 @@
-$("#map-canvas").html("<%= escape_javascript(render 'map_panel') %>")

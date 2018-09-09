@@ -4,12 +4,6 @@ class RealTimeController < ApplicationController
 	def show
 	end
 	
-	def map_panel
-	end
-
-	def options_panel
-	end
-	
 	def getMissions
 		render json: getMissionIds
 	end

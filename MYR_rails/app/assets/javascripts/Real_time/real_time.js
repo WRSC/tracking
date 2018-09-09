@@ -32,9 +32,7 @@ function choosetMission(){
 		nbmissions=missions.length
 		if (nbmissions > 0){
 			var e = $('#dropdown_select_mission :selected').val();
-			if (e=="select_mission"){
-				alert("Please choose a correct mission!!!")
-			}else{
+			if (e !== "select_mission") {
 				if (getMaxCoords() > 1000){
 				  alert("Loading up to "+getMaxCoords()+" coordinates associated to this mission. This can take several seconds.")
 				}
@@ -43,8 +41,6 @@ function choosetMission(){
 				displayMissionsBuoys();
 				manual_or_auto_refresh();
 			}
-
-			//alert(getCurrentMission())//just for debugger
 		}
 
 

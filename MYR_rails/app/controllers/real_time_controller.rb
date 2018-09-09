@@ -7,14 +7,6 @@ class RealTimeController < ApplicationController
 	def getMissions
 		render json: getMissionIds
 	end
-	
-	def	update_map
-		@current_mission_id= params[:mission_id]
-	end
-	
-	def	update_map_auto
-		@current_mission_id= params[:mission_id]
-	end
 
 	def robots_panel
 		@trackers=[] # change js array into tracker_ids

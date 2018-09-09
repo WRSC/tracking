@@ -14,7 +14,9 @@ class CoordinatesController < ApplicationController
   def index  
     mesDateTimes=[]
     if cookies[:rdatetimes]!= nil && cookies[:rdatetimes]!= ""
-      mesDateTimes=cookies[:rdatetimes].split("_") 
+      mesDateTimes=cookies[:rdatetimes].split("_").map { |ts|
+        DateTime.strptime(ts, "%Y%m%d%H%S")
+      }
     elsif cookies[:rtrieslist]!= nil && cookies[:rtrieslist]!= ""
       trySelect=Try.find_by_id(cookies[:rtrieslist].to_i)
       if trySelect!=nil
@@ -214,9 +216,9 @@ class CoordinatesController < ApplicationController
     else #the map does not have any coordinates
       if getMissionIds.size > 0 #if there is currently a mission
         if offset.to_i == 0
-          start = Mission.find(m_id).start.strftime('%Y%m%d%H%M%S') #missionsInfos = [start, end]
+          start = Mission.find(m_id).start
         else
-          start = (Time.now.utc-offset.to_f).strftime('%Y%m%d%H%M%S')
+          start = (Time.now.utc-offset.to_f)
         end
         if (trackers != nil)# trackers identifiers are specified
           newCoords = (Coordinate.where(id: Coordinate.order(datetime: :desc).where("datetime > ?", start).where(tracker_id: trackers).limit(numMaxCoords))).where("datetime > ?", start).where(tracker_id: trackers).where("datetime > ?", datetime).order(tracker_id: :asc).select(:datetime,:tracker_id,:latitude,:longitude)

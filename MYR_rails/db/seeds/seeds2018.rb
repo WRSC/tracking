@@ -126,6 +126,8 @@ i=1
   i=i+1
 end
 
+token1 = Tracker.first!().token
+
 # Coordinates - for testing the site
 require "csv"
 soton_track_f = File.join(File.dirname(__FILE__), "soton-2018-fleetrace.csv")
@@ -137,6 +139,7 @@ soton_track = CSV.read(soton_track_f, options={headers: true}).map {|row|
 		speed: row["speed"].to_f,
 		course: row["course"].to_f,
 		tracker_id: 1,
+		token: token1,
 	)
 }
 Coordinate.import(soton_track)

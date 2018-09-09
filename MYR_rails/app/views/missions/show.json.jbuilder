@@ -1,1 +1,1 @@
-json.extract! @mission, :id, :name, :description, :created_at, :updated_at
+json.extract! @mission, :id, :name, :start, :end, :mtype, :category

@@ -17,14 +17,13 @@ class RealTimeController < ApplicationController
 	end
 
 	def robots_panel
-  		@trackers=[] # change js array into tracker_ids
-  		if (params[:trackers] != nil) 
-     	params[:trackers].each do |k,v|
-    		@trackers << v
-    	end
-    	@current_mission_id = params[:mission_id]
-  	end
-
+		@trackers=[] # change js array into tracker_ids
+		if (params[:trackers] != nil)
+			params[:trackers].each do |k,v|
+				@trackers << v
+			end
+			@current_mission_id = params[:mission_id]
+		end
 	end
 
 	def getNewTrackers

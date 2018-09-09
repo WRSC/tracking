@@ -86,7 +86,7 @@ Rails.application.routes.draw do
 		get  'generateXMLfile'         ,  to: 'attempts#generateXMLfile'
        
 
-   	get  'getMissions'             ,  to: 'real_time#getMissions'
+   	get  'getMissions'             ,  to: 'real_time#getMissions'  # Probably unused -TK, Sep 2018
     get  'getNewTrackers'          ,  to: 'real_time#getNewTrackers'
     get  'update_map'              ,  to: 'real_time#update_map'
     get  'robots_panel'            ,  to: 'real_time#robots_panel'

@@ -7,7 +7,6 @@ var latest_buoys_line = [[],[]];
 var lines = [[],[]]; // keep the lines in memories, [0] for lines and [1] for mission id
 var known_trackers = [];
 var desired_trackers = [];
-var all_current_missions=[];
 var current_mission;
 var myReset;
 var refreshRate = 10000;
@@ -64,23 +63,7 @@ jQuery.expr.filters.offscreen = function(el) {
 	function getKnownTrackers(){
 		return known_trackers;
 	}
-	
-	//get current missions
-	function getAllCurrentMissions(missions){
-		return all_current_missions;
-	}
-	
-	function getIndexOfCurrentMission(){
-		all=getAllCurrentMissions()
-		targ=getCurrentMission()
-		return all.index(targ)
-	}
-	
-	//save current missions, need to clear all the missions before
-	function setAllCurrentMissions(missions){
-		all_current_missions=missions;
-	}
-	
+
 	//get current mission (only one)
 	function getCurrentMission(){
 		return current_mission+''

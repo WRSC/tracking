@@ -28,52 +28,24 @@ $(document).ready(function(){
 
 /*=========================== Begin select a mission==================================*/
 function choosetMission(){
-		missions=getAllCurrentMissions();
-		nbmissions=missions.length
-		if (nbmissions > 0){
-			var e = $('#dropdown_select_mission :selected').val();
-			if (e !== "select_mission") {
-				if (getMaxCoords() > 1000){
-				  alert("Loading up to "+getMaxCoords()+" coordinates associated to this mission. This can take several seconds.")
-				}
-				saveCurrentMission(e)
-				loadMissionBuoys();
-				displayMissionsBuoys();
-				manual_or_auto_refresh();
-			}
+	var e = $('#dropdown_select_mission :selected').val();
+	if (e !== "select_mission") {
+		if (getMaxCoords() > 1000){
+		  alert("Loading up to "+getMaxCoords()+" coordinates associated to this mission. This can take several seconds.")
 		}
-
-
-			
+		saveCurrentMission(e)
+		loadMissionBuoys();
+		displayMissionsBuoys();
+		manual_or_auto_refresh();
+	}
 }
 
-function selectMissions(){
-	$("#map-panel").on("change", "#dropdown_select_mission", function() {
-		$.ajax({
-				type: "GET",
-				url: "/getMissions",
-				success: function(data){// retrieve an array containing the not yet known trackers
-					if(data.length > 0){
-						eraseMap();
-						if (myReset!= null){
-      						clearInterval(myReset);
-      					}
-						setAllCurrentMissions(data);
-						choosetMission();
-					}
-				}       
-			});
-	})
-
-}
 /*============================End select a mission=========================================*/
 
 //when the panel is displayed
 $("#map-panel").ready(function(){
-	selectMissions()
+	$("#map-panel").on("change", "#dropdown_select_mission", choosetMission);
 
-
-	
   //for all checkboxes of tracker, on click do ...
   $("#map-panel").on("click", "input[name*='tracker']", function() {
       //get id of the checkbox

@@ -44,6 +44,7 @@ function autorefreshBindEvents() {
 		var state = $('#dropdown_select_maxCoords :selected').val();
 		setMaxCoords(state);
 		saveLastDatetime("10000101");  // Load coordinates again from the start
+		eraseMap();
 	})
 	setMaxCoords($('#dropdown_select_maxCoords :selected').val());
 

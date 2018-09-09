@@ -16,8 +16,6 @@ var map
 $(document).ready(function(){
 	//initialization
 	google.maps.event.addDomListener(window, 'load', initializeMap());
-	$("#refresh-panel").click();
-	$("#options-panel-bis").click();
 
 	AR_checkbox_cookie();
 	dispBuoys_checkbox_cookie();

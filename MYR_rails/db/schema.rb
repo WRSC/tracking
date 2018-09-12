@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20160819151518) do
     t.string   "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "datetime"
+    t.datetime "datetime"
     t.string   "latitude"
     t.string   "longitude"
     t.string   "speed"

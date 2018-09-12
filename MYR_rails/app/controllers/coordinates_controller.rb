@@ -140,22 +140,32 @@ class CoordinatesController < ApplicationController
         vitesse = params[:coordinate][:speed].split("_")
         orientation = params[:coordinate][:course].split("_")
 
+        new_coords = []
+
         #création des coordinates
         # parcours du tableau
         for i in (0..(lat.length-1))
-          Coordinate.create(:latitude => lat[i], :longitude => long[i], :datetime => date[i], :tracker_id => tr_id, :token => tok, :speed => vitesse[i], :course => orientation[i])
+          new_coords.push(Coordinate.create(
+            :latitude => lat[i],
+            :longitude => long[i],
+            :datetime => date[i],
+            :speed => vitesse[i],
+            :course => orientation[i],
+            :tracker_id => tr_id,
+            :token => tok
+          ))
         end
         #
         #--------------------------------------------------------
 
 
         respond_to do |format|
-          if (lat.length>0 && long.length>0 && date.length >0)
-           # if (lat.length==1)
-           #   @coordinate.save
-           # end
-            format.html { redirect_to @coordinate, notice: 'Coordinate was successfully created.' }
-            format.json { render :show, status: :created, location: @coordinate }
+          if new_coords.length == 1
+            format.html { redirect_to new_coords[0], notice: 'Coordinate was successfully created.' }
+            format.json { render :show, status: :created, location: new_coords }
+          elsif new_coords.length > 0
+            format.html { redirect_to "/coordinates", notice: 'Coordinates were successfully created.' }
+            format.json { render :show, status: :created, location: new_coords }
           else
             format.html { render :new }
             format.json { render json: @coordinate.errors, status: :unprocessable_entity }

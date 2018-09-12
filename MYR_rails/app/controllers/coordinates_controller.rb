@@ -124,23 +124,22 @@ class CoordinatesController < ApplicationController
     myTra=Tracker.find_by_id(params[:coordinate][:tracker_id])
     if myTra!=nil 
       if  myTra.token ==params[:coordinate][:token]
-        @coordinate = Coordinate.new(coordinate_params)
         #-------création des coordinates a partir d'une liste------
           #création des variables
         lat = []
         long = []
         date = 0
         
-        tok = @coordinate.token
-        tr_id = @coordinate.tracker_id
+        tok = params[:coordinate][:token]
+        tr_id = params[:coordinate][:tracker_id]
         
         #split des strings reçus
-        lat = @coordinate.latitude.split("_")
-        long = @coordinate.longitude.split("_")
-        date = @coordinate.datetime.split("_")
-        vitesse = @coordinate.speed.split("_")
-        orientation = @coordinate.course.split("_")
-        
+        lat = params[:coordinate][:latitude].split("_")
+        long = params[:coordinate][:longitude].split("_")
+        date = params[:coordinate][:datetime].split("_")
+        vitesse = params[:coordinate][:speed].split("_")
+        orientation = params[:coordinate][:course].split("_")
+
         #création des coordinates
         # parcours du tableau
         for i in (0..(lat.length-1))

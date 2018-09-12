@@ -34,10 +34,10 @@ ActiveRecord::Schema.define(version: 20160819151518) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "datetime"
-    t.string   "latitude"
-    t.string   "longitude"
-    t.string   "speed"
-    t.string   "course"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "speed"
+    t.float    "course"
   end
 
   create_table "editions", force: :cascade do |t|

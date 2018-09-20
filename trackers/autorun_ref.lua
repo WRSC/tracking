@@ -1,33 +1,32 @@
---Token to test the new website version
-print("Script startup\r\n")
-vmsleep(5000)
-sio.send('at+cpin=1234\r\n')
-vmsleep(15000)
-sio.send('at+cgps=1\r\n')
-vmsleep(10000)
-sio.send('at+netopen=,,1\r\n')
-vmsleep(10000)
+-- insert data from your MYT rails instance here:
+server = "167.99.205.49"
+tracker_id = "1"
+token = "XXXXX"
+
 sio.send('at+printdir=1\r\n')
 
--- The version I got from Sylvain had a token here. I've removed it from the
--- public version, but we can find it if needed. -TK
-token = ""
+print("WRSC tracing hardware revision 1, script 2.0 \r\nStartup")
+-- Unlock sim card when necessary
+-- sio.send('at+cpin=1234')
+sio.send('at+cgsockcont=1,\"IP\",\"giffgaff.com\"\r\n')
+sio.send('at+csockauth=1,1,\"giffgaff\",\"\"\r\n')
+sio.send('at+csocksetpn=1\r\n')
+sio.send('at+cgps=1\r\n')
+print(".")
+vmsleep(10000)
+sio.send('at+netopen=,,1\r\n')
+print(".")
 
 
 
-tracker_id = '"6"'
-mesLats=''
-mesLons=''
-mesdatetimes=''
-messpeeds=''
-mescourses=''
-comp=1;
-nameFileLatitude=''
-nameFileLongitude=''
-nameFileDatetime=''
-nameFileSpeed=''
-nameFileCourse=''
-date=''
+-- initialize variables
+mesLats = ''
+mesLons = ''
+mesdatetimes = ''
+messpeeds = ''
+mescourses = ''
+counter = 1;
+date = ''
 --os.remove("D:/latitude.txt")
 --os.remove("D:/longitude.txt")
 --os.remove("D:/datetime.txt")
@@ -39,216 +38,159 @@ date=''
 --file:write("printdir(1) \n print(\"Demarrage envois \\r \\n\") \n cmd1=\'at+chttpact=\"haggis.ensta-bretagne.fr\",3000 \\r \' \n file2=io.open(\"donnee.txt\",\"r\") \n str10=file2:read(\"*all\") \n file2:close() \n reponce=os.remove(\"donnee.txt\") \n print(\"\\n \\r\") \n print(\"os.remove=\") \n print(reponce) \n print(\"\\n \\r\") \n print(\"\\n \\r\") \n print(\"\\n\\r\") \n print(\"str10=\") \n print(str10) \n print(\" \\n \\r\") \n print(\"\\n \\r\") \n sio.send(cmd1); \n rtc1=sio.recv(5000) \n vmsleep(5000) \n print(\"rtc1=\") \n print(rtc1, \" \\r \\n\") \n sio.send(str10); \n rtc2=sio.recv(5000) \n vmsleep(5000) \n print(\"rtc2=\") \n print(rtc2, \" \\r \\n\") \n print(\"Fin envois\\r\\n\") \n ")
 -- file:close()
 -- Fin Define script lua envois
+success = 0
+errors = 0
 
 while true do
-    rst= gps.gpsinfo();
-    -- rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
+	rst = gps.gpsinfo();
+	-- rst="3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0";
 	if rst==",,,,,,,," then
-	print("Pas de fix\r\n")
-	vmsleep(1000)
+		print("Waiting for GPS fix...\r\n")
+		vmsleep(1000)
 	else
-		print("GPS data received \r\n")
-		str1='POST /coordinates HTTP/1.1\r\nContent-type: application/json\r\nAccept: application/json\r\nContent-length: '
-		msg = string.concat(rst,"\r\n")
-		print(msg)
+		print("GPS data received: ")
+		print(rst)
+		print("\r\n")
 
-		-- Data formating
-		j=0
-		str2={}
+		-- content of var rst is e.g. 
+		-- - 3113.343286,N,12121.234064,E,250311,072809.3,44.1,0.0,0
+		-- - 5049.134774,N,00118.424937,W,290818,185118.0,54.5,0,0
+		
+		-- Data formating: split rst by , into data
+		j = 0
+		data = {}
 		for word in string.gmatch(rst, '([^,]+)') do
-			str2[j]=word
-			j=j+1
-		end
-		strx={}
-		k=1
-		while k<=string.len(str2[0]) do
-			strx[k]=string.sub(str2[0],k,k)
-			k=k+1
-		end
-		latitude1=tonumber(string.concat(strx[1],strx[2]))*1.0
-		latitude2=string.concat(strx[3],strx[4])
-		latitude2=string.concat(latitude2,strx[5])
-		latitude2=string.concat(latitude2,strx[6])
-		latitude2=string.concat(latitude2,strx[7])
-		latitude2=string.concat(latitude2,strx[8])
-		latitude2=string.concat(latitude2,strx[9])
-		latitude2=string.concat(latitude2,strx[10])
-		latitude2=string.concat(latitude2,strx[11])
-		latitude2=tonumber(latitude2)*1.0
-		latitude2=latitude2/60*1.0
-		latitude3=latitude1+latitude2
-		str2[0]=tostring(latitude3)
-		stry={}
-		l=1
-		while l<=string.len(str2[2]) do
-			stry[l]=string.sub(str2[2],l,l)
-			l=l+1
-		end
-		longitude1=string.concat(stry[1],stry[2])
-		longitude1=tonumber(string.concat(longitude1,stry[3]))*1.0
-		longitude2=string.concat(stry[4],stry[5])
-		longitude2=string.concat(longitude2,stry[6])
-		longitude2=string.concat(longitude2,stry[7])
-		longitude2=string.concat(longitude2,stry[8])
-		longitude2=string.concat(longitude2,stry[9])
-		longitude2=string.concat(longitude2,stry[10])
-		longitude2=string.concat(longitude2,stry[11])
-		longitude2=string.concat(longitude2,stry[12])
-		longitude2=tonumber(longitude2)*1.0
-		longitude2=longitude2/60*1.0
-		longitude3=longitude1+longitude2
-		str2[2]=tostring(longitude3)
-		if str2[1]=="S" then
-			str2[0]=string.concat('-',str2[0])
-		end
-		if str2[3]=="W" then
-			str2[2]=string.concat('-',str2[2])
-		end
-		v1=str2[4]
-		v2=string.gsub(v1, "(%d%d)", "%1-")
-		j=0
-		v3={}
-		for word in string.gmatch(v2, '([^-]+)') do
-			v3[j]=word
-
-			j=j+1
+			data[j] = word
+			j = j+1
 		end
 
-		raiponce1=string.concat("20",v3[2])
-		raiponce2=string.concat(raiponce1,v3[1])
-		raiponce3=string.concat(raiponce2,v3[0])
-		raiponce=string.concat(raiponce3,str2[5])
+		-- latitude: "5049.134774,N" to "50.8189129"
+		latitude = tonumber(string.sub(data[0], 1, 2)) + tonumber(string.sub(data[0], 3, 11))/60.0
+		-- prepend minus when neccessary
+		if data[1] == "S" then
+			latitude = -latitude
+		end	
 
-		strz = str2[7]
+		-- longitude: "00118.424937,W" to "-1.3070822833333"
+		longitude = tonumber(string.sub(data[2], 1, 3)) + tonumber(string.sub(data[2], 4, 12))/60.0
+		-- prepend minus when neccessary
+		if data[3] == "W" then
+			longitude = -longitude
+		end
 
-		strk = str2[8]
+		-- format the date "290818" from DDMMYY to YYYYMMDD
+		datetime = string.gsub(data[4], "(%d%d)(%d%d)(%d%d)", "20%3%2%1")
+		-- append time
+		datetime = string.concat(datetime, data[5])
 
-        -- End of formating
 
-        -- Something
-		if comp==1 then
-			mesLats=str2[0]
-			mesLons=str2[2]
-			mesdatetimes=raiponce
+		-- concating data and further processing
+		if counter == 1 then
+			mesLats = latitude
+			mesLons = longitude
+			mesdatetimes = datetime
 			-- 1 knot = 1.852 km/h
-			messpeeds=tonumber(strz)*1.852
-			mescourses=strk
-			if string.len(date)==0 then
-				date=mesdatetimes
+			messpeeds = tonumber(data[7])*1.852
+			mescourses = data[8]
+			if string.len(date) == 0 then
+				date = datetime
 			end
 		end
-		if comp~=1 then
-			mesLats=string.concat(mesLats,"_")
-			mesLats=string.concat(mesLats,str2[0])
-			mesLons=string.concat(mesLons,"_")
-			mesLons=string.concat(mesLons,str2[2])
-			mesdatetimes=string.concat(mesdatetimes,"_")
-			mesdatetimes=string.concat(mesdatetimes,raiponce)
-			messpeeds=string.concat(messpeeds,'_')
-			messpeeds=string.concat(messpeeds,tonumber(str2[7])*1.852)
-			mescourses=string.concat(mescourses,'_')
-			mescourses=string.concat(mescourses,str2[8])
+		if counter ~= 1 then
+			mesLats = mesLats .. "_" .. latitude
+			mesLons = mesLons .. "_" .. longitude
+			mesdatetimes = mesdatetimes .. "_" .. datetime
+			messpeeds = messpeeds .. '_' .. tonumber(data[7])*1.852
+			mescourses = mescourses .. '_' .. data[8]
 		end
 
-		if comp==5 then -- Connexion opening
-			print(" Open connexion \r \n")
-			cmd1='at+chttpact="167.99.205.49",80 \r ' 
-			sio.send(cmd1); 
-			rtc1=sio.recv(5000) 
-			print(" Connexion opened \r \n")
+		if counter == 5 then -- Connexion opening
+			print("Opening connection to server...")
+			sio.send('at+chttpact="' .. server .. '",80 \r' )
+			rtc1 = sio.recv(5000) 
+			print(" opened ")
 		end
-		if comp==10	then
-			comp=0
 
-			str3='\r\n\r\n'
-			str4='{"latitude":"'
-			str5='","longitude":"'
-			str6='","datetime":"'
-			str8='","tracker_id":'
-			str8=string.concat(str8,tracker_id)
-			str9=',"token":"'
-			str9=string.concat(str9,token)	
-			str9=string.concat(str9,'"')
-			str9=string.concat(str9,"}")
-			str11='","speed":"'
-			str12='","course":"'	
-			length1 = string.len(str4)+string.len(mesLats)+string.len(str5)+string.len(mesLons)+string.len(str6)+string.len(mesdatetimes)+string.len(str8)+string.len(str9)+string.len(str11)+string.len(messpeeds)+string.len(str12)+string.len(mescourses)
 
-			str10=string.concat(str1,tostring(length1))
-			str10=string.concat(str10,str3)
-			str10=string.concat(str10,str4)
-			str10=string.concat(str10,mesLats)
-			str10=string.concat(str10,str5)
-			str10=string.concat(str10,mesLons)
-			str10=string.concat(str10,str6)
-			str10=string.concat(str10,mesdatetimes)
-			str10=string.concat(str10,str11)
-			str10=string.concat(str10,messpeeds)
-			str10=string.concat(str10,str12)
-			str10=string.concat(str10,mescourses)
-			str10=string.concat(str10,str8)
-			str10=string.concat(str10,str9)
-			str10=string.concat(str10,string.char(0x1A))
+		if counter == 10 then
+			counter=0
 
-            -- Writing of data in a file
-			nameFileLatitude=string.concat("D:\\latitude",date)
-			nameFileLatitude=string.concat(nameFileLatitude,".txt")
+			body = '{"latitude":"' .. mesLats .. '","longitude":"' .. mesLons
+			body = body .. '","datetime":"' .. mesdatetimes
+			body = string.concat(body, '","speed":"' .. messpeeds)
+			body = string.concat(body, '","course":"' .. mescourses)
+			body = string.concat(body, '","tracker_id":' .. tracker_id)
+			body = string.concat(body, string.format(',"token":"%s"', token))
 
-			nameFileLongitude=string.concat("D:\\longitude",date)
-			nameFileLongitude=string.concat(nameFileLongitude,".txt")
+			print(body)
+			print("\r\n")
 
-			nameFileDatetime=string.concat("D:\\datetime",date)
-			nameFileDatetime=string.concat(nameFileDatetime,".txt")
-
-			nameFileSpeed=string.concat("D:\\speed",date)
-			nameFileSpeed=string.concat(nameFileSpeed,".txt")
-
-			nameFileCourse=string.concat("D:\\course",date)
-			nameFileCourse=string.concat(nameFileCourse,".txt")
-
-			file=io.open(nameFileLatitude,"a")
+			-- Writing of data in a file
+			file = io.open(string.format("D:\\latitude%s.txt", date), "a")
 			print("file= ")
 			print(file)
 			if file ~= nil then -- IF no SD card
-				mesLats=string.concat(mesLats,"_")
+				print("Writing data to SD card...")
+				mesLats = string.concat(mesLats,"_")
 				file:write(mesLats)
 				file:close()
+				print(".")
 				
-				file=io.open(nameFileLongitude,"a")
-
-				mesLons=string.concat(mesLons,"_")
+				file = io.open(string.format("D:\\longitude%s.txt", date), "a")
+				mesLons = string.concat(mesLons,"_")
 				file:write(mesLons)
 				file:close()
+				print(".")
 				
-				file=io.open(nameFileDatetime,"a")
-
-				mesdatetimes=string.concat(mesdatetimes,"_")
+				file = io.open(string.format("D:\\datetime%s.txt", date), "a")
+				mesdatetimes = string.concat(mesdatetimes, "_")
 				file:write(mesdatetimes)
 				file:close()
+				print(".")
 
-				file=io.open(nameFileSpeed,"a")
-
-				messpeeds=string.concat(messpeeds,"_")
+				file = io.open(string.format("D:\\speed%s.txt", date), "a")
+				messpeeds = string.concat(messpeeds, "_")
 				file:write(messpeeds)
 				file:close()
+				print(".")
 
-				file=io.open(nameFileCourse,"a")
-
-				mescourses=string.concat(mescourses,"_")
+				file = io.open(string.format("D:\\course%s.txt", date), "a")
+				mescourses = string.concat(mescourses, "_")
 				file:write(mescourses)
 				file:close()
 
+				print(".")
+			else 
+				print("WARNING: no SD card available!\r\n")
 			end
-                -- Sending of data
-				print(" Start data transfert \r \n ")
-				 sio.send(str10);
-				print(str10)
-				rtc2=sio.recv(5000) 
-				print(" Data transfer is complete \r \n")
+			print("Done \r\n")
+			body = string.concat(body, "}")
+			-- Sending of data
+			print("Starting data transfer...")
+			length = string.len(body)
+			print(".")
+			header = string.format('POST /coordinates HTTP/1.1\r\nContent-type: application/json\r\nAccept: application/json\r\nContent-length: %d\r\n\r\n', length)
+			print(".")
+
+			sio.send(header .. body .. string.char(0x1A));
+			--print(body)
+			rtc2 = sio.recv(5000) 
+			print("\r\nData transfer attempt done, response:\r\n")
+			print(rtc2)
 			
 			
+			print("\r\n")
+			rlen = string.len(rtc2)
+			if rlen > 23 then
+				success = success + 1
+			else
+				errors = errors + 1
+			end
+			print("\r\nSuccessful transmissions: " .. success .. ", errors: " .. errors)
+			print("\r\n")
+			print("\r\n")
 		end
-		comp=comp+1
+		counter = counter + 1
 		vmsleep(1000)
-	end	
+	end 
 end

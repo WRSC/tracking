@@ -1,11 +1,10 @@
--- insert data from your MYT rails instance here:
+token = "fd6434cda6e29c481f5e730fb61e1c50"
 server = "167.99.205.49"
-tracker_id = "1"
-token = "XXXXX"
-
+tracker_id = "6"
+-- insert data from your MYT rails instance above:
 sio.send('at+printdir=1\r\n')
 
-print("WRSC tracing hardware revision 1, script 2.0 \r\nStartup")
+print("WRSC tracking hardware revision 1, script 2.0 \r\nStartup")
 -- Unlock sim card when necessary
 -- sio.send('at+cpin=1234')
 sio.send('at+cgsockcont=1,\"IP\",\"giffgaff.com\"\r\n')
@@ -15,7 +14,7 @@ sio.send('at+cgps=1\r\n')
 print(".")
 vmsleep(10000)
 sio.send('at+netopen=,,1\r\n')
-print(".")
+print(".\n")
 
 
 
@@ -40,6 +39,24 @@ date = ''
 -- Fin Define script lua envois
 success = 0
 errors = 0
+
+file = io.open("D:\\number_of_attempts.txt","r")
+if file==nil then
+    file = io.open("D:\\number_of_attempts.txt","a")
+    file:write('0')
+    file:close()
+    number_of_attempts = 0
+else
+    number_of_attempts = file:read() + 1
+    file = io.open("D:\\number_of_attempts.txt","w+")
+    print(number_of_attempts)
+    file:write(number_of_attempts)
+    file:close()
+end
+
+file = io.open(string.format("D:\\attempt%d.csv", number_of_attempts), "w")
+file:write('datetime,latitude,longitude,speed,course\n')
+file:close()
 
 while true do
 	rst = gps.gpsinfo();
@@ -80,9 +97,14 @@ while true do
 
 		-- format the date "290818" from DDMMYY to YYYYMMDD
 		datetime = string.gsub(data[4], "(%d%d)(%d%d)(%d%d)", "20%3%2%1")
-		-- append time
+		-- append time on datetime for txt file
 		datetime = string.concat(datetime, data[5])
-
+		-- create datet in ISO8601 format for csv, from DDMMYY to YYYY-MM-DDT, e.g "290818" to "20180829T"
+		date_ISO8601 = string.gsub(data[4], "(%d%d)(%d%d)(%d%d)", "20%3-%2-%1T")
+		-- create time in ISO8601 format for csv, from HHMMSS.0 to HH:MM:SSZ, e.g "163454.0" to "16:34:54Z"
+		time_ISO8601 = string.gsub(data[5], "(%d%d)(%d%d)(%d%d).(%d)", "%1:%2:%3Z")
+		-- crate datetime in ISO8601 format
+		datetime_ISO8601 = date_ISO8601 .. time_ISO8601
 
 		-- concating data and further processing
 		if counter == 1 then
@@ -92,6 +114,8 @@ while true do
 			-- 1 knot = 1.852 km/h
 			messpeeds = tonumber(data[7])*1.852
 			mescourses = data[8]
+			Record = {datetime_ISO8601, latitude, longitude, messpeeds, mescourses}
+			csvRecords = table.concat(Record, ',')
 			if string.len(date) == 0 then
 				date = datetime
 			end
@@ -102,6 +126,9 @@ while true do
 			mesdatetimes = mesdatetimes .. "_" .. datetime
 			messpeeds = messpeeds .. '_' .. tonumber(data[7])*1.852
 			mescourses = mescourses .. '_' .. data[8]
+			Record = {datetime_ISO8601, latitude, longitude, tonumber(data[7])*1.852, data[8]}
+			csvRecord = table.concat(Record, ',')
+			csvRecords = csvRecords .. "\n" .. csvRecord
 		end
 
 		if counter == 5 then -- Connexion opening
@@ -157,6 +184,11 @@ while true do
 				file = io.open(string.format("D:\\course%s.txt", date), "a")
 				mescourses = string.concat(mescourses, "_")
 				file:write(mescourses)
+				file:close()
+
+				file = io.open(string.format("D:\\attempt%d.csv", number_of_attempts), "a")
+				csvRecords = string.concat(csvRecords, "\n")
+				file:write(csvRecords)
 				file:close()
 
 				print(".")

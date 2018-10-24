@@ -15,7 +15,7 @@ class CoordinatesController < ApplicationController
     mesDateTimes=[]
     if cookies[:rdatetimes]!= nil && cookies[:rdatetimes]!= ""
       mesDateTimes=cookies[:rdatetimes].split("_").map { |ts|
-        DateTime.strptime(ts, "%Y%m%d%H%S")
+        DateTime.strptime(ts, "%Y%m%d%H%M")
       }
     elsif cookies[:rtrieslist]!= nil && cookies[:rtrieslist]!= ""
       trySelect=Try.find_by_id(cookies[:rtrieslist].to_i)

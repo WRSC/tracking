@@ -242,9 +242,9 @@ class CoordinatesController < ApplicationController
   def gatherCoordsBetweenDates
     trackers=params[:trackers]
 		if (params[:tstart] != nil && params[:tend] != nil)
-      tstart = params[:tstart]
-      tend   = params[:tend]
-      newCoords = Coordinate.where("? < datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers).order(tracker_id: :asc).order(datetime: :asc)
+      tstart = DateTime.strptime(params[:tstart], "%Y-%m-%d %H:%M:%S")
+      tend   = DateTime.strptime(params[:tend], "%Y-%m-%d %H:%M:%S")
+      newCoords = Coordinate.where(datetime: tstart..tend).where(tracker_id: trackers).order(tracker_id: :asc).order(datetime: :asc)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
     end
   end
@@ -252,9 +252,9 @@ class CoordinatesController < ApplicationController
   def gatherCoordsLittleByLittle
     trackers=params[:trackers]
     if (params[:tstart] != nil && params[:tend] != nil)
-      tstart = params[:tstart]
-      tend   = params[:tend]
-      newCoords = Coordinate.where("? <datetime AND datetime < ?", tstart, tend).where(tracker_id: trackers).order(datetime: :asc).limit(10)
+      tstart = DateTime.strptime(params[:tstart], "%Y-%m-%d %H:%M:%S")
+      tend   = DateTime.strptime(params[:tend], "%Y-%m-%d %H:%M:%S")
+      newCoords = Coordinate.where(datetime: tstart..tend).where(tracker_id: trackers).order(datetime: :asc).limit(10)
       render json: newCoords.to_json(:only =>[:tracker_id,:latitude,:longitude,:datetime])
     end
   end

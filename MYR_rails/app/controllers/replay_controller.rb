@@ -185,16 +185,12 @@
  	end
  	
  	def getSingleAttemptInfos
- 		data=[]#Need start time, end time, tracker_id [] (each attempt has only one tracker)
+ 		# Need start time, end time, tracker_id (each attempt has only one tracker)
  		attempt_id = cookies[:attemptslist]
- 		attempt=Attempt.find_by(id: attempt_id)
- 		tstart=attempt.start.strftime("%Y%m%d%H%M%S")
- 		data.push(tstart)
- 		tend=attempt.end.strftime("%Y%m%d%H%M%S")
- 		data.push(tend)
- 		tracker_id=attempt.tracker_id
- 		data.push(tracker_id)
- 		render json: data
+ 		attempt = Attempt.find_by(id: attempt_id)
+ 		tstart = attempt.start.strftime("%Y-%m-%d %H:%M:%S")
+ 		tend = attempt.end.strftime("%Y-%m-%d %H:%M:%S")
+ 		render json: [tstart, tend, attempt.tracker_id]
  	end
  	
  	def getTrackersFromDatetimes

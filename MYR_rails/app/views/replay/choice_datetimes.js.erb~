@@ -1,1 +1,0 @@
-$("#choose_datetimes").html("<%= escape_javascript(render 'choice_datetimes') %>")

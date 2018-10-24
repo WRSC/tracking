@@ -1,1 +1,0 @@
-$("#choose_replay_missions").html("<%= escape_javascript(render 'choice_replay_missions') %>")

@@ -1,1 +1,0 @@
-$("#choice_attempts").html("<%= escape_javascript(render 'choicetries') %>");

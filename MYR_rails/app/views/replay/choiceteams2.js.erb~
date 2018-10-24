@@ -1,1 +1,0 @@
-$("#choice-teams").html("<%= escape_javascript(render 'choiceteams2') %>")

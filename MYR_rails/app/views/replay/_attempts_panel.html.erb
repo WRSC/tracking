@@ -1,0 +1,18 @@
+<p><b><u>Select attempts:</u></b></p>
+<!--%= m.inspect%-->
+<% attempts= Attempt.all() %>
+<option value="0"></option>
+
+<ul class="attempts-list">
+	<% attempts.each do |attempt| %>
+		<li data-mission-id="<%= attempt.mission_id %>">
+			<input type="checkbox" id="attempt-cb-<%= attempt.id %>"
+				data-tracker-id="<%= attempt.tracker_id %>"
+				data-attempt-start="<%= attempt.start %>"
+				data-attempt-end="<%= attempt.end %>"
+				>
+			<label class="attempt-label" for="attempt-cb-<%= attempt.id %>"><%= attempt.name %> (<%= attempt.robot.team.name %>)</label>
+			<img src="/icons/medium<%=attempt.tracker_id%12 %>.png" />
+		</li>
+	<% end %>
+</ul>

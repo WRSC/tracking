@@ -3,6 +3,7 @@
 var replay_map=null
 var lastDatetime = "10000101";
 var latest_markers = [[],[],[]]; //[0] for markers and [1] for tracker id
+var displayed_polylines = [[], []];
 var known_trackers = [];
 var desired_trackers = [];
 var showInfo = false;
@@ -279,4 +280,3 @@ function FullScreenControl(controlDiv) {
 			});
 		});
 	}
-

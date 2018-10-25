@@ -224,7 +224,23 @@
 			strokeWeight: 1
 		});
 		polyline.setMap(replay_map);
+
+		displayed_polylines[0].push(polyline);
+		displayed_polylines[1].push(tracker_id);
 	}
+
+// Remove all displayed markers and lines from the map
+function clearMap(){
+	for (var i = 0 ; i < latest_markers[0].length; i++) {
+		latest_markers[0][i].setMap(null);
+	}
+	latest_markers = [[],[],[]];
+
+	for (var i = 0 ; i < displayed_polylines[0].length; i++) {
+		displayed_polylines[0][i].setMap(null);
+	}
+	displayed_polylines = [[], []];
+}
 
 	function deleteEndMarker(index_of_marker){
 		latest_markers[0][index_of_marker].setMap(null);

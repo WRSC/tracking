@@ -19,6 +19,18 @@
 		</div>
 		<!----------------------Start Side Panel------------------>
 		<div class="one_third" style='height: 100%;overflow:scroll'>
+			<div id="missions-panel">
+				<%= render('missions_panel') %>
+			</div>
+
+			<div id="attempts-panel">
+				<%= render('attempts_panel') %>
+			</div>
+
+			<button id="updatebutton" type="button">Update</button>
+
+			<hr/>
+
 			<p>These functions below work only when one robot is selected. It will not work properly if you use them with 2 or more robots selected.</p>
 			<p><b>Buoys:</b></p>
 			<input type="checkbox" name="display-official-markers" > &nbsp Display Official Buoys</input>
@@ -62,5 +74,3 @@
 		}
 	</style>
 	
-
-

@@ -1,0 +1,15 @@
+<% missionsArray = getCurrentMission %>
+<% nbMissions = missionsArray.size %>
+<% if ( nbMissions > 0 ) %>
+		<p>
+			<select name="Select mission" id="dropdown_select_mission">
+				<option value="select_mission">Select a mission</option>
+				<% for m in missionsArray %>
+					<option value="<%= m.id %>">Mission <%= m.id%> : <%= m.name%> </option>
+				<% end %>
+			</select>
+		</p>
+<% else %>
+	<h1>No mission in progress currently.</h1>
+	<p>Please come back later !</p>
+<% end %>

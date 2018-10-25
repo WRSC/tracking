@@ -26,6 +26,9 @@ $(document).ready(function(){
 	wantDoReplay();
   	displayMarkersOrnot();
   	requestRefreshTeams();
+
+	$("#dropdown_select_mission").change(update_visible_teams);
+	$("#updatebutton").click(update_displayed_traces);
 });
 
 
@@ -44,3 +47,45 @@ $(document).ready(function(){
 	}
 
 	/*===================End Choose teams and robots============================*/
+
+function update_visible_teams() {
+	// Hide and uncheck all attempts
+	$('.attempts-list li').hide();
+	$('.attempts-list li input[type=checkbox]').prop('checked', false);
+
+	// Show attempts for the selected mission
+	var selected_mission = $('#dropdown_select_mission :selected').val();
+	$('.attempts-list li[data-mission-id="' + selected_mission + '"]').show();
+}
+
+function update_displayed_traces() {
+	clearMap();
+
+	var checked = $('.attempts-list input:checked');
+	var attempts = checked.map(function(i, elt) {
+		return {
+			tracker: parseInt(elt.dataset.trackerId),
+			start: elt.dataset.attemptStart,
+			end: elt.dataset.attemptEnd,
+		};
+	}).get();
+	console.log(attempts);
+	attempts.forEach(function(a) {
+		requestCoordsForAttempt(a.start, a.end, a.tracker);
+	})
+}
+
+function requestCoordsForAttempt(tstart,tend,tracker_id) {
+	$.ajax({
+		type: "GET",
+		url: "/gatherCoordsBetweenDates",
+		data: {tstart : tstart, tend: tend, trackers: tracker_id},
+		dataType: "json",
+		success: function(data){
+			refreshWithNewMarkers2(data);
+			// if (getShowInfo()){
+			// 	requestWantInfo();
+			// }
+		}
+	});
+}

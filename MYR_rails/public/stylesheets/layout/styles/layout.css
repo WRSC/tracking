@@ -340,3 +340,13 @@ input[type=checkbox]
 {
  vertical-align: bottom;
 }
+
+.attempts-list {
+	list-style-type: none;
+	margin-top: 0;
+}
+
+.attempt-label {
+  display: inline;
+	margin-left: 5px;
+}

@@ -27,7 +27,7 @@ Edition.create!(name: "WRSC 2019",
 
 	#Fleet Race
 
-	Mission.create!(name:  "Fleet Race Sailboat",
+	Mission.create!(name:  "Fleet Race",
 					start: "20190705000000",
 					end:   "20190826230000",
              		mtype: "Race",
@@ -37,7 +37,7 @@ Edition.create!(name: "WRSC 2019",
 
 	#Station Keeping
 
-	Mission.create!(name:  "Station Keeping Sailboat",
+	Mission.create!(name:  "Station Keeping",
 					start: "20190827000000",
 					end:   "20190827230000",
              		mtype: "StationKeeping",
@@ -47,7 +47,7 @@ Edition.create!(name: "WRSC 2019",
 
 	#Area Scanning
 
-	Mission.create!(name:  "Area Scanning Sailboat",
+	Mission.create!(name:  "Area Scanning",
 					start: "20190828000000",
 					end:   "20190828230000",
              		mtype: "AreaScanning",
@@ -57,7 +57,7 @@ Edition.create!(name: "WRSC 2019",
 
 	#Hide and seek
 
-	Mission.create!(name:  "Collision Avoidance Sailboat",
+	Mission.create!(name:  "Collision Avoidance",
                     start: "20190829000000",
                     end:   "20190829230000",
 		     		mtype: "CollisionAvoidance",

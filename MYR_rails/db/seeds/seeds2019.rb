@@ -10,24 +10,8 @@
 
 #Admins
 
-Member.create!(name:  "Yu Cao",
+Member.create!(name:  "Yu_Cao",
 	               email: "Yu.Cao@soton.ac.uk",
-	               password:              "foobar",
-	               password_confirmation: "foobar",
-	               role:     'administrator',
-	               activated: true,
-	               activated_at: Time.zone.now)
-
-Member.create!(name:  "Thomas Kluyver",
-	               email: "thomas@kluyver.me.uk",
-	               password:              "foobar",
-	               password_confirmation: "foobar",
-	               role:     'administrator',
-	               activated: true,
-	               activated_at: Time.zone.now)
-
-Member.create!(name:  "Captain Seb",
-	               email: "sebastien.lemaire@soton.ac.uk",
 	               password:              "foobar",
 	               password_confirmation: "foobar",
 	               role:     'administrator',

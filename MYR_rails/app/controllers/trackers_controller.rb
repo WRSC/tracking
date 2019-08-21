@@ -86,6 +86,6 @@ class TrackersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tracker_params
-      params.require(:tracker).permit(:token, :description)
+      params.require(:tracker).permit(:token, :description, :enabled)
     end
 end

@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   # Resources
 
     resources :coordinates
-    resources :trackers
+    resources :trackers do
+      member do
+        put :enable
+      end
+    end
     resources :members do
       member do
         patch :invite

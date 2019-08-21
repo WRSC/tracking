@@ -1,1 +1,1 @@
-json.extract! @tracker, :id, :token, :description, :created_at, :updated_at
+json.extract! @tracker, :id, :token, :description, :created_at, :updated_at, :enabled

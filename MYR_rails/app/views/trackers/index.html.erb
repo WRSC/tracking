@@ -12,6 +12,7 @@
         <th>Token</th>
         <th>Description</th>
         <th>ID</th>
+        <th>Enabled</th>
         <th>Options</th>
       </tr>
     </thead>
@@ -29,6 +30,7 @@
                   <td><%= tracker.token %></td>
                   <td><%= tracker.description %></td>
                   <td><%= tracker.id %></td>
+                  <td><%= tracker.enabled %></td>
                   <td><%= link_to 'Show', tracker %> <%= ' | '%>
                   <%= link_to 'Edit', edit_tracker_path(tracker) %> <%= ' | '%>
                   <%= link_to 'Delete', tracker, method: :delete, data: { confirm: 'Are you sure?' } %></td>

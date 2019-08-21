@@ -1,10 +1,13 @@
 class TrackersController < ApplicationController
-  before_action :set_tracker, only: [:show, :edit, :update, :destroy]
+  before_action :set_tracker, only: [:show, :edit, :update, :destroy, :enable]
   before_filter :authenticateA
   # GET /trackers
   # GET /trackers.json
+  # Parasm: ids
+  #   example: '1,2,3,4'
   def index
     @trackers = Tracker.all
+    @trackers = @trackers.where(id: params[:ids].split(',')) if params[:ids].present?
   end
 
   # GET /trackers/1
@@ -19,6 +22,20 @@ class TrackersController < ApplicationController
 
   # GET /trackers/1/edit
   def edit
+  end
+
+  # PUT /trackers/1/enable
+  # PUT /trackers/1/enable.json
+  def enable
+    respond_to do |format|
+      if @tracker.update(enabled: params[:enabled])
+        format.html { redirect_to @tracker, notice: 'Tracker was successfully enabled.' }
+        format.json { render :show, status: :ok, location: @tracker }
+      else
+        format.html { render :edit }
+        format.json { render json: @tracker.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /trackers

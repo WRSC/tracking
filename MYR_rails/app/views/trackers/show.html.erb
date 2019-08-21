@@ -18,6 +18,11 @@
 	  <%= @tracker.description %>
 	</p>
 
+	<p>
+	  <strong>Enabled:</strong>
+	  <%= @tracker.enabled %>
+	</p>
+
 	<%= link_to 'Edit', edit_tracker_path(@tracker) %> | <%= link_to 'Delete', @tracker, method: :delete, data: { confirm: 'Destroy this tracker ?' } %> |
 	<%= link_to 'Back to index', trackers_path %>
 

@@ -19,7 +19,7 @@ class CoordinatesControllerTest < ActionController::TestCase
 
   test "creates single coordinate" do
     assert_difference('Coordinate.count', 1) do
-      post :create, coordinate: {
+      post :create, params: { coordinate: {
         datetime: 20150605010101,
         latitude: "0.5",
         longitude: "1",
@@ -27,7 +27,7 @@ class CoordinatesControllerTest < ActionController::TestCase
         course: 1,
         tracker_id: @tracker.id,
         token: @tracker.token
-      }, format: :json
+      }}, format: :json
     end
 
     assert_response :created
@@ -35,7 +35,7 @@ class CoordinatesControllerTest < ActionController::TestCase
 
   test "creates multiple coordinates" do
     assert_difference('Coordinate.count', 2) do
-      post :create, coordinate: {
+      post :create, params: {coordinate: {
         datetime: "20150605010101_20150606010101",
         latitude: "0.5_0.7",
         longitude: "1_2",
@@ -43,14 +43,14 @@ class CoordinatesControllerTest < ActionController::TestCase
         course: "1_1",
         tracker_id: @tracker.id,
         token: @tracker.token
-      }, format: :json
+      }}, format: :json
     end
 
     assert_response :created
   end
 
   test "should show coordinate" do
-    get :show, id: @coordinate
+    get :show, params: {id: @coordinate}
     assert_response :success
   end
 
@@ -72,7 +72,7 @@ class CoordinatesControllerTest < ActionController::TestCase
       create_coordinate(attempt.tracker, datetime)
     end
 
-    get :latest_by_mission, id: mission.id
+    get :latest_by_mission, params: {id: mission.id}
     assert_response :success
 
     parsed_response = JSON.parse(response.body)
@@ -95,7 +95,7 @@ class CoordinatesControllerTest < ActionController::TestCase
       6.times { create_coordinate(attempt.tracker, datetime) }
     end
 
-    get :latest_by_mission, id: mission.id, limit: 5
+    get :latest_by_mission, params: {id: mission.id, limit: 5}
     assert_response :success
 
     parsed_response = JSON.parse(response.body)
@@ -108,14 +108,14 @@ class CoordinatesControllerTest < ActionController::TestCase
   test "#latest_by_mission with ?limit=501" do
     mission = missions(:triangularRace)
 
-    get :latest_by_mission, id: mission.id, limit: 501
+    get :latest_by_mission, params: {id: mission.id, limit: 501}
     assert_response :bad_request
   end
 
   test "#latest_by_mission with ?limit=0" do
     mission = missions(:triangularRace)
 
-    get :latest_by_mission, id: mission.id, limit: 501
+    get :latest_by_mission, params:{id: mission.id, limit: 0}
     assert_response :bad_request
   end
 

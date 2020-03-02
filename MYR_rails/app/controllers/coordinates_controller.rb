@@ -162,10 +162,10 @@ class CoordinatesController < ApplicationController
         respond_to do |format|
           if new_coords.length == 1
             format.html { redirect_to new_coords[0], notice: 'Coordinate was successfully created.' }
-            format.json { render :show, status: :created, location: new_coords }
+            format.json { render json: new_coords, status: :created}
           elsif new_coords.length > 0
             format.html { redirect_to "/coordinates", notice: 'Coordinates were successfully created.' }
-            format.json { render :show, status: :created, location: new_coords }
+            format.json { render json: new_coords, status: :created}
           else
             format.html { render :new }
             format.json { render json: @coordinate.errors, status: :unprocessable_entity }

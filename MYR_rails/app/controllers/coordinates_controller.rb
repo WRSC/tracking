@@ -1,6 +1,6 @@
 class CoordinatesController < ApplicationController
   before_action :set_coordinate, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticateA, only: [:edit, :update, :destroy]
+  before_action :authenticateA, only: [:edit, :update, :destroy]
   
   include RealTimeHelper
 

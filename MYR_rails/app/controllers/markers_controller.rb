@@ -1,6 +1,6 @@
 class MarkersController < ApplicationController
   before_action :set_marker, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticateA, only: [:new, :edit, :update, :destroy]
+  before_action :authenticateA, only: [:new, :edit, :update, :destroy]
   # GET /markers
   # GET /markers.json
   def index

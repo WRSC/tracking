@@ -1,6 +1,6 @@
 class TrackersController < ApplicationController
   before_action :set_tracker, only: [:show, :edit, :update, :destroy, :enable]
-  before_filter :authenticateA
+  before_action :authenticateA
   # GET /trackers
   # GET /trackers.json
   # Parasm: ids

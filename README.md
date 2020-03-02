@@ -13,13 +13,15 @@ To run the server locally for development:
     # gem is Ruby's package manager. You'll need to get that somehow.
     gem install bundle
     bundle install
-    
+
     # It looks like this should only be needed in production, but I always
     # seem to need it. It should be a proper random token in production.
+    # To learn how to deploy to production, please read `Docs/server_deploy.md`.
     export SECRET_KEY_BASE=blah
-    
-    # Go!
-    bundle exec rails server -e development
+
+    # Run the database migrations, and launch the server!
+    bundle exec rake db:migrate RAILS_ENV=development
+    bundle exec rails server -e development # or bundle exec rails s -e development
 
 Open http://localhost:3000/ in a browser to see it.
 

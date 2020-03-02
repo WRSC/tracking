@@ -5,11 +5,18 @@ class MemberTest < ActiveSupport::TestCase
   #   assert true
   # end
   def setup
-    @member = Member.new(name: 'justfortest', email: 'justfortest@gmail.com', role: 'visitor', password: 'justfortest')
+    @team = Team.new(name: 'Testers')
+    @member = @team.members.new(
+      name: 'justfortest',
+      email: 'justfortest@gmail.com',
+      role: 'visitor',
+      password: 'justfortest',
+      password_confirmation: 'justfortest',
+    )
   end
 
   test "should be valid" do
-    assert @member.valid?
+    assert @member.valid?, "#{@member.errors.messages}"
   end
   
 #================================== Test Name ==========================================#

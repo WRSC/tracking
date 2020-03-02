@@ -1,6 +1,6 @@
 class MissionsController < ApplicationController
   before_action :set_mission, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticateA, only: [:new, :edit, :update, :destroy]
+  before_action :authenticateA, only: [:new, :edit, :update, :destroy]
   # GET /missions
   # GET /missions.json
   def index

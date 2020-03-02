@@ -1,6 +1,6 @@
 class EditionsController < ApplicationController
 	before_action :set_edition, only: [:show, :edit, :update, :destroy]
-	before_filter :authenticateA, only: [:new, :edit, :update, :destroy]
+	before_action :authenticateA, only: [:new, :edit, :update, :destroy]
 
 	# GET /editions
 	# GET /editions.json
